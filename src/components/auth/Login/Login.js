@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { authPending, authFailed, authSucceed } from '../authReducer';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
+import { Link } from 'react-router-dom';
 import { getAuthToken } from '../auth';
 
 
@@ -33,20 +34,20 @@ const Login = ({ pending, success, getAuthToken, push }) => {
                 <Form.Group>
                     <Form.Control
                         type="email"
-                        placeholder="Почт. адрес"
+                        placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    { formSubmitted && !email ? <p className="mt-1 alert-danger">введите почт. адрес</p> : null }
+                    { formSubmitted && !email ? <p className="mt-1 alert-danger">Email is required</p> : null }
                 </Form.Group>
                 <Form.Group>
                     <Form.Control
                         type="password"
-                        placeholder="Пароль"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    { formSubmitted && !password ? <p className="mt-1 alert-danger">введите пароль</p> : null }
+                    { formSubmitted && !password ? <p className="mt-1 alert-danger">Password is required</p> : null }
                 </Form.Group>
                 <Button
                     type="submit"
@@ -55,9 +56,12 @@ const Login = ({ pending, success, getAuthToken, push }) => {
                     block
                     disabled={!password || !email || pending}
                 >
-                    Ввоити
+                    Login
                 </Button>
             </Form>
+            <div className="mt-2">
+                <Link to="/register">Dont have an account? Register Here</Link>
+            </div>
         </div>
     );
 };

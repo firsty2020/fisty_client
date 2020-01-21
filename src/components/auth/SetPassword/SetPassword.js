@@ -40,32 +40,32 @@ const SetPassword = ({ match, pending, success, push, history, submitSetPassword
         <div className='registration-form-container'>
             { notMatch ?
                 <Alert variant="danger">
-                    Введенные поля не совпадают, пожалуйста исправьте ошибку!
+                    Passwords do not match. Please fix it.
                 </Alert> : null
             }
             { success ?
                 <Alert variant="success">
-                    Вы успешно зарегистрировались!
+                    You have successfully registered
                 </Alert> : null
             }
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Control
                         type="password"
-                        placeholder="Пароль"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    { formSubmitted && !password ? <p className="mt-1 alert-danger">введите пароль</p> : null }
+                    { formSubmitted && !password ? <p className="mt-1 alert-danger">Password is required</p> : null }
                 </Form.Group>
                 <Form.Group>
                     <Form.Control
                         type="password"
-                        placeholder="Подтвердите Пароль"
+                        placeholder="Confirm Password"
                         value={repeatPassword}
                         onChange={(e) => setRepeatPassword(e.target.value)}
                     />
-                    { formSubmitted && !repeatPassword ? <p className="mt-1 alert-danger">подтвердите пароль</p> : null }
+                    { formSubmitted && !repeatPassword ? <p className="mt-1 alert-danger">Confirm password</p> : null }
                 </Form.Group>
                 <Button
                     type="submit"

@@ -13,7 +13,7 @@ const Dashboard = ({ user, getAuthUser }) => {
     }, [ getAuthUser ]);
 
     return (
-        <div>
+        <div style={{ 'margin': '50px'}}>
             { user && user.status === 'new' ? <QuestionsModal/> : null }
             <h1>This is dashboard</h1>
         </div>

@@ -9,8 +9,8 @@ function App() {
             <Switch>
                 <Route path="/register" component={Registration} />
                 <Route path="/set-password/:passwordToken" component={SetPassword} />
-                <Route path="/login" component={Login} />
                 <Route path="/dashboard" component={Dashboard} />
+                <Route path="/" component={Login} />
             </Switch>
         </div>
     );

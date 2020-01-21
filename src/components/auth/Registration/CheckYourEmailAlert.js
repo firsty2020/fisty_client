@@ -5,10 +5,10 @@ import Alert from 'react-bootstrap/Alert';
 const CheckYourEmailAlert = () => {
     return (
         <Alert variant="success">
-            <Alert.Heading>Проверьте Вашу Почту.</Alert.Heading>
+            <Alert.Heading>Check your email.</Alert.Heading>
             <hr />
             <p className="mb-0">
-                На Ваш почтовый адрес должно прийти письмо с дальнейшими указаниями.
+                You should have received an email with further details.
             </p>
         </Alert>
     )
