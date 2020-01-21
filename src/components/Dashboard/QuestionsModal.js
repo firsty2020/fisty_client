@@ -57,7 +57,7 @@ const QuestionsModal = ({ loadQuestions, questions, thresholdPassed, submitAnswe
         <Alert variant="success">
             <Alert.Heading>Yeah! You did it!</Alert.Heading>
             <p>
-                Your account will be activated now!
+                Your account is activate now!
             </p>
         </Alert>
     );

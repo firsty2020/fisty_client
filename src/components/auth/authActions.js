@@ -9,6 +9,7 @@ import {
     AUTH_LOGIN_SUCCESS,
     AUTH_LOGIN_ERROR,
     AUTH_GET_USER_SUCCESS,
+    AUTH_GET_USER_ERROR,
 } from '../../constants/actionTypes';
 
 
@@ -57,7 +58,7 @@ export const fetchUserSuccess = (user) => ({
 });
 
 export const fetchUserError = (error) => ({
-    type: AUTH_GET_USER_SUCCESS,
+    type: AUTH_GET_USER_ERROR,
     payload: error,
 });
 

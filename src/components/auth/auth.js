@@ -45,7 +45,7 @@ const getAuthToken = (username, password) => {
                 storeToken( res.data.access);
                 dispatch(loginSuccess());
             })
-            .catch(error => dispatch(loginError(error)));
+            .catch(error => dispatch(loginError(error.toString())));
     }
 };
 
@@ -54,6 +54,8 @@ const storeToken = (token) => localStorage.setItem('auth_token', token);
 const getAuthUser = () => {
     const userId = getUserIdByFromToken();
     return dispatch => {
+        if (!userId)
+            return dispatch(fetchUserError('Not authenticated'));
         api
             .get(`users/${userId}`,)
             .then((res) => dispatch(fetchUserSuccess(res.data)))
@@ -63,7 +65,12 @@ const getAuthUser = () => {
 
 const getUserIdByFromToken = () => {
     const token = localStorage.getItem('auth_token');
-    const decoded = jwt_decode(token);
+    let decoded;
+    try {
+        decoded = jwt_decode(token);
+    } catch (e) {
+        console.log(e);
+    }
     return decoded ? decoded.user_id : null;
 };
 
