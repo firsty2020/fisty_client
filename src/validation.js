@@ -4,7 +4,7 @@ import ERROR_MESSAGES  from './constants/errorMessages'
 const REGEX = {
     NUMERIC: /^\d+$/,
     ALPHABETIC: /^[A-Z]+$/i,
-    LATIN_ALPHABET: /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/g
+    LATIN_ALPHABET: /^[A-Za-z0-9@!#$%^&*{};':",<.>/|?`~=()[\]_\-+\\]+$/
 };
 
 export const userRegistrationSchema = Yup.object().shape({
