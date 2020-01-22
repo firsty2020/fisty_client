@@ -42,6 +42,11 @@ const QuestionsModal = ({ loadQuestions, questions, thresholdPassed, submitAnswe
         setUserAnswers([...userAnswers, answer]);
     };
 
+    const handleSubmitAnswers = () => {
+        if (userAnswers.length < questions.length) return;
+        submitAnswers(userAnswers);
+    };
+
     let alert;
     const failAlert = (
         <Alert variant="danger">
@@ -99,7 +104,7 @@ const QuestionsModal = ({ loadQuestions, questions, thresholdPassed, submitAnswe
                         size="lg"
                         block
                         disabled={submitPending}
-                        onClick={() => submitAnswers(userAnswers)}
+                        onClick={handleSubmitAnswers}
                     >Confirm</Button>
                 </Modal.Footer>
             </Modal>

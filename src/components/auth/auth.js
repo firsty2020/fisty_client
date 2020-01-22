@@ -26,13 +26,13 @@ const registerUser = (user) => {
     };
 };
 
-const setPassword = (password, repeat_password, passwordToken) => {
+const setPassword = (passwords, passwordToken) => {
     return dispatch => {
         dispatch(setPasswordPending());
         api
-            .post(`auth-users/set-password/${passwordToken}/`, { password, repeat_password })
+            .post(`auth-users/set-password/${passwordToken}/`, passwords)
             .then(() => dispatch(setPasswordSuccess()))
-            .catch(error => dispatch(setPasswordError(error)));
+            .catch(error => dispatch(setPasswordError(error.data)));
     };
 };
 
@@ -45,7 +45,7 @@ const getAuthToken = (username, password) => {
                 storeToken( res.data.access);
                 dispatch(loginSuccess());
             })
-            .catch(error => dispatch(loginError(error.toString())));
+            .catch(error => dispatch(loginError(error.data.detail)));
     }
 };
 

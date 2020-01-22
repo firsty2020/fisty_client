@@ -2,9 +2,10 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 
 
-const CountriesDropdown = ({ value, placeHolder,  onSelectCountry, onBlur }) => {
+const CountriesDropdown = ({ value, name, placeHolder,  onSelectCountry, onBlur }) => {
     return (
         <Form.Control
+            name={name}
             value={value}
             as="select"
             onBlur={onBlur}

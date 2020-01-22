@@ -1,0 +1,41 @@
+import * as Yup from 'yup';
+import ERROR_MESSAGES  from './constants/errorMessages'
+
+const REGEX = {
+    NUMERIC: /^\d+$/,
+    ALPHABETIC: /^[A-Z]+$/i,
+    LATIN_ALPHABET: /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/g
+};
+
+export const userRegistrationSchema = Yup.object().shape({
+    first_name: Yup.string()
+        .min(2, ERROR_MESSAGES.FIRST_NAME_INVALID)
+        .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
+    last_name: Yup.string()
+        .min(2, ERROR_MESSAGES.LAST_NAME_INVALID)
+        .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
+    email: Yup.string()
+        .email(ERROR_MESSAGES.EMAIL_INVALID)
+        .required(ERROR_MESSAGES.EMAIL_REQUIRED),
+    phone_number: Yup.string()
+        .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)
+        .required(ERROR_MESSAGES.PHONE_REQUIRED),
+    city: Yup.string()
+        .required(ERROR_MESSAGES.CITY_REQUIRED),
+    country: Yup.string()
+        .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.COUNTRY_REQUIRED),
+    citizenship: Yup.string()
+        .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
+});
+
+export const setPasswordSchema = Yup.object().shape({
+    password: Yup.string()
+        .matches(REGEX.LATIN_ALPHABET, ERROR_MESSAGES.PASSWORD_INVALID_ALPHABET)
+        .min(8, ERROR_MESSAGES.PASSWORD_INVALID_LENGTH)
+        .required(ERROR_MESSAGES.PASSWORD_REQUIRED),
+    repeat_password: Yup.string()
+        .matches(REGEX.LATIN_ALPHABET, ERROR_MESSAGES.PASSWORD_INVALID_ALPHABET)
+        .min(8, ERROR_MESSAGES.PASSWORD_INVALID_LENGTH)
+        .required(ERROR_MESSAGES.REPEAT_PASSWORD_REQUIRED),
+});
+

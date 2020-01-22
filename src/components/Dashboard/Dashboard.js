@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getAuthUser } from '../auth/auth';
 import { getUser, getUserFailed } from '../auth/authReducer';
 import QuestionsModal from './QuestionsModal';
-import ErrorAlert from '../ErrorAlert';
+import Alert from '../AlertNotice';
 import { push } from 'connected-react-router'
 
 
@@ -23,7 +23,7 @@ const Dashboard = ({ user, getAuthUser, userLoadFailed, push }) => {
 
     return (
         <div style={{ 'margin': '50px'}}>
-            { userLoadFailed ? <ErrorAlert errorMsg={userLoadFailed}/> : null }
+            { userLoadFailed ? <Alert errorMsg={userLoadFailed}/> : null }
             { user && user.status === 'new' ? <QuestionsModal/> : null }
             <h1>This is dashboard</h1>
         </div>

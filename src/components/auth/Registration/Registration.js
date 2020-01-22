@@ -12,91 +12,54 @@ import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
 import { authPending, authFailed, authSucceed } from '../authReducer';
+import { userRegistrationSchema } from '../../../validation';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 
-const phoneRegExp = /^\d+$/;
-
-const validationSchema = Yup.object().shape({
-    first_name: Yup.string()
-        .min(2, "First name must have at least 2 characters")
-        .required("First name is required"),
-    last_name: Yup.string()
-        .min(2, "Last name must have at least 2 characters")
-        .required("Last name is required"),
-    email: Yup.string()
-        .email("Must be a valid email address")
-        .max(100, "Email must be less than 100 characters")
-        .required("Email is required"),
-    phone_number: Yup.string()
-        .matches(phoneRegExp, "Phone number is not valid")
-        .required("Phone number required"),
-    city: Yup.string()
-        .required("City is required")
-});
-
-const initialState = {
-    citizenship: -1,
-    country: -1,
-    countryCode: '',
-    formSubmitted: false,
-};
 
 class Registration extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { ...initialState };
+        this.state = {
+            countryCode: '',
+            countryCodeError: false,
+        };
     }
 
     static _concatPhoneNumber(countryCode, number) {
         return countryCode + number;
     }
 
-    handleCountryCodeInput = (countryCode) => {
-        this.setState({ countryCode });
-    };
-    handleSelectCitizenship = (e) => {
-        this.setState({ citizenship: e.target.value});
-    };
-
-    handleSelectCountry = (e) => {
-        this.setState({ country: e.target.value });
-    };
-
-    transFormData = (values, { countryCode, country, citizenship }) => {
-        const user = values;
-        user.phone_number = Registration._concatPhoneNumber(countryCode, user.phone_number);
-        user.country = country;
-        user.citizenship = citizenship;
-        return user;
-    };
-
-
+    handleCountryCodeInput = (countryCode)  => this.setState({ countryCode });
+    
     render() {
 
-        const { countryCode, citizenship, country, formSubmitted } = this.state;
+        const { countryCode, countryCodeError } = this.state;
 
         return (
             <div className="registration-form-container">
                 { this.props.success ? <CheckYourEmailAlert/> : null }
                 <Formik
-                    initialValues={{ first_name:'', last_name:'', email:'', phone_number:'', city: ''}}
-                    validationSchema={validationSchema}
+                    initialValues={ {
+                        first_name:'',
+                        last_name:'',
+                        email:'',
+                        phone_number:'',
+                        city: '',
+                        country: -1,
+                        citizenship: -1,
+                    }}
+                    validationSchema={userRegistrationSchema}
                     onSubmit={(values, { setSubmitting, resetForm }) => {
-                        const { citizenship, country, countryCode } = this.state;
-
-                        if (citizenship == '-1' || country == '-1' || !countryCode) {
-                            this.setState({ formSubmitted: true });
+                        if (!this.state.countryCode) {
+                            this.setState({ countryCodeError: true });
                             setSubmitting(false);
                             return;
                         }
-                        const user = this.transFormData(values, { citizenship, country, countryCode });
+                        const user = { ...values };
+                        user.phone_number = Registration._concatPhoneNumber(countryCode, user.phone_number);
                         this.props.registerUser(user);
                         setSubmitting(true);
-                        resetForm();
-                        this.setState({ ...initialState });
-                        setSubmitting(false);
                     }}
                 >
                     {( {values,
@@ -163,7 +126,7 @@ class Registration extends Component {
                                             <CountryCodeItem value="+7" imgSrc={russianFlag}/>
                                             <CountryCodeItem value="+380" imgSrc={ukrainianFlag}/>
                                         </Dropdown.Menu>
-                                        {!countryCode && formSubmitted? (
+                                        {!countryCode && countryCodeError ? (
                                             <p className="mt-1 alert-danger">Select country code</p>
                                         ): null}
                                     </Dropdown>
@@ -184,22 +147,26 @@ class Registration extends Component {
                                 <Form.Row>
                                     <Col>
                                         <CountriesDropdown
-                                            value={citizenship}
+                                            value={values.citizenship}
+                                            name="citizenship"
                                             placeHolder="Citizenship"
-                                            onSelectCountry={this.handleSelectCitizenship}
+                                            onBlur={handleBlur}
+                                            onSelectCountry={handleChange}
                                         />
-                                        {citizenship == '-1' && formSubmitted? (
-                                            <p className="mt-1 alert-danger">Select citizenship</p>
+                                        {touched.citizenship && errors.citizenship ? (
+                                            <p className="mt-1 alert-danger">{errors.citizenship}</p>
                                         ): null}
                                     </Col>
                                     <Col>
                                         <CountriesDropdown
-                                            value={country}
+                                            value={values.country}
+                                            name="country"
                                             placeHolder="Country"
-                                            onSelectCountry={this.handleSelectCountry}
+                                            onBlur={handleBlur}
+                                            onSelectCountry={handleChange}
                                         />
-                                        {country == '-1' && formSubmitted ? (
-                                            <p className="mt-1 alert-danger">Select country</p>
+                                        {touched.country && errors.country ? (
+                                            <p className="mt-1 alert-danger">{errors.country}</p>
                                         ): null}
                                     </Col>
                                     <Col>

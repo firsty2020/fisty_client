@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { getAuthToken } from '../auth';
-import  ErrorAlert from '../../ErrorAlert';
+import  AlertNotice from '../../AlertNotice';
 
 
 const Login = ({ pending, success, getAuthToken, push, error }) => {
@@ -30,7 +30,7 @@ const Login = ({ pending, success, getAuthToken, push, error }) => {
 
     return (
         <div className='registration-form-container'>
-            { error ? <ErrorAlert errorMsg={error} /> : null }
+            { error ? <AlertNotice errorMsg={error} type="danger" /> : null }
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Control
