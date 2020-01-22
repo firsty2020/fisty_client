@@ -24,6 +24,7 @@ class Registration extends Component {
             countryCode: '',
             countryCodeError: false,
         };
+        localStorage.clear();
     }
 
     static _concatPhoneNumber(countryCode, number) {

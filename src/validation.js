@@ -39,3 +39,13 @@ export const setPasswordSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.REPEAT_PASSWORD_REQUIRED),
 });
 
+export const logInSchema = Yup.object().shape({
+    email: Yup.string()
+        .email(ERROR_MESSAGES.EMAIL_INVALID)
+        .required(ERROR_MESSAGES.EMAIL_REQUIRED),
+    password: Yup.string()
+        .matches(REGEX.LATIN_ALPHABET, ERROR_MESSAGES.PASSWORD_INVALID_ALPHABET)
+        .min(8, ERROR_MESSAGES.PASSWORD_INVALID_LENGTH)
+        .required(ERROR_MESSAGES.PASSWORD_REQUIRED),
+});
+
