@@ -6,9 +6,10 @@ import { getUser, getUserFailed } from '../auth/authReducer';
 import QuestionsModal from './QuestionsModal';
 import Alert from '../AlertNotice';
 import { push } from 'connected-react-router'
+import {shape, string, func, bool, oneOfType} from 'prop-types';
 
 
-const Dashboard = ({ user, getAuthUser, userLoadFailed, push }) => {
+const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
 
     useEffect(() => {
         getAuthUser();
@@ -37,5 +38,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
     { getAuthUser, push }, dispatch);
+
+
+Dashboard.propTypes = {
+    user: oneOfType([ shape({ status: string.isRequired }).isRequired ]),
+    userLoadFailed: bool.isRequired,
+    push: func.isRequired,
+    getAuthUser: func.isRequired
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

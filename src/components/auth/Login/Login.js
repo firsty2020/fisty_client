@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { authPending, authFailed, authSucceed } from '../authReducer';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
+import { bool, oneOfType, string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getAuthToken } from '../auth';
 import  AlertNotice from '../../AlertNotice';
@@ -25,7 +26,7 @@ const Login = ({ pending, success, getAuthToken, push, error }) => {
 
     return (
         <div className='registration-form-container'>
-            { error ? <AlertNotice errorMsg={error} type="danger" /> : null }
+            { error ? <AlertNotice message={error} type="danger" /> : null }
             <Formik
                 initialValues={ {
                     email: '',
@@ -96,5 +97,18 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ getAuthToken, push }, dispatch);
+
+
+Login.propTypes = {
+    pending: bool.isRequired,
+    error: oneOfType([
+        string,
+        bool,
+    ]).isRequired,
+    success: bool.isRequired,
+    getAuthToken: func.isRequired,
+    push: func.isRequired,
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

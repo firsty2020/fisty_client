@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import {shape, string, arrayOf, number} from 'prop-types';
 
 const Question = ({ question, index, onAnswer }) => {
 
@@ -22,6 +23,17 @@ const Question = ({ question, index, onAnswer }) => {
             })}
         </div>
     );
+};
+
+Question.propTypes = {
+    question: shape({
+        id: number.isRequired,
+        question: string.isRequired,
+        question_answers: arrayOf(shape({
+            uid: string.isRequired,
+            answer: string.isRequired,
+        })).isRequired,
+    }).isRequired,
 };
 
 export default Question;

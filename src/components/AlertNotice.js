@@ -1,15 +1,21 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 
-const AlertNotice = ({ errorMsg, type }) => {
+const AlertNotice = ({ message, type }) => {
     return (
         <div style={{ 'margin': '50px'}}>
             <Alert variant={type}>
-                {errorMsg}
+                {message}
             </Alert>
         </div>
     );
+};
+
+AlertNotice.propTypes = {
+    message: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['danger', 'success']), // this component relies on bootsrap, so be sure proper type is passed
 };
 
 export default AlertNotice;

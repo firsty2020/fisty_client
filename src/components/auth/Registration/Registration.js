@@ -11,9 +11,10 @@ import armenianFlag from '../../../assets/icons/armenia.png'
 import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
-import { authPending, authFailed, authSucceed } from '../authReducer';
+import { authPending, authSucceed } from '../authReducer';
 import { userRegistrationSchema } from '../../../validation';
 import { Formik } from 'formik';
+import {bool, func} from 'prop-types';
 
 
 class Registration extends Component {
@@ -109,7 +110,6 @@ class Registration extends Component {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
-                                    className={touched.email && errors.email ? "error" : null}
                                 />
                                 {touched.email && errors.email ? (
                                     <p className="mt-1 alert-danger">{errors.email}</p>
@@ -202,11 +202,17 @@ class Registration extends Component {
 
 const mapStateToProps = state => ({
     pending: authPending(state),
-    error: authFailed(state),
     success: authSucceed(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ registerUser }, dispatch);
+
+
+Registration.propTypes = {
+    pending: bool.isRequired,
+    success: bool.isRequired,
+    registerUser: func.isRequired,
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

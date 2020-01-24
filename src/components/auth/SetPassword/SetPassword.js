@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Alert, Button, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { authPending, authFailed, authSucceed } from '../authReducer';
 import { bindActionCreators } from 'redux';
 import { setPassword as submitSetPassword } from '../auth';
@@ -8,10 +8,10 @@ import { push } from 'connected-react-router'
 import { setPasswordSchema } from '../../../validation';
 import { Formik }  from 'formik';
 import AlertNotice from '../../AlertNotice';
+import { bool, func, shape, string } from 'prop-types';
 
 
 const SetPassword = ({ match, pending, success, error, push, submitSetPassword }) => {
-
     const [ notMatch, setNotMatch ] = useState(false);
 
     useEffect(() => {
@@ -24,18 +24,18 @@ const SetPassword = ({ match, pending, success, error, push, submitSetPassword }
 
     if (error) {
         alert =  <AlertNotice
-            type="danger"
-            errorMsg={error}
+            type={{fuckL:true}}
+            message={error}
         />
     } else if (notMatch) {
         alert = <AlertNotice
             type="danger"
-            errorMsg="Passwords do not match. Please fix it."
+            message="Passwords do not match. Please fix it."
         />
     } else if (success) {
         alert =  <AlertNotice
             type="success"
-            errorMsg="You have successfully registered."
+            message="You have successfully registered."
         />
     }
 
@@ -115,5 +115,17 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ submitSetPassword, push }, dispatch);
+
+
+SetPassword.propTypes = {
+    pending: bool.isRequired,
+    error: bool.isRequired,
+    success: bool.isRequired,
+    match: shape({ params: shape(
+        { passwordToken: string.isRequired })}).isRequired,
+    push: func.isRequired,
+    submitSetPassword: func.isRequired,
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetPassword);

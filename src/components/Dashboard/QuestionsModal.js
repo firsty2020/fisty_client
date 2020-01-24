@@ -5,8 +5,15 @@ import { Modal, Button, Alert } from 'react-bootstrap';
 import { loadQuestions, submitAnswers } from './questions';
 import { loadQuestionsSucceed, submitAnswerPending, submitAnswerSuccess } from './dashboardReducer';
 import Question from './Question';
+import {arrayOf, string, shape, object, bool, func} from 'prop-types';
 
-const QuestionsModal = ({ loadQuestions, questions, thresholdPassed, submitAnswers, submitPending }) => {
+const QuestionsModal = ({
+                            questions,
+                            thresholdPassed,
+                            submitPending,
+                            loadQuestions,
+                            submitAnswers,
+                        }) => {
 
     const [ showQuestions, setShowQuestions ] = useState(false);
     const [ userAnswers, setUserAnswers ] = useState([]);
@@ -120,5 +127,17 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
     { loadQuestions, submitAnswers }, dispatch);
+
+QuestionsModal.propTypes = {
+    questions: arrayOf(shape({
+        url: string.isRequired,
+        question: string.isRequired,
+    })),
+    thresholdPassed: bool,
+    submitPending: bool,
+    loadQuestions: func.isRequired,
+    submitAnswers: func.isRequired,
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionsModal);
