@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { bool, oneOfType, string, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getAuthToken } from '../auth';
-import  AlertNotice from '../../AlertNotice';
+import  AlertNotice from '../../AlertNotice/AlertNotice';
 import { logInSchema } from '../../../validation';
 import { Formik } from 'formik';
 

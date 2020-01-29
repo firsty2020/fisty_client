@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { getAuthUser } from '../auth/auth';
 import { getUser, getUserFailed } from '../auth/authReducer';
 import QuestionsModal from './QuestionsModal';
-import Alert from '../AlertNotice';
+import Alert from '../AlertNotice/AlertNotice';
 import { push } from 'connected-react-router'
 import {shape, string, func, bool, oneOfType} from 'prop-types';
 

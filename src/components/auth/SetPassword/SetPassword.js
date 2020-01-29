@@ -7,7 +7,7 @@ import { setPassword as submitSetPassword } from '../auth';
 import { push } from 'connected-react-router'
 import { setPasswordSchema } from '../../../validation';
 import { Formik }  from 'formik';
-import AlertNotice from '../../AlertNotice';
+import AlertNotice from '../../AlertNotice/AlertNotice';
 import { bool, func, shape, string } from 'prop-types';
 
 
