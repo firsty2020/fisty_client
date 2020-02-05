@@ -5,7 +5,7 @@ import { Modal, Button, Alert } from 'react-bootstrap';
 import { loadQuestions, submitAnswers } from './questions';
 import { loadQuestionsSucceed, submitAnswerPending, submitAnswerSuccess } from './dashboardReducer';
 import Question from './Question';
-import {arrayOf, string, shape, object, bool, func} from 'prop-types';
+import {arrayOf, string, shape, bool, func} from 'prop-types';
 
 const QuestionsModal = ({
                             questions,

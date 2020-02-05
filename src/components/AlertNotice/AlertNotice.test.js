@@ -1,8 +1,7 @@
 import React from 'react';
-import { configure, shallow, render } from 'enzyme';
+import { configure, render } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import AlertNotice from './AlertNotice';
-import Alert from 'react-bootstrap';
 
 const adapter  = new Adapter();
 
