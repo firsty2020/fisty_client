@@ -1,26 +1,14 @@
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import {
-    Button,
-    Badge,
-    NavItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
-} from 'reactstrap';
-import {
     Header,
     SidebarNav,
     Footer,
     PageContent,
-    Avatar,
-    Chat,
     PageAlert,
     Page
 } from '../vibe';
 import Logo from '../assets/images/vibe-logo.svg';
-import avatar1 from '../assets/images/avatar1.png';
 import nav from '../_nav';
 import routes from '../views';
 import ContextProviders from '../vibe/components/utilities/ContextProviders';
@@ -93,7 +81,6 @@ export default class DashboardLayout extends Component {
                                 routes={routes}
                                 {...this.props}
                             >
-                                {/*<HeaderNav />*/}
                             </Header>
                             <PageContent>
                                 <Switch>
@@ -102,20 +89,12 @@ export default class DashboardLayout extends Component {
                                                component={page.component}
                                                key={key}/>
                                     ))}
-                                    {/*<Redirect from="/" to="/home" />*/}
                                 </Switch>
                             </PageContent>
                         </Page>
                     </div>
                     <Footer>
                     </Footer>
-                    <Chat.Container>
-                        {this.state.showChat1 && (
-                            <Chat.ChatBox name="Messages" status="online"
-                                          image={avatar1}
-                                          close={this.closeChat}/>
-                        )}
-                    </Chat.Container>
                 </div>
             </ContextProviders>
         );
