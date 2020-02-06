@@ -1,11 +1,11 @@
 import React from 'react';
-import { configure, render } from 'enzyme';
+import {configure, render} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import AlertNotice from './AlertNotice';
 
-const adapter  = new Adapter();
+const adapter = new Adapter();
 
-configure({ adapter });
+configure({adapter});
 
 
 describe('AlertNotice component', () => {

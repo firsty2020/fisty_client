@@ -1,11 +1,11 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap';
+import {Alert} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 
-const AlertNotice = ({ message, type }) => {
+const AlertNotice = ({message, type}) => {
     return (
-        <div style={{ 'margin': '50px'}}>
+        <div style={{'margin': '50px'}}>
             <Alert variant={type}>
                 {message}
             </Alert>

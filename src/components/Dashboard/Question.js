@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import {shape, string, arrayOf, number} from 'prop-types';
 
-const Question = ({ question, index, onAnswer }) => {
+const Question = ({question, index, onAnswer}) => {
 
     return (
         <div className="mt-4">
@@ -11,7 +11,10 @@ const Question = ({ question, index, onAnswer }) => {
                 return (
                     <div key={answer.uid}>
                         <Form.Check
-                            onChange={() => onAnswer({ question_id: question.id, uid: answer.uid })}
+                            onChange={() => onAnswer({
+                                question_id: question.id,
+                                uid: answer.uid
+                            })}
                             custom
                             name={`answer${question.id}`}
                             type="radio"

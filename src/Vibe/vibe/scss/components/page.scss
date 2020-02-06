@@ -16,20 +16,24 @@
     margin-top: 48px;
   }
 }
+
 #primary-content {
   padding: $pageContentPadding;
 }
+
 .page-container {
   width: 100%;
   margin: auto;
   max-width: 1170px;
 }
+
 .container {
   width: 100%;
   max-width: 1000px;
   padding-left: 0;
   padding-right: 0;
 }
+
 .app-body {
   display: flex;
   width: 100%;
@@ -37,15 +41,18 @@
   flex-grow: 1;
   overflow-x: hidden;
 }
+
 .content-wrap {
   background-color: #ffffff;
   padding: 32px;
   border-radius: 3px;
   @include cardShadow;
 }
+
 .full-bleed-content {
   margin: -$pageContentPadding;
 }
+
 .narrow-page-container {
   max-width: 1000px;
   margin: auto;
@@ -61,12 +68,14 @@
     }
   }
 }
+
 @media screen and (max-width: $breakPointSm) {
   #page-content {
     margin-left: 0px;
     margin-top: 50px;
   }
 }
+
 @media screen and (max-width: $breakPointXs) {
   #page-content {
     margin-top: 50px;

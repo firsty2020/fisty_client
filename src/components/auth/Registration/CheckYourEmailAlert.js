@@ -6,7 +6,7 @@ const CheckYourEmailAlert = () => {
     return (
         <Alert variant="success">
             <Alert.Heading>Check your email.</Alert.Heading>
-            <hr />
+            <hr/>
             <p className="mb-0">
                 You should have received an email with further details.
             </p>

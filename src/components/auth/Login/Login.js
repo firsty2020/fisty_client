@@ -1,24 +1,24 @@
-import React, {useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Button, Form } from 'react-bootstrap';
-import { authPending, authFailed, authSucceed } from '../authReducer';
-import { bindActionCreators } from 'redux';
-import { push } from 'connected-react-router';
-import { bool, oneOfType, string, func } from 'prop-types';
-import { Link } from 'react-router-dom';
-import { getAuthToken } from '../auth';
-import  AlertNotice from '../../AlertNotice/AlertNotice';
-import { logInSchema } from '../../../validation';
-import { Formik } from 'formik';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Button, Form} from 'react-bootstrap';
+import {authPending, authFailed, authSucceed} from '../authReducer';
+import {bindActionCreators} from 'redux';
+import {push} from 'connected-react-router';
+import {bool, oneOfType, string, func} from 'prop-types';
+import {Link} from 'react-router-dom';
+import {getAuthToken} from '../auth';
+import AlertNotice from '../../AlertNotice/AlertNotice';
+import {logInSchema} from '../../../validation';
+import {Formik} from 'formik';
 
 
-const Login = ({ pending, success, getAuthToken, push, error }) => {
+const Login = ({pending, success, getAuthToken, push, error}) => {
 
     useEffect(() => {
         if (success) {
             push('/dashboard');
         }
-    }, [ success, push ]);
+    }, [success, push]);
 
     useEffect(() => {
         localStorage.clear();
@@ -26,14 +26,14 @@ const Login = ({ pending, success, getAuthToken, push, error }) => {
 
     return (
         <div className='registration-form-container'>
-            { error ? <AlertNotice message={error} type="danger" /> : null }
+            {error ? <AlertNotice message={error} type="danger"/> : null}
             <Formik
-                initialValues={ {
+                initialValues={{
                     email: '',
                     password: '',
                 }}
                 validationSchema={logInSchema}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, {setSubmitting}) => {
                     setSubmitting(true);
                     getAuthToken(values.email, values.password);
                 }}
@@ -45,7 +45,7 @@ const Login = ({ pending, success, getAuthToken, push, error }) => {
                       handleChange,
                       handleBlur,
                       handleSubmit,
-                   }) => (
+                  }) => (
                     <Form onSubmit={handleSubmit} className="mx-auto">
                         <Form.Group>
                             <Form.Control
@@ -58,7 +58,7 @@ const Login = ({ pending, success, getAuthToken, push, error }) => {
                             />
                             {touched.email && errors.email ? (
                                 <p className="mt-1 alert-danger">{errors.email}</p>
-                            ): null}
+                            ) : null}
                         </Form.Group>
                         <Form.Group>
                             <Form.Control
@@ -71,7 +71,7 @@ const Login = ({ pending, success, getAuthToken, push, error }) => {
                             />
                             {touched.password && errors.password ? (
                                 <p className="mt-1 alert-danger">{errors.password}</p>
-                            ): null}
+                            ) : null}
                         </Form.Group>
                         <Button
                             variant="primary"
@@ -96,7 +96,10 @@ const mapStateToProps = state => ({
     success: authSucceed(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getAuthToken, push }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    getAuthToken,
+    push
+}, dispatch);
 
 
 Login.propTypes = {

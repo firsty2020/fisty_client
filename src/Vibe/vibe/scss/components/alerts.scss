@@ -51,6 +51,7 @@
       text-decoration: underline;
     }
   }
+
   &.alert-success {
     color: $alertTextColorSuccess;
     background-color: $alertBgColorSuccess;
@@ -66,6 +67,7 @@
       text-decoration: underline;
     }
   }
+
   &.alert-danger {
     color: $alertTextColorDanger;
     background-color: $alertBgColorDanger;

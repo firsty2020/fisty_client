@@ -3,13 +3,13 @@
 
 $baseSpacer: 16px;
 
-$xxs:  1px;
-$xs:   $baseSpacer * .25;
-$sm:   $baseSpacer * .5;
-$n:   $baseSpacer;
-$md:  $baseSpacer * 1.5;
-$lg:  $baseSpacer * 2;
-$xl:  $baseSpacer * 2.5;
+$xxs: 1px;
+$xs: $baseSpacer * .25;
+$sm: $baseSpacer * .5;
+$n: $baseSpacer;
+$md: $baseSpacer * 1.5;
+$lg: $baseSpacer * 2;
+$xl: $baseSpacer * 2.5;
 $xxl: $baseSpacer * 3;
 
 //Margins
@@ -288,6 +288,7 @@ $xxl: $baseSpacer * 3;
 .m-b-n-xxl {
   margin-bottom: -$xxl;
 }
+
 //margin left
 .m-l-none {
   margin-left: 0 !important;
@@ -426,6 +427,7 @@ $xxl: $baseSpacer * 3;
 .p-a-n-xxl {
   padding: -$xxl;
 }
+
 //top
 .p-t-none {
   padding-top: 0 !important;
@@ -632,6 +634,7 @@ $xxl: $baseSpacer * 3;
 .p-b-n-xxl {
   padding-bottom: -$xxl;
 }
+
 //padding left
 .p-l-none {
   padding-left: 0 !important;

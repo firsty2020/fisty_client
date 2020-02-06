@@ -1,9 +1,9 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
-import {string, number, oneOfType, func } from 'prop-types';
+import {Form} from 'react-bootstrap';
+import {string, number, oneOfType, func} from 'prop-types';
 
 
-const CountriesDropdown = ({ value, name, placeHolder,  onSelectCountry, onBlur }) => {
+const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) => {
     return (
         <Form.Control
             name={name}
@@ -23,7 +23,7 @@ const CountriesDropdown = ({ value, name, placeHolder,  onSelectCountry, onBlur 
 
 
 CountriesDropdown.propTypes = {
-    value: oneOfType([ string, number ]).isRequired,
+    value: oneOfType([string, number]).isRequired,
     name: string.isRequired,
     placeHolder: string.isRequired,
     onSelectCountry: func.isRequired,

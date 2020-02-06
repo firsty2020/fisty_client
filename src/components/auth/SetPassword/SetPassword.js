@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Button, Form } from 'react-bootstrap';
-import { authPending, authFailed, authSucceed } from '../authReducer';
-import { bindActionCreators } from 'redux';
-import { setPassword as submitSetPassword } from '../auth';
-import { push } from 'connected-react-router'
-import { setPasswordSchema } from '../../../validation';
-import { Formik }  from 'formik';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Button, Form} from 'react-bootstrap';
+import {authPending, authFailed, authSucceed} from '../authReducer';
+import {bindActionCreators} from 'redux';
+import {setPassword as submitSetPassword} from '../auth';
+import {push} from 'connected-react-router'
+import {setPasswordSchema} from '../../../validation';
+import {Formik} from 'formik';
 import AlertNotice from '../../AlertNotice/AlertNotice';
-import { bool, func, shape, string } from 'prop-types';
+import {bool, func, shape, string} from 'prop-types';
 
 
-const SetPassword = ({ match, pending, success, error, push, submitSetPassword }) => {
-    const [ notMatch, setNotMatch ] = useState(false);
+const SetPassword = ({match, pending, success, error, push, submitSetPassword}) => {
+    const [notMatch, setNotMatch] = useState(false);
 
     useEffect(() => {
         if (success) {
             setTimeout(() => push('/login'), 2000);
         }
-    }, [ success, push ]);
+    }, [success, push]);
 
     let alert;
 
     if (error) {
-        alert =  <AlertNotice
-            type={{fuckL:true}}
+        alert = <AlertNotice
+            type={{fuckL: true}}
             message={error}
         />
     } else if (notMatch) {
@@ -33,7 +33,7 @@ const SetPassword = ({ match, pending, success, error, push, submitSetPassword }
             message="Passwords do not match. Please fix it."
         />
     } else if (success) {
-        alert =  <AlertNotice
+        alert = <AlertNotice
             type="success"
             message="You have successfully registered."
         />
@@ -41,31 +41,35 @@ const SetPassword = ({ match, pending, success, error, push, submitSetPassword }
 
     return (
         <div className='registration-form-container'>
-            { alert ? alert : null }
+            {alert ? alert : null}
             <Formik
-                initialValues={ {
+                initialValues={{
                     password: '',
                     repeat_password: '',
                 }}
                 validationSchema={setPasswordSchema}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
+                onSubmit={(values, {setSubmitting, resetForm}) => {
                     if (values.password !== values.repeat_password) {
                         setSubmitting(false);
                         return setNotMatch(true);
                     }
                     setSubmitting(true);
-                    const { password, repeat_password } = values;
-                    submitSetPassword({ password, repeat_password }, match.params.passwordToken);
+                    const {password, repeat_password} = values;
+                    submitSetPassword({
+                        password,
+                        repeat_password
+                    }, match.params.passwordToken);
                     resetForm();
                 }}
             >
-                {( {values,
-                       errors,
-                       touched,
-                       handleChange,
-                       handleBlur,
-                       handleSubmit,
-                   }) => (
+                {({
+                      values,
+                      errors,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                  }) => (
                     <Form onSubmit={handleSubmit} className="mx-auto">
                         <Form.Group>
                             <Form.Control
@@ -78,7 +82,7 @@ const SetPassword = ({ match, pending, success, error, push, submitSetPassword }
                             />
                             {touched.password && errors.password ? (
                                 <p className="mt-1 alert-danger">{errors.password}</p>
-                            ): null}
+                            ) : null}
                         </Form.Group>
                         <Form.Group>
                             <Form.Control
@@ -91,7 +95,7 @@ const SetPassword = ({ match, pending, success, error, push, submitSetPassword }
                             />
                             {touched.repeat_password && errors.repeat_password ? (
                                 <p className="mt-1 alert-danger">{errors.repeat_password}</p>
-                            ): null}
+                            ) : null}
                         </Form.Group>
                         <Button
                             variant="primary"
@@ -114,15 +118,20 @@ const mapStateToProps = state => ({
     success: authSucceed(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ submitSetPassword, push }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    submitSetPassword,
+    push
+}, dispatch);
 
 
 SetPassword.propTypes = {
     pending: bool.isRequired,
     error: bool.isRequired,
     success: bool.isRequired,
-    match: shape({ params: shape(
-        { passwordToken: string.isRequired })}).isRequired,
+    match: shape({
+        params: shape(
+            {passwordToken: string.isRequired})
+    }).isRequired,
     push: func.isRequired,
     submitSetPassword: func.isRequired,
 };

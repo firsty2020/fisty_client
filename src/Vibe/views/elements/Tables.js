@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
 import {
-  Card,
-  CardBody,
-  Table
+    Card,
+    CardBody,
+    Table
 } from 'reactstrap';
 
 class TablePage extends Component {
-  render() {
-    return (
-        <Card>
-            <CardBody>
-                Basic Table
-                <Table>
-                    <thead>
+    render() {
+        return (
+            <Card>
+                <CardBody>
+                    Basic Table
+                    <Table>
+                        <thead>
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Username</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr>
                             <td>1</td>
                             <td>Mark</td>
@@ -39,19 +39,19 @@ class TablePage extends Component {
                             <td>the Bird</td>
                             <td>@twitter</td>
                         </tr>
-                    </tbody>
-                </Table>
-                Striped Table
-                <Table striped>
-                    <thead>
+                        </tbody>
+                    </Table>
+                    Striped Table
+                    <Table striped>
+                        <thead>
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Username</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr>
                             <td>1</td>
                             <td>Mark</td>
@@ -70,19 +70,19 @@ class TablePage extends Component {
                             <td>the Bird</td>
                             <td>@twitter</td>
                         </tr>
-                    </tbody>
-                </Table>
-                Hover Table
-                <Table hover>
-                    <thead>
+                        </tbody>
+                    </Table>
+                    Hover Table
+                    <Table hover>
+                        <thead>
                         <tr>
                             <th>#</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Username</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr>
                             <td>1</td>
                             <td>Mark</td>
@@ -101,12 +101,12 @@ class TablePage extends Component {
                             <td>the Bird</td>
                             <td>@twitter</td>
                         </tr>
-                    </tbody>
-                </Table>
-            </CardBody>
-        </Card>
-    )
-  }
+                        </tbody>
+                    </Table>
+                </CardBody>
+            </Card>
+        )
+    }
 }
 
 export default TablePage;

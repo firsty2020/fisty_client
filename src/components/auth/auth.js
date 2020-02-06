@@ -40,9 +40,9 @@ const getAuthToken = (username, password) => {
     return dispatch => {
         dispatch(loginPending());
         api
-            .post('token/', { username, password })
+            .post('token/', {username, password})
             .then((res) => {
-                storeToken( res.data.access);
+                storeToken(res.data.access);
                 dispatch(loginSuccess());
             })
             .catch(error => dispatch(loginError(error.data.detail)));

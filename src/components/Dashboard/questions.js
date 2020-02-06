@@ -25,7 +25,7 @@ const submitAnswers = (answers) => {
     return dispatch => {
         dispatch(submitAnswersPending());
         api
-            .post('questions/handle-answers/', { answers })
+            .post('questions/handle-answers/', {answers})
             .then((res) => dispatch(submitAnswersSuccess(res.data)))
             .catch(error => dispatch(submitAnswersError(error)));
     };

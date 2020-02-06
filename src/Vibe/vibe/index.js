@@ -12,16 +12,16 @@ import Switch from './components/utilities/Switch/Switch';
 import Chat from './components/Chat/Chat';
 
 export {
-  Avatar,
-  Footer,
-  Header,
-  Loader,
-  Page,
-  PageContent,
-  SidebarNav,
-  Switch,
-  SubNavigation,
-  Chat,
-  PageLoader,
-  PageAlert
+    Avatar,
+    Footer,
+    Header,
+    Loader,
+    Page,
+    PageContent,
+    SidebarNav,
+    Switch,
+    SubNavigation,
+    Chat,
+    PageLoader,
+    PageAlert
 };

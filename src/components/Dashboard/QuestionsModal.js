@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Modal, Button, Alert } from 'react-bootstrap';
-import { loadQuestions, submitAnswers } from './questions';
-import { loadQuestionsSucceed, submitAnswerPending, submitAnswerSuccess } from './dashboardReducer';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {Modal, Button, Alert} from 'react-bootstrap';
+import {loadQuestions, submitAnswers} from './questions';
+import {
+    loadQuestionsSucceed,
+    submitAnswerPending,
+    submitAnswerSuccess
+} from './dashboardReducer';
 import Question from './Question';
 import {arrayOf, string, shape, bool, func} from 'prop-types';
 
@@ -15,13 +19,13 @@ const QuestionsModal = ({
                             submitAnswers,
                         }) => {
 
-    const [ showQuestions, setShowQuestions ] = useState(false);
-    const [ userAnswers, setUserAnswers ] = useState([]);
-    const [ showAlert, setShowAlert ] = useState('');
+    const [showQuestions, setShowQuestions] = useState(false);
+    const [userAnswers, setUserAnswers] = useState([]);
+    const [showAlert, setShowAlert] = useState('');
 
     useEffect(() => {
         loadQuestions();
-    }, [ loadQuestions ]);
+    }, [loadQuestions]);
 
     useEffect(() => {
         if (questions && questions.length) {
@@ -37,7 +41,7 @@ const QuestionsModal = ({
             setShowAlert('fail');
         }
         setShowQuestions(false);
-    }, [ thresholdPassed ]);
+    }, [thresholdPassed]);
 
     const handleSelectAnswer = (answer) => {
         const a = userAnswers.findIndex(i => i.question_id === answer.question_id);
@@ -82,7 +86,7 @@ const QuestionsModal = ({
 
     return (
         <div>
-            {showAlert ? alert : null }
+            {showAlert ? alert : null}
             <Modal
                 show={showQuestions}
                 size="lg"
@@ -96,7 +100,7 @@ const QuestionsModal = ({
                 </Modal.Header>
                 <Modal.Body>
                     <p>Answer these questions to activate your account.</p>
-                    {questions && questions.length  ?
+                    {questions && questions.length ?
                         questions.map((question, i) => <Question
                             key={question.url}
                             question={question}
@@ -126,7 +130,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-    { loadQuestions, submitAnswers }, dispatch);
+    {loadQuestions, submitAnswers}, dispatch);
 
 QuestionsModal.propTypes = {
     questions: arrayOf(shape({
