@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { registerUser } from '../auth';
 import CheckYourEmailAlert from './CheckYourEmailAlert';
-import './Registration.css';
+import '../../ui/AuthFormContainer/AuthFormContainer.css';
 import { authPending, authSucceed } from '../authReducer';
 import { userRegistrationSchema } from '../../../validation';
 import { Formik } from 'formik';
 import { bool, func } from 'prop-types';
-import logo from '../../../assets/img/logo@2x.png';
+import AuthFormContainer from '../../ui/AuthFormContainer/AuthFormContainer';
 
 
 class Registration extends Component {
@@ -17,11 +17,8 @@ class Registration extends Component {
     render() {
 
         return (
-            <div className="gradient-container">
-                <div className="registration-form-container">
-                    <div className="logo-container">
-                        <img src={logo} alt="firsty logo"/>
-                    </div>
+            <div>
+                <AuthFormContainer>
                     {this.props.registrationSuccess ? <CheckYourEmailAlert/> : null}
                     <Formik
                         initialValues={{
@@ -30,7 +27,7 @@ class Registration extends Component {
                             repeat_password: '',
                         }}
                         validationSchema={userRegistrationSchema}
-                        onSubmit={(values, {setSubmitting, resetForm}) => {
+                        onSubmit={(values, {}) => {
                             this.props.registerUser(values);
                         }}
                     >
@@ -95,7 +92,7 @@ class Registration extends Component {
                             </Form>
                         )}
                     </Formik>
-                </div>
+                </AuthFormContainer>
             </div>
         );
     }

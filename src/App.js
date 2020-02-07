@@ -16,7 +16,7 @@ function App() {
         <div className="App">
             <Switch>
                 <Route path="/register" component={Registration}/>
-                <Route path="/set-password/:passwordToken" component={SetPassword}/>
+                <Route path="/sign-up/:passwordToken" component={SetPassword}/>
                 <Route path="/dashboard" component={Dashboard}/>
                 <Route path="/vibe" component={DashboardLayout}/>
                 <Route path="/" component={Landing}/>
