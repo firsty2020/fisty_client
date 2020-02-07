@@ -16,11 +16,11 @@ import {
 import api from '../../axios';
 
 
-const registerUser = (user) => {
+const registerUser = (credentials) => {
     return dispatch => {
         dispatch(userRegisterPending());
         api
-            .post('sign-up/', user)
+            .post('registration-request/', credentials)
             .then(() => dispatch(userRegisterSuccess()))
             .catch(error => dispatch(userRegisterError(error)));
     };
