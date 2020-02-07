@@ -13,13 +13,20 @@ import warehouse_icon from '../../assets/icons/hr_icons/warehouse.svg';
 import team_member_1 from '../../assets/img/team_member_1.jpg';
 import team_member_2 from '../../assets/img/team_member_2.jpg';
 import team_member_3 from '../../assets/img/team_member_3.jpg';
+import logo_white from '../../assets/img/logo_white.png';
 import brand_logo_1 from '../../assets/img/brands/brand_logo1.png';
 import brand_logo_2 from '../../assets/img/brands/brand_logo2.png';
 import brand_logo_3 from '../../assets/img/brands/brand_logo3.png';
 import brand_logo_4 from '../../assets/img/brands/brand_logo4.png';
 import brand_logo_5 from '../../assets/img/brands/brand_logo5.png';
 import './Landing.css';
-import {Carousel} from 'reactstrap';
+import {
+    ButtonBack,
+    ButtonNext,
+    CarouselProvider,
+    Slide,
+    Slider
+} from 'pure-react-carousel';
 
 
 const Landing = () => {
@@ -356,7 +363,8 @@ const Landing = () => {
                                 <div className="item">
                                     <div className="process_slider_el">
                                         <span className="process_step">1<br/>этап</span>
-                                        <h2 className="process_slide_title">Бриф.Профили.Сроки</h2>
+                                        <h2 className="process_slide_title">Бриф.
+                                            Профили. Сроки</h2>
                                         <p className="process_slide_desc">Детально
                                             изучаем особенности вашего бизнеса и
                                             ставим цели к проекту: уточняем
@@ -491,9 +499,9 @@ const Landing = () => {
                 <div className="wrapper">
                     <div className="footer_col">
                         <a href="#" className="footer_logo"><img
-                            src="img/logo_white.png" alt=""/></a>
+                            src={logo_white} alt=""/></a>
                         <p className="footer_info_paragraph">По вопросам
-                            сотрудничества:ООО «Департамент успеха»<br/>ИНН
+                            сотрудничества: ООО «Департамент успеха»<br/>ИНН
                             7839118920<br/>ОГРН 1197847142987</p>
                     </div>
                     <div className="footer_col">
