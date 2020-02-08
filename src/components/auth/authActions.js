@@ -2,9 +2,9 @@ import {
     AUTH_USER_REGISTER_PENDING,
     AUTH_USER_REGISTER_SUCCESS,
     AUTH_USER_REGISTER_ERROR,
-    AUTH_SET_PASSWORD_PENDING,
-    AUTH_SET_PASSWORD_SUCCESS,
-    AUTH_SET_PASSWORD_ERROR,
+    AUTH_COMPLETE_REGISTRATION_PENDING,
+    AUTH_COMPLETE_REGISTRATION_SUCCESS,
+    AUTH_COMPLETE_REGISTRATION_ERROR,
     AUTH_LOGIN_PENDING,
     AUTH_LOGIN_SUCCESS,
     AUTH_LOGIN_ERROR,
@@ -26,16 +26,16 @@ export const userRegisterError = (error) => ({
     payload: error,
 });
 
-export const setPasswordPending = () => ({
-    type: AUTH_SET_PASSWORD_PENDING,
+export const completeRegistrationPending = () => ({
+    type: AUTH_COMPLETE_REGISTRATION_PENDING,
 });
 
-export const setPasswordSuccess = () => ({
-    type: AUTH_SET_PASSWORD_SUCCESS,
+export const completeRegistrationSuccess = () => ({
+    type: AUTH_COMPLETE_REGISTRATION_SUCCESS,
 });
 
-export const setPasswordError = (error) => ({
-    type: AUTH_SET_PASSWORD_ERROR,
+export const completeRegistrationError = (error) => ({
+    type: AUTH_COMPLETE_REGISTRATION_ERROR,
     payload: error,
 });
 

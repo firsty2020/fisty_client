@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { registerUser } from '../auth';
-import CheckYourEmailAlert from './CheckYourEmailAlert';
-import '../../ui/AuthFormContainer/AuthFormContainer.css';
-import { authPending, authSucceed } from '../authReducer';
-import { userRegistrationSchema } from '../../../validation';
 import { Formik } from 'formik';
 import { bool, func } from 'prop-types';
-import AuthFormContainer from '../../ui/AuthFormContainer/AuthFormContainer';
+import CheckYourEmailAlert from './CheckYourEmailAlert';
+import { AuthFormContainer } from '../../ui/';
+import { registerUser } from '../auth';
+import { authPending, authSucceed } from '../authReducer';
+import { userRegistrationSchema } from '../../../validation';
 
 
 class Registration extends Component {
@@ -27,7 +26,7 @@ class Registration extends Component {
                             repeat_password: '',
                         }}
                         validationSchema={userRegistrationSchema}
-                        onSubmit={(values, {}) => {
+                        onSubmit={(values) => {
                             this.props.registerUser(values);
                         }}
                     >

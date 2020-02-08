@@ -3,9 +3,10 @@ import {
     Registration,
     SetPassword,
     Dashboard,
-    Landing
+    Landing,
+    Login,
 } from './components';
-import {Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import DashboardLayout from './Vibe/layouts/DashboardLayout';
 import './Vibe/vibe/scss/styles.scss';
 import './App.css';
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/register" component={Registration}/>
                 <Route path="/sign-up/:passwordToken" component={SetPassword}/>
                 <Route path="/dashboard" component={Dashboard}/>
+                <Route path="/login" component={Login}/>
                 <Route path="/vibe" component={DashboardLayout}/>
                 <Route path="/" component={Landing}/>
             </Switch>

@@ -2,9 +2,9 @@ import {
     AUTH_USER_REGISTER_PENDING,
     AUTH_USER_REGISTER_SUCCESS,
     AUTH_USER_REGISTER_ERROR,
-    AUTH_SET_PASSWORD_PENDING,
-    AUTH_SET_PASSWORD_SUCCESS,
-    AUTH_SET_PASSWORD_ERROR,
+    AUTH_COMPLETE_REGISTRATION_PENDING,
+    AUTH_COMPLETE_REGISTRATION_SUCCESS,
+    AUTH_COMPLETE_REGISTRATION_ERROR,
     AUTH_LOGIN_PENDING,
     AUTH_LOGIN_SUCCESS,
     AUTH_LOGIN_ERROR,
@@ -23,15 +23,15 @@ export const auth = (state = initialState, action) => {
         case '@@router/LOCATION_CHANGE':
             return initialState;
         case AUTH_USER_REGISTER_PENDING:
-        case AUTH_SET_PASSWORD_PENDING:
+        case AUTH_COMPLETE_REGISTRATION_PENDING:
         case AUTH_LOGIN_PENDING:
             return ({pending: true, success: false, error: false});
         case AUTH_USER_REGISTER_SUCCESS:
-        case AUTH_SET_PASSWORD_SUCCESS:
+        case AUTH_COMPLETE_REGISTRATION_SUCCESS:
         case AUTH_LOGIN_SUCCESS:
             return ({pending: false, success: true, error: false});
         case AUTH_USER_REGISTER_ERROR:
-        case AUTH_SET_PASSWORD_ERROR:
+        case AUTH_COMPLETE_REGISTRATION_ERROR:
         case AUTH_LOGIN_ERROR:
             return ({error: action.payload, pending: false, success: false});
         case AUTH_GET_USER_SUCCESS:

@@ -4,9 +4,9 @@ import {
     userRegisterPending,
     userRegisterSuccess,
     userRegisterError,
-    setPasswordPending,
-    setPasswordError,
-    setPasswordSuccess,
+    completeRegistrationPending,
+    completeRegistrationError,
+    completeRegistrationSuccess,
     loginPending,
     loginSuccess,
     loginError,
@@ -26,13 +26,13 @@ const registerUser = (credentials) => {
     };
 };
 
-const setPassword = (passwords, passwordToken) => {
+const completeRegistration = (userDetails, passwordToken) => {
     return dispatch => {
-        dispatch(setPasswordPending());
+        dispatch(completeRegistrationPending());
         api
-            .post(`auth-users/set-password/${passwordToken}/`, passwords)
-            .then(() => dispatch(setPasswordSuccess()))
-            .catch(error => dispatch(setPasswordError(error.data)));
+            .post(`auth-users/sign-up/${passwordToken}/`, userDetails)
+            .then(() => dispatch(completeRegistrationSuccess()))
+            .catch(error => dispatch(completeRegistrationError(error.data)));
     };
 };
 
@@ -76,7 +76,7 @@ const getUserIdByFromToken = () => {
 
 export {
     registerUser,
-    setPassword,
+    completeRegistration,
     getAuthToken,
     getAuthUser,
 }
