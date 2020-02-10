@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode';
-
 import {
     userRegisterPending,
     userRegisterSuccess,
@@ -14,6 +13,7 @@ import {
     fetchUserError,
 } from './authActions';
 import api from '../../axios';
+import { handleResponseErrors } from '../../utils';
 
 
 const registerUser = (credentials) => {
@@ -22,7 +22,7 @@ const registerUser = (credentials) => {
         api
             .post('registration-request/', credentials)
             .then(() => dispatch(userRegisterSuccess()))
-            .catch(error => dispatch(userRegisterError(error)));
+            .catch(error => dispatch(userRegisterError(handleResponseErrors(error))));
     };
 };
 

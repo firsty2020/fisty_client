@@ -12,5 +12,5 @@ export default {
     REPEAT_PASSWORD_REQUIRED: 'Repeat password',
     EXPERIENCE_REQUIRED: 'Experience is required',
     EXPERIENCE_INVALID: 'Must be a number of years',
-    NAME_REQUIRED: 'Name is required'
+    PASSWORDS_NOT_MATCH: 'Passwords don\'t match'
 };
