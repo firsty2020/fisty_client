@@ -91,7 +91,7 @@ class Registration extends Component {
                                         className={classNames('rounded-0', { 'is-invalid': touched.email && errors.email})}
                                     />
                                     {touched.email && errors.email ? (
-                                        <p className="mt-1 invalid-feedback">{errors.email}</p>
+                                        <span className="mt-1 invalid-feedback">{errors.email}</span>
                                     ) : null}
                                 </Form.Group>
                                 <p className="form-control-label">Password</p>
@@ -124,7 +124,7 @@ class Registration extends Component {
                                             </If>
                                         </InputGroup.Append>
                                         {touched.password && errors.password ? (
-                                            <p className="mt-1 invalid-feedback">{errors.password}</p>
+                                            <span className="mt-1 invalid-feedback">{errors.password}</span>
                                         ) : null}
                                     </InputGroup>
                                 </Form.Group>
@@ -156,7 +156,7 @@ class Registration extends Component {
                                         </If>
                                     </InputGroup.Append>
                                     {touched.repeat_password && errors.repeat_password ? (
-                                        <p className="mt-1 invalid-feedback">{errors.repeat_password}</p>
+                                        <span className="mt-1 invalid-feedback">{errors.repeat_password}</span>
                                     ) : null}
                                 </InputGroup>
                                 <div className="register-button-container">
@@ -185,12 +185,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({ registerUser }, dispatch);
 
+
 Registration.propTypes = {
     registrationPending: bool.isRequired,
     registrationSuccess: bool.isRequired,
     registrationError: oneOfType([ bool.isRequired, string.isRequired ]),
     registerUser: func.isRequired,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);
