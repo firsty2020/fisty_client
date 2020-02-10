@@ -1,8 +1,4 @@
 export default {
-    FIRST_NAME_INVALID: 'First name must have at least 2 characters',
-    FIRST_NAME_REQUIRED: 'First name is required',
-    LAST_NAME_INVALID: 'Last name must have at least 2 characters',
-    LAST_NAME_REQUIRED: 'Last name is required',
     EMAIL_INVALID: 'Must be a valid email address',
     EMAIL_REQUIRED: 'Email is required',
     PHONE_INVALID: 'Phone number is not valid',
@@ -15,5 +11,6 @@ export default {
     PASSWORD_INVALID_LENGTH: 'Password must contain at least 8 characters',
     REPEAT_PASSWORD_REQUIRED: 'Repeat password',
     EXPERIENCE_REQUIRED: 'Experience is required',
-    EXPERIENCE_INVALID: 'Must be a number of years'
+    EXPERIENCE_INVALID: 'Must be a number of years',
+    NAME_REQUIRED: 'Name is required'
 };

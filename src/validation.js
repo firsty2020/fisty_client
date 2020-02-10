@@ -15,10 +15,8 @@ export const userRegistrationSchema = Yup.object().shape({
         .matches(REGEX.LATIN_ALPHABET_NUMBERS_SYMBOLS, ERROR_MESSAGES.PASSWORD_INVALID_ALPHABET)
         .min(8, ERROR_MESSAGES.PASSWORD_INVALID_LENGTH)
         .required(ERROR_MESSAGES.PASSWORD_REQUIRED),
-    repeat_password: Yup.string()
-        .matches(REGEX.LATIN_ALPHABET_NUMBERS_SYMBOLS, ERROR_MESSAGES.PASSWORD_INVALID_ALPHABET)
-        .min(8, ERROR_MESSAGES.PASSWORD_INVALID_LENGTH)
-        .required(ERROR_MESSAGES.REPEAT_PASSWORD_REQUIRED),
+    name: Yup.string()
+        .required(ERROR_MESSAGES.NAME_REQUIRED),
 });
 
 export const completeRegistrationSchema = Yup.object().shape({

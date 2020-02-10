@@ -1,10 +1,12 @@
+@import "index.css"; /* Using a string */
+
 @font-face {
-    font-family: 'icomoon';
-    src:  url('./assets/fonts/icon-fonts/icomoon.eot?n21hu1');
-    src:  url('./assets/fonts/icon-fonts/icomoon.eot?n21hu1#iefix') format('embedded-opentype'),
-    url('./assets/fonts/icon-fonts/icomoon.ttf?n21hu1') format('truetype'),
-    url('./assets/fonts/icon-fonts/icomoon.woff?n21hu1') format('woff'),
-    url('./assets/fonts/icon-fonts/icomoon.svg?n21hu1#icomoon') format('svg');
+    font-family: "icomoon";
+    src:  url("./assets/fonts/icon-fonts/icomoon.eot?n21hu1");
+    src:  url("./assets/fonts/icon-fonts/icomoon.eot?n21hu1#iefix") format("embedded-opentype"),
+    url("./assets/fonts/icon-fonts/icomoon.ttf?n21hu1") format("truetype"),
+    url("./assets/fonts/icon-fonts/icomoon.woff?n21hu1") format("woff"),
+    url("./assets/fonts/icon-fonts/icomoon.svg?n21hu1#icomoon") format("svg");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -12,7 +14,7 @@
 
 [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
+    font-family: "icomoon" !important;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -42,5 +44,14 @@
     width: 100%;
     margin-top: 0.25rem;
     font-size: 80%;
-    color: #dc3545;
+    color: var(--invalid-input-feedback-color);
 }
+
+.input-group-text {
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: var(--disabled-button-color);
+}
+

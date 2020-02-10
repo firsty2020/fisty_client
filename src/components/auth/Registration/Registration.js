@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Form, InputGroup } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { bool, func } from 'prop-types';
+import classNames from 'classnames';
+import { If, Then, Else } from 'react-if';
 import CheckYourEmailAlert from './CheckYourEmailAlert';
 import { AuthFormContainer } from '../../ui/';
 import { registerUser } from '../auth';
@@ -13,17 +16,36 @@ import { userRegistrationSchema } from '../../../validation';
 
 class Registration extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            shouldShowPassword: false,
+        }
+    }
+
+    toggleShowPassword = (shouldShowPassword) => {
+        this.setState({ shouldShowPassword });
+    };
+
     render() {
+
+        const { shouldShowPassword, registrationPending } = this.state;
 
         return (
             <div>
                 <AuthFormContainer>
+                    <div className="title-container">
+                        <span>Sign Up</span>
+                    </div>
+                    <div className="subtitle-container">
+                        <span>Freelancers</span>
+                    </div>
                     {this.props.registrationSuccess ? <CheckYourEmailAlert/> : null}
                     <Formik
                         initialValues={{
                             email: '',
                             password: '',
-                            repeat_password: '',
+                            name: '',
                         }}
                         validationSchema={userRegistrationSchema}
                         onSubmit={(values) => {
@@ -38,59 +60,81 @@ class Registration extends Component {
                               handleBlur,
                               handleSubmit,
                           }) => (
-                            <Form onSubmit={handleSubmit} className="mx-auto">
+                            <Form onSubmit={handleSubmit} className="registration-form">
                                 <Form.Group>
+                                    <p className="form-control-label">Name</p>
+                                    <Form.Control
+                                        type="text"
+                                        name="name"
+                                        placeholder="Your Name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className={classNames('rounded-0', { 'is-invalid': touched.name && errors.name})}
+                                    />
+                                    {touched.name && errors.name ? (
+                                        <p className="mt-1 invalid-feedback">{errors.name}</p>
+                                    ) : null}
+                                </Form.Group>
+                                <Form.Group>
+                                    <p className="form-control-label">Email</p>
                                     <Form.Control
                                         type="text"
                                         name="email"
-                                        placeholder="Email"
+                                        placeholder="you@example.com"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.email}
-                                        className={touched.email && errors.email ? 'is-invalid' : ''}
+                                        className={classNames('rounded-0', { 'is-invalid': touched.email && errors.email})}
                                     />
                                     {touched.email && errors.email ? (
                                         <p className="mt-1 invalid-feedback">{errors.email}</p>
                                     ) : null}
                                 </Form.Group>
-                                <Form.Group>
+                                <p className="form-control-label">Password</p>
+                                <InputGroup>
                                     <Form.Control
-                                        type="password"
+                                        type={shouldShowPassword ? "text": "password"}
                                         name="password"
                                         placeholder="Password"
                                         value={values.password}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        className={touched.password && errors.password ? 'is-invalid' : ''}
+                                        className={classNames('rounded-0', { 'is-invalid': touched.password && errors.password})}
+
                                     />
+                                    <InputGroup.Append>
+                                        <If condition={shouldShowPassword}>
+                                            <Then>
+                                                <InputGroup.Text
+                                                    onClick={() => this.toggleShowPassword(false)}
+                                                    title="hide password"
+                                                ><i className="fa fa-eye-slash"/></InputGroup.Text>
+                                            </Then>
+                                            <Else>
+                                                <InputGroup.Text
+                                                    onClick={() => this.toggleShowPassword(true)}
+                                                    title="show password"
+                                                ><i className="fa fa-eye"/></InputGroup.Text>
+                                            </Else>
+                                        </If>
+                                    </InputGroup.Append>
                                     {touched.password && errors.password ? (
                                         <p className="mt-1 invalid-feedback">{errors.password}</p>
                                     ) : null}
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Control
-                                        type="password"
-                                        name="repeat_password"
-                                        placeholder="Confirm Password"
-                                        value={values.repeat_password}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        className={touched.repeat_password && errors.repeat_password ? 'is-invalid' : ''}
-                                    />
-                                    {touched.repeat_password && errors.repeat_password ? (
-                                        <p className="mt-1 invalid-feedback">{errors.repeat_password}</p>
-                                    ) : null}
-                                </Form.Group>
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    block
-                                    type="submit"
-                                    disabled={this.props.registrationPending}>Submit
-                                </Button>
+                                </InputGroup>
+                                <div className="register-button-container">
+                                    <button
+                                        type="submit"
+                                        disabled={registrationPending}>Register
+                                    </button>
+                                </div>
                             </Form>
                         )}
                     </Formik>
+                    <div className="login-link-text">
+                        <Link to="/login">Have an account? Login here.</Link>
+                    </div>
                 </AuthFormContainer>
             </div>
         );
