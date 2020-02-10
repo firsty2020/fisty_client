@@ -45,7 +45,7 @@ const getAuthToken = (username, password) => {
                 storeToken(res.data.access);
                 dispatch(loginSuccess());
             })
-            .catch(error => dispatch(loginError(error.data.detail)));
+            .catch(error => dispatch(loginError(error.detail)));
     }
 };
 

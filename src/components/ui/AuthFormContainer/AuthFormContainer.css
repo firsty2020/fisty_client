@@ -50,13 +50,13 @@
     margin-bottom: 5px;
 }
 
-.register-button-container {
+.round-button-container {
     margin-top: 22px;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.register-button-container button {
+.round-button-container button {
     padding: 10px 50px 11px;
     border: 0;
     background: #333;

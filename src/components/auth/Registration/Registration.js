@@ -8,11 +8,10 @@ import { bool, func, oneOfType, string } from 'prop-types';
 import classNames from 'classnames';
 import { If, Then, Else, When } from 'react-if';
 import CheckYourEmailAlert from './CheckYourEmailAlert';
-import { AuthFormContainer } from '../../ui/';
+import { AuthFormContainer, AlertNotice } from '../../ui/';
 import { registerUser } from '../auth';
 import { authFailed, authPending, authSucceed } from '../authReducer';
 import { userRegistrationSchema } from '../../../validation';
-import { AlertNotice } from '../../ui';
 import ERROR_MESSAGES from '../../../constants/errorMessages'
 
 
@@ -41,13 +40,10 @@ class Registration extends Component {
 
         return (
             <div>
-                <AuthFormContainer>
-                    <div className="title-container">
-                        <span>Sign Up</span>
-                    </div>
-                    <div className="subtitle-container">
-                        <span>Freelancers</span>
-                    </div>
+                <AuthFormContainer
+                    title="Sign Up"
+                    subtitle="Freelancers"
+                >
                     <When condition={!!registrationError}>
                         <AlertNotice type="danger" message={registrationError}/>
                     </When>
@@ -159,7 +155,7 @@ class Registration extends Component {
                                         <span className="mt-1 invalid-feedback">{errors.repeat_password}</span>
                                     ) : null}
                                 </InputGroup>
-                                <div className="register-button-container">
+                                <div className="round-button-container">
                                     <button
                                         type="submit"
                                         disabled={registrationPending}>Register

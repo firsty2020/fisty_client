@@ -1,6 +1,6 @@
 /**
- * Handle various types of response errors and transform to line separated string
- * to show in alert notice
+ * Handle various types of response errors and transform to
+ * line separated string to show in alert notice
  * @param error {object}
  * @returns {string}
  */
@@ -17,6 +17,7 @@ const handleResponseErrors = (error) => {
     }
     return errors.join('');
 };
+
 
 export {
     handleResponseErrors,

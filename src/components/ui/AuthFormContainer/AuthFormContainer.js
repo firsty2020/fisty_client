@@ -1,14 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import { string } from 'prop-types';
 import logo from '../../../assets/img/logo_blue_container.png';
 import './AuthFormContainer.css';
 
 
-const AuthFormContainer = ({ children }) => {
-
-    useEffect(() => {
-        /*document.body.classList.add('grey-bg');
-        return () => document.body.classList.remove('grey-bg') ;*/
-    }, [] );
+const AuthFormContainer = ({ children, title, subtitle }) => {
 
     return (
         <div className="registration-container">
@@ -16,10 +12,22 @@ const AuthFormContainer = ({ children }) => {
                 <div className="logo-container">
                     <img src={logo} alt="firsty logo" className="logo_blue"/>
                 </div>
+                <div className="title-container">
+                    <span>{title}</span>
+                </div>
+                <div className="subtitle-container">
+                    <span>{subtitle}</span>
+                </div>
                 {children}
             </div>
         </div>
     );
+};
+
+
+AuthFormContainer.propTypes = {
+    title: string.isRequired,
+    subtitle: string,
 };
 
 export default AuthFormContainer;

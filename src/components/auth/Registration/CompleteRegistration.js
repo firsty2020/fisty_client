@@ -162,7 +162,7 @@ const CompleteRegistration = ({ match, pending, success, error, push, completeRe
                                             className={touched.citizenship && errors.citizenship ? 'is-invalid' : ''}
                                         />
                                         {touched.citizenship && errors.citizenship ? (
-                                            <p className="mt-1 invalid-feedback-dropdown">{errors.citizenship}</p>
+                                            <p className="mt-1 invalid-feedback-visible">{errors.citizenship}</p>
                                         ) : null}
                                     </Col>
                                     <Col>
@@ -176,7 +176,7 @@ const CompleteRegistration = ({ match, pending, success, error, push, completeRe
                                         />
 
                                         {touched.country && errors.country ? (
-                                            <p className="mt-1 invalid-feedback-dropdown">{errors.country}</p>
+                                            <p className="mt-1 invalid-feedback-visible">{errors.country}</p>
                                         ) : null}
                                     </Col>
 
