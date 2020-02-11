@@ -22,7 +22,9 @@ class Registration extends Component {
         this.state = {
             shouldShowPassword: false,
             shouldShowRepeatPassword: false,
-        }
+        };
+        //TODO: temp solution before sign out implemented
+        localStorage.clear();
     }
 
     toggleShowPassword = (shouldShowPassword) => {

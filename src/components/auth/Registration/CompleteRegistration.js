@@ -36,6 +36,9 @@ const CompleteRegistration = ({
         }
     }, [success, push]);
 
+    //TODO: temp solution before sign out implemented
+    localStorage.clear();
+
     return (
         <div>
             <AuthFormContainer title="Завершите Регистрацию">
@@ -164,8 +167,9 @@ const CompleteRegistration = ({
                                     <p className="mt-1 invalid-feedback">{errors.experience}</p>
                                 ) : null}
                             </Form.Group>
-                            <Form.Row>
-                                <Col>
+                            <Form.Group>
+                                <Form.Row>
+                                    <Col>
                                         <p className="form-control-label">Гражданство</p>
                                         <CountriesDropdown
                                             value={values.citizenship}
@@ -178,9 +182,9 @@ const CompleteRegistration = ({
                                         {touched.citizenship && errors.citizenship ? (
                                             <p className="mt-1 invalid-feedback-visible">{errors.citizenship}</p>
                                         ) : null}
-                                </Col>
-                                <Col>
-                                        <p className="form-control-label">Страна Проживания</p>
+                                    </Col>
+                                    <Col>
+                                        <p className="form-control-label">Страна</p>
                                         <CountriesDropdown
                                             value={values.country}
                                             name="country"
@@ -193,8 +197,9 @@ const CompleteRegistration = ({
                                         {touched.country && errors.country ? (
                                             <p className="mt-1 invalid-feedback-visible">{errors.country}</p>
                                         ) : null}
-                                </Col>
-                            </Form.Row>
+                                    </Col>
+                                </Form.Row>
+                            </Form.Group>
 
                             <Form.Group>
                                 <p className="form-control-label">Город</p>

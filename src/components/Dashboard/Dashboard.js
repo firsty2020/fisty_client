@@ -18,15 +18,15 @@ const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
 
     useEffect(() => {
         if (userLoadFailed) {
-            setTimeout(() => push('/login'), 2000);
+            setTimeout(() => push('/login'), 3000);
         }
 
     }, [ userLoadFailed, push ]);
 
     return (
         <div style={{'margin': '50px'}}>
-            <When condition={userLoadFailed}>
-                <AlertNotice errorMsg={userLoadFailed} type="danger"/>
+            <When condition={!!userLoadFailed}>
+                <AlertNotice message={userLoadFailed} type="danger"/>
             </When>
             <When condition={!!(user && user.status === 'new')}>
                 <QuestionsModal/>
@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 
 Dashboard.propTypes = {
     user: oneOfType([shape({status: string.isRequired}).isRequired]),
-    userLoadFailed: bool.isRequired,
+    userLoadFailed: oneOfType([ bool, string ]).isRequired,
     push: func.isRequired,
     getAuthUser: func.isRequired
 };

@@ -13,7 +13,7 @@ const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) 
             onChange={onSelectCountry}
         >
             <option value="armenia">Армения</option>
-            <option value="belarus">Белорусь</option>
+            <option value="belarus">Беларусь</option>
             <option value="russia">Россия</option>
             <option value="ukraine">Украина</option>
             <option disabled value={-1}>{placeHolder}</option>
