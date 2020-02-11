@@ -41,8 +41,8 @@ const CompleteRegistration = ({
             <AuthFormContainer title="Завершите Регистрацию">
                 <When condition={success}>
                     <SuccessNotice
-                        title="Регистрация прошла успешно."
-                        body="Вы будете перенаправлены."
+                        title="Регистрация прошла успешно"
+                        body="Ввойдите в свой аккаунт"
                     />
                 </When>
                 <When condition={!!error}>

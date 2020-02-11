@@ -49,8 +49,8 @@ class Registration extends Component {
                     </When>
                     <When condition={registrationSuccess}>
                         <SuccessNotice
-                            title="Регистрация удалась."
-                            body="Проверьте вашу почту для завершения регистрации."
+                            title="Регистрация удалась"
+                            body="Потвердите адрес электронной почты"
                         />
                     </When>
                     <Formik

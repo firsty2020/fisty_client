@@ -47,7 +47,7 @@ const QuestionsModal = ({
             <When condition={!!thresholdPassed}>
                 <Alert variant="success">
                     <Alert.Heading>Отлично!</Alert.Heading>
-                    <p>Теперь ваш аккоунт активен!</p>
+                    <p>Теперь ваш аккaунт активен!</p>
                 </Alert>
             </When>
             <When condition={thresholdPassed === false}>
