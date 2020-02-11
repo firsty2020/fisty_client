@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import { bool, func, oneOfType, string } from 'prop-types';
 import classNames from 'classnames';
 import { If, Then, Else, When } from 'react-if';
-import CheckYourEmailAlert from './CheckYourEmailAlert';
+import { SuccessNotice } from '../../ui';
 import { AuthFormContainer, AlertNotice } from '../../ui/';
 import { registerUser } from '../auth';
 import { authFailed, authPending, authSucceed } from '../authReducer';
@@ -36,19 +36,22 @@ class Registration extends Component {
     render() {
 
         const { shouldShowPassword, shouldShowRepeatPassword } = this.state;
-        const { registrationPending, registrationError } = this.props;
+        const { registrationPending, registrationError, registrationSuccess } = this.props;
 
         return (
             <div>
                 <AuthFormContainer
-                    title="Sign Up"
-                    subtitle="Freelancers"
+                    title="Регистрация"
+                    subtitle="Фрилансеры"
                 >
                     <When condition={!!registrationError}>
                         <AlertNotice type="danger" message={registrationError}/>
                     </When>
-                    <When condition={this.props.registrationSuccess}>
-                        <CheckYourEmailAlert/>
+                    <When condition={registrationSuccess}>
+                        <SuccessNotice
+                            title="Регистрация удалась."
+                            body="Проверьте вашу почту для завершения регистрации."
+                        />
                     </When>
                     <Formik
                         initialValues={{
@@ -76,7 +79,7 @@ class Registration extends Component {
                           }) => (
                             <Form onSubmit={handleSubmit} className="registration-form">
                                 <Form.Group>
-                                    <p className="form-control-label">Email</p>
+                                    <p className="form-control-label">Эл. почта</p>
                                     <Form.Control
                                         type="text"
                                         name="email"
@@ -90,13 +93,13 @@ class Registration extends Component {
                                         <span className="mt-1 invalid-feedback">{errors.email}</span>
                                     ) : null}
                                 </Form.Group>
-                                <p className="form-control-label">Password</p>
+                                <p className="form-control-label">Пароль</p>
                                 <Form.Group>
                                     <InputGroup>
                                         <Form.Control
-                                            type={shouldShowPassword ? "text": "password"}
+                                            type={shouldShowPassword ? 'text' : 'password'}
                                             name="password"
-                                            placeholder="Password"
+                                            placeholder="Пароль"
                                             value={values.password}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
@@ -124,12 +127,12 @@ class Registration extends Component {
                                         ) : null}
                                     </InputGroup>
                                 </Form.Group>
-                                <p className="form-control-label">Repeat Password</p>
+                                <p className="form-control-label">Повторите Пароль</p>
                                 <InputGroup>
                                     <Form.Control
                                         type={shouldShowRepeatPassword ? 'text': 'password'}
                                         name="repeat_password"
-                                        placeholder="Repeat Password"
+                                        placeholder="Повторите Пароль"
                                         value={values.repeat_password}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -158,14 +161,14 @@ class Registration extends Component {
                                 <div className="round-button-container">
                                     <button
                                         type="submit"
-                                        disabled={registrationPending}>Register
+                                        disabled={registrationPending}>Зарегистрироваться
                                     </button>
                                 </div>
                             </Form>
                         )}
                     </Formik>
                     <div className="login-link-text">
-                        <Link to="/login">Have an account? Login here.</Link>
+                        <Link to="/login">Есть акаунт? Ввойти здесь</Link>
                     </div>
                 </AuthFormContainer>
             </div>

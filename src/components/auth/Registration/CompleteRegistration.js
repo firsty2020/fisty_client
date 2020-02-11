@@ -7,7 +7,7 @@ import { completeRegistration } from '../auth';
 import { push } from 'connected-react-router'
 import { completeRegistrationSchema } from '../../../validation';
 import { Formik } from 'formik';
-import {bool, func, oneOfType, shape, string} from 'prop-types';
+import { bool, func, oneOfType, shape, string } from 'prop-types';
 import { When } from 'react-if';
 import CountryCodeItem from './CountryCodeItem';
 import CountriesDropdown from './CountriesDropdown';
@@ -16,7 +16,7 @@ import armenianFlag from '../../../assets/icons/armenia.png'
 import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
-import { AlertNotice } from '../../ui';
+import { AlertNotice, SuccessNotice } from '../../ui';
 
 
 const CompleteRegistration = ({
@@ -32,13 +32,19 @@ const CompleteRegistration = ({
 
     useEffect(() => {
         if (success) {
-            setTimeout(() => push('/login'), 2000);
+            setTimeout(() =>  push('/login'), 3000);
         }
     }, [success, push]);
 
     return (
         <div>
             <AuthFormContainer title="Завершите Регистрацию">
+                <When condition={success}>
+                    <SuccessNotice
+                        title="Регистрация прошла успешно."
+                        body="Вы будете перенаправлены."
+                    />
+                </When>
                 <When condition={!!error}>
                     <AlertNotice type="danger" message={error}/>
                 </When>
@@ -233,7 +239,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 CompleteRegistration.propTypes = {
     pending: bool.isRequired,
-    error: oneOfType([bool, string]).isRequired,
+    error: oneOfType([ bool, string ]).isRequired,
     success: bool.isRequired,
     match: shape({
         params: shape(

@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {getAuthUser} from '../auth/auth';
-import {getUser, getUserFailed} from '../auth/authReducer';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getAuthUser } from '../auth/auth';
+import { getUser, getUserFailed } from '../auth/authReducer';
 import QuestionsModal from './QuestionsModal';
-import Alert from '../ui/AlertNotice';
-import {push} from 'connected-react-router'
-import {shape, string, func, bool, oneOfType} from 'prop-types';
+import { AlertNotice } from '../ui';
+import { push } from 'connected-react-router'
+import { shape, string, func, bool, oneOfType } from 'prop-types';
 
 
-const Dashboard = ({user, userLoadFailed, getAuthUser, push}) => {
+const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
 
     useEffect(() => {
         getAuthUser();
@@ -24,7 +24,7 @@ const Dashboard = ({user, userLoadFailed, getAuthUser, push}) => {
 
     return (
         <div style={{'margin': '50px'}}>
-            {userLoadFailed ? <Alert errorMsg={userLoadFailed}/> : null}
+            {userLoadFailed ? <AlertNotice errorMsg={userLoadFailed} type="danger"/> : null}
             {user && user.status === 'new' ? <QuestionsModal/> : null}
             <h1>This is dashboard</h1>
         </div>
@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-    {getAuthUser, push}, dispatch);
+    { getAuthUser, push }, dispatch);
 
 
 Dashboard.propTypes = {

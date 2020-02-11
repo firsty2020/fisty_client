@@ -27,7 +27,7 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
 
     return (
         <div>
-            <AuthFormContainer title="Sign In">
+            <AuthFormContainer title="Войти в Аккаунт">
                 <When condition={!!authError}>
                     <AlertNotice message={authError} type="danger"/>
                 </When>
@@ -37,7 +37,7 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
                         password: '',
                     }}
                     validationSchema={logInSchema}
-                    onSubmit={(values, {setSubmitting}) => {
+                    onSubmit={(values) => {
                         getAuthToken(values.email, values.password);
                     }}
                 >
@@ -50,12 +50,12 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
                           handleSubmit,
                       }) => (
                         <Form onSubmit={handleSubmit}>
-                            <p className="form-control-label">Email</p>
+                            <p className="form-control-label">Эл. почта</p>
                             <Form.Group>
                                 <Form.Control
                                     type="email"
                                     name="email"
-                                    placeholder="Email"
+                                    placeholder="you@example.com"
                                     value={values.email}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -64,12 +64,12 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
                                     <span className="mt-1 invalid-feedback-visible">{errors.email}</span>
                                 ) : null}
                             </Form.Group>
-                            <p className="form-control-label">Password</p>
+                            <p className="form-control-label">Пароль</p>
                             <Form.Group>
                                 <Form.Control
                                     type="password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Пароль"
                                     value={values.password}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
@@ -81,16 +81,16 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
                             <div className="round-button-container">
                                 <button
                                     type="submit"
-                                    disabled={authPending}>Login
+                                    disabled={authPending}>Ввойти
                                 </button>
                             </div>
                         </Form>
                     )}
                 </Formik>
                 <div className="login-link-text">
-                    <Link to="/register">Don't have an account? Sign up here.</Link>
-                    <br/>
-                    <Link to="/register">Forgot password.</Link>
+                    <Link to="/register">Забыл пароль?</Link>
+                    <hr/>
+                    <Link to="/register">Зарегистрироваться</Link>
                 </div>
             </AuthFormContainer>
         </div>
