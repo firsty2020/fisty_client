@@ -69,7 +69,7 @@ const getUserIdByFromToken = () => {
     try {
         decoded = jwt_decode(token);
     } catch (e) {
-        console.log(e);
+        console.warn(e);
     }
     return decoded ? decoded.user_id : null;
 };

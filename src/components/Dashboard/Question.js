@@ -1,6 +1,6 @@
 import React from 'react';
-import {Form} from 'react-bootstrap';
-import {shape, string, arrayOf, number} from 'prop-types';
+import { Form } from 'react-bootstrap';
+import { shape, string, arrayOf, number } from 'prop-types';
 
 const Question = ({question, index, onAnswer}) => {
 

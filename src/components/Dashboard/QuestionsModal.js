@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {Modal, Button, Alert} from 'react-bootstrap';
-import {loadQuestions, submitAnswers} from './questions';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Modal, Button, Alert } from 'react-bootstrap';
+import { arrayOf, string, shape, bool, func } from 'prop-types';
+import { When } from 'react-if';
+import  { loadQuestions, submitAnswers } from './questions';
 import {
     loadQuestionsSucceed,
     submitAnswerPending,
     submitAnswerSuccess
 } from './dashboardReducer';
 import Question from './Question';
-import {arrayOf, string, shape, bool, func} from 'prop-types';
+
 
 const QuestionsModal = ({
                             questions,
@@ -19,29 +21,11 @@ const QuestionsModal = ({
                             submitAnswers,
                         }) => {
 
-    const [showQuestions, setShowQuestions] = useState(false);
-    const [userAnswers, setUserAnswers] = useState([]);
-    const [showAlert, setShowAlert] = useState('');
+    const [ userAnswers, setUserAnswers ] = useState([]);
 
     useEffect(() => {
         loadQuestions();
-    }, [loadQuestions]);
-
-    useEffect(() => {
-        if (questions && questions.length) {
-            setShowQuestions(true);
-        }
-    }, [questions]);
-
-    useEffect(() => {
-        if (thresholdPassed === undefined) return;
-        if (thresholdPassed) {
-            setShowAlert('success');
-        } else {
-            setShowAlert('fail');
-        }
-        setShowQuestions(false);
-    }, [thresholdPassed]);
+    }, [ loadQuestions ]);
 
     const handleSelectAnswer = (answer) => {
         const a = userAnswers.findIndex(i => i.question_id === answer.question_id);
@@ -50,7 +34,7 @@ const QuestionsModal = ({
             answers[a] = answer;
             return setUserAnswers(answers);
         }
-        setUserAnswers([...userAnswers, answer]);
+        setUserAnswers([ ...userAnswers, answer ]);
     };
 
     const handleSubmitAnswers = () => {
@@ -58,48 +42,33 @@ const QuestionsModal = ({
         submitAnswers(userAnswers);
     };
 
-    let alert;
-    const failAlert = (
-        <Alert variant="danger">
-            <Alert.Heading>Oh snap! You failed!</Alert.Heading>
-            <p>
-                You did not pass minimal threshold.
-                Our administrators will contact you for further details;
-            </p>
-        </Alert>
-    );
-
-    const successAlert = (
-        <Alert variant="success">
-            <Alert.Heading>Yeah! You did it!</Alert.Heading>
-            <p>
-                Your account is activate now!
-            </p>
-        </Alert>
-    );
-
-    if (showAlert === 'success') {
-        alert = successAlert;
-    } else if (showAlert === 'fail') {
-        alert = failAlert;
-    }
-
     return (
         <div>
-            {showAlert ? alert : null}
+            <When condition={!!thresholdPassed}>
+                <Alert variant="success">
+                    <Alert.Heading>Отлично!</Alert.Heading>
+                    <p>Теперь ваш аккоунт активен!</p>
+                </Alert>
+            </When>
+            <When condition={thresholdPassed === false}>
+                <Alert variant="danger">
+                    <Alert.Heading>О нет!</Alert.Heading>
+                    <p>Вы не дали нужное количество правильных ответов.</p>
+                </Alert>
+            </When>
             <Modal
-                show={showQuestions}
+                show={questions && thresholdPassed === undefined}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
                 <Modal.Header>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        <p>Welcome to Firsty!</p>
+                        <p>Добро пожаловать!</p>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Answer these questions to activate your account.</p>
+                    <p>Ответьте на эти вопросы чтобы активировать ваш аккаунт.</p>
                     {questions && questions.length ?
                         questions.map((question, i) => <Question
                             key={question.url}
@@ -115,8 +84,8 @@ const QuestionsModal = ({
                         size="lg"
                         block
                         disabled={submitPending}
-                        onClick={handleSubmitAnswers}
-                    >Confirm</Button>
+                        onClick={handleSubmitAnswers}>Ввод
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>
@@ -130,7 +99,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-    {loadQuestions, submitAnswers}, dispatch);
+    { loadQuestions, submitAnswers }, dispatch);
 
 QuestionsModal.propTypes = {
     questions: arrayOf(shape({

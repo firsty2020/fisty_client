@@ -3,30 +3,35 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAuthUser } from '../auth/auth';
 import { getUser, getUserFailed } from '../auth/authReducer';
+import { shape, string, func, bool, oneOfType } from 'prop-types';
+import { push } from 'connected-react-router'
+import { When } from 'react-if';
 import QuestionsModal from './QuestionsModal';
 import { AlertNotice } from '../ui';
-import { push } from 'connected-react-router'
-import { shape, string, func, bool, oneOfType } from 'prop-types';
 
 
 const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
 
     useEffect(() => {
         getAuthUser();
-    }, [getAuthUser]);
+    }, [ getAuthUser ]);
 
     useEffect(() => {
         if (userLoadFailed) {
             setTimeout(() => push('/login'), 2000);
         }
 
-    }, [userLoadFailed, push]);
+    }, [ userLoadFailed, push ]);
 
     return (
         <div style={{'margin': '50px'}}>
-            {userLoadFailed ? <AlertNotice errorMsg={userLoadFailed} type="danger"/> : null}
-            {user && user.status === 'new' ? <QuestionsModal/> : null}
-            <h1>This is dashboard</h1>
+            <When condition={userLoadFailed}>
+                <AlertNotice errorMsg={userLoadFailed} type="danger"/>
+            </When>
+            <When condition={!!(user && user.status === 'new')}>
+                <QuestionsModal/>
+            </When>
+            <h1>Личный кабинет</h1>
         </div>
     );
 };

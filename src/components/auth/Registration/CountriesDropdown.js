@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form} from 'react-bootstrap';
-import {string, number, oneOfType, func} from 'prop-types';
+import { string, number, oneOfType, func } from 'prop-types';
 
 
 const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) => {
@@ -12,10 +12,10 @@ const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) 
             onBlur={onBlur}
             onChange={onSelectCountry}
         >
-            <option value="armenia">Armenia</option>
-            <option value="belarus">Belarus</option>
-            <option value="russia">Russia</option>
-            <option value="ukraine">Ukraine</option>
+            <option value="armenia">Армения</option>
+            <option value="belarus">Белорусь</option>
+            <option value="russia">Россия</option>
+            <option value="ukraine">Украина</option>
             <option disabled value={-1}>{placeHolder}</option>
         </Form.Control>
     );
