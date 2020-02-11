@@ -1,16 +1,19 @@
 export default {
-    EMAIL_INVALID: 'Must be a valid email address',
-    EMAIL_REQUIRED: 'Email is required',
-    PHONE_INVALID: 'Phone number is not valid',
-    PHONE_REQUIRED: 'Phone number is required',
-    CITY_REQUIRED: 'City is required',
-    COUNTRY_REQUIRED: 'Country is required',
-    CITIZENSHIP_REQUIRED: 'Citizenship is required',
-    PASSWORD_REQUIRED: 'Password is required',
-    PASSWORD_INVALID_ALPHABET: 'Password must not contain other alphabet than latin',
-    PASSWORD_INVALID_LENGTH: 'Password must contain at least 8 characters',
-    REPEAT_PASSWORD_REQUIRED: 'Repeat password',
-    EXPERIENCE_REQUIRED: 'Experience is required',
-    EXPERIENCE_INVALID: 'Must be a number of years',
-    PASSWORDS_NOT_MATCH: 'Passwords don\'t match'
+    FIRST_NAME_REQUIRED: 'Введите ваше имя',
+    LAST_NAME_REQUIRED: 'Введите вашу фамилию',
+    EMAIL_INVALID: 'Введите действительный почтовый адрес',
+    EMAIL_REQUIRED: 'Введите почтовый адрес',
+    PHONE_INVALID: 'Введите действительный номер телефона',
+    PHONE_REQUIRED: 'Введите номер телефона',
+    CITY_REQUIRED: 'Выберите город проживания',
+    COUNTRY_REQUIRED: 'Выберите страну проживания',
+    CITIZENSHIP_REQUIRED: 'Выберите гражданство',
+    PASSWORD_REQUIRED: 'Введите пароль',
+    PASSWORD_INVALID_ALPHABET: 'Пароль не должен содержать кириллицу',
+    PASSWORD_INVALID_LENGTH: 'Пароль слишком короткий',
+    REPEAT_PASSWORD_REQUIRED: 'Повторите пароль',
+    EXPERIENCE_REQUIRED: 'Введите опыт работы',
+    EXPERIENCE_INVALID: 'Введите опыт работы в годах. Пр: 7',
+    PASSWORDS_NOT_MATCH: 'Поля не совпадают'
 };
+

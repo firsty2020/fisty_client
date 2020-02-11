@@ -23,10 +23,8 @@ export const userRegistrationSchema = Yup.object().shape({
 
 export const completeRegistrationSchema = Yup.object().shape({
     first_name: Yup.string()
-        .min(2, ERROR_MESSAGES.FIRST_NAME_INVALID)
         .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
     last_name: Yup.string()
-        .min(2, ERROR_MESSAGES.LAST_NAME_INVALID)
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
     phone_number: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)

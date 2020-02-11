@@ -6,12 +6,16 @@
  */
 const handleResponseErrors = (error) => {
     const errors = [];
-    for (const field in error) {
-        if (error.hasOwnProperty(field)) {
-            if (field === 'non_field_errors') {
-                errors.push(error[field] + '\n');
-            } else {
-                errors.push(`${field} - ${error[field]}\n`);
+    if (error.length) {
+        return error.join('\n');
+    } else {
+        for (const field in error) {
+            if (error.hasOwnProperty(field)) {
+                if (field === 'non_field_errors') {
+                    errors.push(error[field] + '\n');
+                } else {
+                    errors.push(`${field} - ${error[field]}\n`);
+                }
             }
         }
     }

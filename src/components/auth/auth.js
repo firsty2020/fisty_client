@@ -32,7 +32,7 @@ const completeRegistration = (userDetails, passwordToken) => {
         api
             .post(`auth-users/sign-up/${passwordToken}/`, userDetails)
             .then(() => dispatch(completeRegistrationSuccess()))
-            .catch(error => dispatch(completeRegistrationError(error.data)));
+            .catch(error => dispatch(completeRegistrationError(handleResponseErrors(error))));
     };
 };
 
