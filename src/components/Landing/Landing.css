@@ -228,7 +228,7 @@ header.header .wrapper {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background-image: url("../../assets/img/hero_shape.png");
+    background-image: url("../../assets/images/hero_shape.png");
     background-repeat: no-repeat;
     background-position: calc(100% + 216px) -310px;
     background-size: auto;
@@ -361,13 +361,13 @@ header.header .wrapper {
 }
 
 .hero_ill:nth-child(3)::before {
-    background-image: url("../../assets/img/team_dotted_shadow.svg");
+    background-image: url("../../assets/images/team_dotted_shadow.svg");
     bottom: -81px;
     left: -116px;
 }
 
 .hero_ill:nth-child(2)::before {
-    background-image: url("../../assets/img/team_dotted_shadow_light.svg");
+    background-image: url("../../assets/images/team_dotted_shadow_light.svg");
     top: -61px;
     right: -112px;
 }

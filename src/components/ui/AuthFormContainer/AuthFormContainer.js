@@ -1,6 +1,6 @@
 import React from 'react';
 import { string } from 'prop-types';
-import logo from '../../../assets/img/logo_blue_container.png';
+import logo from '../../../assets/images/logo_blue_container.png';
 import './AuthFormContainer.css';
 
 
