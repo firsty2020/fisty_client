@@ -30,7 +30,7 @@ const UserList = ({ users, match, getUsers }) => {
                 </thead>
                 <tbody>
                     {users && users.length ? users.map((user, index) =>
-                        <UserListItem user={user} index={index + 1} key={user.url} />)
+                        <UserListItem user={user} index={index} key={user.url} />)
                         : null}
                 </tbody>
             </Table>
