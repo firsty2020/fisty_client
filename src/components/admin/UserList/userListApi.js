@@ -4,7 +4,6 @@ import {
     getUsersResolved,
 } from '../adminActions';
 import api from '../../../axios';
-import { handleResponseErrors } from '../../../utils';
 
 
 export const getUsers = () => {
@@ -13,6 +12,6 @@ export const getUsers = () => {
         api
             .get('users/')
             .then((res) => dispatch(getUsersResolved(res.data)))
-            .catch(error => dispatch(getUsersFailed(handleResponseErrors(error))));
+            .catch(error => dispatch(getUsersFailed(error)));
     };
 };

@@ -13,7 +13,6 @@ import {
     fetchUserError,
 } from './authActions';
 import api from '../../axios';
-import { handleResponseErrors } from '../../utils';
 
 
 const registerUser = (credentials) => {
@@ -22,7 +21,7 @@ const registerUser = (credentials) => {
         api
             .post('registration-request/', credentials)
             .then(() => dispatch(userRegisterSuccess()))
-            .catch(error => dispatch(userRegisterError(handleResponseErrors(error))));
+            .catch(error => dispatch(userRegisterError(error)));
     };
 };
 
@@ -32,7 +31,7 @@ const completeRegistration = (userDetails, passwordToken) => {
         api
             .post(`auth-users/sign-up/${passwordToken}/`, userDetails)
             .then(() => dispatch(completeRegistrationSuccess()))
-            .catch(error => dispatch(completeRegistrationError(handleResponseErrors(error))));
+            .catch(error => dispatch(completeRegistrationError(error)));
     };
 };
 
@@ -45,7 +44,7 @@ const getAuthToken = (username, password) => {
                 storeToken(res.data.access);
                 dispatch(loginSuccess());
             })
-            .catch(error => dispatch(loginError(error.detail)));
+            .catch(error => dispatch(loginError(error)));
     }
 };
 
