@@ -1,11 +1,13 @@
-export default {
+import UserList from './UserList/UserList';
+
+const navigation =  {
     top: [
         {
             name: 'Кабинет',
             url: '/admin',
             icon: 'Home',
         },
-        { divider: true},
+        { divider: true },
         {
             name: 'Пользователи',
             icon: 'Users',
@@ -29,3 +31,15 @@ export default {
         },
     ],
 };
+
+const routes = [
+    {
+        path: '/admin/users/:filter',
+        component: UserList,
+    },
+];
+
+export  {
+    navigation,
+    routes,
+}

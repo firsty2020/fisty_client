@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Header, SidebarNav, PageContent, Page } from '../../assets/vibe';
+import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
 import Logo from '../../assets/images/logo_white.png';
-import routes from './routes';
+import { navigation, routes } from './routes';
+
 
 const MOBILE_SIZE = 992;
 
-export default class DashboardLayout extends Component {
+class Dashboard extends Component {
 
     constructor(props) {
         super(props);
@@ -31,37 +32,39 @@ export default class DashboardLayout extends Component {
         const { sidebarCollapsed } = this.state;
         const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
         return (
-                <div className={`app ${sidebarCollapsedClass}`}>
-                    <div className="app-body">
-                        <SidebarNav
-                            nav={routes}
-                            logo={Logo}
-                            logoText="Firsty"
-                            isSidebarCollapsed={sidebarCollapsed}
+            <div className={`app ${sidebarCollapsedClass}`}>
+                <div className="app-body">
+                    <SidebarNav
+                        nav={navigation}
+                        logo={Logo}
+                        logoText="Firsty"
+                        isSidebarCollapsed={sidebarCollapsed}
+                        toggleSidebar={this.toggleSideCollapse}
+                        {...this.props}
+                    />
+
+                    <Page>
+                        <Header
                             toggleSidebar={this.toggleSideCollapse}
-                            {...this.props}
-                        />
-                        <Page>
-                            <Header
-                                toggleSidebar={this.toggleSideCollapse}
-                                isSidebarCollapsed={sidebarCollapsed}
-                                routes={routes}
-                                {...this.props}
-                            >
-                            </Header>
-                            <PageContent>
-                                <Switch>
-                                    {[ ...routes.top, ...routes.bottom].map((page, key) => (
-                                        <Route path={page.url}
-                                               component={page.component}
-                                               key={key}
-                                        />
-                                    ))}
-                                </Switch>
-                            </PageContent>
-                        </Page>
-                    </div>
+                            isSidebarCollapsed={sidebarCollapsed}
+                        >
+                        </Header>
+                        <PageContent>
+                            <Switch>
+                                {routes.map((page, key) => (
+                                    <Route path={page.path}
+                                           component={page.component}
+                                           key={key}
+                                    />
+                                ))}
+                            </Switch>
+                        </PageContent>
+                    </Page>
                 </div>
+            </div>
         );
     }
 }
+
+
+export default Dashboard;

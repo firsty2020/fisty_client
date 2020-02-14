@@ -2,7 +2,10 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 import { shape, string, arrayOf, number } from 'prop-types';
 
+
 const Question = ({question, index, onAnswer}) => {
+
+    const handleCheck = (question_id, uid) => onAnswer({ question_id, uid });
 
     return (
         <div className="mt-4">
@@ -11,10 +14,7 @@ const Question = ({question, index, onAnswer}) => {
                 return (
                     <div key={answer.uid}>
                         <Form.Check
-                            onChange={() => onAnswer({
-                                question_id: question.id,
-                                uid: answer.uid
-                            })}
+                            onChange={() => handleCheck(question.id, answer.uid)}
                             custom
                             name={`answer${question.id}`}
                             type="radio"

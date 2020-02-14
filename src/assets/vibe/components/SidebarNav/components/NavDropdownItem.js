@@ -1,14 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import * as Feather from 'react-feather';
 import NavBadge from './NavBadge';
 import NavSingleItem from './NavSingleItem';
 
 export default class NavDropdownItem extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             open: false
         };
+    }
+    
+    componentDidMount() {
+        this.props.item.children.map((child) => {
+            if (child.url === window.location.pathname) {
+                 this.setState({ open: true });
+            }
+            return null;
+        })
     }
 
     toggle = e => {
@@ -18,10 +28,10 @@ export default class NavDropdownItem extends Component {
     };
 
     render() {
-        const {item} = this.props;
+        const { item } = this.props;
         const isExpanded = this.state.open ? 'open' : '';
         const Icon = item.icon ? Feather[item.icon] : null;
-        const ExpandIcon = this.state.open
+        const ExpandIcon = isExpanded
             ? Feather.ChevronDown
             : Feather.ChevronRight;
         return (
