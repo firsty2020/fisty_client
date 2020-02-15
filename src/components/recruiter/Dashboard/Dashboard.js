@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAuthUser } from '../../auth/auth';
-import { getUser, getUserFailed } from '../../auth/authReducer';
+import { userSelector, authErrorSelector } from '../../auth/authReducer';
 import { shape, string, func, bool, oneOfType } from 'prop-types';
 import { push } from 'connected-react-router'
 import { When } from 'react-if';
@@ -37,8 +37,8 @@ const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
 };
 
 const mapStateToProps = state => ({
-    user: getUser(state),
-    userLoadFailed: getUserFailed(state),
+    user: userSelector(state),
+    userLoadFailed: authErrorSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

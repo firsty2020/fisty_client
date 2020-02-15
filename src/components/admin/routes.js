@@ -1,6 +1,7 @@
 import UserList from './UserList/UserList';
 
-const navigation =  {
+
+export const navigation =  {
     top: [
         {
             name: 'Кабинет',
@@ -11,12 +12,7 @@ const navigation =  {
         {
             name: 'Пользователи',
             icon: 'Users',
-            children: [
-                {
-                    name: 'Все',
-                    url: '/admin/users/all',
-                },
-            ],
+            url: '/admin/users',
         },
     ],
     bottom: [
@@ -32,14 +28,10 @@ const navigation =  {
     ],
 };
 
-const routes = [
+
+export const routes = [
     {
-        path: '/admin/users/:filter',
+        path: '/admin/users',
         component: UserList,
     },
 ];
-
-export  {
-    navigation,
-    routes,
-}

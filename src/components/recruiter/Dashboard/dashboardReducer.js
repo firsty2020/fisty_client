@@ -1,29 +1,29 @@
 import {
     DASHBOARD_QUESTIONS_LOAD_PENDING,
-    DASHBOARD_QUESTIONS_LOAD_SUCCESS,
-    DASHBOARD_QUESTIONS_LOAD_ERROR,
+    DASHBOARD_QUESTIONS_LOAD_RESOLVED,
+    DASHBOARD_QUESTIONS_LOAD_FAILED,
     DASHBOARD_ANSWERS_SUBMIT_PENDING,
-    DASHBOARD_ANSWERS_SUBMIT_ERROR,
-    DASHBOARD_ANSWERS_SUBMIT_SUCCESS
+    DASHBOARD_ANSWERS_SUBMIT_FAILED,
+    DASHBOARD_ANSWERS_SUBMIT_RESOLVED
 } from '../../../constants/actionTypes';
 
-export const dashboard = (state = {questions: []}, action) => {
+export const dashboard = (state = { questions: []}, action) => {
     switch (action.type) {
         case DASHBOARD_QUESTIONS_LOAD_PENDING:
-            return ({pending: true, success: false, error: false});
-        case DASHBOARD_QUESTIONS_LOAD_SUCCESS:
-            return ({pending: false, questions: action.payload, error: false});
-        case DASHBOARD_QUESTIONS_LOAD_ERROR:
-            return ({error: action.payload, pending: false, success: false});
+            return ({ pending: true, success: false, error: null });
+        case DASHBOARD_QUESTIONS_LOAD_RESOLVED:
+            return ({ pending: false, questions: action.payload, error: null });
+        case DASHBOARD_QUESTIONS_LOAD_FAILED:
+            return ({ error: action.payload, pending: false, success: false });
         case DASHBOARD_ANSWERS_SUBMIT_PENDING:
-            return ({...state, answerSubmitPending: true});
-        case DASHBOARD_ANSWERS_SUBMIT_SUCCESS:
+            return ({ ...state, answerSubmitPending: true });
+        case DASHBOARD_ANSWERS_SUBMIT_RESOLVED:
             return ({
                 ...state,
                 answerSubmitPending: false,
                 thresholdPassed: action.payload
             });
-        case DASHBOARD_ANSWERS_SUBMIT_ERROR:
+        case DASHBOARD_ANSWERS_SUBMIT_FAILED:
             return ({
                 ...state,
                 answerSubmitPending: false,
@@ -34,7 +34,7 @@ export const dashboard = (state = {questions: []}, action) => {
     }
 };
 
-export const loadQuestionsSucceed = state => state.dashboard.questions;
-export const submitAnswerPending = state => state.dashboard.answerSubmitPending;
-export const submitAnswerSuccess = state => state.dashboard.thresholdPassed;
+export const questionsSelector = state => state.dashboard.questions;
+export const submitAnswerPendingSelector = state => state.dashboard.answerSubmitPending;
+export const thresholdPassedSelector = state => state.dashboard.thresholdPassed;
 

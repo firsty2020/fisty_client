@@ -1,21 +1,21 @@
 import {
     AUTH_USER_REGISTER_PENDING,
-    AUTH_USER_REGISTER_SUCCESS,
-    AUTH_USER_REGISTER_ERROR,
+    AUTH_USER_REGISTER_RESOLVED,
+    AUTH_USER_REGISTER_FAILED,
     AUTH_COMPLETE_REGISTRATION_PENDING,
-    AUTH_COMPLETE_REGISTRATION_SUCCESS,
-    AUTH_COMPLETE_REGISTRATION_ERROR,
+    AUTH_COMPLETE_REGISTRATION_RESOLVED,
+    AUTH_COMPLETE_REGISTRATION_FAILED,
     AUTH_LOGIN_PENDING,
-    AUTH_LOGIN_SUCCESS,
-    AUTH_LOGIN_ERROR,
-    AUTH_GET_USER_SUCCESS,
-    AUTH_GET_USER_ERROR,
+    AUTH_LOGIN_RESOLVED,
+    AUTH_LOGIN_FAILED,
+    AUTH_GET_USER_RESOLVED,
+    AUTH_GET_USER_FAILED,
 } from '../../constants/actionTypes';
 
 const initialState = {
     pending: false,
     success: false,
-    error: false,
+    error: null,
 };
 
 export const auth = (state = initialState, action) => {
@@ -25,27 +25,26 @@ export const auth = (state = initialState, action) => {
         case AUTH_USER_REGISTER_PENDING:
         case AUTH_COMPLETE_REGISTRATION_PENDING:
         case AUTH_LOGIN_PENDING:
-            return ({ pending: true, success: false, error: false });
-        case AUTH_USER_REGISTER_SUCCESS:
-        case AUTH_COMPLETE_REGISTRATION_SUCCESS:
-        case AUTH_LOGIN_SUCCESS:
-            return ({ pending: false, success: true, error: false });
-        case AUTH_USER_REGISTER_ERROR:
-        case AUTH_COMPLETE_REGISTRATION_ERROR:
-        case AUTH_LOGIN_ERROR:
+            return ({ pending: true, success: false, error: null });
+        case AUTH_USER_REGISTER_RESOLVED:
+        case AUTH_COMPLETE_REGISTRATION_RESOLVED:
+        case AUTH_LOGIN_RESOLVED:
+            return ({ pending: false, success: true, error: null });
+        case AUTH_USER_REGISTER_FAILED:
+        case AUTH_COMPLETE_REGISTRATION_FAILED:
+        case AUTH_LOGIN_FAILED:
             return ({ error: action.payload, pending: false, success: false });
-        case AUTH_GET_USER_SUCCESS:
+        case AUTH_GET_USER_RESOLVED:
             return ({ ...state, user: action.payload });
-        case AUTH_GET_USER_ERROR:
+        case AUTH_GET_USER_FAILED:
             return ({ ...state, error: action.payload });
         default:
             return state;
     }
 };
 
-export const authPending = state => state.auth.pending;
-export const authFailed = state => state.auth.error;
-export const authSucceed = state => state.auth.success;
+export const authPendingSelector = state => state.auth.pending;
+export const authErrorSelector = state => state.auth.error;
+export const authSuccessSelector = state => state.auth.success;
 
-export const getUser = state => state.auth.user;
-export const getUserFailed = state => state.auth.error;
+export const userSelector = state => state.auth.user;

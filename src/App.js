@@ -2,7 +2,6 @@ import React, { Suspense, lazy} from 'react';
 import {
     Registration,
     SetPassword,
-    Recruiter,
     Landing,
     Login,
 } from './components';
@@ -11,6 +10,7 @@ import './assets/vibe/scss/styles.scss';
 import './App.css';
 
 const Admin = lazy(() => import('./components/admin/Dashboard'));
+const Recruiter = lazy(() => import('./components/recruiter/Dashboard/Dashboard'));
 
 function App() {
     return (

@@ -5,15 +5,14 @@ import {
 } from '../../constants/actionTypes';
 
 
-
 export const admin = (state = {}, action) => {
     switch (action.type) {
         case ADMIN_GET_USERS_PENDING:
-            return { getUsersPending: true, getUsersError: false, users: [] };
+            return { getUsersPending: true, getUsersError: null, users: [] };
         case ADMIN_GET_USERS_FAILED:
             return { getUsersError: action.payload, getUsersPending: false, users: [] };
         case ADMIN_GET_USERS_RESOLVED:
-            return { users: action.payload, getUsersPending: false, getUsersError: false };
+            return { users: action.payload, getUsersPending: false, getUsersError: null };
         default: return state;
     }
 };

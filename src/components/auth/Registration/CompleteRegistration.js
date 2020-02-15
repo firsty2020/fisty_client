@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Dropdown, Form, InputGroup } from 'react-bootstrap';
-import { authPending, authFailed, authSucceed } from '../authReducer';
-import { bindActionCreators } from 'redux';
+import { authPendingSelector, authErrorSelector, authSuccessSelector } from '../authReducer';
 import { completeRegistration } from '../auth';
 import { push } from 'connected-react-router'
 import { completeRegistrationSchema } from '../../../validation';
@@ -230,16 +229,14 @@ const CompleteRegistration = ({
     );
 };
 
+
 const mapStateToProps = state => ({
-    pending: authPending(state),
-    error: authFailed(state),
-    success: authSucceed(state),
+    pending: authPendingSelector(state),
+    error: authErrorSelector(state),
+    success: authSuccessSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    completeRegistration,
-    push
-}, dispatch);
+const mapDispatchToProps = { completeRegistration, push };
 
 
 CompleteRegistration.propTypes = {

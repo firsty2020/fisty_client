@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { authPending, authFailed, authSucceed } from '../authReducer';
-import { bindActionCreators } from 'redux';
+import { authPendingSelector, authErrorSelector, authSuccessSelector } from '../authReducer';
 import { push } from 'connected-react-router';
 import { Formik } from 'formik';
-import { bool, oneOfType, string, func } from 'prop-types';
+import { bool, string, func } from 'prop-types';
 import { When } from 'react-if';
 import { Link } from 'react-router-dom';
 import { getAuthToken } from '../auth';
@@ -17,7 +16,7 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
 
     useEffect(() => {
         if (authSuccess) {
-            push('/dashboard');
+            push('/recruiter');
         }
     }, [ authSuccess, push ]);
 
@@ -98,25 +97,21 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
 };
 
 const mapStateToProps = state => ({
-    authPending: authPending(state),
-    authError: authFailed(state),
-    authSuccess: authSucceed(state),
+    authPending: authPendingSelector(state),
+    authError: authErrorSelector(state),
+    authSuccess: authSuccessSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    getAuthToken,
-    push
-}, dispatch);
+const mapDispatchToProps = { getAuthToken, push };
+
 
 Login.propTypes = {
     authPending: bool.isRequired,
-    authError: oneOfType([
-        string,
-        bool,
-    ]).isRequired,
+    authError: string,
     authSuccess: bool.isRequired,
     getAuthToken: func.isRequired,
     push: func.isRequired,
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

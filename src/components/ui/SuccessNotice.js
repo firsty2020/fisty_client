@@ -13,12 +13,11 @@ const SuccessAlert = ({ title, body }) => {
     )
 };
 
+
 SuccessAlert.propTypes = {
     title: string.isRequired,
     body: string.isRequired,
-
 };
-
 
 
 export default SuccessAlert;

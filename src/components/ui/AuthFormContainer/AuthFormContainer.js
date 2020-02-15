@@ -30,4 +30,5 @@ AuthFormContainer.propTypes = {
     subtitle: string,
 };
 
+
 export default AuthFormContainer;

@@ -19,6 +19,7 @@ const UserListItem = ({ user, index }) => {
     );
 };
 
+
 UserListItem.propTypes = {
     user: shape({
         first_name: string.isRequired,

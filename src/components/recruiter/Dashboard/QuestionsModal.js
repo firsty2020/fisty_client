@@ -4,11 +4,11 @@ import { bindActionCreators } from 'redux';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import { arrayOf, string, shape, bool, func } from 'prop-types';
 import { When } from 'react-if';
-import  { loadQuestions, submitAnswers } from './questions';
+import  { loadQuestions, submitAnswers } from './questionsApi';
 import {
-    loadQuestionsSucceed,
-    submitAnswerPending,
-    submitAnswerSuccess
+    questionsSelector,
+    submitAnswerPendingSelector,
+    thresholdPassedSelector
 } from './dashboardReducer';
 import Question from './Question';
 
@@ -93,9 +93,9 @@ const QuestionsModal = ({
 };
 
 const mapStateToProps = state => ({
-    questions: loadQuestionsSucceed(state),
-    thresholdPassed: submitAnswerSuccess(state),
-    submitPending: submitAnswerPending(state),
+    questions: questionsSelector(state),
+    thresholdPassed: thresholdPassedSelector(state),
+    submitPending: submitAnswerPendingSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

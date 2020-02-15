@@ -4,6 +4,7 @@ import {
     ADMIN_GET_USERS_RESOLVED,
 } from '../../constants/actionTypes';
 
+
 export const getUsersPending = () => ({
     type: ADMIN_GET_USERS_PENDING,
 });

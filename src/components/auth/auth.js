@@ -15,7 +15,7 @@ import {
 import api from '../../axios';
 
 
-const registerUser = (credentials) => {
+export const registerUser = (credentials) => {
     return dispatch => {
         dispatch(userRegisterPending());
         api
@@ -25,7 +25,7 @@ const registerUser = (credentials) => {
     };
 };
 
-const completeRegistration = (userDetails, passwordToken) => {
+export const completeRegistration = (userDetails, passwordToken) => {
     return dispatch => {
         dispatch(completeRegistrationPending());
         api
@@ -35,7 +35,7 @@ const completeRegistration = (userDetails, passwordToken) => {
     };
 };
 
-const getAuthToken = (username, password) => {
+export const getAuthToken = (username, password) => {
     return dispatch => {
         dispatch(loginPending());
         api
@@ -50,7 +50,7 @@ const getAuthToken = (username, password) => {
 
 const storeToken = (token) => localStorage.setItem('auth_token', token);
 
-const getAuthUser = () => {
+export const getAuthUser = () => {
     const userId = getUserIdByFromToken();
     return dispatch => {
         if (!userId)
@@ -72,10 +72,3 @@ const getUserIdByFromToken = () => {
     }
     return decoded ? decoded.user_id : null;
 };
-
-export {
-    registerUser,
-    completeRegistration,
-    getAuthToken,
-    getAuthUser,
-}

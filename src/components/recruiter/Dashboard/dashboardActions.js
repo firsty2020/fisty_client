@@ -1,10 +1,10 @@
 import {
-    DASHBOARD_QUESTIONS_LOAD_SUCCESS,
-    DASHBOARD_QUESTIONS_LOAD_ERROR,
+    DASHBOARD_QUESTIONS_LOAD_RESOLVED,
+    DASHBOARD_QUESTIONS_LOAD_FAILED,
     DASHBOARD_QUESTIONS_LOAD_PENDING,
     DASHBOARD_ANSWERS_SUBMIT_PENDING,
-    DASHBOARD_ANSWERS_SUBMIT_SUCCESS,
-    DASHBOARD_ANSWERS_SUBMIT_ERROR,
+    DASHBOARD_ANSWERS_SUBMIT_RESOLVED,
+    DASHBOARD_ANSWERS_SUBMIT_FAILED,
 } from '../../../constants/actionTypes';
 
 
@@ -12,13 +12,13 @@ export const loadQuestionsPending = () => ({
     type: DASHBOARD_QUESTIONS_LOAD_PENDING,
 });
 
-export const loadQuestionsSuccess = (questions) => ({
-    type: DASHBOARD_QUESTIONS_LOAD_SUCCESS,
+export const loadQuestionsResolved = (questions) => ({
+    type: DASHBOARD_QUESTIONS_LOAD_RESOLVED,
     payload: questions,
 });
 
-export const loadQuestionsError = (error) => ({
-    type: DASHBOARD_QUESTIONS_LOAD_ERROR,
+export const loadQuestionsFailed = (error) => ({
+    type: DASHBOARD_QUESTIONS_LOAD_FAILED,
     payload: error,
 });
 
@@ -26,12 +26,12 @@ export const submitAnswersPending = () => ({
     type: DASHBOARD_ANSWERS_SUBMIT_PENDING,
 });
 
-export const submitAnswersSuccess = (questions) => ({
-    type: DASHBOARD_ANSWERS_SUBMIT_SUCCESS,
+export const submitAnswersResolved = (questions) => ({
+    type: DASHBOARD_ANSWERS_SUBMIT_RESOLVED,
     payload: questions,
 });
 
-export const submitAnswersError = (error) => ({
-    type: DASHBOARD_ANSWERS_SUBMIT_ERROR,
+export const submitAnswersFailed = (error) => ({
+    type: DASHBOARD_ANSWERS_SUBMIT_FAILED,
     payload: error,
 });
