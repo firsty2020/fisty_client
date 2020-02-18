@@ -16,6 +16,20 @@ import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
 import { AlertNotice, SuccessNotice } from '../../ui';
+import { generateDays, generateMonths, generateYears } from '../../../utils';
+
+import Select from 'react-select';
+
+
+const months = generateMonths();
+const years = generateYears();
+const days = generateDays();
+
+const languageOptions = [
+    { value: 'Английский', label: 'Английский' },
+    { value: 'Русский', label: 'Русский' },
+];
+
 
 
 const CompleteRegistration = ({
@@ -76,6 +90,8 @@ const CompleteRegistration = ({
                           handleChange,
                           handleBlur,
                           handleSubmit,
+                          setFieldTouched,
+                          setFieldValue,
                       }) => (
                         <Form onSubmit={handleSubmit} className="mx-auto">
                             <Form.Group>
@@ -152,6 +168,125 @@ const CompleteRegistration = ({
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group>
+                                <p className="form-control-label">Дата рождения</p>
+                                <Form.Row>
+                                    <Col>
+                                        <Form.Control
+                                            name="year"
+                                            value={values.year}
+                                            as="select"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                        >
+                                            {years.map((year) =>
+                                                <option
+                                                    key={year}
+                                                    value={year}>{year}</option>
+                                            )}
+                                            <option disabled value={-1}>Год</option>
+                                        </Form.Control>
+                                        {touched.year && errors.year ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.year}</span>
+                                        ) : null}
+                                    </Col>
+                                    <Col>
+                                        <Form.Control
+                                            name="month"
+                                            value={values.month}
+                                            as="select"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                        >
+                                            {months.map((month) =>
+                                                <option
+                                                    key={month.title}
+                                                    value={month.value}
+                                                >{month.title}</option>
+                                            )}
+                                            <option disabled value={-1}>Месяц</option>
+                                        </Form.Control>
+                                        {touched.month && errors.month ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.month}</span>
+                                        ) : null}
+                                    </Col>
+                                    <Col>
+                                        <Form.Control
+                                            name="day"
+                                            value={values.day}
+                                            as="select"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                        >
+                                            {days.map((day) =>
+                                                <option
+                                                    value={day}
+                                                    key={day}
+                                                >{day}</option>
+                                            )}
+                                            <option disabled value={-1}>День</option>
+                                        </Form.Control>
+                                        {touched.day && errors.day ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.day}</span>
+                                        ) : null}
+                                    </Col>
+                                </Form.Row>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Row>
+                                    <Col>
+                                        Образование
+                                        <Form.Control
+                                            name="education"
+                                            value={values.education}
+                                            as="select"
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                        >
+                                            <option value='male'>Начальное</option>
+                                            <option  value='female'>Среднее</option>
+                                            <option  value='other'>Высшее</option>
+                                            <option disabled value={-1}>Выберите образование</option>
+                                        </Form.Control>
+                                        {touched.education && errors.education ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.education}</span>
+                                        ) : null}
+                                    </Col>
+                                    <Col>
+                                        Знание языков
+                                        <Select
+                                            name="languages"
+                                            value={values.languages}
+                                            onBlur={(e) => setFieldTouched('languages', e)}
+                                            onChange={(e) => setFieldValue('languages', e)}
+                                            options={languageOptions}
+                                            placeholder="Выберите языки"
+                                            isMulti>
+                                        </Select>
+                                        {touched.languages && errors.languages ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
+                                        ) : null}
+                                    </Col>
+                                </Form.Row>
+                            </Form.Group>
+                            <Form.Group>
+                                Пол
+                                <Form.Control
+                                    name="gender"
+                                    value={values.gender}
+                                    as="select"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                >
+                                    <option value='male'>Мужской</option>
+                                    <option  value='female'>Женский</option>
+                                    <option  value='other'>Другой</option>
+                                    <option disabled value={-1}>Пол</option>
+                                </Form.Control>
+                                {touched.day && errors.day ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
+                                ) : null}
+                            </Form.Group>
+                            <Form.Group>
                                 <p className="form-control-label">Опыт Работы</p>
                                 <Form.Control
                                     type="tel"
@@ -199,7 +334,6 @@ const CompleteRegistration = ({
                                     </Col>
                                 </Form.Row>
                             </Form.Group>
-
                             <Form.Group>
                                 <p className="form-control-label">Город</p>
                                 <Form.Control
@@ -241,7 +375,7 @@ const mapDispatchToProps = { completeRegistration, push };
 
 CompleteRegistration.propTypes = {
     pending: bool.isRequired,
-    error: oneOfType([ bool, string ]).isRequired,
+    error: string,
     success: bool.isRequired,
     match: shape({
         params: shape(

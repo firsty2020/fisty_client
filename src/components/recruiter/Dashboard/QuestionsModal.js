@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Modal, Button, Alert } from 'react-bootstrap';
+import {Modal, Button, Alert, Form } from 'react-bootstrap';
 import { arrayOf, string, shape, bool, func } from 'prop-types';
 import { When } from 'react-if';
+import { Formik } from 'formik';
 import  { loadQuestions, submitAnswers } from './questionsApi';
+import { validationQuestionsSchema } from '../../../validation';
 import {
     questionsSelector,
     submitAnswerPendingSelector,
     thresholdPassedSelector
 } from './dashboardReducer';
 import Question from './Question';
+
+
+let submitFormik;
 
 
 const QuestionsModal = ({
@@ -69,22 +73,58 @@ const QuestionsModal = ({
                 </Modal.Header>
                 <Modal.Body>
                     <p>Ответьте на эти вопросы чтобы активировать ваш аккаунт.</p>
+                    <Formik
+                        initialValues={{
+                            year: -1,
+                            month: -1,
+                            day: -1,
+                            education: -1,
+                            languages: [],
+                            gender: -1
+                        }}
+                        validationSchema={validationQuestionsSchema}
+                        onSubmit={(values) => {
+                            console.log(values, 'values')
+                            handleSubmitAnswers();
+                        }}
+                    >
+                        {({
+                              values,
+                              errors,
+                              touched,
+                              handleChange,
+                              handleBlur,
+                              handleSubmit,
+                              submitForm,
+                              setFieldTouched,
+                              setFieldValue,
+                          }) => {
+                            submitFormik = submitForm;
+                            return (
+                                <Form onSubmit={handleSubmit}>
+
+                                </Form>
+                            )}}
+                    </Formik>
+                    <hr/>
                     {questions && questions.length ?
-                        questions.map((question, i) => <Question
-                            key={question.url}
-                            question={question}
-                            onAnswer={handleSelectAnswer}
-                            index={i}
-                        />)
+                        questions.map((question, i) =>
+                            <Question
+                                key={question.url}
+                                question={question}
+                                onAnswer={handleSelectAnswer}
+                                index={i}
+                            />)
                         : null
                     }
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
                         size="lg"
+                        type="submit"
                         block
                         disabled={submitPending}
-                        onClick={handleSubmitAnswers}>Ввод
+                        onClick={() => submitFormik()}>Ввод
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -92,14 +132,14 @@ const QuestionsModal = ({
     );
 };
 
+
 const mapStateToProps = state => ({
     questions: questionsSelector(state),
     thresholdPassed: thresholdPassedSelector(state),
     submitPending: submitAnswerPendingSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-    { loadQuestions, submitAnswers }, dispatch);
+const mapDispatchToProps = { loadQuestions, submitAnswers };
 
 QuestionsModal.propTypes = {
     questions: arrayOf(shape({

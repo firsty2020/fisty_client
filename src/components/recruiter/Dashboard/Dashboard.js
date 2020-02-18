@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 
 Dashboard.propTypes = {
     user: oneOfType([shape({status: string.isRequired}).isRequired]),
-    userLoadFailed: oneOfType([ bool, string ]).isRequired,
+    userLoadFailed: string,
     push: func.isRequired,
     getAuthUser: func.isRequired
 };

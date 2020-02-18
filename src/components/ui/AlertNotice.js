@@ -15,7 +15,7 @@ const AlertNotice = ({ message, type }) => {
 
 
 AlertNotice.propTypes = {
-    message: oneOfType([ string, bool ]).isRequired,
+    message: string,
     type: oneOf(['danger', 'success']).isRequired, // this component relies on bootsrap, so be sure proper type is passed
 };
 

@@ -38,6 +38,22 @@ export const completeRegistrationSchema = Yup.object().shape({
         .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.COUNTRY_REQUIRED),
     citizenship: Yup.string()
         .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
+    year: Yup.number()
+        .positive(ERROR_MESSAGES.DOB_YEAR_REQUIRED),
+    month: Yup.number()
+        .positive(ERROR_MESSAGES.DOB_MONTH_REQUIRED)
+        .lessThan(13),
+    day: Yup.number()
+        .positive(ERROR_MESSAGES.DOB_DAY_REQUIRED),
+    education: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
+    languages: Yup.array()
+        .min(1, ERROR_MESSAGES.LANGUAGES_REQUIRED)
+        .of(Yup.object().shape({
+                label: Yup.string().required(),
+                value: Yup.string().required(),
+            })
+        ),
+    gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
 });
 
 export const logInSchema = Yup.object().shape({
@@ -50,3 +66,6 @@ export const logInSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.PASSWORD_REQUIRED),
 });
 
+export const validationQuestionsSchema = Yup.object().shape({
+
+});

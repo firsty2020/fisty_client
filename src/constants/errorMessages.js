@@ -14,6 +14,11 @@ export default {
     REPEAT_PASSWORD_REQUIRED: 'Повторите пароль',
     EXPERIENCE_REQUIRED: 'Введите опыт работы',
     EXPERIENCE_INVALID: 'Введите опыт работы в годах. Пр: 7',
-    PASSWORDS_NOT_MATCH: 'Поля не совпадают'
+    PASSWORDS_NOT_MATCH: 'Поля не совпадают',
+    DOB_YEAR_REQUIRED: 'Выберите год вашего рождения',
+    DOB_MONTH_REQUIRED: 'Выберите месяц вашего рождения',
+    DOB_DAY_REQUIRED: 'Выберите день вашего рождения',
+    EDUCATION_REQUIRED: 'Выберите ваше образование',
+    LANGUAGES_REQUIRED: 'Выберите хотя бы один язык',
 };
 

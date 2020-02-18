@@ -4,8 +4,9 @@ import {
     ADMIN_GET_USERS_RESOLVED,
 } from '../../constants/actionTypes';
 
+const initialState = { getUsersPending: false, getUsersError: null, users: [] };
 
-export const admin = (state = {}, action) => {
+export const admin = (state = initialState, action) => {
     switch (action.type) {
         case ADMIN_GET_USERS_PENDING:
             return { getUsersPending: true, getUsersError: null, users: [] };
