@@ -48,10 +48,8 @@ export const getAuthToken = (username, password) => {
     }
 };
 
-const storeToken = (token) => localStorage.setItem('auth_token', token);
-
 export const getAuthUser = () => {
-    const userId = getUserIdByFromToken();
+    const userId = (getUserFromToken() || {}).user_id;
     return dispatch => {
         if (!userId)
             return dispatch(fetchUserError('Not authenticated'));
@@ -62,13 +60,15 @@ export const getAuthUser = () => {
     }
 };
 
-const getUserIdByFromToken = () => {
+export const getUserFromToken = () => {
     const token = localStorage.getItem('auth_token');
-    let decoded;
+    let decoded = null;
     try {
         decoded = jwt_decode(token);
     } catch (e) {
         console.warn(e);
     }
-    return decoded ? decoded.user_id : null;
+    return decoded;
 };
+
+const storeToken = (token) => localStorage.setItem('auth_token', token);
