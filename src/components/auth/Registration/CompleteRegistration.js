@@ -6,7 +6,7 @@ import { completeRegistration } from '../auth';
 import { push } from 'connected-react-router'
 import { completeRegistrationSchema } from '../../../validation';
 import { Formik } from 'formik';
-import { bool, func, oneOfType, shape, string } from 'prop-types';
+import { bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
 import CountryCodeItem from './CountryCodeItem';
 import CountriesDropdown from './CountriesDropdown';

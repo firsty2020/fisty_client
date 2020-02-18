@@ -20,13 +20,13 @@ import brand_logo_3 from '../../assets/images/brands/brand_logo3.png';
 import brand_logo_4 from '../../assets/images/brands/brand_logo4.png';
 import brand_logo_5 from '../../assets/images/brands/brand_logo5.png';
 import './Landing.css';
-import {
+/*import {
     ButtonBack,
     ButtonNext,
     CarouselProvider,
     Slide,
     Slider
-} from 'pure-react-carousel';
+} from 'pure-react-carousel';*/
 
 
 const Landing = () => {
@@ -35,7 +35,7 @@ const Landing = () => {
             <header className="header">
                 <div className="wrapper">
                     <div className="logo_wrapper">
-                        <a href="#">
+                        <a href="#!">
                             <img src={logo} className="logo" alt="firsty logo"/></a>
                     </div>
                     <div className="header_panel">
@@ -443,7 +443,7 @@ const Landing = () => {
                                     директор ООО «ЦентрПроф». На протяжении
                                     более 4 лет реализовывает проекты по
                                     подбору </p>
-                                <a href="#"
+                                <a href="#!"
                                    className="team_member_more_button">Подробнее</a>
                             </div>
                             <div className="team_member">
@@ -459,7 +459,7 @@ const Landing = () => {
                                     массового подбора и рекрутмента в Яндекс.Еда
                                     и Яндекс.Такси, Кидзании, Анкор. Опыт работы
                                     в рекрутменте 11 лет и </p>
-                                <a href="#"
+                                <a href="#!"
                                    className="team_member_more_button">Подробнее</a>
                             </div>
                             <div className="team_member">
@@ -474,7 +474,7 @@ const Landing = () => {
                                 <p className="team_member_desc">На протяжении
                                     3-х лет успешно реализовывает проекты в
                                     области рекрутмента и массового подбора </p>
-                                <a href="#"
+                                <a href="#!"
                                    className="team_member_more_button">Подробнее</a>
                             </div>
                         </div>
@@ -482,15 +482,15 @@ const Landing = () => {
                 </section>
                 <section className="brands">
                     <div className="wrapper">
-                        <a href="#" className="brand_item">
+                        <a href="#!" className="brand_item">
                             <img src={brand_logo_1} alt="brand logo"/></a>
-                        <a href="#" className="brand_item">
+                        <a href="#!" className="brand_item">
                             <img src={brand_logo_2} alt="brand logo"/></a>
-                        <a href="#" className="brand_item"><img
+                        <a href="#!" className="brand_item"><img
                             src={brand_logo_3} alt=""/></a>
-                        <a href="#" className="brand_item"><img
+                        <a href="#!" className="brand_item"><img
                             src={brand_logo_4} alt="brand logo"/></a>
-                        <a href="#" className="brand_item"><img
+                        <a href="#!" className="brand_item"><img
                             src={brand_logo_5} alt="brand logo"/></a>
                     </div>
                 </section>
@@ -498,7 +498,7 @@ const Landing = () => {
             <footer className="footer">
                 <div className="wrapper">
                     <div className="footer_col">
-                        <a href="#" className="footer_logo"><img
+                        <a href="#!" className="footer_logo"><img
                             src={logo_white} alt=""/></a>
                         <p className="footer_info_paragraph">По вопросам
                             сотрудничества: ООО «Департамент успеха»<br/>ИНН

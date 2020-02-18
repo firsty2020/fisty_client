@@ -8,7 +8,7 @@ import api from '../../../axios';
 
 export const getUsers = (status) => {
     let params;
-    if (status && status != -1) {
+    if (status !== 'all') {
         params = { status }
     }
     return dispatch => {

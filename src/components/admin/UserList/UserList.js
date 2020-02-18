@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Form, Row, Spinner, Table} from 'react-bootstrap';
+import { Col, Form, Row, Spinner, Table } from 'react-bootstrap';
 import { getUsers } from './userListApi';
 import { connect } from 'react-redux';
 import {
@@ -17,22 +17,23 @@ import { Database } from 'react-feather';
 
 const UserList = ({ users, match, getUsers, getUsersPending, push }) => {
 
-    const [ status, setStatus ] = useState(-1);
+    const [ status, setStatus ] = useState();
 
     const handleFilterByStatusChange = (e) => setStatus(e.target.value);
 
     useEffect(() => {
-        getUsers(status);
+        if (!status) {
+            setStatus(match.params.status);
+            getUsers(match.params.status);
+        } else {
+            getUsers(status);
+        }
     }, [ getUsers, match.params.status ]);
 
     useEffect(() => {
-        if (status === -1) {
-            push(`/admin/users/all`);
-        } else {
-            push(`/admin/users/${status}`);
-        }
-
-    }, [ status, getUsers, push ]);
+        if (!status) return;
+        push(`/admin/users/${status}`);
+    }, [ getUsers, push, status ]);
 
     return (
         <div>
@@ -51,10 +52,9 @@ const UserList = ({ users, match, getUsers, getUsersPending, push }) => {
                             <option value="clarification">Кларификация</option>
                             <option value="freeze">Замороженные</option>
                             <option value="black_list">Заблокированные</option>
-                            <option value={-1}>Все</option>
+                            <option value="all">Все</option>
                         </Form.Control>
                     </Col>
-                    <Col lg={8} md={4} sm={4}></Col>
                 </Row>
             </div>
             <div >
@@ -124,7 +124,7 @@ UserList.propTypes = {
         country: string.isRequired,
         city: string.isRequired,
     })),
-    match: shape({ status: string}).isRequired,
+    match: shape({ status: string }).isRequired,
     getUsers: func.isRequired,
     getUsersError: string,
     getUsersPending: bool.isRequired,

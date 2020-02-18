@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
-import {bool, oneOf, oneOfType, string} from 'prop-types';
+import { oneOf, string } from 'prop-types';
 
 
 const AlertNotice = ({ message, type }) => {
