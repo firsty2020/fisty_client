@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Form, Row, Table} from 'react-bootstrap';
+import {Col, Container, Form, Row, Spinner, Table} from 'react-bootstrap';
 import { getUsers } from './userListApi';
 import { connect } from 'react-redux';
 import {
@@ -9,11 +9,13 @@ import {
 } from '../adminReducer';
 import UserListItem from './UserListItem';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
+import { When } from 'react-if';
 import { push } from 'connected-react-router';
 import './UserList.css';
+import { Database } from 'react-feather';
 
 
-const UserList = ({ users, match, getUsers, push }) => {
+const UserList = ({ users, match, getUsers, getUsersPending, push }) => {
 
     const [ status, setStatus ] = useState(-1);
 
@@ -21,7 +23,7 @@ const UserList = ({ users, match, getUsers, push }) => {
 
     useEffect(() => {
         getUsers(status);
-    }, [ getUsers, status ]);
+    }, [ getUsers, match.params.status ]);
 
     useEffect(() => {
         if (status === -1) {
@@ -84,7 +86,19 @@ const UserList = ({ users, match, getUsers, push }) => {
                     </tbody>
                 </Table>
             </div>
-
+            <When condition={getUsersPending}>
+                <div className="text-center m-a-xl">
+                    <Spinner
+                        variant="primary"
+                        animation="border" />
+                </div>
+            </When>
+            <When condition={!getUsersPending && !users.length}>
+                <div className="text-center m-a-xl">
+                    <Database/>
+                    <p>Пустой Список</p>
+                </div>
+            </When>
         </div>
     );
 };
