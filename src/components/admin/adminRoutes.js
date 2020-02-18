@@ -12,7 +12,7 @@ export const navigation =  {
         {
             name: 'Пользователи',
             icon: 'Users',
-            url: '/admin/users',
+            url: '/admin/users/all',
         },
     ],
     bottom: [
@@ -29,9 +29,9 @@ export const navigation =  {
 };
 
 
-export const routes = [
+export const adminRoutes = [
     {
-        path: '/admin/users',
+        path: '/admin/users/:status',
         component: UserList,
     },
 ];

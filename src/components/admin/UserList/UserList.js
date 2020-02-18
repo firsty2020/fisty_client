@@ -9,31 +9,38 @@ import {
 } from '../adminReducer';
 import UserListItem from './UserListItem';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
+import { push } from 'connected-react-router';
 import './UserList.css';
 
 
-const UserList = ({ users, match, getUsers }) => {
+const UserList = ({ users, match, getUsers, push }) => {
 
-    const [ filterByStatus, setFilterByStatus ] = useState('-1');
-    
-    const handleFilterByStatusChange = (e) => setFilterByStatus(e.target.value);
+    const [ status, setStatus ] = useState(-1);
 
-    useEffect(() => {
-        getUsers();
-    }, [ match.params.filter, getUsers ]);
+    const handleFilterByStatusChange = (e) => setStatus(e.target.value);
 
     useEffect(() => {
-        getUsers(filterByStatus);
-    }, [ filterByStatus, getUsers ]);
+        getUsers(status);
+    }, [ getUsers, status ]);
+
+    useEffect(() => {
+        if (status === -1) {
+            push(`/admin/users/all`);
+        } else {
+            push(`/admin/users/${status}`);
+        }
+
+    }, [ status, getUsers, push ]);
 
     return (
-        <Container fluid>
-            <Row>
-                <Col md={{ span: 3, offset: 9 }}>
-                    <div className="filter-container">
+        <div>
+            <div className="filter-container">
+                <Row>
+                    <Col lg={4} md={4} sm={4}>
+                        <Form.Label>Фильтровать по статусу</Form.Label>
                         <Form.Control
                             name="filter"
-                            value={filterByStatus}
+                            value={status}
                             onChange={handleFilterByStatusChange}
                             as="select">
                             <option value="new">Новые</option>
@@ -42,38 +49,43 @@ const UserList = ({ users, match, getUsers }) => {
                             <option value="clarification">Кларификация</option>
                             <option value="freeze">Замороженные</option>
                             <option value="black_list">Заблокированные</option>
-                            <option value="-1">Все</option>
-                            <option disabled value="-1">Фильтр</option>
+                            <option value={-1}>Все</option>
                         </Form.Control>
-                    </div>
-                </Col>
+                    </Col>
+                    <Col lg={8} md={4} sm={4}></Col>
+                </Row>
+            </div>
+            <div >
+                <Table
+                    striped
+                    responsive="md"
+                    responsive="lg"
+                    responsive="xs"
+                    responsive="sm"
+                    responsive="xl"
+                >
+                    <thead>
+                    <tr>
+                        <th width={20}>#</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Эл. Почта</th>
+                        <th>Роль</th>
+                        <th>Телефон</th>
+                        <th>Гражданство</th>
+                        <th>Страна</th>
+                        <th>Город</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {users && users.length ? users.map((user, index) =>
+                            <UserListItem user={user} index={index} key={user.url} />)
+                        : null}
+                    </tbody>
+                </Table>
+            </div>
 
-            </Row>
-            <Row>
-                <Col>
-                    <Table striped>
-                        <thead>
-                        <tr>
-                            <th width={20}>#</th>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Эл. Почта</th>
-                            <th>Роль</th>
-                            <th>Телефон</th>
-                            <th>Гражданство</th>
-                            <th>Страна</th>
-                            <th>Город</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {users && users.length ? users.map((user, index) =>
-                                <UserListItem user={user} index={index} key={user.url} />)
-                            : null}
-                        </tbody>
-                    </Table>
-                </Col>
-            </Row>
-        </Container>
+        </div>
     );
 };
 
@@ -84,7 +96,7 @@ const mapStateToProps = state => ({
     getUsersPending: usersPendingSelector(state),
 });
 
-const mapDispatchToProps = { getUsers };
+const mapDispatchToProps = { getUsers, push };
 
 
 UserList.propTypes = {
@@ -98,7 +110,7 @@ UserList.propTypes = {
         country: string.isRequired,
         city: string.isRequired,
     })),
-    match: shape({ filter: string}).isRequired,
+    match: shape({ status: string}).isRequired,
     getUsers: func.isRequired,
     getUsersError: string,
     getUsersPending: bool.isRequired,

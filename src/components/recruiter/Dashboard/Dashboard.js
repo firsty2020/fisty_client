@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAuthUser } from '../../auth/auth';
 import { userSelector, authErrorSelector } from '../../auth/authReducer';
-import { shape, string, func, bool, oneOfType } from 'prop-types';
+import { shape, string, func, oneOfType } from 'prop-types';
 import { push } from 'connected-react-router'
 import { When } from 'react-if';
 import QuestionsModal from './QuestionsModal';

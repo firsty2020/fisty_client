@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
 import Logo from '../../assets/images/logo_white.png';
-import { navigation, routes } from './routes';
+import { navigation, adminRoutes } from './adminRoutes';
 
 
 const MOBILE_SIZE = 992;
@@ -51,7 +51,7 @@ class Dashboard extends Component {
                         </Header>
                         <PageContent>
                             <Switch>
-                                {routes.map((page, key) => (
+                                {adminRoutes.map((page, key) => (
                                     <Route
                                         path={page.path}
                                         component={page.component}
