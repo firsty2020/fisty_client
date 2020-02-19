@@ -8,7 +8,7 @@ import { When } from 'react-if';
 import QuestionsModal from './QuestionsModal';
 import { AlertNotice } from '../ui';
 import { Alert } from 'react-bootstrap';
-import { thresholdPassedSelector } from './dashboardReducer';
+import { thresholdPassedSelector } from './recruiterReducer';
 
 
 const Dashboard = ({ user, userLoadFailed, thresholdPassed, getAuthUser, push }) => {

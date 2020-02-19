@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { auth } from './components/auth/authReducer';
-import { dashboard } from './components/recruiter/dashboardReducer';
+import { dashboard } from './components/recruiter/recruiterReducer';
 import { admin } from './components/admin/adminReducer';
 import { connectRouter } from 'connected-react-router';
 

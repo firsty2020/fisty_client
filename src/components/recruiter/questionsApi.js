@@ -5,7 +5,7 @@ import {
     submitAnswersPending,
     submitAnswersFailed,
     submitAnswersResolved,
-} from './dashboardActions';
+} from './recruiterActions';
 import api from '../../axios';
 
 
