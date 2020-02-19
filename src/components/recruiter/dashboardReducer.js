@@ -5,7 +5,7 @@ import {
     DASHBOARD_ANSWERS_SUBMIT_PENDING,
     DASHBOARD_ANSWERS_SUBMIT_FAILED,
     DASHBOARD_ANSWERS_SUBMIT_RESOLVED
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const dashboard = (state = { questions: []}, action) => {
     switch (action.type) {

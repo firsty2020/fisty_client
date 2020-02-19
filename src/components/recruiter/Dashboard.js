@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getAuthUser } from '../../auth/auth';
-import { userSelector, authErrorSelector } from '../../auth/authReducer';
+import { getAuthUser } from '../auth/auth';
+import { userSelector, authErrorSelector } from '../auth/authReducer';
 import { shape, string, func, oneOfType } from 'prop-types';
 import { push } from 'connected-react-router'
 import { When } from 'react-if';
 import QuestionsModal from './QuestionsModal';
-import { AlertNotice } from '../../ui';
+import { AlertNotice } from '../ui';
+import { Alert } from 'react-bootstrap';
+import { thresholdPassedSelector } from './dashboardReducer';
 
 
-const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
+const Dashboard = ({ user, userLoadFailed, thresholdPassed, getAuthUser, push }) => {
 
     useEffect(() => {
         getAuthUser();
@@ -28,6 +29,18 @@ const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
             <When condition={!!userLoadFailed}>
                 <AlertNotice message={userLoadFailed} type="danger"/>
             </When>
+            <When condition={!!thresholdPassed}>
+                <Alert variant="success">
+                    <Alert.Heading>Отлично!</Alert.Heading>
+                    <p>Теперь ваш аккaунт активен!</p>
+                </Alert>
+            </When>
+            <When condition={thresholdPassed === false}>
+                <Alert variant="danger">
+                    <Alert.Heading>О нет!</Alert.Heading>
+                    <p>Вы не дали нужное количество правильных ответов.</p>
+                </Alert>
+            </When>
             <When condition={!!(user && user.status === 'new')}>
                 <QuestionsModal/>
             </When>
@@ -37,12 +50,12 @@ const Dashboard = ({ user, userLoadFailed, getAuthUser, push }) => {
 };
 
 const mapStateToProps = state => ({
+    thresholdPassed: thresholdPassedSelector(state),
     user: userSelector(state),
     userLoadFailed: authErrorSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-    { getAuthUser, push }, dispatch);
+const mapDispatchToProps = { getAuthUser, push };
 
 
 Dashboard.propTypes = {

@@ -3,7 +3,9 @@ import ERROR_MESSAGES from './constants/errorMessages'
 
 const REGEX = {
     NUMERIC: /^\d+$/,
+    NUMERIC_DECIMAL: /^\d*\.?\d*$/,
     ALPHABETIC: /^[A-Z]+$/i,
+    ALPHABETIC_ALLOW_SPACE: /^[A-Z]+$/i,
     LATIN_ALPHABET_NUMBERS_SYMBOLS: /^[A-Za-z0-9@!#$%^&*{};':",<.>/|?`~=()[\]_\-+\\]+$/
 };
 
@@ -66,6 +68,27 @@ export const logInSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.PASSWORD_REQUIRED),
 });
 
-export const validationQuestionsSchema = Yup.object().shape({
 
+export const validationQuestionsSchema = Yup.object().shape({
+    hasExperience: Yup.bool().required(ERROR_MESSAGES.ANSWER_QUESTION),
+    experience: Yup
+        .string()
+        .matches(REGEX.NUMERIC_DECIMAL, ERROR_MESSAGES.EXPERIENCE_INVALID)
+        .when('hasExperience', {
+            is: true,
+            then: Yup.string().required(ERROR_MESSAGES.EXPERIENCE_REQUIRED)
+        }),
+    personnel: Yup.string()
+        .when('hasExperience', {
+        is: true,
+        then: Yup.string().min(3, ERROR_MESSAGES.ANSWER_QUESTION)
+    }),
+    hasSite_access: Yup.bool()
+        .required(ERROR_MESSAGES.ANSWER_QUESTION),
+    site_access: Yup.array()
+        .when('hasSite_access', {
+            is: true,
+            then: Yup.array().required(ERROR_MESSAGES.ANSWER_QUESTION)
+        }),
+    term: Yup.string().min(3, ERROR_MESSAGES.ANSWER_QUESTION)
 });

@@ -20,5 +20,6 @@ export default {
     DOB_DAY_REQUIRED: 'Выберите день вашего рождения',
     EDUCATION_REQUIRED: 'Выберите ваше образование',
     LANGUAGES_REQUIRED: 'Выберите хотя бы один язык',
+    ANSWER_QUESTION: 'Пожалуйста, ответьте на этот вопрос'
 };
 
