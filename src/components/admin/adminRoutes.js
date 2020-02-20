@@ -1,4 +1,4 @@
-import UserList from './UserList/UserList';
+import UserList from './Users/Users';
 
 
 export const navigation =  {
@@ -13,6 +13,11 @@ export const navigation =  {
             name: 'Пользователи',
             icon: 'Users',
             url: '/admin/users/all',
+        },
+        {
+            name: 'Компании',
+            icon: 'Briefcase',
+            url: '/admin/companies',
         },
     ],
     bottom: [
@@ -32,6 +37,10 @@ export const navigation =  {
 export const adminRoutes = [
     {
         path: '/admin/users/:status',
+        component: UserList,
+    },
+    {
+        path: '/admin/companies',
         component: UserList,
     },
 ];

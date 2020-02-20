@@ -37,7 +37,6 @@ class Dashboard extends Component {
                     <SidebarNav
                         nav={navigation}
                         logo={Logo}
-                        logoText="Firsty"
                         isSidebarCollapsed={sidebarCollapsed}
                         toggleSidebar={this.toggleSideCollapse}
                         {...this.props}

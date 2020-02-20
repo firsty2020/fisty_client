@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Col, Form, Row, Spinner, Table } from 'react-bootstrap';
-import { getUsers } from './userListApi';
+import { getUsers } from './usersApi';
 import { connect } from 'react-redux';
 import {
     usersSelector,
@@ -11,11 +11,11 @@ import UserListItem from './UserListItem';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
-import './UserList.css';
-import { Database } from 'react-feather';
+import './Users.css';
+import { EmptyListPlaceholder } from '../../ui';
 
 
-const UserList = ({ users, match, getUsers, getUsersPending, push }) => {
+const Users = ({ users, match, getUsers, getUsersPending, push }) => {
 
     const [ status, setStatus ] = useState();
 
@@ -94,10 +94,7 @@ const UserList = ({ users, match, getUsers, getUsersPending, push }) => {
                 </div>
             </When>
             <When condition={!getUsersPending && !users.length}>
-                <div className="text-center m-a-xl">
-                    <Database/>
-                    <p>Пустой Список</p>
-                </div>
+                <EmptyListPlaceholder/>
             </When>
         </div>
     );
@@ -113,7 +110,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = { getUsers, push };
 
 
-UserList.propTypes = {
+Users.propTypes = {
     users: arrayOf(shape({
         first_name: string.isRequired,
         last_name: string.isRequired,
@@ -131,4 +128,4 @@ UserList.propTypes = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserList);
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
