@@ -20,6 +20,9 @@ export default {
     DOB_DAY_REQUIRED: 'Выберите день вашего рождения',
     EDUCATION_REQUIRED: 'Выберите ваше образование',
     LANGUAGES_REQUIRED: 'Выберите хотя бы один язык',
-    ANSWER_QUESTION: 'Пожалуйста, ответьте на этот вопрос'
+    ANSWER_QUESTION: 'Пожалуйста, ответьте на этот вопрос',
+    COMPANY_NAME_REQUIRED: 'Введите Полное наименование компании (Юридическое)',
+    COMPANY_BRAND_REQUIRED: 'Введите Название компании (Бренд)',
+    COMPANY_TIN_REQUIRED: 'Введите ИНН',
 };
 

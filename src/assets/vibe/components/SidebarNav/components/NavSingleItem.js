@@ -24,7 +24,12 @@ const NavSingleItem = ({item}) => {
 
         return (
             <li className="nav-item">
-                <NavLink to={url} exact={true} activeClassName="active">
+                <NavLink
+                    isActive={(match, location) =>
+                            match || location.pathname.includes(item.matcher)}
+                    to={url}
+                    exact={true}
+                    activeClassName="active">
                     {item.icon && Icon && <Icon className="side-nav-icon"/>}
                     <span className="nav-item-label">{item.name}</span>
                     {item.badge && <NavBadge color={item.badge.variant}

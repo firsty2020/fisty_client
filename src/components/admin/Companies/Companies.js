@@ -37,7 +37,7 @@ const Companies = () => {
                     <Col lg={4} md={4} sm={4} xs={3}/>
                     <Col lg={4} md={4} sm={4} xs={4}
                          className="d-flex justify-content-end align-items-end">
-                        <Link to="/companies/create">
+                        <Link to="/admin/companies/create">
                             <Button variant="primary">
                                 <PlusCircle
                                     size={20}

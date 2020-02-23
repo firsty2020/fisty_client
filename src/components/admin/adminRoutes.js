@@ -1,5 +1,6 @@
 import UserList from './Users/Users';
 import Companies from './Companies/Companies';
+import CreateCompany from './Companies/CreateCompany';
 
 
 export const navigation =  {
@@ -14,11 +15,13 @@ export const navigation =  {
             name: 'Пользователи',
             icon: 'Users',
             url: '/admin/users/all',
+            matcher: '/users'
         },
         {
             name: 'Компании',
             icon: 'Briefcase',
             url: '/admin/companies',
+            matcher: '/companies',
         },
     ],
     bottom: [
@@ -39,9 +42,16 @@ export const adminRoutes = [
     {
         path: '/admin/users/:status',
         component: UserList,
+        name: 'Пользователи'
     },
     {
         path: '/admin/companies',
         component: Companies,
+        name: 'Компании'
+    },
+    {
+        path: '/admin/companies/create',
+        component: CreateCompany,
+        name: 'Создать компанию'
     },
 ];

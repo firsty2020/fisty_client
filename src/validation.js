@@ -92,3 +92,12 @@ export const validationQuestionsSchema = Yup.object().shape({
         }),
     term: Yup.string().min(3, ERROR_MESSAGES.ANSWER_QUESTION)
 });
+
+export const companySchema = Yup.object().shape({
+    name: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_NAME_REQUIRED),
+    brand: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_BRAND_REQUIRED),
+    tin: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_BRAND_REQUIRED),
+});

@@ -46,6 +46,8 @@ class Dashboard extends Component {
                         <Header
                             toggleSidebar={this.toggleSideCollapse}
                             isSidebarCollapsed={sidebarCollapsed}
+                            {...this.props}
+                            routes={adminRoutes}
                         >
                         </Header>
                         <PageContent>
@@ -55,6 +57,7 @@ class Dashboard extends Component {
                                         path={page.path}
                                         component={page.component}
                                         key={key}
+                                        exact
                                     />
                                 ))}
                             </Switch>
