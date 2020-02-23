@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Col, Form, Row, Spinner, Table } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import { getUsers } from './usersApi';
 import { connect } from 'react-redux';
 import {
@@ -7,12 +7,23 @@ import {
     usersErrorSelector,
     usersPendingSelector
 } from '../adminReducer';
-import UserListItem from './UserListItem';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
 import './Users.css';
-import { EmptyListPlaceholder } from '../../ui';
+import { EmptyListPlaceholder, LoadSpinner, TableList } from '../../ui';
+
+
+const usersTableLayout = {
+    headings: [
+        '#', 'Имя', 'Фамилия', 'Эл. Почта', 'Роль',
+        'Телефон', 'Гражданство', 'Страна', 'Город',
+    ],
+    createRow: (user, index) => [
+        index + 1, user.first_name,  user.last_name, user.email, user.role,
+        user.phone_number, user.citizenship, user.country, user.city,
+    ],
+};
 
 
 const Users = ({ users, match, getUsers, getUsersPending, push }) => {
@@ -45,7 +56,8 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
                             name="filter"
                             value={status}
                             onChange={handleFilterByStatusChange}
-                            as="select">
+                            as="select"
+                        >
                             <option value="new">Новые</option>
                             <option value="active">Активные</option>
                             <option value="inactive">Неактивные</option>
@@ -57,41 +69,14 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
                     </Col>
                 </Row>
             </div>
-            <div >
-                <Table
-                    striped
-                    responsive="md"
-                    responsive="lg"
-                    responsive="xs"
-                    responsive="sm"
-                    responsive="xl"
-                >
-                    <thead>
-                    <tr>
-                        <th width={20}>#</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Эл. Почта</th>
-                        <th>Роль</th>
-                        <th>Телефон</th>
-                        <th>Гражданство</th>
-                        <th>Страна</th>
-                        <th>Город</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {users && users.length ? users.map((user, index) =>
-                            <UserListItem user={user} index={index} key={user.url} />)
-                        : null}
-                    </tbody>
-                </Table>
+            <div>
+                <TableList
+                    layout={usersTableLayout}
+                    data={users}
+                />
             </div>
             <When condition={getUsersPending}>
-                <div className="text-center m-a-xl">
-                    <Spinner
-                        variant="primary"
-                        animation="border" />
-                </div>
+                <LoadSpinner/>
             </When>
             <When condition={!getUsersPending && !users.length}>
                 <EmptyListPlaceholder/>

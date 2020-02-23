@@ -12,10 +12,10 @@ const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) 
             onBlur={onBlur}
             onChange={onSelectCountry}
         >
-            <option value="armenia">Армения</option>
-            <option value="belarus">Беларусь</option>
-            <option value="russia">Россия</option>
-            <option value="ukraine">Украина</option>
+            <option value="Армения">Армения</option>
+            <option value="Беларусь">Беларусь</option>
+            <option value="Россия">Россия</option>
+            <option value="Украина">Украина</option>
             <option disabled value={-1}>{placeHolder}</option>
         </Form.Control>
     );
@@ -23,7 +23,7 @@ const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) 
 
 
 CountriesDropdown.propTypes = {
-    value: oneOfType([string, number]).isRequired,
+    value: oneOfType([ string, number ]).isRequired,
     name: string.isRequired,
     placeHolder: string.isRequired,
     onSelectCountry: func.isRequired,
