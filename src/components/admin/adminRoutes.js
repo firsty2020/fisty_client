@@ -1,4 +1,5 @@
 import UserList from './Users/Users';
+import Companies from './Companies/Companies';
 
 
 export const navigation =  {
@@ -41,6 +42,6 @@ export const adminRoutes = [
     },
     {
         path: '/admin/companies',
-        component: UserList,
+        component: Companies,
     },
 ];
