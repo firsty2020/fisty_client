@@ -24,5 +24,17 @@ export default {
     COMPANY_NAME_REQUIRED: 'Введите Полное наименование компании (Юридическое)',
     COMPANY_BRAND_REQUIRED: 'Введите Название компании (Бренд)',
     COMPANY_TIN_REQUIRED: 'Введите ИНН',
+    COMPANY_CONTRACT_TYPE_REQUIRED: 'Введите тип контракта',
+    COMPANY_PSRN_REQUIRED: 'Введите ОГРН',
+    COMPANY_LEGAL_ADDRESS_REQUIRED: 'Введите юридический адрес',
+    COMPANY_ACEO_REQUIRED: 'Введите ОКПО',
+    COMPANY_ACEA_REQUIRED: 'Введите ОКВЭД',
+    COMPANY_IEC_REQUIRED: 'Введите КПП',
+    COMPANY_BANK_REQUIRED: 'Введите наименование банка',
+    COMPANY_SETTLEMENT_ACCOUNT_REQUIRED: 'Введите расчетный счет организации',
+    COMPANY_CORRESPONDENT_ACCOUNT_REQUIRED: 'Введите корреспондентский счет банка',
+    COMPANY_BANK_IDENTIFICATION_CODE_REQUIRED: 'Введите БИК банка',
+    COMPANY_SUBSCRIBER_NAME_REQUIRED: 'Введите ФИО подписанта',
+    COMPANY_SUBSCRIBER_POSITION_REQUIRED: 'Введите должность подписанта',
 };
 

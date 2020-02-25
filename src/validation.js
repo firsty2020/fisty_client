@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import ERROR_MESSAGES from './constants/errorMessages'
 
+
 const REGEX = {
     NUMERIC: /^\d+$/,
     NUMERIC_DECIMAL: /^\d*\.?\d*$/,
@@ -99,5 +100,33 @@ export const companySchema = Yup.object().shape({
     brand: Yup.string()
         .required(ERROR_MESSAGES.COMPANY_BRAND_REQUIRED),
     tin: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_BRAND_REQUIRED),
+        .required(ERROR_MESSAGES.COMPANY_TIN_REQUIRED),
+    contract_type: Yup.string()
+        .min(3, ERROR_MESSAGES.COMPANY_CONTRACT_TYPE_REQUIRED),
+    psrn: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_PSRN_REQUIRED),
+    legal_address: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_LEGAL_ADDRESS_REQUIRED),
+    aceo: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_ACEO_REQUIRED),
+    acea: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_ACEA_REQUIRED),
+    iec: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_IEC_REQUIRED),
+    bankDetails: Yup.object().shape({
+        name: Yup.string()
+            .required(ERROR_MESSAGES.COMPANY_BANK_REQUIRED),
+        settlement_account: Yup.string()
+            .required(ERROR_MESSAGES.COMPANY_SETTLEMENT_ACCOUNT_REQUIRED),
+        correspondent_account: Yup.string()
+            .required(ERROR_MESSAGES.COMPANY_CORRESPONDENT_ACCOUNT_REQUIRED),
+        identification_code: Yup.string()
+            .required(ERROR_MESSAGES.COMPANY_BANK_IDENTIFICATION_CODE_REQUIRED),
+
+    }),
+    subscriber_name: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_NAME_REQUIRED),
+    subscriber_position: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_POSITION_REQUIRED),
+
 });
