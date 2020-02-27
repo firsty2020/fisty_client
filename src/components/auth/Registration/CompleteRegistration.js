@@ -284,7 +284,6 @@ const CompleteRegistration = ({
                                     {touched.phone_number && errors.phone_number ? (
                                         <p className="mt-1 invalid-feedback">{errors.phone_number}</p>
                                     ) : null}
-
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group>

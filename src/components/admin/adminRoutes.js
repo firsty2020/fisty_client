@@ -2,6 +2,7 @@ import UserList from './Users/Users';
 import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
 import CreateBranch from './Companies/CreateBranch';
+import CreateContactPerson from './Companies/CreateContactPerson';
 
 
 export const navigation =  {
@@ -59,5 +60,10 @@ export const adminRoutes = [
         path: '/admin/companies/branches/create',
         component: CreateBranch,
         name: 'Создать бранч'
+    },
+    {
+        path: '/admin/companies/contact-persons/create',
+        component: CreateContactPerson,
+        name: 'Добавить контактное лицо'
     },
 ];

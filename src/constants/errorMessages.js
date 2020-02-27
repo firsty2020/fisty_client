@@ -1,7 +1,6 @@
 export default {
-    FIRST_NAME_REQUIRED: 'Введите ваше имя',
-    LAST_NAME_REQUIRED: 'Введите вашу фамилию',
-    FATHER_NAME_REQUIRED: 'Введите вашу фамилию',
+    FIRST_NAME_REQUIRED: 'Введите имя',
+    LAST_NAME_REQUIRED: 'Введите фамилию',
     EMAIL_INVALID: 'Введите действительный почтовый адрес',
     EMAIL_REQUIRED: 'Введите почтовый адрес',
     PHONE_INVALID: 'Введите действительный номер телефона',
@@ -36,8 +35,9 @@ export default {
     COMPANY_CORRESPONDENT_ACCOUNT_REQUIRED: 'Введите корреспондентский счет банка',
     COMPANY_BANK_IDENTIFICATION_CODE_REQUIRED: 'Введите БИК банка',
     COMPANY_SUBSCRIBER_NAME_REQUIRED: 'Введите ФИО подписанта',
-    COMPANY_SUBSCRIBER_POSITION_REQUIRED: 'Введите должность подписанта',
+    COMPANY_SUBSCRIBER_POSITION_REQUIRED: 'Введите должность',
     BRANCH_NAME_REQUIRED: 'Введите название бранча',
     BRANCH_ADDRESS_REQUIRED: 'Введите адрес бранча',
+    CONTACT_PERSON_STATUS: 'Выберите статус контактного лица',
 };
 

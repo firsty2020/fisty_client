@@ -7,7 +7,8 @@ const REGEX = {
     NUMERIC_DECIMAL: /^\d*\.?\d*$/,
     ALPHABETIC: /^[A-Z]+$/i,
     ALPHABETIC_ALLOW_SPACE: /^[A-Z]+$/i,
-    LATIN_ALPHABET_NUMBERS_SYMBOLS: /^[A-Za-z0-9@!#$%^&*{};':",<.>/|?`~=()[\]_\-+\\]+$/
+    LATIN_ALPHABET_NUMBERS_SYMBOLS: /^[A-Za-z0-9@!#$%^&*{};':",<.>/|?`~=()[\]_\-+\\]+$/,
+    PHONE_NUMBER: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
 };
 
 export const userRegistrationSchema = Yup.object().shape({
@@ -129,4 +130,22 @@ export const branchSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.BRANCH_NAME_REQUIRED),
     address: Yup.string()
         .required(ERROR_MESSAGES.BRANCH_ADDRESS_REQUIRED),
+});
+
+export const contactPersonSchema = Yup.object().shape({
+    first_name: Yup.string()
+        .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
+    last_name: Yup.string()
+        .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
+    father_name: Yup.string(),
+    position: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_POSITION_REQUIRED),
+    status: Yup.string()
+        .min(3, ERROR_MESSAGES.CONTACT_PERSON_STATUS),
+    email: Yup.string()
+        .email(ERROR_MESSAGES.EMAIL_INVALID)
+        .required(ERROR_MESSAGES.EMAIL_REQUIRED),
+    phone_number: Yup.string()
+        .required(ERROR_MESSAGES.PHONE_REQUIRED)
+        .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID)
 });
