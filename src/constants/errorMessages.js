@@ -37,5 +37,7 @@ export default {
     COMPANY_BANK_IDENTIFICATION_CODE_REQUIRED: 'Введите БИК банка',
     COMPANY_SUBSCRIBER_NAME_REQUIRED: 'Введите ФИО подписанта',
     COMPANY_SUBSCRIBER_POSITION_REQUIRED: 'Введите должность подписанта',
+    BRANCH_NAME_REQUIRED: 'Введите название бранча',
+    BRANCH_ADDRESS_REQUIRED: 'Введите адрес бранча',
 };
 

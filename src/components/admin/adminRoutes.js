@@ -1,6 +1,7 @@
 import UserList from './Users/Users';
 import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
+import CreateBranch from './Companies/CreateBranch';
 
 
 export const navigation =  {
@@ -53,5 +54,10 @@ export const adminRoutes = [
         path: '/admin/companies/create',
         component: CreateCompany,
         name: 'Создать компанию'
+    },
+    {
+        path: '/admin/companies/branches/create',
+        component: CreateBranch,
+        name: 'Создать бранч'
     },
 ];

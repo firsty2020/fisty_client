@@ -20,7 +20,7 @@ const Companies = () => {
 
     return (
         <div>
-            <div className="filter-container">
+            <div className="mt-10-auto">
                 <Row>
                     <Col lg={4} md={4} sm={4} xs={5}>
                         <Form.Label>Фильтровать по статусу</Form.Label>

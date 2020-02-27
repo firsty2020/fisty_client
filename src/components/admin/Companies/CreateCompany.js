@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 
 const CreateCompany = () => {
     return (
-        <Container className="filter-container">
+        <Container className="mt-10-auto">
             <Formik
                 initialValues={{
                     name: '',

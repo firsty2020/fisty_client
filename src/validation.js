@@ -123,3 +123,10 @@ export const companySchema = Yup.object().shape({
         .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_POSITION_REQUIRED),
 
 });
+
+export const branchSchema = Yup.object().shape({
+    name: Yup.string()
+        .required(ERROR_MESSAGES.BRANCH_NAME_REQUIRED),
+    address: Yup.string()
+        .required(ERROR_MESSAGES.BRANCH_ADDRESS_REQUIRED),
+});

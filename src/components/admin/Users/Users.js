@@ -10,7 +10,6 @@ import {
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
-import './Users.css';
 import { EmptyListPlaceholder, LoadSpinner, TableList } from '../../ui';
 
 
@@ -48,7 +47,7 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
 
     return (
         <div>
-            <div className="filter-container">
+            <div className="mt-10-auto">
                 <Row>
                     <Col lg={4} md={4} sm={4}>
                         <Form.Label>Фильтровать по статусу</Form.Label>
