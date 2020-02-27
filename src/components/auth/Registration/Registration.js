@@ -27,13 +27,11 @@ class Registration extends Component {
         localStorage.clear();
     }
 
-    toggleShowPassword = (shouldShowPassword) => {
+    toggleShowPassword = (shouldShowPassword) =>
         this.setState({ shouldShowPassword });
-    };
 
-    toggleShowRepeatPassword = (shouldShowRepeatPassword) => {
+    toggleShowRepeatPassword = (shouldShowRepeatPassword) =>
         this.setState({ shouldShowRepeatPassword });
-    };
 
     render() {
 

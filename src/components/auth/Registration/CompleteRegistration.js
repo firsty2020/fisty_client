@@ -10,12 +10,11 @@ import { bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
 import CountryCodeItem from './CountryCodeItem';
 import CountriesDropdown from './CountriesDropdown';
-import AuthFormContainer from '../../ui/AuthFormContainer/AuthFormContainer';
 import armenianFlag from '../../../assets/icons/armenia.png'
 import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
-import { AlertNotice, SuccessNotice } from '../../ui';
+import { AlertNotice, SuccessNotice, AuthFormContainer } from '../../ui';
 import { generateDays, generateMonths, generateYears } from '../../../utils';
 
 import Select from 'react-select';
@@ -38,7 +37,7 @@ const CompleteRegistration = ({
                                   success,
                                   error,
                                   push,
-                                  completeRegistration
+                                  completeRegistration,
 }) => {
 
     const [ countryCode, setCountryCode ] = useState('');
@@ -54,7 +53,7 @@ const CompleteRegistration = ({
 
     return (
         <div>
-            <AuthFormContainer title="Завершите Регистрацию">
+            <AuthFormContainer title="Завершите Регистрацию" size="lg">
                 <When condition={success}>
                     <SuccessNotice
                         title="Регистрация прошла успешно"
@@ -73,6 +72,12 @@ const CompleteRegistration = ({
                         experience: '',
                         country: -1,
                         citizenship: -1,
+                        day: -1,
+                        month: -1,
+                        year: -1,
+                        father_name: '',
+                        education: -1,
+                        gender: -1,
                     }}
                     validationSchema={completeRegistrationSchema}
                     onSubmit={(values, { resetForm }) => {
@@ -95,77 +100,71 @@ const CompleteRegistration = ({
                       }) => (
                         <Form onSubmit={handleSubmit} className="mx-auto">
                             <Form.Group>
-                                <p className="form-control-label">Имя</p>
+                                <Form.Row>
+                                    <Col>
+                                        <p className="form-control-label">Имя</p>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Имя"
+                                            name="first_name"
+                                            value={values.first_name}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={touched.first_name && errors.first_name ? 'is-invalid' : ''}
+                                        />
+                                        {touched.first_name && errors.first_name ? (
+                                            <p className="mt-1 invalid-feedback">{errors.first_name}</p>
+                                        ) : null}
+                                    </Col>
+                                    <Col>
+                                        <p className="form-control-label">Фамилия</p>
+                                        <Form.Control
+                                            type="text"
+                                            name="last_name"
+                                            placeholder="Фамилия"
+                                            value={values.last_name}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={touched.last_name && errors.last_name ? 'is-invalid' : ''}
+                                        />
+                                        {touched.last_name && errors.last_name ? (
+                                            <p className="mt-1 invalid-feedback">{errors.last_name}</p>
+                                        ) : null}
+                                    </Col>
+                                </Form.Row>
+                            </Form.Group>
+                            <Form.Group>
+                                <p className="form-control-label">Отчество</p>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Имя"
-                                    name="first_name"
-                                    value={values.first_name}
+                                    placeholder="Отчество"
+                                    name="father_name"
+                                    value={values.father_name}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className={touched.first_name && errors.first_name ? 'is-invalid' : ''}
+                                    className={touched.father_name && errors.father_name ? 'is-invalid' : ''}
                                 />
-                                {touched.first_name && errors.first_name ? (
-                                    <p className="mt-1 invalid-feedback">{errors.first_name}</p>
+                                {touched.father_name && errors.father_name ? (
+                                    <p className="mt-1 invalid-feedback">{errors.father_name}</p>
                                 ) : null}
                             </Form.Group>
                             <Form.Group>
-                                <p className="form-control-label">Фамилия</p>
+                                Пол
                                 <Form.Control
-                                    type="text"
-                                    name="last_name"
-                                    placeholder="Фамилия"
-                                    value={values.last_name}
-                                    onChange={handleChange}
+                                    name="gender"
+                                    value={values.gender}
+                                    as="select"
                                     onBlur={handleBlur}
-                                    className={touched.last_name && errors.last_name ? 'is-invalid' : ''}
-                                />
-                                {touched.last_name && errors.last_name ? (
-                                    <p className="mt-1 invalid-feedback">{errors.last_name}</p>
+                                    onChange={handleChange}
+                                >
+                                    <option value='male'>Мужской</option>
+                                    <option  value='female'>Женский</option>
+                                    <option  value='other'>Другой</option>
+                                    <option disabled value={-1}>Пол</option>
+                                </Form.Control>
+                                {touched.day && errors.day ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
                                 ) : null}
-                            </Form.Group>
-                            <Form.Group>
-                                <p className="form-control-label">Номер Телефона</p>
-                                <InputGroup>
-                                    <Dropdown
-                                        onSelect={setCountryCode}>
-                                        <Dropdown.Toggle
-                                            variant="success"
-                                            id="dropdown-basic"
-                                        >{countryCode ? countryCode : 'Код Страны'}</Dropdown.Toggle>
-                                        <Dropdown.Menu>
-                                            <CountryCodeItem
-                                                value="+374"
-                                                imgSrc={armenianFlag}
-                                            />
-                                            <CountryCodeItem
-                                                value="+375"
-                                                imgSrc={belorussianFlag}
-                                            />
-                                            <CountryCodeItem
-                                                value="+7"
-                                                imgSrc={russianFlag}
-                                            />
-                                            <CountryCodeItem
-                                                value="+380"
-                                                imgSrc={ukrainianFlag}
-                                            />
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                    <Form.Control
-                                        type="tel"
-                                        value={values.phone_number}
-                                        name="phone_number"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        placeholder="Номер Телефона"
-                                        className={touched.phone_number && errors.phone_number ? 'is-invalid' : ''}
-                                    />
-                                    {touched.phone_number && errors.phone_number ? (
-                                        <p className="mt-1 invalid-feedback">{errors.phone_number}</p>
-                                    ) : null}
-
-                                </InputGroup>
                             </Form.Group>
                             <Form.Group>
                                 <p className="form-control-label">Дата рождения</p>
@@ -232,8 +231,63 @@ const CompleteRegistration = ({
                                 </Form.Row>
                             </Form.Group>
                             <Form.Group>
-                                <Form.Row>
-                                    <Col>
+                                <p className="form-control-label">Гражданство</p>
+                                <CountriesDropdown
+                                    value={values.citizenship}
+                                    name="citizenship"
+                                    placeHolder="Гражданство"
+                                    onBlur={handleBlur}
+                                    onSelectCountry={handleChange}
+                                    className={touched.citizenship && errors.citizenship ? 'is-invalid' : ''}
+                                />
+                                {touched.citizenship && errors.citizenship ? (
+                                    <p className="mt-1 invalid-feedback-visible">{errors.citizenship}</p>
+                                ) : null}
+                            </Form.Group>
+                            <Form.Group>
+                                <p className="form-control-label">Номер Телефона</p>
+                                <InputGroup>
+                                    <Dropdown
+                                        onSelect={setCountryCode}>
+                                        <Dropdown.Toggle
+                                            variant="success"
+                                            id="dropdown-basic"
+                                        >{countryCode ? countryCode : 'Код Страны'}</Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <CountryCodeItem
+                                                value="+374"
+                                                imgSrc={armenianFlag}
+                                            />
+                                            <CountryCodeItem
+                                                value="+375"
+                                                imgSrc={belorussianFlag}
+                                            />
+                                            <CountryCodeItem
+                                                value="+7"
+                                                imgSrc={russianFlag}
+                                            />
+                                            <CountryCodeItem
+                                                value="+380"
+                                                imgSrc={ukrainianFlag}
+                                            />
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                    <Form.Control
+                                        type="tel"
+                                        value={values.phone_number}
+                                        name="phone_number"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        placeholder="Номер Телефона"
+                                        className={touched.phone_number && errors.phone_number ? 'is-invalid' : ''}
+                                    />
+                                    {touched.phone_number && errors.phone_number ? (
+                                        <p className="mt-1 invalid-feedback">{errors.phone_number}</p>
+                                    ) : null}
+
+                                </InputGroup>
+                            </Form.Group>
+                            <Form.Group>
                                         Образование
                                         <Form.Control
                                             name="education"
@@ -250,73 +304,24 @@ const CompleteRegistration = ({
                                         {touched.education && errors.education ? (
                                             <span className="mt-1 invalid-feedback-visible">{errors.education}</span>
                                         ) : null}
-                                    </Col>
-                                    <Col>
-                                        Знание языков
-                                        <Select
-                                            name="languages"
-                                            value={values.languages}
-                                            onBlur={(e) => setFieldTouched('languages', e)}
-                                            onChange={(e) => setFieldValue('languages', e)}
-                                            options={languageOptions}
-                                            placeholder="Выберите языки"
-                                            isMulti>
-                                        </Select>
-                                        {touched.languages && errors.languages ? (
-                                            <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
-                                        ) : null}
-                                    </Col>
-                                </Form.Row>
                             </Form.Group>
                             <Form.Group>
-                                Пол
-                                <Form.Control
-                                    name="gender"
-                                    value={values.gender}
-                                    as="select"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                >
-                                    <option value='male'>Мужской</option>
-                                    <option  value='female'>Женский</option>
-                                    <option  value='other'>Другой</option>
-                                    <option disabled value={-1}>Пол</option>
-                                </Form.Control>
-                                {touched.day && errors.day ? (
-                                    <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
-                                ) : null}
-                            </Form.Group>
-                            <Form.Group>
-                                <p className="form-control-label">Опыт Работы</p>
-                                <Form.Control
-                                    type="tel"
-                                    value={values.experience}
-                                    name="experience"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    placeholder="Опыт работы в годах"
-                                    className={touched.experience && errors.experience ? 'is-invalid' : ''}
-                                />
-                                {touched.experience && errors.experience ? (
-                                    <p className="mt-1 invalid-feedback">{errors.experience}</p>
+                                Знание языков
+                                <Select
+                                    name="languages"
+                                    value={values.languages}
+                                    onBlur={(e) => setFieldTouched('languages', e)}
+                                    onChange={(e) => setFieldValue('languages', e)}
+                                    options={languageOptions}
+                                    placeholder="Выберите языки"
+                                    isMulti>
+                                </Select>
+                                {touched.languages && errors.languages ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
                                 ) : null}
                             </Form.Group>
                             <Form.Group>
                                 <Form.Row>
-                                    <Col>
-                                        <p className="form-control-label">Гражданство</p>
-                                        <CountriesDropdown
-                                            value={values.citizenship}
-                                            name="citizenship"
-                                            placeHolder="Гражданство"
-                                            onBlur={handleBlur}
-                                            onSelectCountry={handleChange}
-                                            className={touched.citizenship && errors.citizenship ? 'is-invalid' : ''}
-                                        />
-                                        {touched.citizenship && errors.citizenship ? (
-                                            <p className="mt-1 invalid-feedback-visible">{errors.citizenship}</p>
-                                        ) : null}
-                                    </Col>
                                     <Col>
                                         <p className="form-control-label">Страна</p>
                                         <CountriesDropdown
@@ -332,22 +337,25 @@ const CompleteRegistration = ({
                                             <p className="mt-1 invalid-feedback-visible">{errors.country}</p>
                                         ) : null}
                                     </Col>
+                                    <Col>
+                                        <p className="form-control-label">Город</p>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Город"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            name="city"
+                                            value={values.city}
+                                            className={touched.city && errors.city ? 'is-invalid' : ''}
+                                        />
+                                        {touched.city && errors.city ? (
+                                            <p className="mt-1 invalid-feedback">{errors.city}</p>
+                                        ) : null}
+                                    </Col>
                                 </Form.Row>
                             </Form.Group>
                             <Form.Group>
-                                <p className="form-control-label">Город</p>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Город"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    name="city"
-                                    value={values.city}
-                                    className={touched.city && errors.city ? 'is-invalid' : ''}
-                                />
-                                {touched.city && errors.city ? (
-                                    <p className="mt-1 invalid-feedback">{errors.city}</p>
-                                ) : null}
+
                             </Form.Group>
                             <div className="round-button-container">
                                 <button

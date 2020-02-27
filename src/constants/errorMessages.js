@@ -1,6 +1,7 @@
 export default {
     FIRST_NAME_REQUIRED: 'Введите ваше имя',
     LAST_NAME_REQUIRED: 'Введите вашу фамилию',
+    FATHER_NAME_REQUIRED: 'Введите вашу фамилию',
     EMAIL_INVALID: 'Введите действительный почтовый адрес',
     EMAIL_REQUIRED: 'Введите почтовый адрес',
     PHONE_INVALID: 'Введите действительный номер телефона',

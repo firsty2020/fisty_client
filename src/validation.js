@@ -29,16 +29,15 @@ export const completeRegistrationSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
     last_name: Yup.string()
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
+    father_name: Yup.string(),
     phone_number: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)
         .required(ERROR_MESSAGES.PHONE_REQUIRED),
     experience: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.EXPERIENCE_INVALID)
         .required(ERROR_MESSAGES.EXPERIENCE_REQUIRED),
-    city: Yup.string()
-        .required(ERROR_MESSAGES.CITY_REQUIRED),
-    country: Yup.string()
-        .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.COUNTRY_REQUIRED),
+    city: Yup.string(),
+    country: Yup.string(),
     citizenship: Yup.string()
         .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
     year: Yup.number()
@@ -49,13 +48,7 @@ export const completeRegistrationSchema = Yup.object().shape({
     day: Yup.number()
         .positive(ERROR_MESSAGES.DOB_DAY_REQUIRED),
     education: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
-    languages: Yup.array()
-        .min(1, ERROR_MESSAGES.LANGUAGES_REQUIRED)
-        .of(Yup.object().shape({
-                label: Yup.string().required(),
-                value: Yup.string().required(),
-            })
-        ),
+    languages: Yup.array(),
     gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
 });
 

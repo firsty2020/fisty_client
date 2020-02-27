@@ -75,3 +75,7 @@
     font-size: 14px;
     color: #000;
 }
+
+.max-width-600 {
+    max-width: 600px!important;
+}

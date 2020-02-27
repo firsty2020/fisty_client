@@ -1,14 +1,15 @@
 import React from 'react';
 import { string } from 'prop-types';
+import classNames from 'classnames';
 import logo from '../../../assets/images/logo_blue_container.png';
 import './AuthFormContainer.css';
 
 
-const AuthFormContainer = ({ children, title, subtitle }) => {
+const AuthFormContainer = ({ children, title, subtitle, size }) => {
 
     return (
         <div className="registration-container">
-            <div className="registration-form-container">
+            <div className={classNames('registration-form-container', {'max-width-600': size === 'lg'} )}>
                 <div className="logo-container">
                     <img src={logo} alt="firsty logo" className="logo_blue"/>
                 </div>
@@ -28,6 +29,7 @@ const AuthFormContainer = ({ children, title, subtitle }) => {
 AuthFormContainer.propTypes = {
     title: string.isRequired,
     subtitle: string,
+    size: string,
 };
 
 
