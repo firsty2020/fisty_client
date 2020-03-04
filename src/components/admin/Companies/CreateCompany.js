@@ -9,23 +9,15 @@ const CreateCompany = () => {
         <Container className="mt-10-auto">
             <Formik
                 initialValues={{
+                    source: -1,
                     name: '',
-                    brand: '',
-                    tin: '',
-                    contract_type: '-1',
-                    psrn: '',
-                    legal_address: '',
-                    aceo: '',
-                    acea: '',
-                    iec: '',
-                    bankDetails: {
-                        name: '',
-                        settlement_account: '',
-                        correspondent_account: '',
-                        identification_code: '',
-                    },
-                    subscriber_name: '',
-                    subscriber_position: '',
+                    english_name: '',
+                    type: -1,
+                    website: '',
+                    social_link: '',
+                    industry: -1,
+                    specification: -1,
+                    phone_number: ''
                 }}
                 validationSchema={companySchema}
                 onSubmit={(values) => {
@@ -41,12 +33,12 @@ const CreateCompany = () => {
                       handleSubmit,
                   }) => (
                     <Form onSubmit={handleSubmit}>
-                        <p className="form-control-label">Полное наименование компании (Юридическое)</p>
+                        <p className="form-control-label">Название компании *</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
                                 name="name"
-                                placeholder="Полное наименование компании (Юридическое)"
+                                placeholder="На Русском Языке"
                                 value={values.name}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
@@ -55,208 +47,132 @@ const CreateCompany = () => {
                                 <span className="mt-1 invalid-feedback-visible">{errors.name}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">Название компании (Бренд)</p>
+                        <p className="form-control-label">Название компании *</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="brand"
-                                placeholder="Название компании (Бренд)"
-                                value={values.brand}
+                                name="english_name"
+                                placeholder="На Английском Языке"
+                                value={values.english_name}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            {touched.brand && errors.brand ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.brand}</span>
+                            {touched.english_name && errors.english_name ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.english_name}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">ИНН</p>
+                        <p className="form-control-label">Источник *</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="tin"
-                                placeholder="ИНН"
-                                value={values.tin}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.tin && errors.tin ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.tin}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">Тип договора</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="contract_type"
+                                name="source"
                                 as="select"
-                                value={values.contract_type}
+                                value={values.source}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <option value="тип 1">тип 1</option>
-                                <option value="тип 2">тип 2</option>
+                                <option value="Firsty">Firsty</option>
+                                <option value="Входяший запрос">Входяший запрос</option>
                                 <option value="-1" disabled>Выберите из списка</option>
                             </Form.Control>
-                            {touched.contract_type && errors.contract_type ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.contract_type}</span>
+                            {touched.source && errors.source ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.source}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">ОГРН</p>
+                        <p className="form-control-label">Отрасль </p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="psrn"
-                                placeholder="ОГРН"
-                                value={values.psrn}
+                                name="industry"
+                                as="select"
+                                value={values.industry}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                            />
-                            {touched.psrn && errors.psrn ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.psrn}</span>
+                            >
+                                <option value="Firsty">industry1</option>
+                                <option value="Входяший запрос">industry2</option>
+                                <option value="-1" disabled>Выберите из списка</option>
+                            </Form.Control>
+                            {touched.industry && errors.industry ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.industry}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">Юридический адрес</p>
+                        <p className="form-control-label">Специфика</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="legal_address"
-                                placeholder="Юридический адрес"
-                                value={values.legal_address}
+                                name="specification"
+                                as="select"
+                                value={values.specification}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                            />
-                            {touched.legal_address && errors.legal_address ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.legal_address}</span>
+                            >
+                                <option value="Firsty">specification1</option>
+                                <option value="Входяший запрос">specification2</option>
+                                <option value="-1" disabled>Выберите из списка</option>
+                            </Form.Control>
+                            {touched.specification && errors.specification ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.specification}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">ОКПО</p>
+                        <p className="form-control-label">Тип Компании *</p>
+                        <Form.Group>
+                            <Form.Control
+                                name="type"
+                                as="select"
+                                value={values.type}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            >
+                                <option value="Малый бизнес">Малый бизнес</option>
+                                <option value="Средний бизнес">Средний бизнес</option>
+                                <option value="Малый бизнес">Крупный бизнес</option>
+                                <option value="-1" disabled>Выберите из списка</option>
+                            </Form.Control>
+                            {touched.type && errors.type ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.type}</span>
+                            ) : null}
+                        </Form.Group>
+                        <p className="form-control-label">Сайт</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="aceo"
-                                placeholder="ОКПО"
-                                value={values.aceo}
+                                name="website"
+                                placeholder="https://yourcompany.domain"
+                                value={values.website}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            {touched.aceo && errors.aceo ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.aceo}</span>
+                            {touched.website && errors.website ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.website}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">ОКВЭД</p>
+                        <p className="form-control-label">Социальная Сеть</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="acea"
-                                placeholder="ОКПО"
-                                value={values.acea}
+                                name="social_link"
+                                placeholder="https://facebook.com/yourcompany"
+                                value={values.social_link}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            {touched.acea && errors.acea ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.acea}</span>
+                            {touched.social_link && errors.social_link ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.social_link}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">КПП</p>
+                        <p className="form-control-label">Контактный Номер</p>
                         <Form.Group>
                             <Form.Control
-                                type="text"
-                                name="iec"
-                                placeholder="КПП"
-                                value={values.iec}
+                                type="tel"
+                                name="phone_number"
+                                placeholder="+71234567890"
+                                value={values.phone_number}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            {touched.iec && errors.iec ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.iec}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">Банк организации</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="bankDetails.name"
-                                placeholder="Банк организации"
-                                value={values.bankDetails.name}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {(touched.bankDetails && touched.bankDetails.name) &&
-                            (errors.bankDetails && errors.bankDetails.name) ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.bankDetails.name}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">Расчетный счет организации</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="bankDetails.settlement_account"
-                                placeholder="Расчетный счет организации"
-                                value={values.bankDetails.settlement_account}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {(touched.bankDetails && touched.bankDetails.settlement_account) &&
-                            (errors.bankDetails && errors.bankDetails.settlement_account) ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.bankDetails.settlement_account}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">Корреспондентский счет банка</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="bankDetails.correspondent_account"
-                                placeholder="Корреспондентский счет банка"
-                                value={values.bankDetails.correspondent_account}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {(touched.bankDetails && touched.bankDetails.correspondent_account) &&
-                            (errors.bankDetails && errors.bankDetails.correspondent_account) ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.bankDetails.correspondent_account}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">БИК банка</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="bankDetails.identification_code"
-                                placeholder="БИК банка"
-                                value={values.bankDetails.identification_code}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {(touched.bankDetails && touched.bankDetails.identification_code) &&
-                            (errors.bankDetails && errors.bankDetails.identification_code) ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.bankDetails.identification_code}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">ФИО Подписанта со стороны компании</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="subscriber_name"
-                                placeholder="ФИО Подписанта"
-                                value={values.subscriber_name}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.subscriber_name && errors.subscriber_name ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.subscriber_name}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">Должность подписанта</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="subscriber_position"
-                                placeholder="Должность подписанта"
-                                value={values.subscriber_position}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.subscriber_position && errors.subscriber_position ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.subscriber_position}</span>
+                            {touched.phone_number && errors.phone_number ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.phone_number}</span>
                             ) : null}
                         </Form.Group>
                         <div className="text-center">

@@ -8,7 +8,7 @@ const REGEX = {
     ALPHABETIC: /^[A-Z]+$/i,
     ALPHABETIC_ALLOW_SPACE: /^[A-Z]+$/i,
     LATIN_ALPHABET_NUMBERS_SYMBOLS: /^[A-Za-z0-9@!#$%^&*{};':",<.>/|?`~=()[\]_\-+\\]+$/,
-    PHONE_NUMBER: /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+    PHONE_NUMBER: /^[+]?\d+$/,
 };
 
 export const userRegistrationSchema = Yup.object().shape({
@@ -90,39 +90,19 @@ export const validationQuestionsSchema = Yup.object().shape({
 
 export const companySchema = Yup.object().shape({
     name: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_NAME_REQUIRED),
-    brand: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_BRAND_REQUIRED),
-    tin: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_TIN_REQUIRED),
-    contract_type: Yup.string()
-        .min(3, ERROR_MESSAGES.COMPANY_CONTRACT_TYPE_REQUIRED),
-    psrn: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_PSRN_REQUIRED),
-    legal_address: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_LEGAL_ADDRESS_REQUIRED),
-    aceo: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_ACEO_REQUIRED),
-    acea: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_ACEA_REQUIRED),
-    iec: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_IEC_REQUIRED),
-    bankDetails: Yup.object().shape({
-        name: Yup.string()
-            .required(ERROR_MESSAGES.COMPANY_BANK_REQUIRED),
-        settlement_account: Yup.string()
-            .required(ERROR_MESSAGES.COMPANY_SETTLEMENT_ACCOUNT_REQUIRED),
-        correspondent_account: Yup.string()
-            .required(ERROR_MESSAGES.COMPANY_CORRESPONDENT_ACCOUNT_REQUIRED),
-        identification_code: Yup.string()
-            .required(ERROR_MESSAGES.COMPANY_BANK_IDENTIFICATION_CODE_REQUIRED),
-
-    }),
-    subscriber_name: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_NAME_REQUIRED),
-    subscriber_position: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_POSITION_REQUIRED),
-
+        .required(''),
+    english_name: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_NAME_RUSSIAN_REQUIRED),
+    type: Yup.string()
+        .min(3, ERROR_MESSAGES.COMPANY_TYPE),
+    source: Yup.string()
+        .min(3, ERROR_MESSAGES.SOURCE_REQUIRED),
+    website: Yup.string()
+        .url(ERROR_MESSAGES.URL_INVALID),
+    social_link: Yup.string()
+        .url(ERROR_MESSAGES.URL_INVALID),
+    phone_number: Yup.string()
+        .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID),
 });
 
 export const branchSchema = Yup.object().shape({
@@ -139,9 +119,9 @@ export const contactPersonSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
     father_name: Yup.string(),
     position: Yup.string()
-        .required(ERROR_MESSAGES.COMPANY_SUBSCRIBER_POSITION_REQUIRED),
+        .required(''),
     status: Yup.string()
-        .min(3, ERROR_MESSAGES.CONTACT_PERSON_STATUS),
+        .min(3, ''),
     email: Yup.string()
         .email(ERROR_MESSAGES.EMAIL_INVALID)
         .required(ERROR_MESSAGES.EMAIL_REQUIRED),
