@@ -1,22 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { PlusCircle } from 'react-feather';
 import { EmptyListPlaceholder, TableList } from '../../ui';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { getCompanies } from './companiesApi';
+import { companiesSelector } from '../adminReducer';
+import { When } from 'react-if';
 
 
 const companiesTableLayout = {
     headings: [
-        '#', 'ID', 'Дата Создания', 'Полное наименование компании (Юридическое)',
-        'Название компании (Бренд)', 'ИНН'
+        '#', 'Название на русском', 'Название на английском', 'Тип бизнесса',
+        'Сайт', 'Источник'
     ],
-    createRow: () => [
-
+    createRow: (company, index) => [
+        index + 1, company.name, company.english_name, company.type,
+        company.website, company.source,
     ],
 };
 
-const Companies = () => {
+const Companies = ({ companies, getCompanies }) => {
+
+    useEffect(() => {
+        getCompanies();
+    });
+
 
     return (
         <div>
@@ -51,20 +60,22 @@ const Companies = () => {
             <div>
                 <TableList
                     layout={companiesTableLayout}
-                    data={[]}
+                    data={companies || []}
                 />
             </div>
-            <EmptyListPlaceholder/>
+            <When condition={(!companies || !companies.length)}>
+                <EmptyListPlaceholder/>
+            </When>
         </div>
     );
 };
 
 
 const mapStateToProps = state => ({
-
+    companies: companiesSelector(state),
 });
 
-const mapDispatchToProps = {  };
+const mapDispatchToProps = { getCompanies };
 
 
 Companies.propTypes = {

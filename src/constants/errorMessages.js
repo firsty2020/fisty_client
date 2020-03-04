@@ -22,6 +22,7 @@ export default {
     LANGUAGES_REQUIRED: 'Выберите хотя бы один язык',
     ANSWER_QUESTION: 'Пожалуйста, ответьте на этот вопрос',
     COMPANY_NAME_RUSSIAN_REQUIRED: 'Введите название компании на русском языке',
+    COMPANY_NAME_ENGLISH_REQUIRED: 'Введите название компании на английском языке',
     COMPANY_TYPE: 'Выберите тип компании',
     BRANCH_NAME_REQUIRED: 'Введите название бранча',
     BRANCH_ADDRESS_REQUIRED: 'Введите адрес бранча',

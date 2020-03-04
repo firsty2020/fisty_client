@@ -1,27 +1,53 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { companySchema } from '../../../validation';
 import { Formik } from 'formik';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
+import { companySchema } from '../../../validation';
+import { createCompany } from './companiesApi';
+import {
+    createCompanyPendingSelector,
+    createCompanySuccessSelector
+} from '../adminReducer';
 
 
-const CreateCompany = () => {
+const CreateCompany = ({ pending, created, createCompany, push }) => {
+
+    const handleCreateCompany = (companyData) => {
+        const postData = { ...companyData };
+        postData.industry = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/industries/1/';
+        postData.specification = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/specification/1/';
+        for (const field in postData) {
+            if (postData.hasOwnProperty(field) && (postData[field] === -1 || !postData[field])) {
+                delete postData[field];
+            }
+        }
+        createCompany(postData);
+    };
+
+    useEffect(() => {
+        if (created) {
+            push('/admin/companies')
+        }
+    }, [ created ]);
+
     return (
         <Container className="mt-10-auto">
             <Formik
                 initialValues={{
-                    source: -1,
                     name: '',
                     english_name: '',
+                    source: -1,
                     type: -1,
-                    website: '',
-                    social_link: '',
                     industry: -1,
                     specification: -1,
-                    phone_number: ''
+                    website: '',
+                    social_link: '',
+                    contact_number: ''
                 }}
                 validationSchema={companySchema}
                 onSubmit={(values) => {
-                    alert('nothing will happen');
+                    handleCreateCompany(values);
                 }}
             >
                 {({
@@ -71,7 +97,7 @@ const CreateCompany = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <option value="Firsty">Firsty</option>
+                                <option value="firsty">Firsty</option>
                                 <option value="Входяший запрос">Входяший запрос</option>
                                 <option value="-1" disabled>Выберите из списка</option>
                             </Form.Control>
@@ -124,9 +150,9 @@ const CreateCompany = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <option value="Малый бизнес">Малый бизнес</option>
-                                <option value="Средний бизнес">Средний бизнес</option>
-                                <option value="Малый бизнес">Крупный бизнес</option>
+                                <option value="малый">Малый бизнес</option>
+                                <option value="средний">Средний бизнес</option>
+                                <option value="крупный">Крупный бизнес</option>
                                 <option value="-1" disabled>Выберите из списка</option>
                             </Form.Control>
                             {touched.type && errors.type ? (
@@ -165,18 +191,19 @@ const CreateCompany = () => {
                         <Form.Group>
                             <Form.Control
                                 type="tel"
-                                name="phone_number"
+                                name="contact_number"
                                 placeholder="+71234567890"
-                                value={values.phone_number}
+                                value={values.contact_number}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            {touched.phone_number && errors.phone_number ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.phone_number}</span>
+                            {touched.contact_number && errors.contact_number ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.contact_number}</span>
                             ) : null}
                         </Form.Group>
                         <div className="text-center">
                             <Button
+                                disabled={pending}
                                 type="submit">Создать
                             </Button>
                         </div>
@@ -188,4 +215,16 @@ const CreateCompany = () => {
 };
 
 
-export default CreateCompany;
+const mapStateToProps = state => ({
+    pending: createCompanyPendingSelector(state),
+    created: createCompanySuccessSelector(state),
+});
+
+const mapDispatchToProps = { createCompany, push };
+
+
+CreateCompany.propTypes = {
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCompany);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import {arrayOf, func, object, shape, string} from 'prop-types';
+import { arrayOf, func, object, shape, string } from 'prop-types';
 
 
 const TableList = ({ layout, data }) => (

@@ -90,9 +90,9 @@ export const validationQuestionsSchema = Yup.object().shape({
 
 export const companySchema = Yup.object().shape({
     name: Yup.string()
-        .required(''),
-    english_name: Yup.string()
         .required(ERROR_MESSAGES.COMPANY_NAME_RUSSIAN_REQUIRED),
+    english_name: Yup.string()
+        .required(ERROR_MESSAGES.COMPANY_NAME_ENGLISH_REQUIRED),
     type: Yup.string()
         .min(3, ERROR_MESSAGES.COMPANY_TYPE),
     source: Yup.string()
@@ -101,7 +101,7 @@ export const companySchema = Yup.object().shape({
         .url(ERROR_MESSAGES.URL_INVALID),
     social_link: Yup.string()
         .url(ERROR_MESSAGES.URL_INVALID),
-    phone_number: Yup.string()
+    contact_number: Yup.string()
         .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID),
 });
 
