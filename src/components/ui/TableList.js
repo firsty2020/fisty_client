@@ -1,33 +1,39 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { arrayOf, func, object, shape, string } from 'prop-types';
+import {EmptyListPlaceholder} from './index';
 
 
-const TableList = ({ layout, data }) => (
-    <Table
-        striped
-        responsive="md"
-        responsive="lg"
-        responsive="xs"
-        responsive="sm"
-        responsive="xl"
-    >
-        <thead>
-        <tr>
-            {layout.headings.map((heading) => <th key={heading}>{heading}</th>)}
-        </tr>
-        </thead>
-        <tbody>
-        {data.map((item, index) => (
-            <tr key={index}>
-                {layout.createRow(item, index).map((value, i) =>
-                    <td key={i}>{value}</td>
-                )}
+const TableList = ({ layout, data }) => {
+    if (!data || !data.length) {
+        return <EmptyListPlaceholder/>;
+    }
+    return (
+        <Table
+            striped
+            responsive="md"
+            responsive="lg"
+            responsive="xs"
+            responsive="sm"
+            responsive="xl"
+        >
+            <thead>
+            <tr>
+                {layout.headings.map((heading) => <th key={heading}>{heading}</th>)}
             </tr>
-        ))}
-        </tbody>
-    </Table>
-);
+            </thead>
+            <tbody>
+            {data.map((item, index) => (
+                <tr key={index}>
+                    {layout.createRow(item, index).map((value, i) =>
+                        <td key={i}>{value}</td>
+                    )}
+                </tr>
+            ))}
+            </tbody>
+        </Table>);
+
+};
 
 
 TableList.propTypes = {

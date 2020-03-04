@@ -24,7 +24,7 @@ const Companies = ({ companies, getCompanies }) => {
 
     useEffect(() => {
         getCompanies();
-    });
+    }, [ getCompanies ]);
 
 
     return (

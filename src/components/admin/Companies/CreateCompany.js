@@ -29,7 +29,7 @@ const CreateCompany = ({ pending, created, createCompany, push }) => {
         if (created) {
             push('/admin/companies')
         }
-    }, [ created ]);
+    }, [ created, push ]);
 
     return (
         <Container className="mt-10-auto">

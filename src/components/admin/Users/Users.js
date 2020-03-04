@@ -74,11 +74,8 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
                     data={users}
                 />
             </div>
-            <When condition={getUsersPending}>
+            <When condition={!!getUsersPending}>
                 <LoadSpinner/>
-            </When>
-            <When condition={!getUsersPending && !users.length}>
-                <EmptyListPlaceholder/>
             </When>
         </div>
     );
@@ -108,7 +105,7 @@ Users.propTypes = {
     match: shape({ status: string }).isRequired,
     getUsers: func.isRequired,
     getUsersError: string,
-    getUsersPending: bool.isRequired,
+    getUsersPending: bool,
 };
 
 
