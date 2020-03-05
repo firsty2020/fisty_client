@@ -8,9 +8,8 @@ import {
     usersPendingSelector
 } from '../adminReducer';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
-import { When } from 'react-if';
 import { push } from 'connected-react-router';
-import { EmptyListPlaceholder, LoadSpinner, TableList } from '../../ui';
+import { TableList } from '../../ui';
 
 
 const usersTableLayout = {

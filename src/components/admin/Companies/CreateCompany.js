@@ -8,19 +8,24 @@ import { createCompany } from './companiesApi';
 import {
     createCompanyErrorSelector,
     createCompanyPendingSelector,
-    createCompanySuccessSelector
+    createCompanySuccessSelector,
+    industryOptionsSelector,
 } from '../adminReducer';
 import { AlertNotice } from '../../ui';
-import { When } from "react-if";
+import { When } from 'react-if';
 import messages from '../../../constants/messages';
+import { getIndustryOptions } from '../Configs/configsApi';
 
 
 const CreateCompany = ({
                            createCompanyError,
                            pending,
                            created,
+                           industryOptions,
                            createCompany,
-                           push }) => {
+                           push,
+                           getIndustryOptions,
+}) => {
 
     const handleCreateCompany = (companyData) => {
         const postData = { ...companyData };
@@ -41,6 +46,12 @@ const CreateCompany = ({
             }, 3000);
         }
     }, [ created, push ]);
+
+
+    useEffect(() => {
+        console.log( 'aaaaaaaaaa')
+        getIndustryOptions();
+    }, [ ]);
 
     return (
         <Container className="mt-10-auto">
@@ -132,8 +143,8 @@ const CreateCompany = ({
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <option value="Firsty">industry1</option>
-                                <option value="Входяший запрос">industry2</option>
+                                {(industryOptions || []).map(({ url, name }) =>
+                                    <option value={url} key={url}>{name}</option>)}
                                 <option value="-1" disabled>Выберите из списка</option>
                             </Form.Control>
                             {touched.industry && errors.industry ? (
@@ -236,9 +247,10 @@ const mapStateToProps = state => ({
     pending: createCompanyPendingSelector(state),
     created: createCompanySuccessSelector(state),
     createCompanyError: createCompanyErrorSelector(state),
+    industryOptions: industryOptionsSelector(state),
 });
 
-const mapDispatchToProps = { createCompany, push };
+const mapDispatchToProps = { createCompany, push, getIndustryOptions };
 
 
 CreateCompany.propTypes = {

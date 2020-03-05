@@ -129,3 +129,4 @@ export const contactPersonSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.PHONE_REQUIRED)
         .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID)
 });
+

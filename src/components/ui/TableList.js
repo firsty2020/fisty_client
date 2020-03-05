@@ -1,11 +1,11 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import {arrayOf, bool, func, object, shape, string} from 'prop-types';
-import {EmptyListPlaceholder, LoadSpinner} from './index';
-import {When} from "react-if";
+import { arrayOf, bool, func, object, shape, string } from 'prop-types';
+import { EmptyListPlaceholder, LoadSpinner } from './index';
 
 
 const TableList = ({ layout, data, showSpinner }) => {
+
 
     if (showSpinner) {
         return <LoadSpinner/>

@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Col, Container, Form, InputGroup} from 'react-bootstrap';
+import { Button, Col, Container, Form } from 'react-bootstrap';
 import { contactPersonSchema } from '../../../validation';
 import { Formik } from 'formik';
-import classNames from 'classnames';
 
 
 const CreateContactPerson = () => {
