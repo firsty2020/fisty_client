@@ -12,9 +12,9 @@ const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) 
             onBlur={onBlur}
             onChange={onSelectCountry}
         >
+            <option value="Россия">Россия</option>
             <option value="Армения">Армения</option>
             <option value="Беларусь">Беларусь</option>
-            <option value="Россия">Россия</option>
             <option value="Украина">Украина</option>
             <option disabled value={-1}>{placeHolder}</option>
         </Form.Control>

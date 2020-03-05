@@ -13,6 +13,9 @@ import {
     ADMIN_CONFIGS_GET_INDUSTRIES_PENDING,
     ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
     ADMIN_CONFIGS_GET_INDUSTRIES_FAILED,
+    ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING,
+    ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED,
 } from '../../constants/actionTypes';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
@@ -51,6 +54,13 @@ export const admin = (state = initialState, action) => {
             return { getIndustryOptionsPending: false, getIndustryOptionsFailed: false, industryOptions: action.payload };
         case ADMIN_CONFIGS_GET_INDUSTRIES_FAILED:
             return { getIndustryOptionsPending: false, getIndustryOptionsFailed: true, industryOptions: [] };
+
+        case ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING:
+            return { updateIndustryOptionPending: true, updateIndustryOptionError: false, updateIndustryOptionResolved: false };
+        case ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED:
+            return { updateIndustryOptionPending: false, updateIndustryOptionError: false, updateIndustryOptionResolved: true };
+        case ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED:
+            return { updateIndustryOptionPending: true, updateIndustryOptionError: true, updateIndustryOptionResolved: false };
         default: return state;
     }
 };

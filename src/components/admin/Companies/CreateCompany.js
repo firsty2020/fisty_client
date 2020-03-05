@@ -29,7 +29,6 @@ const CreateCompany = ({
 
     const handleCreateCompany = (companyData) => {
         const postData = { ...companyData };
-        postData.industry = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/industries/1/';
         postData.specification = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/specification/1/';
         for (const field in postData) {
             if (postData.hasOwnProperty(field) && (postData[field] === -1 || !postData[field])) {
@@ -49,9 +48,8 @@ const CreateCompany = ({
 
 
     useEffect(() => {
-        console.log( 'aaaaaaaaaa')
         getIndustryOptions();
-    }, [ ]);
+    }, [ getIndustryOptions ]);
 
     return (
         <Container className="mt-10-auto">

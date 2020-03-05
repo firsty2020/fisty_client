@@ -4,3 +4,7 @@
     --grey-bg-color: #f0f0f0;
     --admin-dashboard-color: #162c50;
 }
+
+html {
+    scroll-behavior: smooth;
+}

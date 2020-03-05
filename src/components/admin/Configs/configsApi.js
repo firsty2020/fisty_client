@@ -3,7 +3,11 @@ import {
     addIndustryOptionFailed,
     addIndustryOptionPending,
     getIndustryOptionsResolved,
-    getIndustryOptionsPending, getIndustryOptionsFailed,
+    getIndustryOptionsPending,
+    getIndustryOptionsFailed,
+    updateIndustryOptionPending,
+    updateIndustryOptionResolved,
+    updateIndustryOptionFailed,
 } from '../adminActions';
 import api from '../../../axios';
 
@@ -23,7 +27,6 @@ export const addIndustryOption = (name) => {
     };
 };
 
-
 export const getIndustryOptions = () => {
     return dispatch => {
         dispatch(getIndustryOptionsPending());
@@ -31,5 +34,15 @@ export const getIndustryOptions = () => {
             .get('industries/')
             .then((res) => dispatch(getIndustryOptionsResolved(res.data)))
             .catch((err) => dispatch(getIndustryOptionsFailed(err)))
+    };
+};
+
+export const updateIndustryOption = ({ id, name }) => {
+    return dispatch => {
+        dispatch(updateIndustryOptionPending());
+        api
+            .patch(`industries/${id}`, { name })
+            .then((res) => dispatch(updateIndustryOptionResolved(res.data)))
+            .catch((err) => dispatch(updateIndustryOptionFailed(err)))
     };
 };

@@ -1,21 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Button, Container, Form, Row, Col, Table, InputGroup } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Trash, Edit } from 'react-feather';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import { addIndustryOption, getIndustryOptions } from './configsApi';
+import { addIndustryOption, getIndustryOptions, updateIndustryOption } from './configsApi';
 import {
     addIndustryOptionFailedSelector,
     addIndustryOptionPendingSelector,
     addIndustryOptionResolvedSelector, industryOptionsSelector
 } from '../adminReducer';
+import { scrollToRef } from '../../../utils';
+import { Popover } from '../../ui';
 
 
-export const validationSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
     field: Yup.string()
         .required('Введите опцию'),
 });
+
+let setFormikFieldValue;
 
 
 const DynamicFields = ({
@@ -24,13 +28,24 @@ const DynamicFields = ({
                            industryOptions,
                            addIndustryOption,
                            getIndustryOptions,
-}) => {
+                           updateIndustryOption,
+                       }) => {
+
+    const [ industryOptionToEdit, setIndustryOptionToEdit ] = useState(null);
 
     useEffect(() => {
         if (addIndustryResolved === false) return;
         getIndustryOptions();
     }, [ getIndustryOptions, addIndustryResolved ]);
-    
+
+    const handleEdit = ({ id, name }) => {
+        setIndustryOptionToEdit(id);
+        setFormikFieldValue('field', name);
+        scrollToRef(inputRef);
+    };
+
+    const inputRef = useRef(null);
+
     return (
         <Container className="mt-10-auto">
             <Row>
@@ -43,7 +58,12 @@ const DynamicFields = ({
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values, { resetForm }) => {
-                            addIndustryOption(values.field);
+                            if (industryOptionToEdit) {
+                                updateIndustryOption({ id: industryOptionToEdit, name: values.field });
+                                setIndustryOptionToEdit(null);
+                            } else {
+                                addIndustryOption(values.field);
+                            }
                             resetForm();
                         }}
                     >
@@ -54,32 +74,42 @@ const DynamicFields = ({
                               handleChange,
                               handleBlur,
                               handleSubmit,
-                          }) => (
-                            <Form onSubmit={handleSubmit}>
-                                <InputGroup className="mb-3">
-                                    <Form.Control
-                                        type="text"
-                                        name="field"
-                                        placeholder="Добавить опцию"
-                                        value={values.field}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
+                              setFieldValue
+                          }) => {
+                            setFormikFieldValue = setFieldValue;
+                            return (
+                                <Form onSubmit={handleSubmit}>
+                                    <Popover
+                                        show={!!industryOptionToEdit}
+                                        placement="left"
+                                        el={inputRef}
+                                        body="Редактировать здесь"
                                     />
-                                    <InputGroup.Append>
-                                        <Button
-                                            disabled={addIndustryPending}
-                                            type="submit"
-                                            variant="outline-primary">Сохранить
-                                        </Button>
-                                    </InputGroup.Append>
-                                    {touched.field && errors.field ? (
-                                        <span
-                                            className="mt-1 invalid-feedback-visible">{errors.field}</span>
-                                    ) : null}
-
-                                </InputGroup>
-                            </Form>
-                        )}
+                                    <InputGroup className="mb-3">
+                                        <Form.Control
+                                            type="text"
+                                            name="field"
+                                            placeholder="Добавить опцию"
+                                            value={values.field}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            ref={inputRef}
+                                        />
+                                        <InputGroup.Append>
+                                            <Button
+                                                disabled={addIndustryPending}
+                                                type="submit"
+                                                variant="outline-primary">Сохранить
+                                            </Button>
+                                        </InputGroup.Append>
+                                        {touched.field && errors.field ? (
+                                            <span
+                                                className="mt-1 invalid-feedback-visible">{errors.field}</span>
+                                        ) : null}
+                                    </InputGroup>
+                                </Form>
+                            );
+                        }}
                     </Formik>
                     <Table>
                         <thead>
@@ -89,11 +119,20 @@ const DynamicFields = ({
                         </tr>
                         </thead>
                         <tbody>
-                        {(industryOptions || []).map(({ id, name}) => {
+                        {(industryOptions || []).map(({ id, name }) => {
                             return (
                                 <tr key={id}>
                                     <td>{name}</td>
-                                    <td><Trash/><Edit/></td>
+                                    <td>
+                                        <div className="d-flex justify-content-around">
+                                            <Trash className="cursor-pointer" color="red"/>
+                                            <Edit
+                                                onClick={() => handleEdit({ id, name })}
+                                                className="cursor-pointer"
+                                                color="blue"
+                                            />
+                                        </div>
+                                    </td>
                                 </tr>
                             );
                         })}
@@ -114,7 +153,11 @@ const mapStateToProps = state => ({
     industryOptions: industryOptionsSelector(state),
 });
 
-const mapDispatchToProps = { addIndustryOption, getIndustryOptions };
+const mapDispatchToProps = {
+    addIndustryOption,
+    getIndustryOptions,
+    updateIndustryOption,
+};
 
 
 DynamicFields.propTypes = {

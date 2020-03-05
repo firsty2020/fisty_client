@@ -79,3 +79,6 @@ export const generateDays = () => {
     }
     return days;
 };
+
+
+export const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);

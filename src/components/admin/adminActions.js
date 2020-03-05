@@ -13,6 +13,9 @@ import {
     ADMIN_CONFIGS_GET_INDUSTRIES_PENDING,
     ADMIN_CONFIGS_GET_INDUSTRIES_FAILED,
     ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING,
+    ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED,
+    ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
 } from '../../constants/actionTypes';
 
 
@@ -96,13 +99,30 @@ export const getIndustryOptionsFailed = (error) => ({
 });
 
 /**
- *
  * @param industries { string }
  * @returns payload: [ industries ], type: string
  */
 export const getIndustryOptionsResolved = (industries) => ({
     type: ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
     payload: industries
+});
+
+/******************************************/
+
+
+/*** Actions for updating options for industry field ***/
+
+export const updateIndustryOptionPending = () => ({
+    type: ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING,
+});
+
+export const updateIndustryOptionFailed = (error) => ({
+    type: ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED,
+    error,
+});
+
+export const updateIndustryOptionResolved = () => ({
+    type: ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
 });
 
 /******************************************/
