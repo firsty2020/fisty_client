@@ -38,7 +38,7 @@ const CompleteRegistration = ({
                                   error,
                                   push,
                                   completeRegistration,
-}) => {
+                              }) => {
 
     const [ countryCode, setCountryCode ] = useState('');
 
@@ -102,21 +102,6 @@ const CompleteRegistration = ({
                             <Form.Group>
                                 <Form.Row>
                                     <Col>
-                                        <p className="form-control-label">Имя</p>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Имя"
-                                            name="first_name"
-                                            value={values.first_name}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            className={touched.first_name && errors.first_name ? 'is-invalid' : ''}
-                                        />
-                                        {touched.first_name && errors.first_name ? (
-                                            <p className="mt-1 invalid-feedback">{errors.first_name}</p>
-                                        ) : null}
-                                    </Col>
-                                    <Col>
                                         <p className="form-control-label">Фамилия</p>
                                         <Form.Control
                                             type="text"
@@ -129,6 +114,21 @@ const CompleteRegistration = ({
                                         />
                                         {touched.last_name && errors.last_name ? (
                                             <p className="mt-1 invalid-feedback">{errors.last_name}</p>
+                                        ) : null}
+                                    </Col>
+                                    <Col>
+                                        <p className="form-control-label">Имя</p>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Имя"
+                                            name="first_name"
+                                            value={values.first_name}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            className={touched.first_name && errors.first_name ? 'is-invalid' : ''}
+                                        />
+                                        {touched.first_name && errors.first_name ? (
+                                            <p className="mt-1 invalid-feedback">{errors.first_name}</p>
                                         ) : null}
                                     </Col>
                                 </Form.Row>
@@ -287,22 +287,22 @@ const CompleteRegistration = ({
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group>
-                                        Образование
-                                        <Form.Control
-                                            name="education"
-                                            value={values.education}
-                                            as="select"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        >
-                                            <option value='male'>Начальное</option>
-                                            <option  value='female'>Среднее</option>
-                                            <option  value='other'>Высшее</option>
-                                            <option disabled value={-1}>Выберите образование</option>
-                                        </Form.Control>
-                                        {touched.education && errors.education ? (
-                                            <span className="mt-1 invalid-feedback-visible">{errors.education}</span>
-                                        ) : null}
+                                Образование
+                                <Form.Control
+                                    name="education"
+                                    value={values.education}
+                                    as="select"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                >
+                                    <option value='male'>Начальное</option>
+                                    <option  value='female'>Среднее</option>
+                                    <option  value='other'>Высшее</option>
+                                    <option disabled value={-1}>Выберите образование</option>
+                                </Form.Control>
+                                {touched.education && errors.education ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.education}</span>
+                                ) : null}
                             </Form.Group>
                             <Form.Group>
                                 Знание языков
@@ -319,6 +319,7 @@ const CompleteRegistration = ({
                                     <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
                                 ) : null}
                             </Form.Group>
+                            <h6 className="text-center">Постоянное место жительства</h6>
                             <Form.Group>
                                 <Form.Row>
                                     <Col>
@@ -353,8 +354,10 @@ const CompleteRegistration = ({
                                     </Col>
                                 </Form.Row>
                             </Form.Group>
-                            <Form.Group>
-
+                            <Form.Group controlId="formBasicCheckbox">
+                                <Form.Check type="checkbox"
+                                            value={termsAccepted}
+                                            label="Я принимаю условия Пользовательского соглашения" />
                             </Form.Group>
                             <div className="round-button-container">
                                 <button
