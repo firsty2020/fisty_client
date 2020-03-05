@@ -356,7 +356,6 @@ const CompleteRegistration = ({
                             </Form.Group>
                             <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check type="checkbox"
-                                            value={termsAccepted}
                                             label="Я принимаю условия Пользовательского соглашения" />
                             </Form.Group>
                             <div className="round-button-container">
