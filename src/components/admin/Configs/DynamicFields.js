@@ -91,7 +91,7 @@ const DynamicFields = ({
                                 <Form onSubmit={handleSubmit}>
                                     <Popover
                                         show={!!industryOptionToEdit}
-                                        placement="left"
+                                        placement="bottom"
                                         el={inputRef}
                                         body="Редактировать здесь"
                                     />

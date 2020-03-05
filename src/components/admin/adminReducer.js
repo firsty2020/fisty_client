@@ -39,7 +39,7 @@ export const admin = (state = initialState, action) => {
         case ADMIN_GET_COMPANIES_PENDING:
             return { ...state,  companies: [], getCompaniesPending: true };
         case ADMIN_GET_COMPANIES_RESOLVED:
-            return { ...state,  companies: action.payload };
+            return { ...state,  companies: action.payload, getCompaniesPending: false };
 
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
             return { ...state,  addIndustryOptionPending: true, addIndustryOptionFailed: false, addIndustryOptionResolved: false };

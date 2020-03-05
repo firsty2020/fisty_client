@@ -59,7 +59,7 @@ const Companies = ({ companies, getCompanies, getCompaniesPending }) => {
             <div>
                 <TableList
                     layout={companiesTableLayout}
-                    data={companies || []}
+                    data={companies}
                     showSpinner={!!getCompaniesPending}
                 />
             </div>
