@@ -41,7 +41,7 @@ export const updateIndustryOption = ({ id, name }) => {
     return dispatch => {
         dispatch(updateIndustryOptionPending());
         api
-            .patch(`industries/${id}`, { name })
+            .patch(`industries/${id}/`, { name })
             .then((res) => dispatch(updateIndustryOptionResolved(res.data)))
             .catch((err) => dispatch(updateIndustryOptionFailed(err)))
     };

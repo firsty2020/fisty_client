@@ -23,44 +23,44 @@ const initialState = { getUsersPending: false, getUsersError: null, users: [] };
 export const admin = (state = initialState, action) => {
     switch (action.type) {
         case ADMIN_GET_USERS_PENDING:
-            return { getUsersPending: true, getUsersError: null, users: [] };
+            return { ...state,  getUsersPending: true, getUsersError: null, users: [] };
         case ADMIN_GET_USERS_FAILED:
-            return { getUsersError: action.payload, getUsersPending: false, users: [] };
+            return { ...state,  getUsersError: action.payload, getUsersPending: false, users: [] };
         case ADMIN_GET_USERS_RESOLVED:
-            return { users: action.payload, getUsersPending: false, getUsersError: null };
+            return { ...state,  users: action.payload, getUsersPending: false, getUsersError: null };
 
         case ADMIN_CREATE_COMPANY_PENDING:
-            return { companyCreated: false, createCompanyError: null, createCompanyPending: true };
+            return { ...state,  companyCreated: false, createCompanyError: null, createCompanyPending: true };
         case ADMIN_CREATE_COMPANY_RESOLVED:
-            return { companyCreated: true, createCompanyError: null, createCompanyPending: false };
+            return { ...state,  companyCreated: true, createCompanyError: null, createCompanyPending: false };
         case ADMIN_CREATE_COMPANY_FAILED:
-            return { companyCreated: false, createCompanyError: action.error, createCompanyPending: false };
+            return { ...state,  companyCreated: false, createCompanyError: action.error, createCompanyPending: false };
 
         case ADMIN_GET_COMPANIES_PENDING:
-            return { companies: [], getCompaniesPending: true };
+            return { ...state,  companies: [], getCompaniesPending: true };
         case ADMIN_GET_COMPANIES_RESOLVED:
-            return { companies: action.payload };
+            return { ...state,  companies: action.payload };
 
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
-            return { addIndustryOptionPending: true, addIndustryOptionFailed: false, addIndustryOptionResolved: false };
+            return { ...state,  addIndustryOptionPending: true, addIndustryOptionFailed: false, addIndustryOptionResolved: false };
         case ADMIN_CONFIGS_ADD_INDUSTRY_RESOLVED:
-            return { addIndustryOptionPending: false, addIndustryOptionFailed: false, addIndustryOptionResolved: true };
+            return { ...state,  addIndustryOptionPending: false, addIndustryOptionFailed: false, addIndustryOptionResolved: true };
         case ADMIN_CONFIGS_ADD_INDUSTRY_FAILED:
-            return { addIndustryOptionPending: false, addIndustryOptionFailed: false, addIndustryOptionResolved: false };
+            return { ...state,  addIndustryOptionPending: false, addIndustryOptionFailed: false, addIndustryOptionResolved: false };
 
         case ADMIN_CONFIGS_GET_INDUSTRIES_PENDING:
-            return { getIndustryOptionsPending: true, getIndustryOptionsFailed: false, industryOptions: [] };
+            return { ...state,  getIndustryOptionsPending: true, getIndustryOptionsFailed: false, industryOptions: [] };
         case ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED:
-            return { getIndustryOptionsPending: false, getIndustryOptionsFailed: false, industryOptions: action.payload };
+            return { ...state,  getIndustryOptionsPending: false, getIndustryOptionsFailed: false, industryOptions: action.payload };
         case ADMIN_CONFIGS_GET_INDUSTRIES_FAILED:
-            return { getIndustryOptionsPending: false, getIndustryOptionsFailed: true, industryOptions: [] };
+            return { ...state,  getIndustryOptionsPending: false, getIndustryOptionsFailed: true, industryOptions: [] };
 
         case ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING:
-            return { updateIndustryOptionPending: true, updateIndustryOptionError: false, updateIndustryOptionResolved: false };
+            return { ...state,  updateIndustryOptionPending: true, updateIndustryOptionError: false, updateIndustryOptionResolved: false };
         case ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED:
-            return { updateIndustryOptionPending: false, updateIndustryOptionError: false, updateIndustryOptionResolved: true };
+            return { ...state,  updateIndustryOptionPending: false, updateIndustryOptionError: false, updateIndustryOptionResolved: true };
         case ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED:
-            return { updateIndustryOptionPending: true, updateIndustryOptionError: true, updateIndustryOptionResolved: false };
+            return { ...state,  updateIndustryOptionPending: true, updateIndustryOptionError: true, updateIndustryOptionResolved: false };
         default: return state;
     }
 };
@@ -84,3 +84,7 @@ export const addIndustryOptionResolvedSelector = state => state.admin.addIndustr
 export const getIndustryOptionsPendingSelector = state => state.admin.getIndustryOptionsPending;
 export const getIndustryOptionsFailedSelector = state => state.admin.getIndustryOptionsFailed;
 export const industryOptionsSelector = state => state.admin.industryOptions;
+
+export const updateIndustryOptionPendingSelector = state => state.admin.updateIndustryOptionPending;
+export const updateIndustryOptionFailedSelector = state => state.admin.updateIndustryOptionError;
+export const updateIndustryOptionResoledSelector = state => state.admin.updateIndustryOptionResolved;

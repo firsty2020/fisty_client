@@ -8,7 +8,9 @@ import { addIndustryOption, getIndustryOptions, updateIndustryOption } from './c
 import {
     addIndustryOptionFailedSelector,
     addIndustryOptionPendingSelector,
-    addIndustryOptionResolvedSelector, industryOptionsSelector
+    addIndustryOptionResolvedSelector,
+    industryOptionsSelector,
+    updateIndustryOptionResoledSelector
 } from '../adminReducer';
 import { scrollToRef } from '../../../utils';
 import { Popover } from '../../ui';
@@ -23,10 +25,11 @@ let setFormikFieldValue;
 
 
 const DynamicFields = ({
+                           addIndustryOption,
                            addIndustryPending,
                            addIndustryResolved,
+                           updateIndustryOptionResolved,
                            industryOptions,
-                           addIndustryOption,
                            getIndustryOptions,
                            updateIndustryOption,
                        }) => {
@@ -38,10 +41,17 @@ const DynamicFields = ({
         getIndustryOptions();
     }, [ getIndustryOptions, addIndustryResolved ]);
 
+    useEffect(() => {
+        if (updateIndustryOptionResolved) {
+            getIndustryOptions();
+        }
+    }, [ updateIndustryOptionResolved, getIndustryOptions ] );
+
     const handleEdit = ({ id, name }) => {
         setIndustryOptionToEdit(id);
         setFormikFieldValue('field', name);
         scrollToRef(inputRef);
+        inputRef.current.focus();
     };
 
     const inputRef = useRef(null);
@@ -151,6 +161,7 @@ const mapStateToProps = state => ({
     addIndustryResolved: addIndustryOptionResolvedSelector(state),
     addIndustryOptionFailed: addIndustryOptionFailedSelector(state),
     industryOptions: industryOptionsSelector(state),
+    updateIndustryOptionResolved: updateIndustryOptionResoledSelector(state),
 });
 
 const mapDispatchToProps = {
