@@ -28,5 +28,6 @@ export default {
     BRANCH_ADDRESS_REQUIRED: 'Введите адрес бранча',
     SOURCE_REQUIRED: 'Укажите источник',
     URL_INVALID: 'Введите правильный адрес веб-сайта',
+    COMPANY_CREATED_SUCCESS: 'Вы успешно создали компанию'
 };
 

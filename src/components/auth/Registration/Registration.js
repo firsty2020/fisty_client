@@ -12,7 +12,7 @@ import { AuthFormContainer, AlertNotice } from '../../ui/';
 import { registerUser } from '../auth';
 import { authErrorSelector, authPendingSelector, authSuccessSelector } from '../authReducer';
 import { userRegistrationSchema } from '../../../validation';
-import ERROR_MESSAGES from '../../../constants/errorMessages'
+import ERROR_MESSAGES from '../../../constants/messages'
 
 
 class Registration extends Component {

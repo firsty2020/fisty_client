@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import ERROR_MESSAGES from './constants/errorMessages'
+import ERROR_MESSAGES from './constants/messages'
 
 
 const REGEX = {

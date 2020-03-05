@@ -28,8 +28,9 @@ export const createCompanyPending = () => ({
     type: ADMIN_CREATE_COMPANY_PENDING,
 });
 
-export const createCompanyFailed = () => ({
+export const createCompanyFailed = (err) => ({
     type: ADMIN_CREATE_COMPANY_FAILED,
+    error: err,
 });
 
 export const createCompanyResolved = () => ({

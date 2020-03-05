@@ -6,12 +6,21 @@ import { push } from 'connected-react-router';
 import { companySchema } from '../../../validation';
 import { createCompany } from './companiesApi';
 import {
+    createCompanyErrorSelector,
     createCompanyPendingSelector,
     createCompanySuccessSelector
 } from '../adminReducer';
+import { AlertNotice } from '../../ui';
+import { When } from "react-if";
+import messages from '../../../constants/messages';
 
 
-const CreateCompany = ({ pending, created, createCompany, push }) => {
+const CreateCompany = ({
+                           createCompanyError,
+                           pending,
+                           created,
+                           createCompany,
+                           push }) => {
 
     const handleCreateCompany = (companyData) => {
         const postData = { ...companyData };
@@ -27,12 +36,20 @@ const CreateCompany = ({ pending, created, createCompany, push }) => {
 
     useEffect(() => {
         if (created) {
-            push('/admin/companies')
+            setTimeout(() => {
+                push('/admin/companies');
+            }, 3000);
         }
     }, [ created, push ]);
 
     return (
         <Container className="mt-10-auto">
+            <When condition={!!createCompanyError}>
+                <AlertNotice message={createCompanyError} type="danger"/>
+            </When>
+            <When condition={!!created}>
+                <AlertNotice message={messages.COMPANY_CREATED_SUCCESS} type="success"/>
+            </When>
             <Formik
                 initialValues={{
                     name: '',
@@ -218,6 +235,7 @@ const CreateCompany = ({ pending, created, createCompany, push }) => {
 const mapStateToProps = state => ({
     pending: createCompanyPendingSelector(state),
     created: createCompanySuccessSelector(state),
+    createCompanyError: createCompanyErrorSelector(state),
 });
 
 const mapDispatchToProps = { createCompany, push };

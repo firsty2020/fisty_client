@@ -2,11 +2,10 @@ import React, {useEffect} from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { PlusCircle } from 'react-feather';
-import { EmptyListPlaceholder, TableList } from '../../ui';
+import { TableList } from '../../ui';
 import { Link } from 'react-router-dom';
 import { getCompanies } from './companiesApi';
-import { companiesSelector } from '../adminReducer';
-import { When } from 'react-if';
+import { companiesSelector, getCompaniesPendingSelector } from '../adminReducer';
 
 
 const companiesTableLayout = {
@@ -20,7 +19,7 @@ const companiesTableLayout = {
     ],
 };
 
-const Companies = ({ companies, getCompanies }) => {
+const Companies = ({ companies, getCompanies, getCompaniesPending }) => {
 
     useEffect(() => {
         getCompanies();
@@ -61,11 +60,9 @@ const Companies = ({ companies, getCompanies }) => {
                 <TableList
                     layout={companiesTableLayout}
                     data={companies || []}
+                    showSpinner={!!getCompaniesPending}
                 />
             </div>
-            <When condition={(!companies || !companies.length)}>
-                <EmptyListPlaceholder/>
-            </When>
         </div>
     );
 };
@@ -73,6 +70,7 @@ const Companies = ({ companies, getCompanies }) => {
 
 const mapStateToProps = state => ({
     companies: companiesSelector(state),
+    getCompaniesPending: getCompaniesPendingSelector(state),
 });
 
 const mapDispatchToProps = { getCompanies };

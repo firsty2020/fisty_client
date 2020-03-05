@@ -72,11 +72,9 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
                 <TableList
                     layout={usersTableLayout}
                     data={users}
+                    showSpinner={!!getUsersPending}
                 />
             </div>
-            <When condition={!!getUsersPending}>
-                <LoadSpinner/>
-            </When>
         </div>
     );
 };

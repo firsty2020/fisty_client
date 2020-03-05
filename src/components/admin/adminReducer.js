@@ -5,6 +5,8 @@ import {
     ADMIN_CREATE_COMPANY_PENDING,
     ADMIN_CREATE_COMPANY_RESOLVED,
     ADMIN_GET_COMPANIES_RESOLVED,
+    ADMIN_CREATE_COMPANY_FAILED,
+    ADMIN_GET_COMPANIES_PENDING,
 } from '../../constants/actionTypes';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
@@ -18,9 +20,13 @@ export const admin = (state = initialState, action) => {
         case ADMIN_GET_USERS_RESOLVED:
             return { users: action.payload, getUsersPending: false, getUsersError: null };
         case ADMIN_CREATE_COMPANY_PENDING:
-            return { companyCreated: false, createCompanyError: false, createCompanyPending: true };
+            return { companyCreated: false, createCompanyError: null, createCompanyPending: true };
         case ADMIN_CREATE_COMPANY_RESOLVED:
-            return { companyCreated: true, createCompanyError: false, createCompanyPending: false };
+            return { companyCreated: true, createCompanyError: null, createCompanyPending: false };
+        case ADMIN_CREATE_COMPANY_FAILED:
+            return { companyCreated: false, createCompanyError: action.error, createCompanyPending: false };
+        case ADMIN_GET_COMPANIES_PENDING:
+            return { companies: [], getCompaniesPending: true };
         case ADMIN_GET_COMPANIES_RESOLVED:
             return { companies: action.payload };
         default: return state;
@@ -35,4 +41,6 @@ export const usersPendingSelector = (state) => state.admin.getUsersPending;
 export const createCompanySuccessSelector = (state) => state.admin.companyCreated;
 export const createCompanyErrorSelector = (state) => state.admin.createCompanyError;
 export const createCompanyPendingSelector = (state) => state.admin.createCompanyPending;
+
 export const companiesSelector = (state) => state.admin.companies;
+export const getCompaniesPendingSelector = state => state.admin.getCompaniesPending;
