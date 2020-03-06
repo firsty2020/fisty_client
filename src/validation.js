@@ -34,13 +34,9 @@ export const completeRegistrationSchema = Yup.object().shape({
     phone_number: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)
         .required(ERROR_MESSAGES.PHONE_REQUIRED),
-    experience: Yup.string()
-        .matches(REGEX.NUMERIC, ERROR_MESSAGES.EXPERIENCE_INVALID)
-        .required(ERROR_MESSAGES.EXPERIENCE_REQUIRED),
     city: Yup.string(),
     country: Yup.string(),
-    citizenship: Yup.string()
-        .matches(REGEX.ALPHABETIC, ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
+    citizenship: Yup.string().min(3, ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
     year: Yup.number()
         .positive(ERROR_MESSAGES.DOB_YEAR_REQUIRED),
     month: Yup.number()
@@ -51,6 +47,7 @@ export const completeRegistrationSchema = Yup.object().shape({
     education: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
     languages: Yup.array(),
     gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
+    accept: Yup.bool().oneOf([true], 'Вы должны принять условия'),
 });
 
 export const logInSchema = Yup.object().shape({

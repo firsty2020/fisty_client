@@ -3,7 +3,7 @@ import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
 import CreateBranch from './Companies/CreateBranch';
 import CreateContactPerson from './Companies/CreateContactPerson';
-import DynamicFields from './Configs/DynamicFields';
+import DynamicFields from './Configs/DynamicFields/DynamicFields';
 
 
 export const navigation =  {

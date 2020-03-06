@@ -69,7 +69,6 @@ const CompleteRegistration = ({
                         last_name: '',
                         phone_number: '',
                         city: '',
-                        experience: '',
                         country: -1,
                         citizenship: -1,
                         day: -1,
@@ -78,6 +77,7 @@ const CompleteRegistration = ({
                         father_name: '',
                         education: -1,
                         gender: -1,
+                        accept: false,
                     }}
                     validationSchema={completeRegistrationSchema}
                     onSubmit={(values, { resetForm }) => {
@@ -97,7 +97,7 @@ const CompleteRegistration = ({
                           handleSubmit,
                           setFieldTouched,
                           setFieldValue,
-                      }) => (
+                      }) => console.log(errors, 'errors') || (
                         <Form onSubmit={handleSubmit} className="mx-auto">
                             <Form.Group>
                                 <Form.Row>
@@ -354,9 +354,16 @@ const CompleteRegistration = ({
                                     </Col>
                                 </Form.Row>
                             </Form.Group>
-                            <Form.Group controlId="formBasicCheckbox">
+                            <Form.Group>
                                 <Form.Check type="checkbox"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            name="accept"
+                                            value={values.accept}
                                             label="Я принимаю условия Пользовательского Соглашения" />
+                                {touched.accept && errors.accept ? (
+                                    <p className="mt-1 invalid-feedback-visible">{errors.accept}</p>
+                                ) : null}
                             </Form.Group>
                             <div className="round-button-container">
                                 <button

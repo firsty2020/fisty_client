@@ -1,78 +1,122 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { Button, Container, Form, Row, Col, Table, InputGroup } from 'react-bootstrap';
+import {
+    Button,
+    Form,
+    Row,
+    Col,
+    Table,
+    InputGroup,
+    Modal
+} from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Trash, Edit } from 'react-feather';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import { addIndustryOption, getIndustryOptions, updateIndustryOption } from './configsApi';
+import {
+    addIndustryOption,
+    getIndustryOptions,
+    updateIndustryOption,
+    removeIndustryOption,
+} from '../configsApi';
 import {
     addIndustryOptionFailedSelector,
     addIndustryOptionPendingSelector,
     addIndustryOptionResolvedSelector,
     industryOptionsSelector,
-    updateIndustryOptionResoledSelector
-} from '../adminReducer';
-import { scrollToRef } from '../../../utils';
-import { Popover } from '../../ui';
+    removeIndustryOptionsResolvedSelector,
+    updateIndustryOptionResoledSelector,
+} from '../../adminReducer';
+import { scrollToRef } from '../../../../utils';
+import { Popover } from '../../../ui';
 
 
-const validationSchema = Yup.object().shape({
-    field: Yup.string()
+const industryValidationSchema = Yup.object().shape({
+    industry: Yup.string()
         .required('Введите опцию'),
 });
 
 let setFormikFieldValue;
 
 
-const DynamicFields = ({
-                           addIndustryOption,
-                           addIndustryPending,
-                           addIndustryResolved,
-                           updateIndustryOptionResolved,
-                           industryOptions,
-                           getIndustryOptions,
-                           updateIndustryOption,
-                       }) => {
+const Industries = ({
+                        addIndustryOption,
+                        addIndustryPending,
+                        addIndustryResolved,
+                        updateIndustryOptionResolved,
+                        industryOptionRemoved,
+                        industryOptions,
+                        getIndustryOptions,
+                        updateIndustryOption,
+                        removeIndustryOption,
+                    }) => {
 
     const [ industryOptionToEdit, setIndustryOptionToEdit ] = useState(null);
+    const [ industryOptionToDelete, setIndustryOptionToDelete ] = useState(null);
 
     useEffect(() => {
-        if (addIndustryResolved === false) return;
         getIndustryOptions();
-    }, [ getIndustryOptions, addIndustryResolved ]);
+    }, [ getIndustryOptions ]);
+
+    useEffect(() => {
+        if (addIndustryResolved) {
+            getIndustryOptions();
+        }
+    }, [ addIndustryResolved, getIndustryOptions ]);
+
+    useEffect(() => {
+        if (industryOptionRemoved) {
+            getIndustryOptions();
+        }
+    }, [ industryOptionRemoved, getIndustryOptions ]);
 
     useEffect(() => {
         if (updateIndustryOptionResolved) {
             getIndustryOptions();
         }
-    }, [ updateIndustryOptionResolved, getIndustryOptions ] );
+    }, [ updateIndustryOptionResolved, getIndustryOptions ]);
 
     const handleEdit = ({ id, name }) => {
         setIndustryOptionToEdit(id);
-        setFormikFieldValue('field', name);
-        scrollToRef(inputRef);
-        inputRef.current.focus();
+        setFormikFieldValue('industry', name);
+        scrollToRef(industryInputRef);
+        industryInputRef.current.focus();
     };
 
-    const inputRef = useRef(null);
+    const handleIndustryOptionDelete = () => {
+        removeIndustryOption(industryOptionToDelete);
+        setIndustryOptionToDelete(null);
+    };
+
+    const industryInputRef = useRef(null);
 
     return (
-        <Container className="mt-10-auto">
+        <div>
+            <Modal
+                show={!!industryOptionToDelete}
+                centered>
+                <Modal.Body>
+                    <p className="text-center mt-1">Вы уверены что хотите удалить эту опцию?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setIndustryOptionToDelete(null)}>Нет</Button>
+                    <Button variant="danger" onClick={handleIndustryOptionDelete}>Да</Button>
+                </Modal.Footer>
+            </Modal>
             <Row>
                 <Col>
                     <h3 className="text-center mb-3">Отрасль - выпадающий
                         список</h3>
                     <Formik
                         initialValues={{
-                            field: '',
+                            industry: '',
                         }}
-                        validationSchema={validationSchema}
+                        validationSchema={industryValidationSchema}
                         onSubmit={(values, { resetForm }) => {
                             if (industryOptionToEdit) {
-                                updateIndustryOption({ id: industryOptionToEdit, name: values.field });
+                                updateIndustryOption({ id: industryOptionToEdit, name: values.industry });
                                 setIndustryOptionToEdit(null);
                             } else {
-                                addIndustryOption(values.field);
+                                addIndustryOption(values.industry);
                             }
                             resetForm();
                         }}
@@ -92,18 +136,18 @@ const DynamicFields = ({
                                     <Popover
                                         show={!!industryOptionToEdit}
                                         placement="bottom"
-                                        el={inputRef}
+                                        el={industryInputRef}
                                         body="Редактировать здесь"
                                     />
                                     <InputGroup className="mb-3">
                                         <Form.Control
                                             type="text"
-                                            name="field"
+                                            name="industry"
                                             placeholder="Добавить опцию"
-                                            value={values.field}
+                                            value={values.industry}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            ref={inputRef}
+                                            ref={industryInputRef}
                                         />
                                         <InputGroup.Append>
                                             <Button
@@ -112,9 +156,9 @@ const DynamicFields = ({
                                                 variant="outline-primary">Сохранить
                                             </Button>
                                         </InputGroup.Append>
-                                        {touched.field && errors.field ? (
+                                        {touched.industry && errors.industry ? (
                                             <span
-                                                className="mt-1 invalid-feedback-visible">{errors.field}</span>
+                                                className="mt-1 invalid-feedback-visible">{errors.industry}</span>
                                         ) : null}
                                     </InputGroup>
                                 </Form>
@@ -135,7 +179,9 @@ const DynamicFields = ({
                                     <td>{name}</td>
                                     <td>
                                         <div className="d-flex justify-content-around">
-                                            <Trash className="cursor-pointer" color="red"/>
+                                            <Trash
+                                                onClick={() => setIndustryOptionToDelete(id)}
+                                                className="cursor-pointer" color="red"/>
                                             <Edit
                                                 onClick={() => handleEdit({ id, name })}
                                                 className="cursor-pointer"
@@ -151,7 +197,8 @@ const DynamicFields = ({
                 </Col>
             </Row>
             <hr/>
-        </Container>
+
+        </div>
     );
 };
 
@@ -162,18 +209,20 @@ const mapStateToProps = state => ({
     addIndustryOptionFailed: addIndustryOptionFailedSelector(state),
     industryOptions: industryOptionsSelector(state),
     updateIndustryOptionResolved: updateIndustryOptionResoledSelector(state),
+    industryOptionRemoved: removeIndustryOptionsResolvedSelector(state),
 });
 
 const mapDispatchToProps = {
     addIndustryOption,
     getIndustryOptions,
     updateIndustryOption,
+    removeIndustryOption,
 };
 
 
-DynamicFields.propTypes = {
+Industries.propTypes = {
 
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(DynamicFields);
+export default connect(mapStateToProps, mapDispatchToProps)(Industries);

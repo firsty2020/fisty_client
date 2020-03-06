@@ -16,6 +16,19 @@ import {
     ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING,
     ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED,
     ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING,
+    ADMIN_CONFIGS_REMOVE_INDUSTRY_FAILED,
+    ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_PENDING,
+    ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_FAILED,
+    ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
+    ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
+    ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
 } from '../../constants/actionTypes';
 
 
@@ -123,6 +136,97 @@ export const updateIndustryOptionFailed = (error) => ({
 
 export const updateIndustryOptionResolved = () => ({
     type: ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
+});
+
+/******************************************/
+
+
+/*** Actions for removing options for industry field ***/
+
+export const removeIndustryOptionPending = () => ({
+    type: ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING,
+});
+
+export const removeIndustryOptionFailed = (error) => ({
+    type: ADMIN_CONFIGS_REMOVE_INDUSTRY_FAILED,
+    error,
+});
+
+export const removeIndustryOptionResolved = () => ({
+    type: ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED,
+});
+
+/******************************************/
+
+
+/*** Actions for creating options for specification field ***/
+
+export const addSpecificationOptionPending = () => ({
+    type: ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_PENDING,
+});
+
+export const addSpecificationOptionFailed = (err) => ({
+    type: ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_FAILED,
+    error: err,
+});
+
+export const addSpecificationOptionResolved = () => ({
+    type: ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_RESOLVED,
+});
+
+/******************************************/
+
+
+/*** Actions for fetching options for specification field ***/
+
+export const getSpecificationOptionsPending = () => ({
+    type: ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING,
+});
+
+export const getSpecificationOptionsFailed = (err) => ({
+    type: ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
+    error: err,
+});
+
+export const getSpecificationOptionsResolved = (specifications) => ({
+    type: ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_RESOLVED,
+    payload: specifications,
+});
+
+/******************************************/
+
+
+/*** Actions for updating options for industry field ***/
+
+export const updateSpecificationOptionPending = () => ({
+    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
+});
+
+export const updateSpecificationOptionFailed = (error) => ({
+    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
+    error,
+});
+
+export const updateSpecificationOptionResolved = () => ({
+    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED,
+});
+
+/******************************************/
+
+
+/*** Actions for updating options for industry field ***/
+
+/*export const updateSpecificationOptionPending = () => ({
+    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
+});
+
+export const updateSpecificationOptionFailed = (error) => ({
+    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
+    error,
+});*/
+
+export const removeSpecificationOptionResolved = () => ({
+    type: ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
 });
 
 /******************************************/

@@ -16,6 +16,15 @@ import {
     ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING,
     ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
     ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED,
+    ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_PENDING,
+    ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_FAILED,
+    ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING,
+    ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_PENDING,
 } from '../../constants/actionTypes';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
@@ -51,7 +60,14 @@ export const admin = (state = initialState, action) => {
         case ADMIN_CONFIGS_GET_INDUSTRIES_PENDING:
             return { ...state,  getIndustryOptionsPending: true, getIndustryOptionsFailed: false, industryOptions: [] };
         case ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED:
-            return { ...state,  getIndustryOptionsPending: false, getIndustryOptionsFailed: false, industryOptions: action.payload };
+            return {
+                ...state,
+                getIndustryOptionsPending: false,
+                getIndustryOptionsFailed: false,
+                industryOptions: action.payload,
+                updateIndustryOptionResolved: false,
+                removeIndustryOptionResolved: false,
+            };
         case ADMIN_CONFIGS_GET_INDUSTRIES_FAILED:
             return { ...state,  getIndustryOptionsPending: false, getIndustryOptionsFailed: true, industryOptions: [] };
 
@@ -61,6 +77,56 @@ export const admin = (state = initialState, action) => {
             return { ...state,  updateIndustryOptionPending: false, updateIndustryOptionError: false, updateIndustryOptionResolved: true };
         case ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED:
             return { ...state,  updateIndustryOptionPending: true, updateIndustryOptionError: true, updateIndustryOptionResolved: false };
+
+        case ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_PENDING:
+            return { ...state,  addSpecificationOptionPending: true, addSpecificationOptionFailed: false, addSpecificationOptionResolved: false };
+        case ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_FAILED:
+            return { ...state,  addSpecificationOptionPending: false, addSpecificationOptionFailed: true, addSpecificationOptionResolved: false };
+        case ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_RESOLVED:
+            return { ...state,  addSpecificationOptionPending: false, addSpecificationOptionFailed: false, addSpecificationOptionResolved: true };
+
+        case ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_RESOLVED:
+            return { ...state,
+                getSpecificationOptionsPending: false,
+                getSpecificationOptionsFailed: false,
+                specificationOptions: action.payload,
+                removeSpecificationOptionResolved: false,
+                updateSpecificationOptionResolved: false,
+            };
+
+        case ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED:
+            return { ...state,
+                updateSpecificationOptionPending: false,
+                updateSpecificationOptionFailed: false,
+                updateSpecificationOptionResolved: true
+            };
+
+        case ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED:
+            return { ...state,
+                removeIndustryOptionPending: false,
+                removeIndustryOptionFailed: false,
+                removeIndustryOptionResolved: true
+            };
+        case ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING:
+            return { ...state,
+                removeIndustryOptionPending: true,
+                removeIndustryOptionFailed: false,
+                removeIndustryOptionResolved: false
+            };
+
+        case ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED:
+            return { ...state,
+                removeSpecificationOptionPending: false,
+                removeSpecificationOptionFailed: false,
+                removeSpecificationOptionResolved: true
+            };
+
+        case ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_PENDING:
+            return { ...state,
+                removeSpecificationOptionPending: true,
+                removeSpecificationOptionFailed: false,
+                removeSpecificationOptionResolved: false,
+            };
         default: return state;
     }
 };
@@ -88,3 +154,12 @@ export const industryOptionsSelector = state => state.admin.industryOptions;
 export const updateIndustryOptionPendingSelector = state => state.admin.updateIndustryOptionPending;
 export const updateIndustryOptionFailedSelector = state => state.admin.updateIndustryOptionError;
 export const updateIndustryOptionResoledSelector = state => state.admin.updateIndustryOptionResolved;
+
+export const specificationOptionsSelector = state => state.admin.specificationOptions;
+
+export const addSpecificationOptionResolvedSelector = state => state.admin.addSpecificationOptionResolved;
+
+export const updateSpecificationOptionResolvedSelector = state => state.admin.updateSpecificationOptionResolved;
+
+export const removeIndustryOptionsResolvedSelector = state => state.admin.removeIndustryOptionResolved;
+export const removeSpecificationOptionsResolvedSelector = state => state.admin.removeSpecificationOptionResolved;

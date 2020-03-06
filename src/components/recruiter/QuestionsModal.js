@@ -42,7 +42,6 @@ const QuestionsModal = ({ thresholdPassed, submitPending }) => {
                         }}
                         validationSchema={validationQuestionsSchema}
                         onSubmit={(values) => {
-                            console.log(values, 'values')
                             // handleSubmitAnswers();
                         }}
                     >
