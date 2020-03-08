@@ -30,7 +30,7 @@ export const completeRegistrationSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
     last_name: Yup.string()
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
-    father_name: Yup.string(),
+    middle_name: Yup.string(),
     phone_number: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)
         .required(ERROR_MESSAGES.PHONE_REQUIRED),
@@ -114,7 +114,7 @@ export const contactPersonSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
     last_name: Yup.string()
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
-    father_name: Yup.string(),
+    middle_name: Yup.string(),
     position: Yup.string()
         .required(''),
     status: Yup.string()

@@ -1,8 +1,12 @@
-import { combineReducers } from 'redux';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
 import { auth } from './components/auth/authReducer';
 import { dashboard } from './components/recruiter/recruiterReducer';
 import { admin } from './components/admin/adminReducer';
-import { connectRouter } from 'connected-react-router';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import thunk from 'redux-thunk';
+import { createBrowserHistory } from 'history';
+
+export const history = createBrowserHistory();
 
 
 const createRootReducer = (history) => combineReducers({
@@ -11,6 +15,14 @@ const createRootReducer = (history) => combineReducers({
     dashboard,
     admin,
 });
+
+export const store = createStore(
+    createRootReducer(history),
+    applyMiddleware(
+        routerMiddleware(history),
+        thunk,
+    )
+);
 
 
 export default createRootReducer;

@@ -41,7 +41,7 @@ export const getAuthToken = (username, password) => {
         api
             .post('token/', {username, password})
             .then((res) => {
-                storeToken(res.data.access);
+                storeTokens(res.data.access, res.data.refresh);
                 dispatch(loginSuccess());
             })
             .catch(error => dispatch(loginError(error)));
@@ -71,4 +71,7 @@ export const getUserFromToken = () => {
     return decoded;
 };
 
-const storeToken = (token) => localStorage.setItem('auth_token', token);
+const storeTokens = (token, refreshToken) => {
+    localStorage.setItem('auth_token', token);
+    localStorage.setItem('refresh_token', refreshToken);
+};

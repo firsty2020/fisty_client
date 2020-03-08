@@ -4,13 +4,13 @@ import { Form, InputGroup } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { bool, func, oneOfType, string } from 'prop-types';
+import { bool, func } from 'prop-types';
 import classNames from 'classnames';
 import { If, Then, Else, When } from 'react-if';
 import { SuccessNotice } from '../../ui';
-import { AuthFormContainer, AlertNotice } from '../../ui/';
+import { AuthFormContainer } from '../../ui/';
 import { registerUser } from '../auth';
-import { authErrorSelector, authPendingSelector, authSuccessSelector } from '../authReducer';
+import { authPendingSelector, authSuccessSelector } from '../authReducer';
 import { userRegistrationSchema } from '../../../validation';
 import ERROR_MESSAGES from '../../../constants/messages'
 
@@ -36,7 +36,7 @@ class Registration extends Component {
     render() {
 
         const { shouldShowPassword, shouldShowRepeatPassword } = this.state;
-        const { registrationPending, registrationError, registrationSuccess } = this.props;
+        const { registrationPending, registrationSuccess } = this.props;
 
         return (
             <div>
@@ -44,9 +44,6 @@ class Registration extends Component {
                     title="Регистрация"
                     subtitle="Фрилансеры"
                 >
-                    <When condition={!!registrationError}>
-                        <AlertNotice type="danger" message={registrationError}/>
-                    </When>
                     <When condition={registrationSuccess}>
                         <SuccessNotice
                             title="Регистрация удалась"
@@ -179,7 +176,6 @@ class Registration extends Component {
 const mapStateToProps = state => ({
     registrationPending: authPendingSelector(state),
     registrationSuccess: authSuccessSelector(state),
-    registrationError: authErrorSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ registerUser }, dispatch);
@@ -188,7 +184,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({ registerUser }, disp
 Registration.propTypes = {
     registrationPending: bool.isRequired,
     registrationSuccess: bool.isRequired,
-    registrationError: oneOfType([ bool.isRequired, string.isRequired ]),
     registerUser: func.isRequired,
 };
 

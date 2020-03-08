@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Dropdown, Form, InputGroup } from 'react-bootstrap';
-import { authPendingSelector, authErrorSelector, authSuccessSelector } from '../authReducer';
+import { authPendingSelector, authSuccessSelector } from '../authReducer';
 import { completeRegistration } from '../auth';
 import { push } from 'connected-react-router'
 import { completeRegistrationSchema } from '../../../validation';
@@ -14,7 +14,7 @@ import armenianFlag from '../../../assets/icons/armenia.png'
 import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
-import { AlertNotice, SuccessNotice, AuthFormContainer } from '../../ui';
+import { SuccessNotice, AuthFormContainer } from '../../ui';
 import { generateDays, generateMonths, generateYears } from '../../../utils';
 
 import Select from 'react-select';
@@ -28,7 +28,6 @@ const languageOptions = [
     { value: 'Английский', label: 'Английский' },
     { value: 'Русский', label: 'Русский' },
 ];
-
 
 
 const CompleteRegistration = ({
@@ -60,9 +59,6 @@ const CompleteRegistration = ({
                         body="Ввойдите в свой аккаунт"
                     />
                 </When>
-                <When condition={!!error}>
-                    <AlertNotice type="danger" message={error}/>
-                </When>
                 <Formik
                     initialValues={{
                         first_name: '',
@@ -74,18 +70,19 @@ const CompleteRegistration = ({
                         day: -1,
                         month: -1,
                         year: -1,
-                        father_name: '',
+                        middle_name: '',
                         education: -1,
                         gender: -1,
                         accept: false,
+                        languages: [],
                     }}
                     validationSchema={completeRegistrationSchema}
                     onSubmit={(values, { resetForm }) => {
                         const userDetails = { ...values };
                         userDetails.phone_number = countryCode + userDetails.phone_number;
+                        userDetails.date_of_birth = `${values.year}-${values.month}-${values.day}`;
+                        userDetails.languages = values.languages
                         completeRegistration(userDetails, match.params.passwordToken);
-                        resetForm();
-                        setCountryCode('');
                     }}
                 >
                     {({
@@ -138,14 +135,14 @@ const CompleteRegistration = ({
                                 <Form.Control
                                     type="text"
                                     placeholder="Отчество"
-                                    name="father_name"
-                                    value={values.father_name}
+                                    name="middle_name"
+                                    value={values.middle_name}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className={touched.father_name && errors.father_name ? 'is-invalid' : ''}
+                                    className={touched.middle_name && errors.middle_name ? 'is-invalid' : ''}
                                 />
-                                {touched.father_name && errors.father_name ? (
-                                    <p className="mt-1 invalid-feedback">{errors.father_name}</p>
+                                {touched.middle_name && errors.middle_name ? (
+                                    <p className="mt-1 invalid-feedback">{errors.middle_name}</p>
                                 ) : null}
                             </Form.Group>
                             <Form.Group>
@@ -382,7 +379,6 @@ const CompleteRegistration = ({
 
 const mapStateToProps = state => ({
     pending: authPendingSelector(state),
-    error: authErrorSelector(state),
     success: authSuccessSelector(state),
 });
 

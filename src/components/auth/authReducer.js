@@ -44,7 +44,6 @@ export const auth = (state = initialState, action) => {
 };
 
 export const authPendingSelector = state => state.auth.pending;
-export const authErrorSelector = state => state.auth.error;
 export const authSuccessSelector = state => state.auth.success;
 
 export const userSelector = state => state.auth.user;

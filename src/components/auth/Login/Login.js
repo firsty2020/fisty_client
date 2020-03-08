@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { authPendingSelector, authErrorSelector, authSuccessSelector } from '../authReducer';
+import { authPendingSelector, authSuccessSelector } from '../authReducer';
 import { push } from 'connected-react-router';
 import { Formik } from 'formik';
-import { bool, string, func } from 'prop-types';
-import { When } from 'react-if';
+import { bool, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getAuthToken } from '../auth';
-import { AlertNotice, AuthFormContainer } from '../../ui';
+import { AuthFormContainer } from '../../ui';
 import { logInSchema } from '../../../validation';
 
 
@@ -27,9 +26,6 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
     return (
         <div>
             <AuthFormContainer title="Войти в Аккаунт">
-                <When condition={!!authError}>
-                    <AlertNotice message={authError} type="danger"/>
-                </When>
                 <Formik
                     initialValues={{
                         email: '',
@@ -98,7 +94,6 @@ const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
 
 const mapStateToProps = state => ({
     authPending: authPendingSelector(state),
-    authError: authErrorSelector(state),
     authSuccess: authSuccessSelector(state),
 });
 
@@ -107,7 +102,6 @@ const mapDispatchToProps = { getAuthToken, push };
 
 Login.propTypes = {
     authPending: bool.isRequired,
-    authError: string,
     authSuccess: bool.isRequired,
     getAuthToken: func.isRequired,
     push: func.isRequired,

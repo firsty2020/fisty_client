@@ -24,6 +24,6 @@ export const getCompanies = () => {
         api
             .get('companies/')
             .then((res) => dispatch(getCompaniesResolved(res.data)))
-            .catch()
+            .catch((err) => console.log(err, 'err'))
     }
 };

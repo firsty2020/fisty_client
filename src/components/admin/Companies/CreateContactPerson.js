@@ -11,7 +11,7 @@ const CreateContactPerson = () => {
                 initialValues={{
                     first_name: '',
                     last_name: '',
-                    father_name: '',
+                    middle_name: '',
                     position: '',
                     status: -1,
                     email: '',
@@ -66,13 +66,13 @@ const CreateContactPerson = () => {
                                     <Form.Control
                                         type="text"
                                         placeholder="Отчество"
-                                        name="father_name"
-                                        value={values.father_name}
+                                        name="middle_name"
+                                        value={values.middle_name}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
-                                    {touched.father_name && errors.father_name ? (
-                                        <p className="mt-1 invalid-feedback-visible">{errors.father_name}</p>
+                                    {touched.middle_name && errors.middle_name ? (
+                                        <p className="mt-1 invalid-feedback-visible">{errors.middle_name}</p>
                                     ) : null}
                                 </Col>
                             </Form.Row>

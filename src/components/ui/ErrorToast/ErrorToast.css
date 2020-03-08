@@ -1,0 +1,43 @@
+
+#error-toast-container {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    bottom: 0;
+    z-index: 999; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.toast.show {
+    float: right;
+    background-color: red;
+    color: white;
+}
+
+.toast {
+    margin-top: 40px;
+    margin-right: 10px;
+    max-width: 400px!important;
+    -webkit-box-shadow: 0 0 7px 1px rgba(0,0,0,0.75)!important;
+    -moz-box-shadow: 0 0 7px 1px rgba(0,0,0,0.75)!important;
+    box-shadow: 0 0 7px 1px rgba(0,0,0,0.75)!important;
+    font-family: "Open Sans";
+
+}
+
+.toast-header-title {
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+}
+
+.toast-header {
+    padding: 10px!important;
+}
+
+.toast-body {
+    font-size: 17px;
+}

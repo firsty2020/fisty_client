@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { PlusCircle } from 'react-feather';
 import { TableList } from '../../ui';
@@ -31,7 +31,7 @@ const Companies = ({ companies, getCompanies, getCompaniesPending }) => {
             <div className="mt-10-auto">
                 <Row>
                     <Col lg={4} md={4} sm={4} xs={5}>
-                        <Form.Label>Фильтровать по статусу</Form.Label>
+                       {/* <Form.Label>Фильтровать по статусу</Form.Label>
                         <Form.Control
                             name="filter"
                             as="select"
@@ -40,7 +40,7 @@ const Companies = ({ companies, getCompanies, getCompaniesPending }) => {
                             <option value="inactive">Неактивные</option>
                             <option value="black_list">Блек Лист</option>
                             <option value="all">Все</option>
-                        </Form.Control>
+                        </Form.Control>*/}
                     </Col>
                     <Col lg={4} md={4} sm={4} xs={3}/>
                     <Col lg={4} md={4} sm={4} xs={4}

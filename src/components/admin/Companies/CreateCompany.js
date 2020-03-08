@@ -6,7 +6,6 @@ import { push } from 'connected-react-router';
 import { companySchema } from '../../../validation';
 import { createCompany } from './companiesApi';
 import {
-    createCompanyErrorSelector,
     createCompanyPendingSelector,
     createCompanySuccessSelector,
     industryOptionsSelector,
@@ -18,7 +17,6 @@ import { getIndustryOptions } from '../Configs/configsApi';
 
 
 const CreateCompany = ({
-                           createCompanyError,
                            pending,
                            created,
                            industryOptions,
@@ -53,9 +51,6 @@ const CreateCompany = ({
 
     return (
         <Container className="mt-10-auto">
-            <When condition={!!createCompanyError}>
-                <AlertNotice message={createCompanyError} type="danger"/>
-            </When>
             <When condition={!!created}>
                 <AlertNotice message={messages.COMPANY_CREATED_SUCCESS} type="success"/>
             </When>
@@ -244,7 +239,6 @@ const CreateCompany = ({
 const mapStateToProps = state => ({
     pending: createCompanyPendingSelector(state),
     created: createCompanySuccessSelector(state),
-    createCompanyError: createCompanyErrorSelector(state),
     industryOptions: industryOptionsSelector(state),
 });
 

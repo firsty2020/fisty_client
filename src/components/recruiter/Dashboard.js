@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getAuthUser } from '../auth/auth';
-import { userSelector, authErrorSelector } from '../auth/authReducer';
+import { userSelector } from '../auth/authReducer';
 import { shape, string, func, oneOfType } from 'prop-types';
 import { push } from 'connected-react-router'
 import { When } from 'react-if';
 import QuestionsModal from './QuestionsModal';
-import { AlertNotice } from '../ui';
 import { Alert } from 'react-bootstrap';
 import { thresholdPassedSelector } from './recruiterReducer';
 
@@ -26,9 +25,6 @@ const Dashboard = ({ user, userLoadFailed, thresholdPassed, getAuthUser, push })
 
     return (
         <div style={{'margin': '50px'}}>
-            <When condition={!!userLoadFailed}>
-                <AlertNotice message={userLoadFailed} type="danger"/>
-            </When>
             <When condition={!!thresholdPassed}>
                 <Alert variant="success">
                     <Alert.Heading>Отлично!</Alert.Heading>
@@ -52,7 +48,6 @@ const Dashboard = ({ user, userLoadFailed, thresholdPassed, getAuthUser, push })
 const mapStateToProps = state => ({
     thresholdPassed: thresholdPassedSelector(state),
     user: userSelector(state),
-    userLoadFailed: authErrorSelector(state),
 });
 
 const mapDispatchToProps = { getAuthUser, push };
