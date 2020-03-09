@@ -4,6 +4,7 @@ import {
     createCompanyResolved,
     getCompaniesPending,
     getCompaniesResolved,
+    getCompaniesFailed,
 } from '../adminActions';
 import api from '../../../axios';
 
@@ -24,6 +25,6 @@ export const getCompanies = () => {
         api
             .get('companies/')
             .then((res) => dispatch(getCompaniesResolved(res.data)))
-            .catch((err) => console.log(err, 'err'))
+            .catch((err) => dispatch(getCompaniesFailed(err)))
     }
 };

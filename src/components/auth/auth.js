@@ -48,13 +48,23 @@ export const getAuthToken = (username, password) => {
     }
 };
 
+export const refreshExpiredToken = (refreshToken) => {
+    return new Promise((resolve, rej) => {
+        api
+            .post('token/refresh/', { refresh: refreshToken })
+            .then(res => resolve(res))
+            .catch(err => rej(err));
+    });
+
+};
+
 export const getAuthUser = () => {
     const userId = (getUserFromToken() || {}).user_id;
     return dispatch => {
         if (!userId)
             return dispatch(fetchUserError('Not authenticated'));
         api
-            .get(`users/${userId}`,)
+            .get(`users/${userId}/`,)
             .then((res) => dispatch(fetchUserSuccess(res.data)))
             .catch(error => dispatch(fetchUserError(error)));
     }

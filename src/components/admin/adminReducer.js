@@ -25,6 +25,7 @@ import {
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_PENDING,
+    ADMIN_GET_COMPANIES_FAILED,
 } from '../../constants/actionTypes';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
@@ -49,6 +50,8 @@ export const admin = (state = initialState, action) => {
             return { ...state,  companies: [], getCompaniesPending: true };
         case ADMIN_GET_COMPANIES_RESOLVED:
             return { ...state,  companies: action.payload, getCompaniesPending: false };
+        case ADMIN_GET_COMPANIES_FAILED:
+            return { ...state,  companies: [], getCompaniesPending: false };
 
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
             return { ...state,  addIndustryOptionPending: true, addIndustryOptionFailed: false, addIndustryOptionResolved: false };

@@ -20,5 +20,19 @@ export const ErrorToast = ({ container, message }) => (
     </div>
 );
 
+export const renderErrorToast = (message) => {
+    const container = temporarilyShowErrorContainer();
+    ReactDOM.render(
+        <ErrorToast
+            message={message}
+            container={container}/>, container);
+};
 
-export default ErrorToast;
+const temporarilyShowErrorContainer = () => {
+    const errorToastContainer = document.getElementById('error-toast-container');
+    errorToastContainer.style.display = 'block';
+    setTimeout(() => {
+        errorToastContainer.style.display = 'none';
+    }, 4000);
+    return errorToastContainer;
+};

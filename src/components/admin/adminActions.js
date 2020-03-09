@@ -29,6 +29,7 @@ import {
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_GET_COMPANIES_FAILED,
 } from '../../constants/actionTypes';
 
 
@@ -76,6 +77,11 @@ export const getCompaniesPending = () => ({
 
 export const getCompaniesResolved = (companies) => ({
     type: ADMIN_GET_COMPANIES_RESOLVED,
+    payload: companies,
+});
+
+export const getCompaniesFailed = (companies) => ({
+    type: ADMIN_GET_COMPANIES_FAILED,
     payload: companies,
 });
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ErrorToast } from './components/ui';
+import { renderErrorToast } from './components/ui/ErrorToast/ErrorToast';
+import { refreshExpiredToken } from './components/auth/auth';
 
 let refreshed = false;
 
@@ -11,7 +10,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config) => {
     const token = (localStorage.getItem('auth_token') || '');
-    if (token && !(config.headers.Authorization && config.headers.Authorization.includes('Refresh'))) {
+    if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
     config.headers['Accept-Language'] = 'ru';
@@ -20,32 +19,39 @@ instance.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
+
 instance.interceptors.response.use((config) => config,
     (error) => {
         const errorData = error.response && error.response.data ? error.response.data : error.response;
+        const errorMessage = transformError(errorData);
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken && !refreshed && error.config &&
             error.response && error.response.status === 401) {
-            refreshed = true;
-            error.config.headers.Authorization = `Refresh ${refreshToken}`;
-            return instance.request(error.config)
-                .then(res => Promise.resolve(res))
-                .catch(); //TODO handle this
+            return handleRefreshToken(error, errorMessage, refreshToken);
         }
-        renderErrorToast(transformError(errorData));
-        return Promise.reject(transformError(errorData));
-    });
+        if  (error.response && error.response.status === 401) {
+            setTimeout(() => window.location.pathname = 'login', 3000);
+        }
+        renderErrorToast(errorMessage);
+        return Promise.reject(errorMessage);
+});
 
-const renderErrorToast = (message) => {
-    const errorToastContainer = document.getElementById('error-toast-container');
-    errorToastContainer.style.display = 'block';
-    setTimeout(() => {
-        errorToastContainer.style.display = 'none';
-    }, 4000);
-    ReactDOM.render(<ErrorToast
-        message={message}
-        container={errorToastContainer}/>, errorToastContainer);
+
+const handleRefreshToken = (error, message, refreshToken) => {
+    refreshed = true;
+    return refreshExpiredToken(refreshToken)
+        .then(response => {
+            localStorage.setItem('auth_token', response.data.access);
+            return instance.request(error.config)
+                .then(res => {
+                    return Promise.resolve(res)
+                });
+        }).catch(() => {
+            renderErrorToast(message);
+            return Promise.reject(message);
+        });
 };
+
 
 const transformError = (error) => {
     const errors = [];
@@ -56,7 +62,11 @@ const transformError = (error) => {
             if (error.hasOwnProperty(field)) {
                 if (field === 'non_field_errors') {
                     errors.push(error[field] + '\n');
-                } else {
+                } else if (field === 'detail') {
+                    errors.push(`${error[field]}\n`);
+                    break;
+                }
+                else {
                     errors.push(`${field}: ${error[field]}\n`);
                 }
             }
@@ -64,5 +74,6 @@ const transformError = (error) => {
     }
     return errors.join('');
 };
+
 
 export default instance;
