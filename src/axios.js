@@ -37,7 +37,7 @@ instance.interceptors.response.use(
             return handleTokenRefresh(error, errorMessage, refreshToken);
         }
         if  (error.response && error.response.status === 401) {
-          //  setTimeout(() => window.location.pathname = 'login', 3000);
+             setTimeout(() => window.location.pathname = 'login', 3000);
         }
         renderErrorToast(errorMessage);
         return Promise.reject(errorMessage);
