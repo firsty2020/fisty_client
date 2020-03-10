@@ -2,50 +2,56 @@ import axios from 'axios';
 import { renderErrorToast } from './components/ui/ErrorToast/ErrorToast';
 import { refreshExpiredToken } from './components/auth/auth';
 
-let refreshed = false;
+
+let refreshedRequestUrl = '';
+
 
 const instance = axios.create({
     baseURL: 'https://sheltered-meadow-55057.herokuapp.com/api/v0/',
 });
 
 
-instance.interceptors.request.use((config) => {
-    const token = (localStorage.getItem('auth_token') || '');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    config.headers['Accept-Language'] = 'ru';
-    return config;
-}, (error) => {
-    return Promise.reject(error);
-});
+instance.interceptors.request.use(
+    (request) => {
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+            request.headers.Authorization = `Bearer ${token}`;
+        }
+        request.headers['Accept-Language'] = 'ru';
+        return request;
+    },
+    (error) => Promise.reject(error));
 
 
-instance.interceptors.response.use((config) => config,
+instance.interceptors.response.use(
+    (response) => response,
     (error) => {
         const errorData = error.response && error.response.data ? error.response.data : error.response;
         const errorMessage = transformError(errorData);
         const refreshToken = localStorage.getItem('refresh_token');
-        if (refreshToken && !refreshed && error.config &&
-            error.response && error.response.status === 401) {
-            return handleRefreshToken(error, errorMessage, refreshToken);
+        if (refreshToken
+            && refreshedRequestUrl !== error.config.url
+            && error.config
+            && error.response
+            && error.response.status === 401) {
+            return handleTokenRefresh(error, errorMessage, refreshToken);
         }
         if  (error.response && error.response.status === 401) {
-            setTimeout(() => window.location.pathname = 'login', 3000);
+          //  setTimeout(() => window.location.pathname = 'login', 3000);
         }
         renderErrorToast(errorMessage);
         return Promise.reject(errorMessage);
-});
+    });
 
 
-const handleRefreshToken = (error, message, refreshToken) => {
-    refreshed = true;
+const handleTokenRefresh = (error, message, refreshToken) => {
+    refreshedRequestUrl = error.config.url;
     return refreshExpiredToken(refreshToken)
         .then(response => {
             localStorage.setItem('auth_token', response.data.access);
-            return instance.request(error.config)
-                .then(res => Promise.resolve(res));
-        }).catch(() => {
+            return instance.request(error.config).then(res => Promise.resolve(res));
+        })
+        .catch(() => {
             renderErrorToast(message);
             return Promise.reject(message);
         });
