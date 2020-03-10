@@ -37,13 +37,15 @@ export const completeRegistrationSchema = Yup.object().shape({
     city: Yup.string(),
     country: Yup.string(),
     citizenship: Yup.string().min(3, ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
-    year: Yup.number()
-        .positive(ERROR_MESSAGES.DOB_YEAR_REQUIRED),
-    month: Yup.number()
-        .positive(ERROR_MESSAGES.DOB_MONTH_REQUIRED)
-        .lessThan(13),
-    day: Yup.number()
-        .positive(ERROR_MESSAGES.DOB_DAY_REQUIRED),
+    date_of_birth: Yup.object().shape({
+        year: Yup.number()
+            .positive(ERROR_MESSAGES.DOB_YEAR_REQUIRED),
+        month: Yup.number()
+            .positive(ERROR_MESSAGES.DOB_MONTH_REQUIRED)
+            .lessThan(13),
+        day: Yup.number()
+            .positive(ERROR_MESSAGES.DOB_DAY_REQUIRED),
+    }),
     education: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
     languages: Yup.array(),
     gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),

@@ -29,12 +29,10 @@ const languageOptions = [
     { value: 'Русский', label: 'Русский' },
 ];
 
-
 const CompleteRegistration = ({
                                   match,
                                   pending,
                                   success,
-                                  error,
                                   push,
                                   completeRegistration,
                               }) => {
@@ -46,6 +44,15 @@ const CompleteRegistration = ({
             setTimeout(() =>  push('/login'), 3000);
         }
     }, [success, push]);
+
+    const transformUserData = (values) => {
+        const userDetails = { ...values };
+        userDetails.phone_number = countryCode + userDetails.phone_number;
+        userDetails.date_of_birth =
+            `${values.date_of_birth.year}-${values.date_of_birth.month}-${values.date_of_birth.day}`;
+        userDetails.languages = values.languages.map((item) => item.value);
+        return userDetails;
+    };
 
     //TODO: temp solution before sign out implemented
     localStorage.clear();
@@ -67,9 +74,11 @@ const CompleteRegistration = ({
                         city: '',
                         country: -1,
                         citizenship: -1,
-                        day: -1,
-                        month: -1,
-                        year: -1,
+                        date_of_birth: {
+                            year: -1,
+                            month: -1,
+                            day: -1,
+                        },
                         middle_name: '',
                         education: -1,
                         gender: -1,
@@ -77,11 +86,8 @@ const CompleteRegistration = ({
                         languages: [],
                     }}
                     validationSchema={completeRegistrationSchema}
-                    onSubmit={(values, { resetForm }) => {
-                        const userDetails = { ...values };
-                        userDetails.phone_number = countryCode + userDetails.phone_number;
-                        userDetails.date_of_birth = `${values.year}-${values.month}-${values.day}`;
-                        userDetails.languages = values.languages
+                    onSubmit={(values) => {
+                        const userDetails = transformUserData(values);
                         completeRegistration(userDetails, match.params.passwordToken);
                     }}
                 >
@@ -94,7 +100,7 @@ const CompleteRegistration = ({
                           handleSubmit,
                           setFieldTouched,
                           setFieldValue,
-                      }) => console.log(errors, 'errors') || (
+                      }) => (
                         <Form onSubmit={handleSubmit} className="mx-auto">
                             <Form.Group>
                                 <Form.Row>
@@ -156,10 +162,9 @@ const CompleteRegistration = ({
                                 >
                                     <option value='male'>Мужской</option>
                                     <option  value='female'>Женский</option>
-                                    <option  value='other'>Другой</option>
                                     <option disabled value={-1}>Пол</option>
                                 </Form.Control>
-                                {touched.day && errors.day ? (
+                                {touched.gender && errors.gender ? (
                                     <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
                                 ) : null}
                             </Form.Group>
@@ -168,8 +173,8 @@ const CompleteRegistration = ({
                                 <Form.Row>
                                     <Col>
                                         <Form.Control
-                                            name="year"
-                                            value={values.year}
+                                            name="date_of_birth.year"
+                                            value={values.date_of_birth.year}
                                             as="select"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -181,14 +186,14 @@ const CompleteRegistration = ({
                                             )}
                                             <option disabled value={-1}>Год</option>
                                         </Form.Control>
-                                        {touched.year && errors.year ? (
-                                            <span className="mt-1 invalid-feedback-visible">{errors.year}</span>
+                                        {(touched.date_of_birth && touched.date_of_birth.year) && (errors.date_of_birth && errors.date_of_birth.year) ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.year}</span>
                                         ) : null}
                                     </Col>
                                     <Col>
                                         <Form.Control
-                                            name="month"
-                                            value={values.month}
+                                            name="date_of_birth.month"
+                                            value={values.date_of_birth.month}
                                             as="select"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -201,14 +206,14 @@ const CompleteRegistration = ({
                                             )}
                                             <option disabled value={-1}>Месяц</option>
                                         </Form.Control>
-                                        {touched.month && errors.month ? (
-                                            <span className="mt-1 invalid-feedback-visible">{errors.month}</span>
+                                        {(touched.date_of_birth && touched.date_of_birth.month) && (errors.date_of_birth && errors.date_of_birth.month) ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.month}</span>
                                         ) : null}
                                     </Col>
                                     <Col>
                                         <Form.Control
-                                            name="day"
-                                            value={values.day}
+                                            name="date_of_birth.day"
+                                            value={values.date_of_birth.day}
                                             as="select"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -221,8 +226,8 @@ const CompleteRegistration = ({
                                             )}
                                             <option disabled value={-1}>День</option>
                                         </Form.Control>
-                                        {touched.day && errors.day ? (
-                                            <span className="mt-1 invalid-feedback-visible">{errors.day}</span>
+                                        {(touched.date_of_birth && touched.date_of_birth.day) && (errors.date_of_birth && errors.date_of_birth.day) ? (
+                                            <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.day}</span>
                                         ) : null}
                                     </Col>
                                 </Form.Row>
@@ -351,7 +356,7 @@ const CompleteRegistration = ({
                                     </Col>
                                 </Form.Row>
                             </Form.Group>
-                            <Form.Group>
+                            <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check type="checkbox"
                                             onChange={handleChange}
                                             onBlur={handleBlur}
@@ -387,7 +392,6 @@ const mapDispatchToProps = { completeRegistration, push };
 
 CompleteRegistration.propTypes = {
     pending: bool.isRequired,
-    error: string,
     success: bool.isRequired,
     match: shape({
         params: shape(

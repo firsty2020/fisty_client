@@ -8,6 +8,7 @@ const instance = axios.create({
     baseURL: 'https://sheltered-meadow-55057.herokuapp.com/api/v0/',
 });
 
+
 instance.interceptors.request.use((config) => {
     const token = (localStorage.getItem('auth_token') || '');
     if (token) {
@@ -43,9 +44,7 @@ const handleRefreshToken = (error, message, refreshToken) => {
         .then(response => {
             localStorage.setItem('auth_token', response.data.access);
             return instance.request(error.config)
-                .then(res => {
-                    return Promise.resolve(res)
-                });
+                .then(res => Promise.resolve(res));
         }).catch(() => {
             renderErrorToast(message);
             return Promise.reject(message);

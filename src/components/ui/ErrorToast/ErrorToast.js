@@ -5,7 +5,7 @@ import React from 'react';
 import './ErrorToast.css';
 
 
-export const ErrorToast = ({ container, message }) => (
+const ErrorToast = ({ container, message }) => (
     <div>
         { ReactDOM.createPortal(
             <Toast animation={true}>

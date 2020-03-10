@@ -1,63 +1,61 @@
 export const generateMonths = () => ([
     {
-        title: 'January',
-        value: 1,
+        title: 'Январь',
+        value: '01',
     },
     {
-        title: 'February',
-        value: 2,
+        title: 'Февраль',
+        value: '02',
     },
     {
-        title: 'March',
-        value: 3,
+        title: 'Март',
+        value: '03',
     },
     {
-        title: 'April',
-        value: 4,
+        title: 'Апрель',
+        value: '04',
     },
     {
-        title: 'May',
-        value: 5,
+        title: 'Май',
+        value: '05',
     },
     {
-        title: 'June',
-        value: 6,
+        title: 'Июнь',
+        value: '06',
     },
     {
-        title: 'July',
-        value: 7,
+        title: 'Июль',
+        value: '07',
     },
     {
-        title: 'August',
-        value: 8,
+        title: 'Август',
+        value: '08',
     },
     {
-        title: 'September',
-        value: 9,
+        title: 'Сентябрь',
+        value: '09',
     },
     {
-        title: 'October',
-        value: 10,
+        title: 'Октябрь',
+        value: '10',
     },
     {
-        title: 'November',
-        value: 11,
+        title: 'Ноябрь',
+        value: '11',
     },
     {
-        title: 'December',
-        value: 12,
+        title: 'Декабрь',
+        value: '12',
     }
 ]);
 
 
 /**
  * Generate years [ ... 1990, 1991, 1992 ...]
- * for convention only 100 years are generated, but this could be
- * changed in the future so may be an additional parameter will be required
+ * yearsToGenerate: number
  * @returns {number[]}
  */
-export const generateYears = () => {
-    const yearsToGenerate = 60;
+export const generateYears = (yearsToGenerate = 60) => {
     const currentYear = new Date().getFullYear();
     const years = new Array(yearsToGenerate);
     for (let i = 0; i <= yearsToGenerate; i++) {
