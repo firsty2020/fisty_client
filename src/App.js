@@ -21,8 +21,16 @@ function App() {
                     <Route path="/register" component={Registration}/>
                     <Route path="/sign-up/:passwordToken" component={SetPassword}/>
                     <Route path="/login" component={Login}/>
-                    <ProtectedRoute path="/recruiter" component={Recruiter}/>
-                    <ProtectedRoute path="/admin" component={Admin}/>
+                    <ProtectedRoute
+                        path="/recruiter"
+                        component={Recruiter}
+                        role='recruiter'
+                    />
+                    <ProtectedRoute
+                        path="/admin"
+                        component={Admin}
+                        role='admin'
+                    />
                     <Route path="/" component={Landing}/>
                 </Switch>
             </Suspense>

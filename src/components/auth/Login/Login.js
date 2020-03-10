@@ -6,16 +6,22 @@ import { push } from 'connected-react-router';
 import { Formik } from 'formik';
 import { bool, func } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getAuthToken } from '../auth';
+import { getAuthToken, getUserFromToken } from '../auth';
 import { AuthFormContainer } from '../../ui';
 import { logInSchema } from '../../../validation';
 
+
+const redirectToDashboard = (push) => {
+    const token = localStorage.getItem('auth_token');
+    const user = getUserFromToken(token);
+    push(`/${user.role}`);
+};
 
 const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
 
     useEffect(() => {
         if (authSuccess) {
-            push('/recruiter');
+            redirectToDashboard(push);
         }
     }, [ authSuccess, push ]);
 
