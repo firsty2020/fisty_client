@@ -24,7 +24,7 @@ export const getCompanies = () => {
         dispatch(getCompaniesPending());
         api
             .get('companies/')
-            .then((res) => dispatch(getCompaniesResolved(res.data)))
+            .then((res) => dispatch(getCompaniesResolved(res.data.results)))
             .catch((err) => dispatch(getCompaniesFailed(err)))
     }
 };

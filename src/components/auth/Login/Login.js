@@ -17,7 +17,7 @@ const redirectToDashboard = (push) => {
     push(`/${user.role}`);
 };
 
-const Login = ({ authPending, authSuccess, getAuthToken, push, authError }) => {
+const Login = ({ authPending, authSuccess, getAuthToken, push }) => {
 
     useEffect(() => {
         if (authSuccess) {

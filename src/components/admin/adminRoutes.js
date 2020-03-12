@@ -4,6 +4,7 @@ import CreateCompany from './Companies/CreateCompany';
 import CreateBranch from './Companies/CreateBranch';
 import CreateContactPerson from './Companies/CreateContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
+import Roles from './Configs/Roles/Roles';
 
 
 export const navigation =  {
@@ -35,6 +36,12 @@ export const navigation =  {
                     icon: 'Sliders',
                     url: '/admin/configs/dynamic-fields',
                     matcher: '/dynamic-fields',
+                },
+                {
+                    name: 'Роли',
+                    icon: 'Users',
+                    url: '/admin/configs/roles',
+                    matcher: '/roles',
                 },
             ]
         },
@@ -83,5 +90,10 @@ export const adminRoutes = [
         path: '/admin/configs/dynamic-fields',
         component: DynamicFields,
         name: 'Динамичные Поля'
+    },
+    {
+        path: '/admin/configs/roles',
+        component: Roles,
+        name: 'Роли'
     },
 ];

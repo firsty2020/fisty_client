@@ -30,6 +30,17 @@ import {
     ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_GET_COMPANIES_FAILED,
+    ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_PENDING,
+    ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_RESOLVED,
+    ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_FAILED,
+    ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_PENDING,
+    ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_RESOLVED,
+    ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_FAILED,
+    ADMIN_CONFIGS_REMOVE_CONTACT_PERSON_ROLE_PENDING,
+    ADMIN_CONFIGS_REMOVE_CONTACT_PERSON_ROLE_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
+    ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
 } from '../../constants/actionTypes';
 
 
@@ -222,17 +233,81 @@ export const updateSpecificationOptionResolved = () => ({
 
 /*** Actions for updating options for industry field ***/
 
-/*export const updateSpecificationOptionPending = () => ({
-    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
-});
-
-export const updateSpecificationOptionFailed = (error) => ({
-    type: ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
-    error,
-});*/
-
 export const removeSpecificationOptionResolved = () => ({
     type: ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
 });
+
+/******************************************/
+
+
+/*** Actions for creating roles for contact persons ***/
+
+export const createContactPersonRolePending = () => ({
+    type: ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_PENDING,
+});
+
+export const createContactPersonRoleResolved = () => ({
+    type: ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_RESOLVED,
+});
+
+export const createContactPersonRoleFailed = () => ({
+    type: ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_FAILED,
+});
+
+
+/******************************************/
+
+
+/*** Actions for creating roles for contact persons ***/
+
+export const getContactPersonRolesPending = () => ({
+    type: ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_PENDING,
+});
+
+export const getContactPersonRolesResolved = (roles) => ({
+    type: ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_RESOLVED,
+    payload: roles,
+});
+
+export const getContactPersonRolesFailed = () => ({
+    type: ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_FAILED,
+});
+
+
+/******************************************/
+
+
+/*** Actions for creating roles for contact persons ***/
+
+export const removeContactPersonRolePending = () => ({
+    type: ADMIN_CONFIGS_REMOVE_CONTACT_PERSON_ROLE_PENDING,
+});
+
+export const removeContactPersonRoleResolved = () => ({
+    type: ADMIN_CONFIGS_REMOVE_CONTACT_PERSON_ROLE_RESOLVED,
+});
+
+export const removeContactPersonRoleFailed = () => ({
+    type: ADMIN_CONFIGS_REMOVE_CONTACT_PERSON_ROLE_PENDING,
+});
+
+/******************************************/
+
+
+
+/*** Actions for updating roles for contact persons ***/
+
+export const updateContactPersonRolePending = () => ({
+    type: ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
+});
+
+export const updateContactPersonRoleResolved = () => ({
+    type: ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_RESOLVED,
+});
+
+export const updateContactPersonRoleFailed = () => ({
+    type: ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
+});
+
 
 /******************************************/
