@@ -375,6 +375,7 @@ export const admin = (state = initialState, action) => {
                 getContactPersonPending: true,
                 getContactPersonFailed: false,
                 contactPersons: [],
+                createContactPersonResolved: false,
             };
 
         case ADMIN_GET_CONTACT_PERSONS_FAILED:
@@ -461,7 +462,7 @@ export const updateContactPersonRolePendingSelector = state => state.admin.updat
 export const updateContactPersonRoleResolvedSelector = state => state.admin.updateContactPersonRoleResolved;
 
 export const contactPersonCreatedSelector = state => state.admin.createContactPersonResolved;
-export const contactPersonPendingSelector = state => state.admin.createContactPersonPending;
+export const createContactPersonPendingSelector = state => state.admin.createContactPersonPending;
 
 export const contactPersonsSelector = state => state.admin.contactPersons;
 

@@ -8,7 +8,6 @@ import {
     createContactPersonPending,
     createContactPersonResolved,
     createContactPersonFailed,
-    getContactPersonPending,
     getContactPersonsPending,
     getContactPersonsResolved,
     getContactPersonsFailed,
