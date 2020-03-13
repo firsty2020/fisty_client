@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import ERROR_MESSAGES from './constants/messages'
 
 
-const REGEX = {
+export const REGEX = {
     NUMERIC: /^\d+$/,
     NUMERIC_DECIMAL: /^\d*\.?\d*$/,
     ALPHABETIC: /^[A-Z]+$/i,

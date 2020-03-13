@@ -9,7 +9,7 @@ import {
 import { createContactPerson } from './contactPersonApi';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
-import ContactPerson from './ContactPerson';
+import ContactPerson from './ContactPersonForm';
 import { baseURL } from '../../../../axios';
 
 

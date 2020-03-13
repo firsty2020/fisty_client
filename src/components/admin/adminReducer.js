@@ -53,6 +53,8 @@ import {
     ADMIN_UPDATE_CONTACT_PERSON_PENDING,
     ADMIN_UPDATE_CONTACT_PERSON_FAILED,
     ADMIN_UPDATE_CONTACT_PERSON_RESOLVED,
+    AUTH_SET_PASSWORD_PENDING,
+    AUTH_SET_PASSWORD_FAILED, AUTH_SET_PASSWORD_RESOLVED,
 } from '../../constants/actionTypes';
 
 const initialState = {getUsersPending: false, getUsersError: null, users: []};
@@ -473,6 +475,27 @@ export const admin = (state = initialState, action) => {
                 updateContactPersonResolved: true,
             };
 
+        case AUTH_SET_PASSWORD_PENDING:
+            return {
+                setPasswordPending: true,
+                setPasswordFailed: false,
+                setPasswordResolved: false,
+            };
+
+        case AUTH_SET_PASSWORD_FAILED:
+            return {
+                setPasswordPending: false,
+                setPasswordFailed: true,
+                setPasswordResolved: false,
+            };
+
+        case AUTH_SET_PASSWORD_RESOLVED:
+            return {
+                setPasswordPending: false,
+                setPasswordFailed: false,
+                setPasswordResolved: true,
+            };
+
         default:
             return state;
     }
@@ -525,3 +548,6 @@ export const contactPersonSelector = state => state.admin.contactPerson;
 export const removeContactPersonResolvedSelector = state => state.admin.removeContactPersonResolved;
 
 export const updateContactPersonResolvedSelector = state => state.admin.updateContactPersonResolved;
+
+export const setPasswordResolvedSelector = state => state.admin.setPasswordResolved;
+export const setPasswordPendingSelector = state => state.admin.setPasswordPending;

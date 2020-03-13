@@ -11,6 +11,9 @@ import {
     loginError,
     fetchUserSuccess,
     fetchUserError,
+    setPasswordPending,
+    setPasswordResolved,
+    setPasswordFailed,
 } from './authActions';
 import api from '../../axios';
 
@@ -67,6 +70,16 @@ export const getAuthUser = () => {
             .get(`users/${userId}/`,)
             .then((res) => dispatch(fetchUserSuccess(res.data)))
             .catch(error => dispatch(fetchUserError(error)));
+    }
+};
+
+export const setPassword = (passwords, token) => {
+    return dispatch => {
+        dispatch(setPasswordPending());
+        api
+            .post(`auth-users/set-password/${token}/`, passwords)
+            .then((res) => dispatch(setPasswordResolved()))
+            .catch(() => dispatch(setPasswordFailed()));
     }
 };
 

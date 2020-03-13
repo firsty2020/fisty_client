@@ -35,15 +35,22 @@ const initialValues = {
     },
 };
 
+const fillForm = (contactPerson) => {
+    for (let key in initialValues) {
+        initialValues[key] = contactPerson[key];
+    }
+    initialValues.date_of_birth = parseDobString(contactPerson.date_of_birth);
+};
 
-const ContactPerson = ({
-                           roles,
-                           pending,
-                           contactPerson,
-                           isUpdating,
-                           getRoles,
-                           onSubmit,
-                       }) => {
+
+const ContactPersonForm = ({
+                               roles,
+                               pending,
+                               contactPerson,
+                               isUpdating,
+                               getRoles,
+                               onSubmit,
+                           }) => {
 
     useEffect(() => {
         getRoles();
@@ -51,16 +58,9 @@ const ContactPerson = ({
 
     useEffect(() => {
         if (isUpdating && contactPerson) {
-            fillForm();
+            fillForm(contactPerson);
         }
     },[ contactPerson, isUpdating ]);
-
-    const fillForm = () => {
-        for (let key in initialValues) {
-            initialValues[key] = contactPerson[key];
-        }
-        initialValues.date_of_birth = parseDobString(contactPerson.date_of_birth);
-    };
 
     if (isUpdating && !contactPerson) {
         return null;
@@ -293,7 +293,7 @@ const mapDispatchToProps = {
 };
 
 
-ContactPerson.propTypes = {};
+ContactPersonForm.propTypes = {};
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactPerson);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactPersonForm);

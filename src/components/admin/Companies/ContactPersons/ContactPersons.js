@@ -21,13 +21,15 @@ const ContactPersons = ({
 
     const [ contactPersonToRemove, setContactPersonToRemove ] = useState(null);
 
+    const params = { company: match.params.companyId };
+
     useEffect(() => {
-        getContactPersons();
+        getContactPersons(params);
     }, [ getContactPersons ]);
 
     useEffect(() => {
         if (contactPersonRemoved) {
-            getContactPersons();
+            getContactPersons(params);
         }
     }, [ getContactPersons, contactPersonRemoved ]);
 

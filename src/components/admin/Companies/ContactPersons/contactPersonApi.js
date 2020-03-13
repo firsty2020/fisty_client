@@ -26,11 +26,11 @@ export const createContactPerson = (data) => {
     }
 };
 
-export const getContactPersons = () => {
+export const getContactPersons = (params) => {
     return dispatch => {
         dispatch(getContactPersonsPending());
         api
-            .get('contact-person/')
+            .get('contact-person/', { params })
             .then((res) => dispatch(getContactPersonsResolved(res.data.results)))
             .catch((err) => dispatch(getContactPersonsFailed()))
     }

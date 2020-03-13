@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
-import ContactPerson from './ContactPerson';
+import ContactPerson from './ContactPersonForm';
 import { getContactPerson, updateContactPerson } from './contactPersonApi';
 import {
     contactPersonSelector,

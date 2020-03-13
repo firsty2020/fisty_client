@@ -11,6 +11,7 @@ import { ConfirmationModal } from '../../../ui/';
 import { When } from 'react-if';
 import CreateRole from './CreateRole';
 import UpdateRole from './UpdateRole';
+import { Check } from 'react-feather';
 
 
 const Roles = ({
@@ -97,10 +98,7 @@ const Roles = ({
                             <tr key={role.id}>
                                 <td>{role.name}</td>
                                 <td>
-                                    <Form.Check
-                                        disabled
-                                        defaultChecked={role.create_user}
-                                        type="checkbox"/>
+                                    {role.create_user ? <Check/> : null}
                                 </td>
                                 <td>
                                     <div className="d-flex justify-content-around">
