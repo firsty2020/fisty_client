@@ -5,14 +5,6 @@ import {
     getCompaniesPending,
     getCompaniesResolved,
     getCompaniesFailed,
-    createContactPersonPending,
-    createContactPersonResolved,
-    createContactPersonFailed,
-    getContactPersonsPending,
-    getContactPersonsResolved,
-    getContactPersonsFailed,
-    removeContactPersonPending,
-    removeContactPersonResolved, removeContactPersonFailed,
 } from '../adminActions';
 import api from '../../../axios';
 
@@ -34,35 +26,5 @@ export const getCompanies = () => {
             .get('companies/')
             .then((res) => dispatch(getCompaniesResolved(res.data.results)))
             .catch((err) => dispatch(getCompaniesFailed(err)))
-    }
-};
-
-export const createContactPerson = (data) => {
-    return dispatch => {
-        dispatch(createContactPersonPending());
-        api
-            .post('contact-person/', data)
-            .then(() => dispatch(createContactPersonResolved()))
-            .catch((err) => dispatch(createContactPersonFailed()))
-    }
-};
-
-export const getContactPersons = () => {
-    return dispatch => {
-        dispatch(getContactPersonsPending());
-        api
-            .get('contact-person/')
-            .then((res) => dispatch(getContactPersonsResolved(res.data.results)))
-            .catch((err) => dispatch(getContactPersonsFailed()))
-    }
-};
-
-export const removeContactPerson = (id) => {
-    return dispatch => {
-        dispatch(removeContactPersonPending());
-        api
-            .delete(`contact-person/${id}`)
-            .then((res) => dispatch(removeContactPersonResolved()))
-            .catch((err) => dispatch(removeContactPersonFailed()))
     }
 };

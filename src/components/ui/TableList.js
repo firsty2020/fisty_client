@@ -32,7 +32,7 @@ const TableList = ({ layout, data, showSpinner, onClickRow }) => {
                 </thead>
                 <tbody>
                 {data.map((item, index) => (
-                    <tr onClick={() => onClickRow(item)}
+                    <tr onClick={() => onClickRow && onClickRow(item)}
                         key={index}>
                         {layout.createRow(item, index).map((value, i) =>
                             <td key={i}>{value}</td>

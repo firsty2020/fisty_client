@@ -3,12 +3,12 @@ import { Button, Container, Table } from 'react-bootstrap';
 import { Edit, PlusCircle, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getContactPersons, removeContactPerson } from './companiesApi';
+import { getContactPersons, removeContactPerson } from './contactPersonApi';
 import {
     contactPersonsSelector,
     removeContactPersonResolvedSelector
-} from '../adminReducer';
-import { ConfirmationModal } from '../../ui';
+} from '../../adminReducer';
+import { ConfirmationModal } from '../../../ui';
 
 
 const ContactPersons = ({
@@ -80,11 +80,12 @@ const ContactPersons = ({
                                             onClick={() => setContactPersonToRemove(contactPerson.id)}
                                             className="cursor-pointer"
                                             color="red"/>
-                                        <Edit
-                                            onClick={() => alert(contactPerson)}
-                                            className="cursor-pointer"
-                                            color="blue"
-                                        />
+                                        <Link to={`${match.url}/${contactPerson.id}`}>
+                                            <Edit
+                                                className="cursor-pointer"
+                                                color="blue"
+                                            />
+                                        </Link>
                                     </div>
                                 </td>
                             </tr>
@@ -95,7 +96,6 @@ const ContactPersons = ({
             </Container>
         </div>
     );
-
 };
 
 const mapStateToProps = state => ({

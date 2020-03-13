@@ -90,7 +90,7 @@ export const getSpecificationOptions = () => {
         dispatch(getSpecificationOptionsPending());
         api
             .get('specification/')
-            .then((res) => dispatch(getSpecificationOptionsResolved(res.data)))
+            .then((res) => dispatch(getSpecificationOptionsResolved(res.data.results)))
             .catch((err) => dispatch(getSpecificationOptionsFailed(err)))
     };
 };

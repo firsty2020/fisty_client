@@ -49,6 +49,7 @@ const handleTokenRefresh = (error, message, refreshToken) => {
     refreshedRequestUrl = error.config.url;
     return refreshExpiredToken(refreshToken)
         .then(response => {
+            refreshedRequestUrl = '';
             localStorage.setItem('auth_token', response.data.access);
             return instance.request(error.config).then(res => Promise.resolve(res));
         })

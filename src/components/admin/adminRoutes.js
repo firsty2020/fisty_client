@@ -2,11 +2,12 @@ import UserList from './Users/Users';
 import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
 import CreateBranch from './Companies/CreateBranch';
-import CreateContactPerson from './Companies/CreateContactPerson';
+import CreateContactPerson from './Companies/ContactPersons/CreateContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
 import Roles from './Configs/Roles/Roles';
 import CompanyDetails from './Companies/CompanyDetails';
-import ContactPersons from './Companies/ContactPersons';
+import ContactPersons from './Companies/ContactPersons/ContactPersons';
+import UpdateContactPerson from './Companies/ContactPersons/UpdateContactPerson';
 
 
 export const navigation =  {
@@ -86,6 +87,11 @@ export const adminRoutes = [
     {
         path: '/admin/companies/:companyId/contact-persons/create',
         component: CreateContactPerson,
+        name: 'Контактные Лица',
+    },
+    {
+        path: '/admin/companies/:companyId/contact-persons/:contactPersonId',
+        component: UpdateContactPerson,
         name: 'Контактные Лица',
     },
     {

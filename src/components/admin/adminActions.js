@@ -41,15 +41,6 @@ import {
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_RESOLVED,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
-    ADMIN_CREATE_CONTACT_PERSON_PENDING,
-    ADMIN_CREATE_CONTACT_PERSON_RESOLVED,
-    ADMIN_CREATE_CONTACT_PERSON_FAILED,
-    ADMIN_GET_CONTACT_PERSONS_PENDING,
-    ADMIN_GET_CONTACT_PERSONS_RESOLVED,
-    ADMIN_GET_CONTACT_PERSONS_FAILED,
-    ADMIN_REMOVE_CONTACT_PERSON_PENDING,
-    ADMIN_REMOVE_CONTACT_PERSON_RESOLVED,
-    ADMIN_REMOVE_CONTACT_PERSON_FAILED,
 } from '../../constants/actionTypes';
 
 
@@ -321,55 +312,3 @@ export const updateContactPersonRoleFailed = () => ({
 
 /******************************************/
 
-
-/*** Actions for creating contact persons ***/
-
-export const createContactPersonPending = () => ({
-    type: ADMIN_CREATE_CONTACT_PERSON_PENDING,
-});
-
-export const createContactPersonResolved = () => ({
-    type: ADMIN_CREATE_CONTACT_PERSON_RESOLVED,
-});
-
-export const createContactPersonFailed = () => ({
-    type: ADMIN_CREATE_CONTACT_PERSON_FAILED,
-});
-
-
-/******************************************/
-
-
-/*** Actions for fetching contact persons ***/
-
-export const getContactPersonsPending = () => ({
-    type: ADMIN_GET_CONTACT_PERSONS_PENDING,
-});
-
-export const getContactPersonsResolved = (contactPersons) => ({
-    type: ADMIN_GET_CONTACT_PERSONS_RESOLVED,
-    payload: contactPersons,
-});
-
-export const getContactPersonsFailed = () => ({
-    type: ADMIN_GET_CONTACT_PERSONS_FAILED,
-});
-
-/******************************************/
-
-
-/*** Actions for removing contact persons ***/
-
-export const removeContactPersonPending = () => ({
-    type: ADMIN_REMOVE_CONTACT_PERSON_PENDING,
-});
-
-export const removeContactPersonResolved = () => ({
-    type: ADMIN_REMOVE_CONTACT_PERSON_RESOLVED,
-});
-
-export const removeContactPersonFailed = () => ({
-    type: ADMIN_REMOVE_CONTACT_PERSON_FAILED,
-});
-
-/******************************************/

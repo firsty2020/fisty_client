@@ -80,3 +80,13 @@ export const generateDays = () => {
 
 
 export const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
+
+/**
+ * @param dob string like 1958-12-31
+ * @return {{month: *, year: *, day: *}}
+ */
+
+export const parseDobString = (dob) => {
+    const [ year, month, day ] = dob.split('-');
+    return { year, month, day };
+};
