@@ -48,7 +48,7 @@ export const completeRegistrationSchema = Yup.object().shape({
     }),
     education: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
     languages: Yup.array(),
-    gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.EDUCATION_REQUIRED),
+    gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.GENDER_REQUIRED),
     accept: Yup.bool().oneOf([true], 'Вы должны принять условия'),
 });
 
@@ -117,15 +117,23 @@ export const contactPersonSchema = Yup.object().shape({
     last_name: Yup.string()
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
     middle_name: Yup.string(),
-    position: Yup.string()
-        .required(''),
-    status: Yup.string()
+    role: Yup.string()
         .min(3, ''),
     email: Yup.string()
         .email(ERROR_MESSAGES.EMAIL_INVALID)
         .required(ERROR_MESSAGES.EMAIL_REQUIRED),
     phone_number: Yup.string()
         .required(ERROR_MESSAGES.PHONE_REQUIRED)
-        .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID)
+        .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID),
+    gender: Yup.string().matches(REGEX.ALPHABETIC, ERROR_MESSAGES.GENDER_REQUIRED),
+    date_of_birth: Yup.object().shape({
+        year: Yup.number()
+            .positive(ERROR_MESSAGES.DOB_YEAR_REQUIRED),
+        month: Yup.number()
+            .positive(ERROR_MESSAGES.DOB_MONTH_REQUIRED)
+            .lessThan(13),
+        day: Yup.number()
+            .positive(ERROR_MESSAGES.DOB_DAY_REQUIRED),
+    }),
 });
 

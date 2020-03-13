@@ -38,6 +38,15 @@ import {
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_RESOLVED,
+    ADMIN_CREATE_CONTACT_PERSON_PENDING,
+    ADMIN_CREATE_CONTACT_PERSON_FAILED,
+    ADMIN_CREATE_CONTACT_PERSON_RESOLVED,
+    ADMIN_GET_CONTACT_PERSONS_PENDING,
+    ADMIN_GET_CONTACT_PERSONS_FAILED,
+    ADMIN_GET_CONTACT_PERSONS_RESOLVED,
+    ADMIN_REMOVE_CONTACT_PERSON_PENDING,
+    ADMIN_REMOVE_CONTACT_PERSON_FAILED,
+    ADMIN_REMOVE_CONTACT_PERSON_RESOLVED,
 } from '../../constants/actionTypes';
 
 const initialState = {getUsersPending: false, getUsersError: null, users: []};
@@ -336,6 +345,78 @@ export const admin = (state = initialState, action) => {
                 updateContactPersonRoleResolved: true,
             };
 
+        case ADMIN_CREATE_CONTACT_PERSON_PENDING:
+            return {
+                ...state,
+                createContactPersonPending: true,
+                createContactPersonFailed: false,
+                createContactPersonResolved: false,
+            };
+
+        case ADMIN_CREATE_CONTACT_PERSON_FAILED:
+            return {
+                ...state,
+                createContactPersonPending: false,
+                createContactPersonFailed: true,
+                createContactPersonResolved: false,
+            };
+
+        case ADMIN_CREATE_CONTACT_PERSON_RESOLVED:
+            return {
+                ...state,
+                createContactPersonPending: false,
+                createContactPersonFailed: false,
+                createContactPersonResolved: true,
+            };
+
+        case ADMIN_GET_CONTACT_PERSONS_PENDING:
+            return {
+                ...state,
+                getContactPersonPending: true,
+                getContactPersonFailed: false,
+                contactPersons: [],
+            };
+
+        case ADMIN_GET_CONTACT_PERSONS_FAILED:
+            return {
+                ...state,
+                getContactPersonPending: false,
+                getContactPersonFailed: true,
+                contactPersons: [],
+            };
+
+        case ADMIN_GET_CONTACT_PERSONS_RESOLVED:
+            return {
+                ...state,
+                getContactPersonPending: false,
+                getContactPersonFailed: false,
+                contactPersons: action.payload,
+            };
+
+        case ADMIN_REMOVE_CONTACT_PERSON_PENDING:
+            return {
+                ...state,
+                removeContactPersonPending: true,
+                removeContactPersonFailed: false,
+                removeContactPersonResolved: false,
+            };
+
+        case ADMIN_REMOVE_CONTACT_PERSON_FAILED:
+            return {
+                ...state,
+                removeContactPersonPending: false,
+                removeContactPersonFailed: true,
+                removeContactPersonResolved: false,
+            };
+
+        case ADMIN_REMOVE_CONTACT_PERSON_RESOLVED:
+            return {
+                ...state,
+                removeContactPersonPending: false,
+                removeContactPersonFailed: false,
+                removeContactPersonResolved: true,
+            };
+
         default:
             return state;
     }
@@ -378,3 +459,10 @@ export const contactPersonRoleRemovedSelector = state => state.admin.removeConta
 
 export const updateContactPersonRolePendingSelector = state => state.admin.updateContactPersonRolePending;
 export const updateContactPersonRoleResolvedSelector = state => state.admin.updateContactPersonRoleResolved;
+
+export const contactPersonCreatedSelector = state => state.admin.createContactPersonResolved;
+export const contactPersonPendingSelector = state => state.admin.createContactPersonPending;
+
+export const contactPersonsSelector = state => state.admin.contactPersons;
+
+export const removeContactPersonResolvedSelector = state => state.admin.removeContactPersonResolved;

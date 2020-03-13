@@ -11,37 +11,29 @@ import { companiesSelector, getCompaniesPendingSelector } from '../adminReducer'
 const companiesTableLayout = {
     headings: [
         '#', 'Название на русском', 'Название на английском', 'Тип бизнесса',
-        'Сайт', 'Источник'
+        'Сайт',
     ],
     createRow: (company, index) => [
         index + 1, company.name, company.english_name, company.type,
-        company.website, company.source,
+        company.website,
     ],
 };
 
-const Companies = ({ companies, getCompanies, getCompaniesPending }) => {
+const Companies = ({ companies, getCompanies, getCompaniesPending, history }) => {
 
     useEffect(() => {
         getCompanies();
     }, [ getCompanies ]);
 
+    const handleClickOnRow = (item) => {
+        history.push(`/admin/companies/${item.id}`);
+    };
 
     return (
         <div>
             <div className="mt-10-auto">
                 <Row>
-                    <Col lg={4} md={4} sm={4} xs={5}>
-                       {/* <Form.Label>Фильтровать по статусу</Form.Label>
-                        <Form.Control
-                            name="filter"
-                            as="select"
-                        >
-                            <option value="active">Активные</option>
-                            <option value="inactive">Неактивные</option>
-                            <option value="black_list">Блек Лист</option>
-                            <option value="all">Все</option>
-                        </Form.Control>*/}
-                    </Col>
+                    <Col lg={4} md={4} sm={4} xs={5}/>
                     <Col lg={4} md={4} sm={4} xs={3}/>
                     <Col lg={4} md={4} sm={4} xs={4}
                          className="d-flex justify-content-end align-items-end">
@@ -58,6 +50,7 @@ const Companies = ({ companies, getCompanies, getCompaniesPending }) => {
             </div>
             <div>
                 <TableList
+                    onClickRow={(item) => handleClickOnRow(item)}
                     layout={companiesTableLayout}
                     data={companies}
                     showSpinner={!!getCompaniesPending}
@@ -73,7 +66,7 @@ const mapStateToProps = state => ({
     getCompaniesPending: getCompaniesPendingSelector(state),
 });
 
-const mapDispatchToProps = { getCompanies };
+const mapDispatchToProps = { getCompanies, };
 
 
 Companies.propTypes = {

@@ -15,7 +15,7 @@ export const getUsers = (status) => {
         dispatch(getUsersPending());
         api
             .get('users/', { params })
-            .then((res) => dispatch(getUsersResolved(res.data)))
+            .then((res) => dispatch(getUsersResolved(res.data.results)))
             .catch(error => dispatch(getUsersFailed(error)));
     };
 };

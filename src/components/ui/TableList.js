@@ -4,7 +4,7 @@ import { arrayOf, bool, func, object, shape, string } from 'prop-types';
 import { EmptyListPlaceholder, LoadSpinner } from './index';
 
 
-const TableList = ({ layout, data, showSpinner }) => {
+const TableList = ({ layout, data, showSpinner, onClickRow }) => {
 
 
     if (showSpinner) {
@@ -15,13 +15,14 @@ const TableList = ({ layout, data, showSpinner }) => {
         return <EmptyListPlaceholder/>;
     }
     return (
-        <div>
+        <div className="cursor-pointer">
             <Table
+                hover
                 striped
-                responsive="md"
-                responsive="lg"
                 responsive="xs"
                 responsive="sm"
+                responsive="md"
+                responsive="lg"
                 responsive="xl"
             >
                 <thead>
@@ -31,7 +32,8 @@ const TableList = ({ layout, data, showSpinner }) => {
                 </thead>
                 <tbody>
                 {data.map((item, index) => (
-                    <tr key={index}>
+                    <tr onClick={() => onClickRow(item)}
+                        key={index}>
                         {layout.createRow(item, index).map((value, i) =>
                             <td key={i}>{value}</td>
                         )}

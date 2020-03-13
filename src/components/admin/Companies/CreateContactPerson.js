@@ -1,10 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button, Col, Container, Form } from 'react-bootstrap';
 import { contactPersonSchema } from '../../../validation';
 import { Formik } from 'formik';
+import { connect } from 'react-redux';
+import { getContactPersonRoles } from '../Configs/Roles/rolesApi';
+import {
+    contactPersonCreatedSelector,
+    contactPersonPendingSelector,
+    contactPersonRolesSelector,
+} from '../adminReducer';
+import { createContactPerson } from './companiesApi';
+import { generateDays, generateMonths, generateYears } from '../../../utils';
+import { baseURL } from '../../../axios';
 
 
-const CreateContactPerson = () => {
+const months = generateMonths();
+const years = generateYears();
+const days = generateDays();
+
+
+const CreateContactPerson = ({ match, roles, pending, getRoles, createContactPerson }) => {
+
+    useEffect(() => {
+        getRoles();
+    }, [ getRoles ]);
+
     return (
         <Container className="mt-10-auto">
             <Formik
@@ -12,14 +32,23 @@ const CreateContactPerson = () => {
                     first_name: '',
                     last_name: '',
                     middle_name: '',
-                    position: '',
-                    status: -1,
+                    role: -1,
                     email: '',
                     phone_number: '',
+                    gender: -1,
+                    date_of_birth: {
+                        year: -1,
+                        month: -1,
+                        day: -1,
+                    },
                 }}
                 validationSchema={contactPersonSchema}
                 onSubmit={(values) => {
-                    alert('nothing will happen');
+                    const contactPerson = { ...values };
+                    contactPerson.date_of_birth =
+                        `${values.date_of_birth.year}-${values.date_of_birth.month}-${values.date_of_birth.day}`;
+                    contactPerson.company = `${baseURL}companies/${match.params.companyId}/`;
+                    createContactPerson(contactPerson);
                 }}
             >
                 {({
@@ -77,37 +106,25 @@ const CreateContactPerson = () => {
                                 </Col>
                             </Form.Row>
                         </Form.Group>
-                        <p className="form-control-label">Должность</p>
+                        <p className="form-control-label">Роль</p>
                         <Form.Group>
                             <Form.Control
                                 type="text"
-                                name="position"
-                                placeholder="Должность"
-                                value={values.position}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.position && errors.position ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.position}</span>
-                            ) : null}
-                        </Form.Group>
-                        <p className="form-control-label">Статус</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="status"
+                                name="role"
                                 as="select"
-                                value={values.status}
+                                value={values.role}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <option value="Активный">Активный</option>
-                                <option value="Неактивный">Неактивный</option>
-                                <option value="Бывшый Сотрудник">Бывшый Сотрудник</option>
+                                {(roles || []).map(({ name, url}) =>
+                                    <option
+                                        key={url}
+                                        value={url}>{name}</option>
+                                )}
                                 <option value="-1" disabled>Выберите из списка</option>
                             </Form.Control>
-                            {touched.status && errors.status ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.status}</span>
+                            {touched.role && errors.role ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.role}</span>
                             ) : null}
                         </Form.Group>
                         <Form.Group>
@@ -138,8 +155,90 @@ const CreateContactPerson = () => {
                                 <p className="mt-1 invalid-feedback-visible">{errors.phone_number}</p>
                             ) : null}
                         </Form.Group>
+                        <Form.Group>
+                            Пол
+                            <Form.Control
+                                name="gender"
+                                value={values.gender}
+                                as="select"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            >
+                                <option value='male'>Мужской</option>
+                                <option  value='female'>Женский</option>
+                                <option disabled value={-1}>Пол</option>
+                            </Form.Control>
+                            {touched.gender && errors.gender ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
+                            ) : null}
+                        </Form.Group>
+                        <Form.Group>
+                            <p className="form-control-label">Дата рождения</p>
+                            <Form.Row>
+                                <Col>
+                                    <Form.Control
+                                        name="date_of_birth.year"
+                                        value={values.date_of_birth.year}
+                                        as="select"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                    >
+                                        {years.map((year) =>
+                                            <option
+                                                key={year}
+                                                value={year}>{year}</option>
+                                        )}
+                                        <option disabled value={-1}>Год</option>
+                                    </Form.Control>
+                                    {(touched.date_of_birth && touched.date_of_birth.year) && (errors.date_of_birth && errors.date_of_birth.year) ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.year}</span>
+                                    ) : null}
+                                </Col>
+                                <Col>
+                                    <Form.Control
+                                        name="date_of_birth.month"
+                                        value={values.date_of_birth.month}
+                                        as="select"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                    >
+                                        {months.map((month) =>
+                                            <option
+                                                key={month.title}
+                                                value={month.value}
+                                            >{month.title}</option>
+                                        )}
+                                        <option disabled value={-1}>Месяц</option>
+                                    </Form.Control>
+                                    {(touched.date_of_birth && touched.date_of_birth.month) && (errors.date_of_birth && errors.date_of_birth.month) ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.month}</span>
+                                    ) : null}
+                                </Col>
+                                <Col>
+                                    <Form.Control
+                                        name="date_of_birth.day"
+                                        value={values.date_of_birth.day}
+                                        as="select"
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                    >
+                                        {days.map((day) =>
+                                            <option
+                                                value={day}
+                                                key={day}
+                                            >{day}</option>
+                                        )}
+                                        <option disabled value={-1}>День</option>
+                                    </Form.Control>
+                                    {(touched.date_of_birth && touched.date_of_birth.day) && (errors.date_of_birth && errors.date_of_birth.day) ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.day}</span>
+                                    ) : null}
+                                </Col>
+                            </Form.Row>
+                        </Form.Group>
                         <div className="text-center">
                             <Button
+                                disabled={pending}
                                 type="submit">Создать
                             </Button>
                         </div>
@@ -151,4 +250,20 @@ const CreateContactPerson = () => {
 };
 
 
-export default CreateContactPerson;
+const mapStateToProps = state => ({
+    roles: contactPersonRolesSelector(state),
+    created: contactPersonCreatedSelector(state),
+    pending: contactPersonPendingSelector(state),
+});
+
+const mapDispatchToProps = {
+    getRoles: getContactPersonRoles,
+    createContactPerson,
+};
+
+
+CreateContactPerson.propTypes = {
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateContactPerson);

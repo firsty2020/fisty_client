@@ -45,7 +45,7 @@ export const getIndustryOptions = () => {
         dispatch(getIndustryOptionsPending());
         api
             .get('industries/')
-            .then((res) => dispatch(getIndustryOptionsResolved(res.data)))
+            .then((res) => dispatch(getIndustryOptionsResolved(res.data.results)))
             .catch((err) => dispatch(getIndustryOptionsFailed(err)))
     };
 };
@@ -55,7 +55,7 @@ export const updateIndustryOption = ({ id, name }) => {
         dispatch(updateIndustryOptionPending());
         api
             .patch(`industries/${id}/`, { name })
-            .then((res) => dispatch(updateIndustryOptionResolved(res.data)))
+            .then((res) => dispatch(updateIndustryOptionResolved(res.data.results)))
             .catch((err) => dispatch(updateIndustryOptionFailed(err)))
     };
 };

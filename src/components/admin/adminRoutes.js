@@ -5,6 +5,8 @@ import CreateBranch from './Companies/CreateBranch';
 import CreateContactPerson from './Companies/CreateContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
 import Roles from './Configs/Roles/Roles';
+import CompanyDetails from './Companies/CompanyDetails';
+import ContactPersons from './Companies/ContactPersons';
 
 
 export const navigation =  {
@@ -72,6 +74,21 @@ export const adminRoutes = [
         name: 'Компании'
     },
     {
+        path: '/admin/companies/:companyId',
+        component: CompanyDetails,
+        name: 'Компания',
+    },
+    {
+        path: '/admin/companies/:companyId/contact-persons',
+        component: ContactPersons,
+        name: 'Контактные Лица',
+    },
+    {
+        path: '/admin/companies/:companyId/contact-persons/create',
+        component: CreateContactPerson,
+        name: 'Контактные Лица',
+    },
+    {
         path: '/admin/companies/create',
         component: CreateCompany,
         name: 'Создать компанию'
@@ -80,11 +97,6 @@ export const adminRoutes = [
         path: '/admin/companies/branches/create',
         component: CreateBranch,
         name: 'Создать бранч'
-    },
-    {
-        path: '/admin/companies/contact-persons/create',
-        component: CreateContactPerson,
-        name: 'Добавить контактное лицо'
     },
     {
         path: '/admin/configs/dynamic-fields',

@@ -5,9 +5,10 @@ import { refreshExpiredToken } from './components/auth/auth';
 
 let refreshedRequestUrl = '';
 
+export const baseURL = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/';
 
 const instance = axios.create({
-    baseURL: 'https://sheltered-meadow-55057.herokuapp.com/api/v0/',
+    baseURL,
 });
 
 
