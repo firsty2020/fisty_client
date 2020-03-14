@@ -9,25 +9,27 @@ import {
     createCompanyPendingSelector,
     createCompanySuccessSelector,
     industryOptionsSelector,
+    specificationOptionsSelector,
 } from '../adminReducer';
 import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
 import messages from '../../../constants/messages';
-import { getIndustryOptions } from '../Configs/configsApi';
+import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
 
 
 const CreateCompany = ({
                            pending,
                            created,
                            industryOptions,
+                           specificationOptions,
                            createCompany,
                            push,
                            getIndustryOptions,
-}) => {
+                           getSpecificationOptions,
+                       }) => {
 
     const handleCreateCompany = (companyData) => {
         const postData = { ...companyData };
-        postData.specification = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/specification/1/';
         for (const field in postData) {
             if (postData.hasOwnProperty(field) && (postData[field] === -1 || !postData[field])) {
                 delete postData[field];
@@ -47,7 +49,8 @@ const CreateCompany = ({
 
     useEffect(() => {
         getIndustryOptions();
-    }, [ getIndustryOptions ]);
+        getSpecificationOptions();
+    }, [ getIndustryOptions, getSpecificationOptions ]);
 
     return (
         <Container className="mt-10-auto">
@@ -154,8 +157,8 @@ const CreateCompany = ({
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             >
-                                <option value="Firsty">specification1</option>
-                                <option value="Входяший запрос">specification2</option>
+                                {(specificationOptions || []).map(({ url, name }) =>
+                                    <option value={url} key={url}>{name}</option>)}
                                 <option value="-1" disabled>Выберите из списка</option>
                             </Form.Control>
                             {touched.specification && errors.specification ? (
@@ -240,9 +243,15 @@ const mapStateToProps = state => ({
     pending: createCompanyPendingSelector(state),
     created: createCompanySuccessSelector(state),
     industryOptions: industryOptionsSelector(state),
+    specificationOptions: specificationOptionsSelector(state),
 });
 
-const mapDispatchToProps = { createCompany, push, getIndustryOptions };
+const mapDispatchToProps = {
+    createCompany,
+    push,
+    getIndustryOptions,
+    getSpecificationOptions,
+};
 
 
 CreateCompany.propTypes = {
