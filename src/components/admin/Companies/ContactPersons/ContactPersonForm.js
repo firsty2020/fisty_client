@@ -88,20 +88,6 @@ const ContactPersonForm = ({
                         <Form.Group>
                             <Form.Row>
                                 <Col>
-                                    <p className="form-control-label">Имя</p>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Имя"
-                                        name="first_name"
-                                        value={values.first_name}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                    />
-                                    {touched.first_name && errors.first_name ? (
-                                        <p className="mt-1 invalid-feedback-visible">{errors.first_name}</p>
-                                    ) : null}
-                                </Col>
-                                <Col>
                                     <p className="form-control-label">Фамилия</p>
                                     <Form.Control
                                         type="text"
@@ -113,6 +99,20 @@ const ContactPersonForm = ({
                                     />
                                     {touched.last_name && errors.last_name ? (
                                         <p className="mt-1 invalid-feedback-visible">{errors.last_name}</p>
+                                    ) : null}
+                                </Col>
+                                <Col>
+                                    <p className="form-control-label">Имя</p>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Имя"
+                                        name="first_name"
+                                        value={values.first_name}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    />
+                                    {touched.first_name && errors.first_name ? (
+                                        <p className="mt-1 invalid-feedback-visible">{errors.first_name}</p>
                                     ) : null}
                                 </Col>
                                 <Col>

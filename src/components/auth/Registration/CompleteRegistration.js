@@ -252,10 +252,15 @@ const CompleteRegistration = ({
                                     <Dropdown
                                         onSelect={setCountryCode}>
                                         <Dropdown.Toggle
+                                            className="country_code_dropdown"
                                             variant="success"
                                             id="dropdown-basic"
                                         >{countryCode ? countryCode : 'Код Страны'}</Dropdown.Toggle>
                                         <Dropdown.Menu>
+                                            <CountryCodeItem
+                                                value="+7"
+                                                imgSrc={russianFlag}
+                                            />
                                             <CountryCodeItem
                                                 value="+374"
                                                 imgSrc={armenianFlag}
@@ -263,10 +268,6 @@ const CompleteRegistration = ({
                                             <CountryCodeItem
                                                 value="+375"
                                                 imgSrc={belorussianFlag}
-                                            />
-                                            <CountryCodeItem
-                                                value="+7"
-                                                imgSrc={russianFlag}
                                             />
                                             <CountryCodeItem
                                                 value="+380"
@@ -321,7 +322,7 @@ const CompleteRegistration = ({
                                     <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
                                 ) : null}
                             </Form.Group>
-                            <h6 className="text-center">Постоянное место жительства</h6>
+                            <h4 className="text-center">Постоянное место жительства</h4>
                             <Form.Group>
                                 <Form.Row>
                                     <Col>

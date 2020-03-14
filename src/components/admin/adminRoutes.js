@@ -75,6 +75,11 @@ export const adminRoutes = [
         name: 'Компании'
     },
     {
+        path: '/admin/companies/create',
+        component: CreateCompany,
+        name: 'Создать компанию'
+    },
+    {
         path: '/admin/companies/:companyId',
         component: CompanyDetails,
         name: 'Компания',
@@ -93,11 +98,6 @@ export const adminRoutes = [
         path: '/admin/companies/:companyId/contact-persons/:contactPersonId',
         component: UpdateContactPerson,
         name: 'Контактные Лица',
-    },
-    {
-        path: '/admin/companies/create',
-        component: CreateCompany,
-        name: 'Создать компанию'
     },
     {
         path: '/admin/companies/branches/create',
