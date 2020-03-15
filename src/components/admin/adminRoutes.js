@@ -82,7 +82,7 @@ export const adminRoutes = [
     {
         path: '/admin/companies/:companyId',
         component: CompanyDetails,
-        name: 'Компания',
+        name: 'Детали компании',
     },
     {
         path: '/admin/companies/:companyId/contact-persons',

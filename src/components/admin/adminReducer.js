@@ -2,12 +2,6 @@ import {
     ADMIN_GET_USERS_PENDING,
     ADMIN_GET_USERS_FAILED,
     ADMIN_GET_USERS_RESOLVED,
-    ADMIN_CREATE_COMPANY_PENDING,
-    ADMIN_CREATE_COMPANY_RESOLVED,
-    ADMIN_GET_COMPANIES_RESOLVED,
-    ADMIN_CREATE_COMPANY_FAILED,
-    ADMIN_GET_COMPANIES_PENDING,
-    ADMIN_GET_COMPANIES_FAILED,
     ADMIN_CREATE_CONTACT_PERSON_PENDING,
     ADMIN_CREATE_CONTACT_PERSON_FAILED,
     ADMIN_CREATE_CONTACT_PERSON_RESOLVED,
@@ -26,6 +20,7 @@ import {
 } from '../../constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
+import { companies } from './Companies/companiesReducer';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
 
@@ -52,39 +47,6 @@ const test = (state = initialState, action) => {
                 getUsersPending: false,
                 getUsersError: null
             };
-
-        case ADMIN_CREATE_COMPANY_PENDING:
-            return {
-                ...state,
-                companyCreated: false,
-                createCompanyError: null,
-                createCompanyPending: true
-            };
-        case ADMIN_CREATE_COMPANY_RESOLVED:
-            return {
-                ...state,
-                companyCreated: true,
-                createCompanyError: null,
-                createCompanyPending: false
-            };
-        case ADMIN_CREATE_COMPANY_FAILED:
-            return {
-                ...state,
-                companyCreated: false,
-                createCompanyError: action.error,
-                createCompanyPending: false
-            };
-
-        case ADMIN_GET_COMPANIES_PENDING:
-            return {...state, companies: [], getCompaniesPending: true};
-        case ADMIN_GET_COMPANIES_RESOLVED:
-            return {
-                ...state,
-                companies: action.payload,
-                getCompaniesPending: false
-            };
-        case ADMIN_GET_COMPANIES_FAILED:
-            return {...state, companies: [], getCompaniesPending: false};
 
         case ADMIN_CREATE_CONTACT_PERSON_PENDING:
             return {
@@ -217,18 +179,13 @@ const test = (state = initialState, action) => {
 export const admin =  combineReducers({
     test,
     configs,
+    companies,
 });
 
 
 export const usersSelector = (state) => state.admin.test.users;
 export const usersErrorSelector = (state) => state.admin.test.getUsersError;
 export const usersPendingSelector = (state) => state.admin.test.getUsersPending;
-
-export const createCompanySuccessSelector = (state) => state.admin.test.companyCreated;
-export const createCompanyPendingSelector = (state) => state.admin.test.createCompanyPending;
-
-export const companiesSelector = (state) => state.admin.test.companies;
-export const getCompaniesPendingSelector = state => state.admin.test.getCompaniesPending;
 
 export const contactPersonCreatedSelector = state => state.admin.test.createContactPersonResolved;
 export const createContactPersonPendingSelector = state => state.admin.test.createContactPersonPending;

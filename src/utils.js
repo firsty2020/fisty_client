@@ -90,3 +90,12 @@ export const parseDobString = (dob) => {
     const [ year, month, day ] = dob.split('-');
     return { year, month, day };
 };
+
+
+/**
+ * @param url string like https://sheltered-meadow-55057.herokuapp.com/api/v0/industries/94/
+ * @return string representation of id ('94')
+ */
+export const extractIdFromUrl = (url) => {
+  return url.split('/').slice(-2, -1).join('');
+};

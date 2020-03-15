@@ -5,7 +5,8 @@ import { PlusCircle } from 'react-feather';
 import { TableList } from '../../ui';
 import { Link } from 'react-router-dom';
 import { getCompanies } from './companiesApi';
-import { companiesSelector, getCompaniesPendingSelector } from '../adminReducer';
+import { companiesSelector, getCompaniesPendingSelector } from './companiesReducer';
+import './Companies.css';
 
 
 const companiesTableLayout = {

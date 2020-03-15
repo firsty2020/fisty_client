@@ -21,6 +21,10 @@ import {
     updateSpecificationOptionResolved,
     updateSpecificationOptionFailed,
     removeSpecificationOptionResolved,
+    getIndustryOptionResolved,
+    getIndustryOptionFailed,
+    getSpecificationOptionResolved,
+    getSpecificationOptionFailed,
 } from './configsActions';
 import api from '../../../axios';
 
@@ -47,6 +51,15 @@ export const getIndustryOptions = () => {
             .get('industries/')
             .then((res) => dispatch(getIndustryOptionsResolved(res.data.results)))
             .catch((err) => dispatch(getIndustryOptionsFailed(err)))
+    };
+};
+
+export const getIndustryOption = (id) => {
+    return dispatch => {
+        api
+            .get(`industries/${id}`)
+            .then((res) => dispatch(getIndustryOptionResolved(res.data)))
+            .catch(() => dispatch(getIndustryOptionFailed()))
     };
 };
 
@@ -92,6 +105,15 @@ export const getSpecificationOptions = () => {
             .get('specification/')
             .then((res) => dispatch(getSpecificationOptionsResolved(res.data.results)))
             .catch((err) => dispatch(getSpecificationOptionsFailed(err)))
+    };
+};
+
+export const getSpecificationOption = (id) => {
+    return dispatch => {
+        api
+            .get(`specification/${id}`)
+            .then((res) => dispatch(getSpecificationOptionResolved(res.data)))
+            .catch(() => dispatch(getSpecificationOptionFailed()))
     };
 };
 

@@ -14,6 +14,10 @@ import {
     ADMIN_CONFIGS_GET_INDUSTRIES_FAILED,
     ADMIN_CONFIGS_GET_INDUSTRIES_PENDING,
     ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
+    ADMIN_CONFIGS_GET_INDUSTRY_FAILED,
+    ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_RESOLVED,
@@ -71,6 +75,20 @@ export const getIndustryOptionsResolved = (industries) => ({
     type: ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
     payload: industries
 });
+
+/******************************************/
+
+/*** Actions for fetching a single option for industry field ***/
+
+export const getIndustryOptionFailed = () => ({
+    type: ADMIN_CONFIGS_GET_INDUSTRY_FAILED,
+});
+
+export const getIndustryOptionResolved = (industry) => ({
+    type: ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED,
+    payload: industry
+});
+
 
 /******************************************/
 
@@ -146,6 +164,21 @@ export const getSpecificationOptionsResolved = (specifications) => ({
 });
 
 /******************************************/
+
+
+/*** Actions for fetching a single option for specification field ***/
+
+export const getSpecificationOptionFailed = () => ({
+    type: ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
+});
+
+export const getSpecificationOptionResolved = (specification) => ({
+    type: ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
+    payload: specification,
+});
+
+/******************************************/
+
 
 
 /*** Actions for updating options for industry field ***/

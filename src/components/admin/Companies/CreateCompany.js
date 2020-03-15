@@ -8,7 +8,7 @@ import { createCompany } from './companiesApi';
 import {
     createCompanyPendingSelector,
     createCompanySuccessSelector,
-} from '../adminReducer';
+} from './companiesReducer';
 import {
     industryOptionsSelector,
     specificationOptionsSelector

@@ -19,11 +19,7 @@ const TableList = ({ layout, data, showSpinner, onClickRow }) => {
             <Table
                 hover
                 striped
-                responsive="xs"
-                responsive="sm"
-                responsive="md"
-                responsive="lg"
-                responsive="xl"
+                responsive
             >
                 <thead>
                 <tr>

@@ -25,13 +25,13 @@ const ContactPersons = ({
 
     useEffect(() => {
         getContactPersons(params);
-    }, [ getContactPersons, params ]);
+    }, [ getContactPersons, params.company ]);
 
     useEffect(() => {
         if (contactPersonRemoved) {
             getContactPersons(params);
         }
-    }, [ getContactPersons, contactPersonRemoved , params]);
+    }, [ getContactPersons, contactPersonRemoved , params.company ]);
 
     const handleRemoveContactPerson = () => {
         removeContactPerson(contactPersonToRemove);

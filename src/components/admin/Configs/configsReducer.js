@@ -29,6 +29,12 @@ import {
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_RESOLVED,
+    ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_GET_INDUSTRY_FAILED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
+    ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
 } from '../../../constants/actionTypes';
 
 
@@ -38,21 +44,18 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 addIndustryOptionPending: true,
-                addIndustryOptionFailed: false,
                 addIndustryOptionResolved: false
             };
         case ADMIN_CONFIGS_ADD_INDUSTRY_RESOLVED:
             return {
                 ...state,
                 addIndustryOptionPending: false,
-                addIndustryOptionFailed: false,
                 addIndustryOptionResolved: true
             };
         case ADMIN_CONFIGS_ADD_INDUSTRY_FAILED:
             return {
                 ...state,
                 addIndustryOptionPending: false,
-                addIndustryOptionFailed: false,
                 addIndustryOptionResolved: false
             };
 
@@ -60,14 +63,12 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getIndustryOptionsPending: true,
-                getIndustryOptionsFailed: false,
                 industryOptions: []
             };
         case ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED:
             return {
                 ...state,
                 getIndustryOptionsPending: false,
-                getIndustryOptionsFailed: false,
                 industryOptions: action.payload,
                 updateIndustryOptionResolved: false,
                 removeIndustryOptionResolved: false,
@@ -76,8 +77,20 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getIndustryOptionsPending: false,
-                getIndustryOptionsFailed: true,
                 industryOptions: []
+            };
+
+        case ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED:
+            return {
+                ...state,
+                getIndustryOptionPending: false,
+                industryOption: action.payload,
+            };
+        case ADMIN_CONFIGS_GET_INDUSTRY_FAILED:
+            return {
+                ...state,
+                getIndustryOptionPending: false,
+                industryOption: null
             };
 
         case ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING:
@@ -106,21 +119,18 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 addSpecificationOptionPending: true,
-                addSpecificationOptionFailed: false,
                 addSpecificationOptionResolved: false
             };
         case ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_FAILED:
             return {
                 ...state,
                 addSpecificationOptionPending: false,
-                addSpecificationOptionFailed: true,
                 addSpecificationOptionResolved: false
             };
         case ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_RESOLVED:
             return {
                 ...state,
                 addSpecificationOptionPending: false,
-                addSpecificationOptionFailed: false,
                 addSpecificationOptionResolved: true
             };
 
@@ -128,17 +138,44 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getSpecificationOptionsPending: false,
-                getSpecificationOptionsFailed: false,
                 specificationOptions: action.payload,
+            };
+
+        case ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING:
+            return {
+                ...state,
+                getSpecificationOptionsPending: true,
+                specificationOptions: [],
                 removeSpecificationOptionResolved: false,
                 updateSpecificationOptionResolved: false,
             };
+
+        case ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED:
+            return {
+                ...state,
+                getSpecificationOptionsPending: false,
+                specificationOptions: [],
+            };
+
+        case ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED:
+            return {
+                ...state,
+                getSpecificationOptionsPending: false,
+                specificationOptions: action.payload,
+            };
+
+        case ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED:
+            return {
+                ...state,
+                getSpecificationOptionPending: false,
+                specificationOption: null,
+            };
+
 
         case ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED:
             return {
                 ...state,
                 updateSpecificationOptionPending: false,
-                updateSpecificationOptionFailed: false,
                 updateSpecificationOptionResolved: true
             };
 
@@ -146,14 +183,12 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 removeIndustryOptionPending: false,
-                removeIndustryOptionFailed: false,
                 removeIndustryOptionResolved: true
             };
         case ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING:
             return {
                 ...state,
                 removeIndustryOptionPending: true,
-                removeIndustryOptionFailed: false,
                 removeIndustryOptionResolved: false
             };
 
@@ -161,7 +196,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 removeSpecificationOptionPending: false,
-                removeSpecificationOptionFailed: false,
                 removeSpecificationOptionResolved: true
             };
 
@@ -169,7 +203,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 removeSpecificationOptionPending: true,
-                removeSpecificationOptionFailed: false,
                 removeSpecificationOptionResolved: false,
             };
 
@@ -177,7 +210,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 createContactPersonRolePending: true,
-                createContactPersonRoleFailed: false,
                 createContactPersonRoleResolved: false,
             };
 
@@ -185,7 +217,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 createContactPersonRolePending: false,
-                createContactPersonRoleFailed: true,
                 createContactPersonRoleResolved: false,
             };
 
@@ -193,7 +224,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 createContactPersonRolePending: false,
-                createContactPersonRoleFailed: false,
                 createContactPersonRoleResolved: true,
             };
 
@@ -201,7 +231,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getContactPersonRolesPending: true,
-                getContactPersonRolesFailed: false,
                 contactPersonRoles: [],
                 createContactPersonRoleResolved: false,
                 updateContactPersonRoleResolved: false,
@@ -211,7 +240,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getContactPersonRolesPending: false,
-                getContactPersonRolesFailed: true,
                 contactPersonRoles: [],
             };
 
@@ -219,7 +247,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getContactPersonRolesPending: false,
-                getContactPersonRolesFailed: false,
                 contactPersonRoles: action.payload,
             };
 
@@ -227,7 +254,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 removeContactPersonRolePending: true,
-                removeContactPersonRoleFailed: false,
                 removeContactPersonRoleResolved: false,
             };
 
@@ -235,7 +261,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 removeContactPersonRolePending: false,
-                removeContactPersonRoleFailed: true,
                 removeContactPersonRoleResolved: false,
             };
 
@@ -243,7 +268,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 removeContactPersonRolePending: false,
-                removeContactPersonRoleFailed: false,
                 removeContactPersonRoleResolved: true,
             };
 
@@ -251,7 +275,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 updateContactPersonRolePending: true,
-                updateContactPersonRoleFailed: false,
                 updateContactPersonRoleResolved: false,
             };
 
@@ -259,7 +282,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 updateContactPersonRolePending: false,
-                updateContactPersonRoleFailed: true,
                 updateContactPersonRoleResolved: false,
             };
 
@@ -267,7 +289,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 updateContactPersonRolePending: false,
-                updateContactPersonRoleFailed: false,
                 updateContactPersonRoleResolved: true,
             };
 
@@ -278,14 +299,15 @@ export const configs = (state = {}, action) => {
 
 
 export const addIndustryOptionPendingSelector = state => state.admin.configs.addIndustryOptionPending;
-export const addIndustryOptionFailedSelector = state => state.admin.configs.addIndustryOptionFailed;
 export const addIndustryOptionResolvedSelector = state => state.admin.configs.addIndustryOptionResolved;
 
 export const industryOptionsSelector = state => state.admin.configs.industryOptions;
+export const industryOptionSelector = state => state.admin.configs.industryOption;
 
 export const updateIndustryOptionResoledSelector = state => state.admin.configs.updateIndustryOptionResolved;
 
 export const specificationOptionsSelector = state => state.admin.configs.specificationOptions;
+export const specificationOptionSelector = state => state.admin.configs.specificationOption;
 
 export const addSpecificationOptionResolvedSelector = state => state.admin.configs.addSpecificationOptionResolved;
 

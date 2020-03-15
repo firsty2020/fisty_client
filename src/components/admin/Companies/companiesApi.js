@@ -5,7 +5,9 @@ import {
     getCompaniesPending,
     getCompaniesResolved,
     getCompaniesFailed,
-} from '../adminActions';
+    getCompanyResolved,
+    getCompanyFailed,
+} from './companiesActions';
 import api from '../../../axios';
 
 
@@ -25,6 +27,15 @@ export const getCompanies = () => {
         api
             .get('companies/')
             .then((res) => dispatch(getCompaniesResolved(res.data.results)))
-            .catch((err) => dispatch(getCompaniesFailed(err)))
+            .catch(() => dispatch(getCompaniesFailed()))
+    }
+};
+
+export const getCompany = (id) => {
+    return dispatch => {
+        api
+            .get(`companies/${id}`)
+            .then((res) => dispatch(getCompanyResolved(res.data)))
+            .catch(() => dispatch(getCompanyFailed()))
     }
 };

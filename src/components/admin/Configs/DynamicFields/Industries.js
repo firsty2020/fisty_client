@@ -19,7 +19,6 @@ import {
     removeIndustryOption,
 } from '../configsApi';
 import {
-    addIndustryOptionFailedSelector,
     addIndustryOptionPendingSelector,
     addIndustryOptionResolvedSelector,
     industryOptionsSelector,
@@ -206,7 +205,6 @@ const Industries = ({
 const mapStateToProps = state => ({
     addIndustryPending: addIndustryOptionPendingSelector(state),
     addIndustryResolved: addIndustryOptionResolvedSelector(state),
-    addIndustryOptionFailed: addIndustryOptionFailedSelector(state),
     industryOptions: industryOptionsSelector(state),
     updateIndustryOptionResolved: updateIndustryOptionResoledSelector(state),
     industryOptionRemoved: removeIndustryOptionsResolvedSelector(state),
