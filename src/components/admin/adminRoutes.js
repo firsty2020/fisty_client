@@ -8,6 +8,7 @@ import Roles from './Configs/Roles/Roles';
 import CompanyDetails from './Companies/CompanyDetails';
 import ContactPersons from './Companies/ContactPersons/ContactPersons';
 import UpdateContactPerson from './Companies/ContactPersons/UpdateContactPerson';
+import Locations from './Configs/Locations';
 
 
 export const navigation =  {
@@ -45,6 +46,12 @@ export const navigation =  {
                     icon: 'Users',
                     url: '/admin/configs/roles',
                     matcher: '/roles',
+                },
+                {
+                    name: 'Местонахождения',
+                    icon: 'MapPin',
+                    url: '/admin/configs/locations',
+                    matcher: '/locations',
                 },
             ]
         },
@@ -113,5 +120,10 @@ export const adminRoutes = [
         path: '/admin/configs/roles',
         component: Roles,
         name: 'Роли'
+    },
+    {
+        path: '/admin/configs/locations',
+        component: Locations,
+        name: 'Местонахождения'
     },
 ];
