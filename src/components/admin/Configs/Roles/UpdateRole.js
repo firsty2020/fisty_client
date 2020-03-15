@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import CreateOrUpdateRoleModal from './CreateOrUpdateRoleModal';
 import { updateContactPersonRole } from './rolesApi';
-import {updateContactPersonRolePendingSelector, updateContactPersonRoleResolvedSelector} from '../../adminReducer';
+import {
+    updateContactPersonRolePendingSelector,
+    updateContactPersonRoleResolvedSelector
+} from '../configsReducer';
 
 const UpdateRole = ({
                         pending,

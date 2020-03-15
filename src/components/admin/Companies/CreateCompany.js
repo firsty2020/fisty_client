@@ -8,9 +8,11 @@ import { createCompany } from './companiesApi';
 import {
     createCompanyPendingSelector,
     createCompanySuccessSelector,
-    industryOptionsSelector,
-    specificationOptionsSelector,
 } from '../adminReducer';
+import {
+    industryOptionsSelector,
+    specificationOptionsSelector
+} from '../Configs/configsReducer';
 import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
 import messages from '../../../constants/messages';

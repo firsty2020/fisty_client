@@ -4,9 +4,7 @@ import { contactPersonSchema } from '../../../../validation';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { getContactPersonRoles } from '../../Configs/Roles/rolesApi';
-import {
-    contactPersonRolesSelector,
-} from '../../adminReducer';
+import { contactPersonRolesSelector } from '../../Configs/configsReducer';
 import {
     generateDays,
     generateMonths,

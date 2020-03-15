@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import {
     contactPersonCreatedSelector,
     createContactPersonPendingSelector,
-    contactPersonRolesSelector,
 } from '../../adminReducer';
+import { contactPersonRolesSelector } from '../../Configs/configsReducer';
 import { createContactPerson } from './contactPersonApi';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';

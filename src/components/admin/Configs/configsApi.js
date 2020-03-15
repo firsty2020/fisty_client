@@ -21,7 +21,7 @@ import {
     updateSpecificationOptionResolved,
     updateSpecificationOptionFailed,
     removeSpecificationOptionResolved,
-} from '../adminActions';
+} from './configsActions';
 import api from '../../../axios';
 
 

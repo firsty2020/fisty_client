@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Edit, PlusCircle, Trash } from 'react-feather';
-import { Button, Container, Form, Table } from 'react-bootstrap';
+import { Button, Container, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getContactPersonRoles, removeContactPersonRole } from './rolesApi';
 import {
     contactPersonRoleRemovedSelector,
     contactPersonRolesSelector
-} from '../../adminReducer';
+} from '../configsReducer';
 import { ConfirmationModal } from '../../../ui/';
 import { When } from 'react-if';
 import CreateRole from './CreateRole';

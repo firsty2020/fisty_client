@@ -11,7 +11,7 @@ import {
     updateContactPersonRoleFailed,
     updateContactPersonRolePending,
     updateContactPersonRoleResolved
-} from '../../adminActions';
+} from '../configsActions';
 import api from '../../../../axios';
 
 export const createContactPersonRole = (data) => {

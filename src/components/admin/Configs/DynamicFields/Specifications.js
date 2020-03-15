@@ -23,7 +23,7 @@ import {
     specificationOptionsSelector,
     removeSpecificationOptionsResolvedSelector,
     updateSpecificationOptionResolvedSelector,
-} from '../../adminReducer';
+} from '../configsReducer';
 import { scrollToRef } from '../../../../utils';
 import { Popover } from '../../../ui';
 

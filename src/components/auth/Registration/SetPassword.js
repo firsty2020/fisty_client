@@ -11,7 +11,7 @@ import { setPassword } from '../auth';
 import {
     setPasswordPendingSelector,
     setPasswordResolvedSelector
-} from '../../admin/adminReducer';
+} from '../../auth/authReducer';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
 

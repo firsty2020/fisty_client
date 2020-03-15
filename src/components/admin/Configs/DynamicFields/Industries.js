@@ -25,7 +25,7 @@ import {
     industryOptionsSelector,
     removeIndustryOptionsResolvedSelector,
     updateIndustryOptionResoledSelector,
-} from '../../adminReducer';
+} from '../configsReducer';
 import { scrollToRef } from '../../../../utils';
 import { Popover } from '../../../ui';
 

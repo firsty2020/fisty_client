@@ -10,6 +10,9 @@ import {
     AUTH_LOGIN_FAILED,
     AUTH_GET_USER_RESOLVED,
     AUTH_GET_USER_FAILED,
+    AUTH_SET_PASSWORD_PENDING,
+    AUTH_SET_PASSWORD_FAILED,
+    AUTH_SET_PASSWORD_RESOLVED,
 } from '../../constants/actionTypes';
 
 const initialState = {
@@ -38,6 +41,26 @@ export const auth = (state = initialState, action) => {
             return ({ ...state, user: action.payload });
         case AUTH_GET_USER_FAILED:
             return ({ ...state, error: action.payload });
+        case AUTH_SET_PASSWORD_PENDING:
+            return {
+                setPasswordPending: true,
+                setPasswordFailed: false,
+                setPasswordResolved: false,
+            };
+
+        case AUTH_SET_PASSWORD_FAILED:
+            return {
+                setPasswordPending: false,
+                setPasswordFailed: true,
+                setPasswordResolved: false,
+            };
+
+        case AUTH_SET_PASSWORD_RESOLVED:
+            return {
+                setPasswordPending: false,
+                setPasswordFailed: false,
+                setPasswordResolved: true,
+            };
         default:
             return state;
     }
@@ -47,3 +70,6 @@ export const authPendingSelector = state => state.auth.pending;
 export const authSuccessSelector = state => state.auth.success;
 
 export const userSelector = state => state.auth.user;
+
+export const setPasswordResolvedSelector = state => state.admin.setPasswordResolved;
+export const setPasswordPendingSelector = state => state.admin.setPasswordPending;

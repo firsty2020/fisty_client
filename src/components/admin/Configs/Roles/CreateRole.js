@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
     createContactPersonRolePendingSelector,
     createContactPersonRoleResolvedSelector
-} from '../../adminReducer';
+} from '../configsReducer';
 import { createContactPersonRole } from './rolesApi';
 import CreateOrUpdateRoleModal from './CreateOrUpdateRoleModal';
 
