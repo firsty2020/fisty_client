@@ -25,6 +25,12 @@ import {
     getIndustryOptionFailed,
     getSpecificationOptionResolved,
     getSpecificationOptionFailed,
+    createLocationPending,
+    createLocationResolved,
+    createLocationFailed,
+    getLocationsResolved,
+    getLocationsPending,
+    getLocationsFailed,
 } from './configsActions';
 import api from '../../../axios';
 
@@ -133,6 +139,26 @@ export const removeSpecificationOption = (id) => {
             .delete(`specification/${id}/`)
             .then((res) => dispatch(removeSpecificationOptionResolved(res.data)))
             .catch((err) => null)
+    };
+};
+
+export const createLocation = (name) => {
+    return dispatch => {
+        dispatch(createLocationPending());
+        api
+            .post('locations/', { name })
+            .then(() => dispatch(createLocationResolved()))
+            .catch((err) => dispatch(createLocationFailed()))
+    };
+};
+
+export const getLocations = () => {
+    return dispatch => {
+        dispatch(getLocationsPending());
+        api
+            .get('locations/')
+            .then((res) => dispatch(getLocationsResolved(res.data.results)))
+            .catch(() => dispatch(getLocationsFailed()))
     };
 };
 

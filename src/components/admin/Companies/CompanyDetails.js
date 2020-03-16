@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import {
     industryOptionSelector,
-    specificationOptionsSelector
+    specificationOptionSelector,
 } from '../Configs/configsReducer';
 import { getIndustryOption, getSpecificationOption } from '../Configs/configsApi';
 import { extractIdFromUrl } from '../../../utils';
@@ -106,7 +106,7 @@ const CompanyDetails = ({
 const mapStateToProps = state => ({
     company: companySelector(state),
     industry: industryOptionSelector(state),
-    specification: specificationOptionsSelector(state),
+    specification: specificationOptionSelector(state),
 });
 
 const mapDispatchToProps = {

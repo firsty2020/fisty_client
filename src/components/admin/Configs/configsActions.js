@@ -8,6 +8,8 @@ import {
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_FAILED,
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_PENDING,
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_RESOLVED,
+    ADMIN_CONFIGS_CREATE_LOCATION_PENDING,
+    ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_FAILED,
     ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_PENDING,
     ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_RESOLVED,
@@ -16,6 +18,8 @@ import {
     ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
     ADMIN_CONFIGS_GET_INDUSTRY_FAILED,
     ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
+    ADMIN_CONFIGS_GET_LOCATIONS_PENDING, ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
@@ -280,3 +284,38 @@ export const updateContactPersonRoleFailed = () => ({
 
 /******************************************/
 
+
+/*** Actions for creating location  ***/
+
+export const createLocationPending = () => ({
+    type: ADMIN_CONFIGS_CREATE_LOCATION_PENDING,
+});
+
+export const createLocationFailed = (err) => ({
+    type: ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_FAILED,
+    error: err,
+});
+
+export const createLocationResolved = () => ({
+    type: ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED,
+});
+
+/******************************************/
+
+
+/*** Actions for fetching locations  ***/
+
+export const getLocationsPending = () => ({
+    type: ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
+});
+
+export const getLocationsFailed = () => ({
+    type: ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
+});
+
+export const getLocationsResolved = (locations) => ({
+    type: ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
+    payload: locations
+});
+
+/******************************************/

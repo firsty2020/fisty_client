@@ -35,6 +35,12 @@ import {
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_CREATE_LOCATION_PENDING,
+    ADMIN_CONFIGS_CREATE_LOCATION_FAILED,
+    ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED,
+    ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
+    ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
+    ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
 } from '../../../constants/actionTypes';
 
 
@@ -60,11 +66,7 @@ export const configs = (state = {}, action) => {
             };
 
         case ADMIN_CONFIGS_GET_INDUSTRIES_PENDING:
-            return {
-                ...state,
-                getIndustryOptionsPending: true,
-                industryOptions: []
-            };
+            return { ...state, getIndustryOptionsPending: true };
         case ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED:
             return {
                 ...state,
@@ -145,7 +147,6 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getSpecificationOptionsPending: true,
-                specificationOptions: [],
                 removeSpecificationOptionResolved: false,
                 updateSpecificationOptionResolved: false,
             };
@@ -292,6 +293,44 @@ export const configs = (state = {}, action) => {
                 updateContactPersonRoleResolved: true,
             };
 
+        case ADMIN_CONFIGS_CREATE_LOCATION_PENDING:
+            return {
+                ...state,
+                createLocationPending: true,
+                createLocationResolved: false,
+            };
+
+        case ADMIN_CONFIGS_CREATE_LOCATION_FAILED:
+            return {
+                ...state,
+                createLocationPending: false,
+                createLocationResolved: false,
+            };
+
+        case ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED:
+            return {
+                ...state,
+                createLocationPending: false,
+                createLocationResolved: true,
+            };
+
+        case ADMIN_CONFIGS_GET_LOCATIONS_PENDING:
+            return {
+                ...state,
+            };
+
+        case ADMIN_CONFIGS_GET_LOCATIONS_FAILED:
+            return {
+                ...state,
+                locations: [],
+            };
+
+        case ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED:
+            return {
+                ...state,
+                locations: action.payload,
+            };
+
         default:
             return state;
     }
@@ -325,3 +364,8 @@ export const contactPersonRoleRemovedSelector = state => state.admin.configs.rem
 
 export const updateContactPersonRolePendingSelector = state => state.admin.configs.updateContactPersonRolePending;
 export const updateContactPersonRoleResolvedSelector = state => state.admin.configs.updateContactPersonRoleResolved;
+
+export const createLocationPendingSelector = state => state.admin.configs.createLocationPending;
+export const createLocationResolvedSelector = state => state.admin.configs.createLocationResolved;
+
+export const locationsSelector = state => state.admin.configs.locations;
