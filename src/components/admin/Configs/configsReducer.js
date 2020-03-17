@@ -41,6 +41,9 @@ import {
     ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
     ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
     ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_LOCATION_PENDING,
+    ADMIN_CONFIGS_REMOVE_LOCATION_FAILED,
+    ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
 } from '../../../constants/actionTypes';
 
 
@@ -326,6 +329,23 @@ export const configs = (state = {}, action) => {
             };
 
         case ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED:
+            return {
+                ...state,
+                locations: action.payload,
+            };
+
+        case ADMIN_CONFIGS_REMOVE_LOCATION_PENDING:
+            return {
+                ...state,
+            };
+
+        case ADMIN_CONFIGS_REMOVE_LOCATION_FAILED:
+            return {
+                ...state,
+                locations: [],
+            };
+
+        case ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED:
             return {
                 ...state,
                 locations: action.payload,

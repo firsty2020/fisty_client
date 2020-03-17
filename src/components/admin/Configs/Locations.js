@@ -99,28 +99,25 @@ const Locations = ({ pending, locations, created, createLocation, getLocations }
                     </tr>
                     </thead>
                     <tbody>
-                    {(locations || []).map(({ id, name }) => {
-                        return (
-                            <tr key={id}>
-                                <td>{name}</td>
-                                <td>
-                                    <div className="d-flex justify-content-around">
-                                        <Trash
-                                            onClick={() => alert('NIY')}
-                                            className="cursor-pointer" color="red"/>
-                                        <Edit
-                                            onClick={() => alert('NIY')}
-                                            className="cursor-pointer"
-                                            color="blue"
-                                        />
-                                    </div>
-                                </td>
-                            </tr>
-                        );
-                    })}
+                    {(locations || []).map(({ id, name }) => (
+                        <tr key={id}>
+                            <td>{name}</td>
+                            <td>
+                                <div className="d-flex justify-content-around">
+                                    <Trash
+                                        onClick={() => alert('NIY')}
+                                        className="cursor-pointer" color="red"/>
+                                    <Edit
+                                        onClick={() => alert('NIY')}
+                                        className="cursor-pointer"
+                                        color="blue"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </Table>
-
             </Container>
         </div>
     );

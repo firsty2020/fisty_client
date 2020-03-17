@@ -1,15 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    Button,
-    Form,
-    Row,
-    Col,
-    Table,
-    InputGroup,
-    Modal
-} from 'react-bootstrap';
-import { Formik } from 'formik';
-import { Trash, Edit } from 'react-feather';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import {
@@ -25,15 +14,13 @@ import {
     updateSpecificationOptionResolvedSelector,
 } from '../configsReducer';
 import { scrollToRef } from '../../../../utils';
-import { Popover } from '../../../ui';
+import ConfigFormList from '../ConfigFormList';
 
 
 const specificationValidationSchema = Yup.object().shape({
-    specification: Yup.string()
+    item: Yup.string()
         .required('Введите опцию'),
 });
-
-let setFormikFieldValue;
 
 
 const Specifications = ({
@@ -72,14 +59,14 @@ const Specifications = ({
         }
     }, [ specificationOptionUpdated, getSpecificationOptions ]);
 
-    const handleEdit = ({ id, name }) => {
+    const handleEdit = ({ id, name, setFieldValue }) => {
         setSpecificationOptionToEdit(id);
-        setFormikFieldValue('specification', name);
+        setFieldValue('item', name);
         scrollToRef(specificationInputRef);
         specificationInputRef.current.focus();
     };
 
-    const handleSpecificationOptionDelete = () => {
+    const handleDelete = () => {
         removeSpecificationOption(specificationOptionToDelete);
         setSpecificationOptionToDelete(null);
     };
@@ -88,111 +75,21 @@ const Specifications = ({
 
     return (
         <div className="mt-5">
-            <Modal
-                show={!!specificationOptionToDelete}
-                centered>
-                <Modal.Body>
-                    <p className="text-center mt-1">Вы уверены что хотите удалить эту опцию?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setSpecificationOptionToDelete(null)}>Нет</Button>
-                    <Button variant="danger" onClick={handleSpecificationOptionDelete}>Да</Button>
-                </Modal.Footer>
-            </Modal>
-            <Row>
-                <Col>
-                    <h3 className="text-center mb-3">Специфика - выпадающий
-                        список</h3>
-                    <Formik
-                        initialValues={{
-                            specification: '',
-                        }}
-                        validationSchema={specificationValidationSchema}
-                        onSubmit={(values, { resetForm }) => {
-                            if (specificationOptionToEdit) {
-                                updateSpecificationOption({ id: specificationOptionToEdit, name: values.specification });
-                                setSpecificationOptionToEdit(null);
-                            } else {
-                                addSpecificationOption(values.specification);
-                            }
-                            resetForm();
-                        }}
-                    >
-                        {({
-                              values,
-                              errors,
-                              touched,
-                              handleChange,
-                              handleBlur,
-                              handleSubmit,
-                              setFieldValue
-                          }) => {
-                            setFormikFieldValue = setFieldValue;
-                            return (
-                                <Form onSubmit={handleSubmit}>
-                                    <Popover
-                                        show={!!specificationOptionToEdit}
-                                        placement="bottom"
-                                        el={specificationInputRef}
-                                        body="Редактировать здесь"
-                                    />
-                                    <InputGroup className="mb-3">
-                                        <Form.Control
-                                            type="text"
-                                            name="specification"
-                                            placeholder="Добавить опцию"
-                                            value={values.specification}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            ref={specificationInputRef}
-                                        />
-                                        <InputGroup.Append>
-                                            <Button
-                                                type="submit"
-                                                variant="outline-primary">Сохранить
-                                            </Button>
-                                        </InputGroup.Append>
-                                        {touched.specification && errors.specification ? (
-                                            <span
-                                                className="mt-1 invalid-feedback-visible">{errors.specification}</span>
-                                        ) : null}
-                                    </InputGroup>
-                                </Form>
-                            );
-                        }}
-                    </Formik>
-                    <Table>
-                        <thead>
-                        <tr>
-                            <th>Наименование</th>
-                            <th width="5%">Действия</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {(specificationOptions || []).map(({ id, name }) => {
-                            return (
-                                <tr key={id}>
-                                    <td>{name}</td>
-                                    <td>
-                                        <div className="d-flex justify-content-around">
-                                            <Trash
-                                                onClick={() => setSpecificationOptionToDelete(id)}
-                                                className="cursor-pointer" color="red"/>
-                                            <Edit
-                                                onClick={() => handleEdit({ id, name })}
-                                                className="cursor-pointer"
-                                                color="blue"
-                                            />
-                                        </div>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                        </tbody>
-                    </Table>
-                </Col>
-            </Row>
-            <hr/>
+            <ConfigFormList
+                heading={'Специфика - выпадающий список'}
+                validationSchema={specificationValidationSchema}
+                itemToEdit={specificationOptionToEdit}
+                itemToDelete={specificationOptionToDelete}
+                inputRef={specificationInputRef}
+                pending={false}
+                itemList={specificationOptions}
+                handleEditItem={handleEdit}
+                handleItemDelete={handleDelete}
+                updateItem={updateSpecificationOption}
+                addItem={addSpecificationOption}
+                setItemToEdit={setSpecificationOptionToEdit}
+                setItemToDelete={setSpecificationOptionToDelete}
+            />
         </div>
     );
 };
