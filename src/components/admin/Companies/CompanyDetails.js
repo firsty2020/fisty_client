@@ -31,8 +31,8 @@ const CompanyDetails = ({
         if (!company) return;
         const industryId = extractIdFromUrl(company.industry);
         const specificationId = extractIdFromUrl(company.specification);
-        getIndustryOption(industryId);
-        getSpecificationOption(specificationId);
+        industryId && getIndustryOption(industryId);
+        specificationId && getSpecificationOption(specificationId);
     }, [ company, getIndustryOption, getSpecificationOption ]);
 
     if (!company) {

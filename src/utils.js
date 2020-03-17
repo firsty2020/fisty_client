@@ -97,5 +97,5 @@ export const parseDobString = (dob) => {
  * @return string representation of id ('94')
  */
 export const extractIdFromUrl = (url) => {
-  return url.split('/').slice(-2, -1).join('');
+  return url && url.split('/').slice(-2, -1).join('');
 };
