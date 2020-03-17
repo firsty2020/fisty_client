@@ -41,9 +41,10 @@ import {
     ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
     ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
     ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
-    ADMIN_CONFIGS_REMOVE_LOCATION_PENDING,
     ADMIN_CONFIGS_REMOVE_LOCATION_FAILED,
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
+    ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
 } from '../../../constants/actionTypes';
 
 
@@ -69,7 +70,7 @@ export const configs = (state = {}, action) => {
             };
 
         case ADMIN_CONFIGS_GET_INDUSTRIES_PENDING:
-            return { ...state, getIndustryOptionsPending: true };
+            return {...state, getIndustryOptionsPending: true};
         case ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED:
             return {
                 ...state,
@@ -320,6 +321,9 @@ export const configs = (state = {}, action) => {
         case ADMIN_CONFIGS_GET_LOCATIONS_PENDING:
             return {
                 ...state,
+                createLocationResolved: false,
+                removeLocationResolved: false,
+                updateLocationResolved: false,
             };
 
         case ADMIN_CONFIGS_GET_LOCATIONS_FAILED:
@@ -334,21 +338,32 @@ export const configs = (state = {}, action) => {
                 locations: action.payload,
             };
 
-        case ADMIN_CONFIGS_REMOVE_LOCATION_PENDING:
-            return {
-                ...state,
-            };
-
         case ADMIN_CONFIGS_REMOVE_LOCATION_FAILED:
             return {
                 ...state,
-                locations: [],
+                removeLocationPending: false,
+                removeLocationResolved: false,
             };
 
         case ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED:
             return {
                 ...state,
-                locations: action.payload,
+                removeLocationPending: false,
+                removeLocationResolved: true,
+            };
+
+        case ADMIN_CONFIGS_UPDATE_LOCATION_FAILED:
+            return {
+                ...state,
+                updateLocationPending: false,
+                updateLocationResolved: false
+            };
+
+        case ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED:
+            return {
+                ...state,
+                updateLocationPending: false,
+                updateLocationResolved: true
             };
 
         default:
@@ -389,3 +404,5 @@ export const createLocationPendingSelector = state => state.admin.configs.create
 export const createLocationResolvedSelector = state => state.admin.configs.createLocationResolved;
 
 export const locationsSelector = state => state.admin.configs.locations;
+export const removeLocationResolvedSelector = state => state.admin.configs.removeLocationResolved;
+export const updateLocationResolvedSelector = state => state.admin.configs.updateLocationResolved;

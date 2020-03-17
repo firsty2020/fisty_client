@@ -31,6 +31,12 @@ import {
     getLocationsResolved,
     getLocationsPending,
     getLocationsFailed,
+    removeSpecificationOptionFailed,
+    removeLocationResolved,
+    removeLocationFailed,
+    updateLocationPending,
+    updateLocationResolved,
+    updateLocationFailed,
 } from './configsActions';
 import api from '../../../axios';
 
@@ -138,7 +144,7 @@ export const removeSpecificationOption = (id) => {
         api
             .delete(`specification/${id}/`)
             .then((res) => dispatch(removeSpecificationOptionResolved(res.data)))
-            .catch((err) => null)
+            .catch((err) => dispatch(removeSpecificationOptionFailed()))
     };
 };
 
@@ -162,3 +168,20 @@ export const getLocations = () => {
     };
 };
 
+export const removeLocation = (id) => {
+    return dispatch => {
+        api
+            .delete(`locations/${id}/`)
+            .then((res) => dispatch(removeLocationResolved()))
+            .catch((err) => removeLocationFailed())
+    };
+};
+
+export const updateLocation = ({ id, name }) => {
+    return dispatch => {
+        api
+            .patch(`locations/${id}/`, { name })
+            .then(() => dispatch(updateLocationResolved()))
+            .catch(() => dispatch(updateLocationFailed()))
+    };
+};

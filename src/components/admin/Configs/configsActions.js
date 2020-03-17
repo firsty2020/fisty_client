@@ -19,7 +19,8 @@ import {
     ADMIN_CONFIGS_GET_INDUSTRY_FAILED,
     ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED,
     ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
-    ADMIN_CONFIGS_GET_LOCATIONS_PENDING, ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
+    ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
+    ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
@@ -30,6 +31,9 @@ import {
     ADMIN_CONFIGS_REMOVE_INDUSTRY_FAILED,
     ADMIN_CONFIGS_REMOVE_INDUSTRY_PENDING,
     ADMIN_CONFIGS_REMOVE_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_LOCATION_FAILED,
+    ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
+    ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
@@ -37,10 +41,13 @@ import {
     ADMIN_CONFIGS_UPDATE_INDUSTRY_FAILED,
     ADMIN_CONFIGS_UPDATE_INDUSTRY_PENDING,
     ADMIN_CONFIGS_UPDATE_INDUSTRY_RESOLVED,
+    ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
+    ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED
 } from '../../../constants/actionTypes';
+
 
 /*** Actions for creating options for industry field ***/
 
@@ -209,6 +216,11 @@ export const removeSpecificationOptionResolved = () => ({
     type: ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
 });
 
+export const removeSpecificationOptionFailed = () => ({
+    type: ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_FAILED,
+});
+
+
 /******************************************/
 
 
@@ -316,6 +328,34 @@ export const getLocationsFailed = () => ({
 export const getLocationsResolved = (locations) => ({
     type: ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
     payload: locations
+});
+
+/******************************************/
+
+
+/*** Actions for removing a single location  ***/
+
+
+export const removeLocationFailed = () => ({
+    type: ADMIN_CONFIGS_REMOVE_LOCATION_FAILED,
+});
+
+export const removeLocationResolved = () => ({
+    type: ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
+});
+
+/******************************************/
+
+
+
+/*** Actions for updating location  ***/
+
+export const updateLocationFailed = () => ({
+    type: ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
+});
+
+export const updateLocationResolved = () => ({
+    type: ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
 });
 
 /******************************************/

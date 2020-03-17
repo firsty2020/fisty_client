@@ -3,12 +3,13 @@ import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
 import CreateBranch from './Companies/CreateBranch';
 import CreateContactPerson from './Companies/ContactPersons/CreateContactPerson';
-import DynamicFields from './Configs/DynamicFields/DynamicFields';
 import Roles from './Configs/Roles/Roles';
 import CompanyDetails from './Companies/CompanyDetails';
 import ContactPersons from './Companies/ContactPersons/ContactPersons';
 import UpdateContactPerson from './Companies/ContactPersons/UpdateContactPerson';
 import Locations from './Configs/Locations';
+import Industries from './Configs/Industries';
+import Specifications from './Configs/Specifications';
 
 
 export const navigation =  {
@@ -36,22 +37,28 @@ export const navigation =  {
             icon: 'Settings',
             children: [
                 {
-                    name: 'Динамичные поля',
-                    icon: 'Sliders',
-                    url: '/admin/configs/dynamic-fields',
-                    matcher: '/dynamic-fields',
+                    name: 'Отрасль',
+                    icon: 'GitBranch',
+                    url: '/admin/configs/industries',
+                    matcher: '/industries',
                 },
                 {
-                    name: 'Роли',
-                    icon: 'Users',
-                    url: '/admin/configs/roles',
-                    matcher: '/roles',
+                    name: 'Специфика',
+                    icon: 'Aperture',
+                    url: '/admin/configs/specifications',
+                    matcher: '/specifications',
                 },
                 {
                     name: 'Местонахождения',
                     icon: 'MapPin',
                     url: '/admin/configs/locations',
                     matcher: '/locations',
+                },
+                {
+                    name: 'Роли',
+                    icon: 'Users',
+                    url: '/admin/configs/roles',
+                    matcher: '/roles',
                 },
             ]
         },
@@ -112,9 +119,14 @@ export const adminRoutes = [
         name: 'Создать бранч'
     },
     {
-        path: '/admin/configs/dynamic-fields',
-        component: DynamicFields,
-        name: 'Динамичные Поля'
+        path: '/admin/configs/industries',
+        component: Industries,
+        name: 'Отрасль'
+    },
+    {
+        path: '/admin/configs/specifications',
+        component: Specifications,
+        name: 'Специфика'
     },
     {
         path: '/admin/configs/roles',

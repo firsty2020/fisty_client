@@ -6,19 +6,19 @@ import {
     getSpecificationOptions,
     updateSpecificationOption,
     removeSpecificationOption,
-} from '../configsApi';
+} from './configsApi';
 import {
     addSpecificationOptionResolvedSelector,
     specificationOptionsSelector,
     removeSpecificationOptionsResolvedSelector,
     updateSpecificationOptionResolvedSelector,
-} from '../configsReducer';
-import { scrollToRef } from '../../../../utils';
-import ConfigFormList from '../ConfigFormList';
+} from './configsReducer';
+import { scrollToRef } from '../../../utils';
+import ConfigFormList from './ConfigFormList';
 
 
 const specificationValidationSchema = Yup.object().shape({
-    item: Yup.string()
+    specification: Yup.string()
         .required('Введите опцию'),
 });
 
@@ -61,7 +61,7 @@ const Specifications = ({
 
     const handleEdit = ({ id, name, setFieldValue }) => {
         setSpecificationOptionToEdit(id);
-        setFieldValue('item', name);
+        setFieldValue('specification', name);
         scrollToRef(specificationInputRef);
         specificationInputRef.current.focus();
     };
@@ -76,7 +76,7 @@ const Specifications = ({
     return (
         <div className="mt-5">
             <ConfigFormList
-                heading={'Специфика - выпадающий список'}
+                itemName="specification"
                 validationSchema={specificationValidationSchema}
                 itemToEdit={specificationOptionToEdit}
                 itemToDelete={specificationOptionToDelete}

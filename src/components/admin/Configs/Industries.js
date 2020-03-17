@@ -6,20 +6,20 @@ import {
     getIndustryOptions,
     updateIndustryOption,
     removeIndustryOption,
-} from '../configsApi';
+} from './configsApi';
 import {
     addIndustryOptionPendingSelector,
     addIndustryOptionResolvedSelector,
     industryOptionsSelector,
     removeIndustryOptionsResolvedSelector,
     updateIndustryOptionResoledSelector,
-} from '../configsReducer';
-import { scrollToRef } from '../../../../utils';
-import ConfigFormList from '../ConfigFormList';
+} from './configsReducer';
+import { scrollToRef } from '../../../utils';
+import ConfigFormList from './ConfigFormList';
 
 
 const industryValidationSchema = Yup.object().shape({
-    item: Yup.string()
+    industry: Yup.string()
         .required('Введите опцию'),
 });
 
@@ -62,7 +62,7 @@ const Industries = ({
 
     const handleEdit = ({ id, name, setFieldValue }) => {
         setIndustryOptionToEdit(id);
-        setFieldValue('item', name);
+        setFieldValue('industry', name);
         scrollToRef(industryInputRef);
         industryInputRef.current.focus();
     };
@@ -77,7 +77,7 @@ const Industries = ({
     return (
         <div>
             <ConfigFormList
-                heading={'Отрасль - выпадающий список'}
+                itemName="industry"
                 validationSchema={industryValidationSchema}
                 itemToEdit={industryOptionToEdit}
                 itemToDelete={industryOptionToDelete}
