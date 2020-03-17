@@ -74,7 +74,7 @@ const Specifications = ({
     const specificationInputRef = useRef(null);
 
     return (
-        <div className="mt-5">
+        <div>
             <ConfigFormList
                 itemName="specification"
                 validationSchema={specificationValidationSchema}
