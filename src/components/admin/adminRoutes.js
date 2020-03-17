@@ -65,13 +65,9 @@ export const navigation =  {
     ],
     bottom: [
         {
-            name: 'Account',
-            url: '/dashboard',
-            icon: 'User',
-            badge: {
-                variant: 'success',
-                text: '3',
-            },
+            name: 'Выйти',
+            url: '/login',
+            icon: 'LogOut',
         },
     ],
 };

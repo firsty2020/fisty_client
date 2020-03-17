@@ -3,6 +3,7 @@ import ToggleSidebarButton from './components/ToggleSidebarButton';
 
 import {Navbar, NavbarToggler, Collapse, Nav} from 'reactstrap';
 import {matchPath} from 'react-router-dom';
+import PageLoader from '../PageLoader/PageLoader';
 
 export default class Header extends Component {
     constructor(props) {
@@ -54,7 +55,6 @@ export default class Header extends Component {
                                 {this.props.children}
                             </Nav>
                         </Collapse>
-                        {/*<PageLoader/>*/}
                     </Navbar>
                 </div>
             </header>
