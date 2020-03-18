@@ -1,50 +1,50 @@
 export const generateMonths = () => ([
     {
-        title: 'Январь',
+        label: 'Январь',
         value: '01',
     },
     {
-        title: 'Февраль',
+        label: 'Февраль',
         value: '02',
     },
     {
-        title: 'Март',
+        label: 'Март',
         value: '03',
     },
     {
-        title: 'Апрель',
+        label: 'Апрель',
         value: '04',
     },
     {
-        title: 'Май',
+        label: 'Май',
         value: '05',
     },
     {
-        title: 'Июнь',
+        label: 'Июнь',
         value: '06',
     },
     {
-        title: 'Июль',
+        label: 'Июль',
         value: '07',
     },
     {
-        title: 'Август',
+        label: 'Август',
         value: '08',
     },
     {
-        title: 'Сентябрь',
+        label: 'Сентябрь',
         value: '09',
     },
     {
-        title: 'Октябрь',
+        label: 'Октябрь',
         value: '10',
     },
     {
-        title: 'Ноябрь',
+        label: 'Ноябрь',
         value: '11',
     },
     {
-        title: 'Декабрь',
+        label: 'Декабрь',
         value: '12',
     }
 ]);
@@ -97,5 +97,23 @@ export const parseDobString = (dob) => {
  * @return string representation of id ('94')
  */
 export const extractIdFromUrl = (url) => {
-  return url && url.split('/').slice(-2, -1).join('');
+    return url && url.split('/').slice(-2, -1).join('');
+};
+
+
+export const transFormDatesArray = (array) => array.reduce((acc, curr) => {
+    acc.push({
+        label: curr,
+        value: curr,
+    });
+    return acc;
+}, []);
+
+
+export const generateSelectOptions = (list, value, label) => {
+    if (!list) return null;
+    return list.reduce((acc, curr) => {
+        acc.push({value: curr[value], label: curr[label] });
+        return acc;
+    }, [])
 };

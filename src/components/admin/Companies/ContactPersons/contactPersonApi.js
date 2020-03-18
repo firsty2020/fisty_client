@@ -57,7 +57,6 @@ export const removeContactPerson = (id) => {
 };
 
 export const updateContactPerson = (contactPerson) => {
-    console.log(contactPerson, 'contactPerson')
     return dispatch => {
         dispatch(updateContactPersonPending());
         api

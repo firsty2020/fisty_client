@@ -15,19 +15,35 @@ import belorussianFlag from '../../../assets/icons/belorussia.png'
 import russianFlag from '../../../assets/icons/russia.png'
 import ukrainianFlag from '../../../assets/icons/ukraine.png'
 import { SuccessNotice, AuthFormContainer } from '../../ui';
-import { generateDays, generateMonths, generateYears } from '../../../utils';
-
+import {
+    generateDays,
+    generateMonths,
+    generateYears,
+    transFormDatesArray,
+} from '../../../utils';
 import Select from 'react-select';
 
 
-const months = generateMonths();
-const years = generateYears();
-const days = generateDays();
+const monthsOptions = generateMonths();
+const yearsOptions = transFormDatesArray(generateYears());
+const daysOptions = transFormDatesArray(generateDays());
 
 const languageOptions = [
     { value: 'Английский', label: 'Английский' },
     { value: 'Русский', label: 'Русский' },
 ];
+
+const genderOptions = [
+    { value: 'мужской', label: 'Мужской' },
+    { value: 'женский', label: 'Женский' },
+];
+
+const educationOptions = [
+    { value: 'начальное', label: 'Начальное' },
+    { value: 'среднее', label: 'Среднее' },
+    { value: 'высшее', label: 'Высшее' },
+];
+
 
 const CompleteRegistration = ({
                                   match,
@@ -47,10 +63,14 @@ const CompleteRegistration = ({
 
     const transformUserData = (values) => {
         const userDetails = { ...values };
+        userDetails.country = userDetails.country.value;
+        userDetails.citizenship = userDetails.citizenship.value;
+        userDetails.education = userDetails.education.value;
+        userDetails.gender = userDetails.gender.value;
         userDetails.phone_number = countryCode + userDetails.phone_number;
         userDetails.date_of_birth =
-            `${values.date_of_birth.year}-${values.date_of_birth.month}-${values.date_of_birth.day}`;
-        userDetails.languages = values.languages.map((item) => item.value);
+            `${userDetails.date_of_birth.year.value}-${values.date_of_birth.month.value}-${values.date_of_birth.day.value}`;
+        userDetails.languages = userDetails.languages.map((item) => item.value);
         return userDetails;
     };
 
@@ -72,16 +92,16 @@ const CompleteRegistration = ({
                         last_name: '',
                         phone_number: '',
                         city: '',
-                        country: -1,
-                        citizenship: -1,
+                        country: '',
+                        citizenship: '',
                         date_of_birth: {
-                            year: -1,
-                            month: -1,
-                            day: -1,
+                            year: '',
+                            month: '',
+                            day: '',
                         },
                         middle_name: '',
-                        education: -1,
-                        gender: -1,
+                        education: '',
+                        gender: '',
                         accept: false,
                         languages: [],
                     }}
@@ -153,17 +173,14 @@ const CompleteRegistration = ({
                             </Form.Group>
                             <Form.Group>
                                 Пол
-                                <Form.Control
+                                <Select
                                     name="gender"
                                     value={values.gender}
-                                    as="select"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                >
-                                    <option value='male'>Мужской</option>
-                                    <option  value='female'>Женский</option>
-                                    <option disabled value={-1}>Пол</option>
-                                </Form.Control>
+                                    options={genderOptions}
+                                    placeholder="Выберите пол"
+                                    onBlur={(e) => setFieldTouched('gender', e)}
+                                    onChange={(e) => setFieldValue('gender', e)}
+                                />
                                 {touched.gender && errors.gender ? (
                                     <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
                                 ) : null}
@@ -172,60 +189,41 @@ const CompleteRegistration = ({
                                 <p className="form-control-label">Дата рождения</p>
                                 <Form.Row>
                                     <Col>
-                                        <Form.Control
+                                        <Select
                                             name="date_of_birth.year"
                                             value={values.date_of_birth.year}
-                                            as="select"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        >
-                                            {years.map((year) =>
-                                                <option
-                                                    key={year}
-                                                    value={year}>{year}</option>
-                                            )}
-                                            <option disabled value={-1}>Год</option>
-                                        </Form.Control>
+                                            placeholder="Год"
+                                            options={yearsOptions}
+                                            onBlur={(e) => setFieldTouched('date_of_birth.year', e)}
+                                            onChange={(e) => setFieldValue('date_of_birth.year', e)}
+                                        />
                                         {(touched.date_of_birth && touched.date_of_birth.year) && (errors.date_of_birth && errors.date_of_birth.year) ? (
                                             <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.year}</span>
                                         ) : null}
                                     </Col>
                                     <Col>
-                                        <Form.Control
+                                        <Select
                                             name="date_of_birth.month"
                                             value={values.date_of_birth.month}
-                                            as="select"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        >
-                                            {months.map((month) =>
-                                                <option
-                                                    key={month.title}
-                                                    value={month.value}
-                                                >{month.title}</option>
-                                            )}
-                                            <option disabled value={-1}>Месяц</option>
-                                        </Form.Control>
+                                            placeholder="Месяц"
+                                            options={monthsOptions}
+                                            onBlur={(e) => setFieldTouched('date_of_birth.month', e)}
+                                            onChange={(e) => setFieldValue('date_of_birth.month', e)}
+
+                                        />
                                         {(touched.date_of_birth && touched.date_of_birth.month) && (errors.date_of_birth && errors.date_of_birth.month) ? (
                                             <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.month}</span>
                                         ) : null}
                                     </Col>
                                     <Col>
-                                        <Form.Control
+                                        <Select
                                             name="date_of_birth.day"
+                                            placeholder="День"
                                             value={values.date_of_birth.day}
-                                            as="select"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        >
-                                            {days.map((day) =>
-                                                <option
-                                                    value={day}
-                                                    key={day}
-                                                >{day}</option>
-                                            )}
-                                            <option disabled value={-1}>День</option>
-                                        </Form.Control>
+                                            options={daysOptions}
+                                            onBlur={(e) => setFieldTouched('date_of_birth.day', e)}
+                                            onChange={(e) => setFieldValue('date_of_birth.day', e)}
+                                        />
                                         {(touched.date_of_birth && touched.date_of_birth.day) && (errors.date_of_birth && errors.date_of_birth.day) ? (
                                             <span className="mt-1 invalid-feedback-visible">{errors.date_of_birth.day}</span>
                                         ) : null}
@@ -238,8 +236,8 @@ const CompleteRegistration = ({
                                     value={values.citizenship}
                                     name="citizenship"
                                     placeHolder="Гражданство"
-                                    onBlur={handleBlur}
-                                    onSelectCountry={handleChange}
+                                    onBlur={(e) => setFieldTouched('citizenship', e)}
+                                    onChange={(e) => setFieldValue('citizenship', e)}
                                     className={touched.citizenship && errors.citizenship ? 'is-invalid' : ''}
                                 />
                                 {touched.citizenship && errors.citizenship ? (
@@ -291,18 +289,15 @@ const CompleteRegistration = ({
                             </Form.Group>
                             <Form.Group>
                                 Образование
-                                <Form.Control
+                                <Select
                                     name="education"
+                                    placeholder="Выберите образование"
                                     value={values.education}
-                                    as="select"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                >
-                                    <option value='male'>Начальное</option>
-                                    <option  value='female'>Среднее</option>
-                                    <option  value='other'>Высшее</option>
-                                    <option disabled value={-1}>Выберите образование</option>
-                                </Form.Control>
+                                    options={educationOptions}
+                                    onBlur={(e) => setFieldTouched('education', e)}
+                                    onChange={(e) => setFieldValue('education', e)}
+                                />
+
                                 {touched.education && errors.education ? (
                                     <span className="mt-1 invalid-feedback-visible">{errors.education}</span>
                                 ) : null}
@@ -312,8 +307,8 @@ const CompleteRegistration = ({
                                 <Select
                                     name="languages"
                                     value={values.languages}
-                                    onBlur={(e) => setFieldTouched('languages', e)}
-                                    onChange={(e) => setFieldValue('languages', e)}
+                                    onBlur={(e) => setFieldTouched('languages', e || [])}
+                                    onChange={(e) => setFieldValue('languages', e || [])}
                                     options={languageOptions}
                                     placeholder="Выберите языки"
                                     isMulti>
@@ -331,8 +326,8 @@ const CompleteRegistration = ({
                                             value={values.country}
                                             name="country"
                                             placeHolder="Страна"
-                                            onBlur={handleBlur}
-                                            onSelectCountry={handleChange}
+                                            onBlur={(e) => setFieldTouched('country', e)}
+                                            onChange={(e) => setFieldValue('country', e)}
                                             className={touched.country && errors.country ? 'is-invalid' : ''}
                                         />
 

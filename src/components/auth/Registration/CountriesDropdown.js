@@ -1,32 +1,33 @@
 import React from 'react';
-import {Form} from 'react-bootstrap';
 import { string, number, oneOfType, func } from 'prop-types';
+import Select from 'react-select';
 
 
-const CountriesDropdown = ({value, name, placeHolder, onSelectCountry, onBlur}) => {
-    return (
-        <Form.Control
-            name={name}
-            value={value}
-            as="select"
-            onBlur={onBlur}
-            onChange={onSelectCountry}
-        >
-            <option value="россия">Россия</option>
-            <option value="армения">Армения</option>
-            <option value="беларусь">Беларусь</option>
-            <option value="украина">Украина</option>
-            <option disabled value={-1}>{placeHolder}</option>
-        </Form.Control>
-    );
-};
+const countriesOptions = [
+    { value: 'россия', label: 'Россия'},
+    { value: 'армения', label: 'Армения'},
+    { value: 'беларусь', label: 'Беларусь'},
+    { value: 'украина', label: 'Украина'},
+];
+
+
+const CountriesDropdown = ({value, name, placeHolder, onChange, onBlur}) => (
+    <Select
+        name={name}
+        value={value}
+        placeholder={placeHolder}
+        options={countriesOptions}
+        onBlur={onBlur}
+        onChange={onChange}
+    />
+);
 
 
 CountriesDropdown.propTypes = {
-    value: oneOfType([ string, number ]).isRequired,
+    // value: string.isRequired,
     name: string.isRequired,
     placeHolder: string.isRequired,
-    onSelectCountry: func.isRequired,
+    onChange: func.isRequired,
     onBlur: func.isRequired,
 };
 

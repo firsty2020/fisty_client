@@ -20,13 +20,6 @@ import brand_logo_3 from '../../assets/images/brands/brand_logo3.png';
 import brand_logo_4 from '../../assets/images/brands/brand_logo4.png';
 import brand_logo_5 from '../../assets/images/brands/brand_logo5.png';
 import './Landing.css';
-/*import {
-    ButtonBack,
-    ButtonNext,
-    CarouselProvider,
-    Slide,
-    Slider
-} from 'pure-react-carousel';*/
 
 
 const Landing = () => {

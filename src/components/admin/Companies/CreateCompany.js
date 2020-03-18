@@ -17,7 +17,20 @@ import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
 import messages from '../../../constants/messages';
 import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
+import Select from 'react-select';
+import { generateSelectOptions } from '../../../utils';
 
+
+const sourceOptions = [
+    { value: 'firsty', label: 'Firsty'},
+    { value: 'входяший запрос', label: 'Входяший запрос'},
+];
+
+
+const typeOptions = [
+    { value: 'средний', label: 'Средний бизнес' },
+    { value: 'крупный', label: 'Крупный бизнес' },
+];
 
 const CreateCompany = ({
                            pending,
@@ -32,8 +45,12 @@ const CreateCompany = ({
 
     const handleCreateCompany = (companyData) => {
         const postData = { ...companyData };
+        postData.source = postData.source.value;
+        postData.type = postData.type.value;
+        postData.industry = postData.industry.value;
+        postData.specification = postData.specification.value;
         for (const field in postData) {
-            if (postData.hasOwnProperty(field) && (postData[field] === -1 || !postData[field])) {
+            if (postData.hasOwnProperty(field) && !postData[field]) {
                 delete postData[field];
             }
         }
@@ -63,10 +80,10 @@ const CreateCompany = ({
                 initialValues={{
                     name: '',
                     english_name: '',
-                    source: -1,
-                    type: -1,
-                    industry: -1,
-                    specification: -1,
+                    source: '',
+                    type: '',
+                    industry: '',
+                    specification: '',
                     website: '',
                     social_link: '',
                     contact_number: ''
@@ -83,6 +100,8 @@ const CreateCompany = ({
                       handleChange,
                       handleBlur,
                       handleSubmit,
+                      setFieldTouched,
+                      setFieldValue,
                   }) => (
                     <Form onSubmit={handleSubmit}>
                         <p className="form-control-label">Название компании *</p>
@@ -115,72 +134,57 @@ const CreateCompany = ({
                         </Form.Group>
                         <p className="form-control-label">Источник *</p>
                         <Form.Group>
-                            <Form.Control
-                                type="text"
+                            <Select
                                 name="source"
-                                as="select"
+                                placeholder="Выберите из списка"
                                 value={values.source}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            >
-                                <option value="firsty">Firsty</option>
-                                <option value="Входяший запрос">Входяший запрос</option>
-                                <option value="-1" disabled>Выберите из списка</option>
-                            </Form.Control>
+                                options={sourceOptions}
+                                onBlur={(e) => setFieldTouched('source', e)}
+                                onChange={(e) => setFieldValue('source', e)}
+                            />
+
                             {touched.source && errors.source ? (
                                 <span className="mt-1 invalid-feedback-visible">{errors.source}</span>
                             ) : null}
                         </Form.Group>
                         <p className="form-control-label">Отрасль </p>
                         <Form.Group>
-                            <Form.Control
-                                type="text"
+                            <Select
                                 name="industry"
-                                as="select"
                                 value={values.industry}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            >
-                                {(industryOptions || []).map(({ url, name }) =>
-                                    <option value={url} key={url}>{name}</option>)}
-                                <option value="-1" disabled>Выберите из списка</option>
-                            </Form.Control>
+                                placeholder="Выберите из списка"
+                                options={generateSelectOptions(industryOptions, 'url', 'name')}
+                                onBlur={(e) => setFieldTouched('industry', e)}
+                                onChange={(e) => setFieldValue('industry', e)}
+                            />
                             {touched.industry && errors.industry ? (
                                 <span className="mt-1 invalid-feedback-visible">{errors.industry}</span>
                             ) : null}
                         </Form.Group>
                         <p className="form-control-label">Специфика</p>
                         <Form.Group>
-                            <Form.Control
-                                type="text"
+                            <Select
                                 name="specification"
-                                as="select"
                                 value={values.specification}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            >
-                                {(specificationOptions || []).map(({ url, name }) =>
-                                    <option value={url} key={url}>{name}</option>)}
-                                <option value="-1" disabled>Выберите из списка</option>
-                            </Form.Control>
+                                placeholder="Выберите из списка"
+                                options={generateSelectOptions(specificationOptions, 'url', 'name')}
+                                onBlur={(e) => setFieldTouched('specification', e)}
+                                onChange={(e) => setFieldValue('specification', e)}
+                            />
                             {touched.specification && errors.specification ? (
                                 <span className="mt-1 invalid-feedback-visible">{errors.specification}</span>
                             ) : null}
                         </Form.Group>
                         <p className="form-control-label">Тип Компании *</p>
                         <Form.Group>
-                            <Form.Control
+                            <Select
                                 name="type"
-                                as="select"
+                                placeholder="Выберите из списка"
                                 value={values.type}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            >
-                                <option value="малый">Малый бизнес</option>
-                                <option value="средний">Средний бизнес</option>
-                                <option value="крупный">Крупный бизнес</option>
-                                <option value="-1" disabled>Выберите из списка</option>
-                            </Form.Control>
+                                options={typeOptions}
+                                onBlur={(e) => setFieldTouched('type', e)}
+                                onChange={(e) => setFieldValue('type', e)}
+                            />
                             {touched.type && errors.type ? (
                                 <span className="mt-1 invalid-feedback-visible">{errors.type}</span>
                             ) : null}

@@ -10,6 +10,7 @@ import {
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { push } from 'connected-react-router';
 import { TableList } from '../../ui';
+import Select from 'react-select';
 
 
 const usersTableLayout = {
@@ -23,25 +24,32 @@ const usersTableLayout = {
     ],
 };
 
+const statusOptions = [
+    { value: 'active', label: 'Активные' },
+    { value: 'inactive', label: 'Неактивные' },
+    { value: 'clarification', label: 'Кларификация' },
+    { value: 'freeze', label: 'Замороженные' },
+    { value: 'black_list', label: 'Заблокированные' },
+    { value: 'all', label: 'Все' },
+];
+
 
 const Users = ({ users, match, getUsers, getUsersPending, push }) => {
 
-    const [ status, setStatus ] = useState();
-
-    const handleFilterByStatusChange = (e) => setStatus(e.target.value);
+    const [ status, setStatus ] = useState(statusOptions[statusOptions.length - 1]);
 
     useEffect(() => {
         if (!status) {
             setStatus(match.params.status);
             getUsers(match.params.status);
         } else {
-            getUsers(status);
+            getUsers(status.value);
         }
     }, [ getUsers, match.params.status ]);
 
     useEffect(() => {
         if (!status) return;
-        push(`/admin/users/${status}`);
+        push(`/admin/users/${status.value}`);
     }, [ getUsers, push, status ]);
 
     return (
@@ -49,21 +57,13 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
             <div className="mt-10-auto">
                 <Row>
                     <Col lg={4} md={4} sm={4}>
-                        <Form.Label>Фильтровать по статусу</Form.Label>
-                        <Form.Control
+                        <Select
                             name="filter"
                             value={status}
-                            onChange={handleFilterByStatusChange}
-                            as="select"
-                        >
-                            <option value="new">Новые</option>
-                            <option value="active">Активные</option>
-                            <option value="inactive">Неактивные</option>
-                            <option value="clarification">Кларификация</option>
-                            <option value="freeze">Замороженные</option>
-                            <option value="black_list">Заблокированные</option>
-                            <option value="all">Все</option>
-                        </Form.Control>
+                            placeholder="Фильтровать по статусу"
+                            onChange={setStatus}
+                            options={statusOptions}
+                        />
                     </Col>
                 </Row>
             </div>

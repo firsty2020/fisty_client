@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { authPendingSelector, authSuccessSelector } from '../authReducer';
+import { authPendingSelector, authSuccessSelector } from './authReducer';
 import { push } from 'connected-react-router';
 import { Formik } from 'formik';
 import { bool, func } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getAuthToken, getUserFromToken } from '../auth';
-import { AuthFormContainer } from '../../ui';
-import { logInSchema } from '../../../validation';
+import { getAuthToken, getUserFromToken } from './auth';
+import { AuthFormContainer } from '../ui';
+import { logInSchema } from '../../validation';
 
 
 const redirectToDashboard = (push) => {

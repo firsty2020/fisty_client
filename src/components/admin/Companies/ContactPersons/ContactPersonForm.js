@@ -5,41 +5,33 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { getContactPersonRoles } from '../../Configs/Roles/rolesApi';
 import { contactPersonRolesSelector } from '../../Configs/configsReducer';
-import {
-    generateDays,
-    generateMonths,
-    generateYears,
-    parseDobString
-} from '../../../../utils';
+import Select from 'react-select';
+import {generateSelectOptions} from '../../../../utils';
 
-
-const months = generateMonths();
-const years = generateYears();
-const days = generateDays();
+const genderOptions = [
+    { value: 'мужской', label: 'Мужской' },
+    { value: 'женский', label: 'Женский' },
+];
 
 
 const initialValues = {
     first_name: '',
     last_name: '',
     middle_name: '',
-    role: -1,
+    role: '',
     email: '',
     phone_number: '',
-    gender: -1,
-    date_of_birth: {
-        year: -1,
-        month: -1,
-        day: -1,
-    },
+    gender: '',
 };
 
-const fillForm = (contactPerson) => {
+
+const fillForm = (contactPerson, roles) => {
     for (let key in initialValues) {
         initialValues[key] = contactPerson[key];
     }
-    initialValues.date_of_birth = parseDobString(contactPerson.date_of_birth);
+    initialValues.gender = genderOptions.find(option => option.value === contactPerson.gender);
+    initialValues.role = generateSelectOptions(roles, 'url', 'name').find(role => role.value === contactPerson.role);
 };
-
 
 const ContactPersonForm = ({
                                roles,
@@ -55,10 +47,10 @@ const ContactPersonForm = ({
     }, [ getRoles ]);
 
     useEffect(() => {
-        if (isUpdating && contactPerson) {
-            fillForm(contactPerson);
+        if (isUpdating && contactPerson && roles) {
+            fillForm(contactPerson, roles);
         }
-    },[ contactPerson, isUpdating ]);
+    },[ contactPerson, isUpdating, roles ]);
 
     if (isUpdating && !contactPerson) {
         return null;
@@ -81,6 +73,8 @@ const ContactPersonForm = ({
                       handleChange,
                       handleBlur,
                       handleSubmit,
+                      setFieldTouched,
+                      setFieldValue,
                   }) => (
                     <Form onSubmit={handleSubmit}>
                         <Form.Group>
@@ -131,22 +125,15 @@ const ContactPersonForm = ({
                         </Form.Group>
                         <p className="form-control-label">Роль</p>
                         <Form.Group>
-                            <Form.Control
+                            <Select
                                 type="text"
                                 name="role"
-                                as="select"
+                                options={generateSelectOptions(roles, 'url', 'name')}
+                                placeholder="Выберите роль"
                                 value={values.role}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            >
-                                {(roles || []).map(({name, url}) =>
-                                    <option
-                                        key={url}
-                                        value={url}>{name}</option>
-                                )}
-                                <option value="-1" disabled>Выберите из списка
-                                </option>
-                            </Form.Control>
+                                onBlur={(e) => setFieldTouched('role', e)}
+                                onChange={(e) => setFieldValue('role', e)}
+                            />
                             {touched.role && errors.role ? (
                                 <span
                                     className="mt-1 invalid-feedback-visible">{errors.role}</span>
@@ -183,90 +170,18 @@ const ContactPersonForm = ({
                         </Form.Group>
                         <Form.Group>
                             Пол
-                            <Form.Control
+                            <Select
                                 name="gender"
                                 value={values.gender}
-                                as="select"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                            >
-                                <option value='male'>Мужской</option>
-                                <option value='female'>Женский</option>
-                                <option disabled value={-1}>Пол</option>
-                            </Form.Control>
+                                options={genderOptions}
+                                placeholder="Выберите пол"
+                                onBlur={(e) => setFieldTouched('gender', e)}
+                                onChange={(e) => setFieldValue('gender', e)}
+                            />
                             {touched.gender && errors.gender ? (
                                 <span
                                     className="mt-1 invalid-feedback-visible">{errors.gender}</span>
                             ) : null}
-                        </Form.Group>
-                        <Form.Group>
-                            <p className="form-control-label">Дата рождения</p>
-                            <Form.Row>
-                                <Col>
-                                    <Form.Control
-                                        name="date_of_birth.year"
-                                        value={values.date_of_birth.year}
-                                        as="select"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                    >
-                                        {years.map((year) =>
-                                            <option
-                                                key={year}
-                                                value={year}>{year}</option>
-                                        )}
-                                        <option disabled value={-1}>Год</option>
-                                    </Form.Control>
-                                    {(touched.date_of_birth && touched.date_of_birth.year) && (errors.date_of_birth && errors.date_of_birth.year) ? (
-                                        <span
-                                            className="mt-1 invalid-feedback-visible">{errors.date_of_birth.year}</span>
-                                    ) : null}
-                                </Col>
-                                <Col>
-                                    <Form.Control
-                                        name="date_of_birth.month"
-                                        value={values.date_of_birth.month}
-                                        as="select"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                    >
-                                        {months.map((month) =>
-                                            <option
-                                                key={month.title}
-                                                value={month.value}
-                                            >{month.title}</option>
-                                        )}
-                                        <option disabled value={-1}>Месяц
-                                        </option>
-                                    </Form.Control>
-                                    {(touched.date_of_birth && touched.date_of_birth.month) && (errors.date_of_birth && errors.date_of_birth.month) ? (
-                                        <span
-                                            className="mt-1 invalid-feedback-visible">{errors.date_of_birth.month}</span>
-                                    ) : null}
-                                </Col>
-                                <Col>
-                                    <Form.Control
-                                        name="date_of_birth.day"
-                                        value={values.date_of_birth.day}
-                                        as="select"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                    >
-                                        {days.map((day) =>
-                                            <option
-                                                value={day}
-                                                key={day}
-                                            >{day}</option>
-                                        )}
-                                        <option disabled value={-1}>День
-                                        </option>
-                                    </Form.Control>
-                                    {(touched.date_of_birth && touched.date_of_birth.day) && (errors.date_of_birth && errors.date_of_birth.day) ? (
-                                        <span
-                                            className="mt-1 invalid-feedback-visible">{errors.date_of_birth.day}</span>
-                                    ) : null}
-                                </Col>
-                            </Form.Row>
                         </Form.Group>
                         <div className="text-center">
                             <Button
@@ -278,7 +193,6 @@ const ContactPersonForm = ({
                 )}
             </Formik>
         </div>
-
     )};
 
 

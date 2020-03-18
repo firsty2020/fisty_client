@@ -13,7 +13,6 @@ import {
 
 const UpdateContactPerson = ({
                                  pending,
-                                 created,
                                  history,
                                  match,
                                  updated,
@@ -39,8 +38,8 @@ const UpdateContactPerson = ({
 
     const handleUpdateContactPerson = (values) => {
         const __contactPerson = { ...contactPerson, ...values };
-        __contactPerson.date_of_birth =
-            `${values.date_of_birth.year}-${values.date_of_birth.month}-${values.date_of_birth.day}`;
+        __contactPerson.gender = __contactPerson.gender.value;
+        __contactPerson.role = __contactPerson.role.value;
         updateContactPerson(__contactPerson);
     };
 

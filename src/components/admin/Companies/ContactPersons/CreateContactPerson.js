@@ -33,9 +33,9 @@ const CreateContactPerson = ({
 
     const handleCreateContactPerson = (values) => {
         const contactPerson = {...values};
-        contactPerson.date_of_birth =
-            `${values.date_of_birth.year}-${values.date_of_birth.month}-${values.date_of_birth.day}`;
         contactPerson.company = `${baseURL}companies/${match.params.companyId}/`;
+        contactPerson.gender = contactPerson.gender.value;
+        contactPerson.role = contactPerson.role.value;
         createContactPerson(contactPerson);
     };
 
