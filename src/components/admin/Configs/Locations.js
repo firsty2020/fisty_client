@@ -14,7 +14,7 @@ import {
 } from './configsReducer';
 import { connect } from 'react-redux';
 import ConfigFormList from './ConfigFormList';
-import { scrollToRef } from '../../../utils';
+import { scrollToRef } from '../../../helpers/utils';
 
 
 const validationSchema = Yup.object().shape({

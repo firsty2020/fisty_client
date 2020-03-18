@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { branchSchema } from '../../../validation';
+import { branchSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
 
 

@@ -10,7 +10,7 @@ import {
     specificationOptionSelector,
 } from '../Configs/configsReducer';
 import { getIndustryOption, getSpecificationOption } from '../Configs/configsApi';
-import { extractIdFromUrl } from '../../../utils';
+import { extractIdFromUrl } from '../../../helpers/utils';
 
 
 const CompanyDetails = ({

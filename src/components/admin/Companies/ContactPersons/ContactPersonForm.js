@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
-import { contactPersonSchema } from '../../../../validation';
+import { contactPersonSchema } from '../../../../helpers/schemas';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { getContactPersonRoles } from '../../Configs/Roles/rolesApi';
 import { contactPersonRolesSelector } from '../../Configs/configsReducer';
 import Select from 'react-select';
-import {generateSelectOptions} from '../../../../utils';
+import {generateSelectOptions} from '../../../../helpers/utils';
 
 const genderOptions = [
     { value: 'мужской', label: 'Мужской' },

@@ -4,7 +4,7 @@ import { Modal, Button, Form, Col } from 'react-bootstrap';
 import { arrayOf, string, shape, bool, func } from 'prop-types';
 import { Formik } from 'formik';
 import { When } from 'react-if';
-import { validationQuestionsSchema } from '../../validation';
+import { validationQuestionsSchema } from '../../helpers/schemas';
 import Select from 'react-select';
 
 

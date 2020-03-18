@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import {AuthFormContainer, SuccessNotice} from '../../ui';
-import { REGEX } from '../../../validation';
+import { REGEX } from '../../../helpers/regex-rules';
 import classNames from 'classnames';
 import * as Yup from 'yup';
 import ERROR_MESSAGES from '../../../constants/messages';

@@ -30,5 +30,6 @@ export default {
     URL_INVALID: 'Введите правильный адрес веб-сайта',
     COMPANY_CREATED_SUCCESS: 'Вы успешно создали компанию',
     GENDER_REQUIRED: 'Укажите пол',
+    POSITION_REQUIRED: 'Введите наименоване должности',
 };
 

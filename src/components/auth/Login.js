@@ -8,7 +8,7 @@ import { bool, func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getAuthToken, getUserFromToken } from './auth';
 import { AuthFormContainer } from '../ui';
-import { logInSchema } from '../../validation';
+import { logInSchema } from '../../helpers/schemas';
 
 
 const redirectToDashboard = (push) => {

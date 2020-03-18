@@ -1,15 +1,6 @@
 import * as Yup from 'yup';
-import ERROR_MESSAGES from './constants/messages'
-
-
-export const REGEX = {
-    NUMERIC: /^\d+$/,
-    NUMERIC_DECIMAL: /^\d*\.?\d*$/,
-    ALPHABETIC: /^[A-Z]+$/i,
-    ALPHABETIC_ALLOW_SPACE: /^[A-Z]+$/i,
-    LATIN_ALPHABET_NUMBERS_SYMBOLS: /^[A-Za-z0-9@!#$%^&*{};':",<.>/|?`~=()[\]_\-+\\]+$/,
-    PHONE_NUMBER: /^[+]?\d+$/,
-};
+import ERROR_MESSAGES from '../constants/messages';
+import { REGEX } from './regex-rules';
 
 export const userRegistrationSchema = Yup.object().shape({
     email: Yup.string()
@@ -24,6 +15,7 @@ export const userRegistrationSchema = Yup.object().shape({
         .min(8, ERROR_MESSAGES.PASSWORD_INVALID_LENGTH)
         .required(ERROR_MESSAGES.REPEAT_PASSWORD_REQUIRED),
 });
+
 
 export const completeRegistrationSchema = Yup.object().shape({
     first_name: Yup.string()
@@ -51,6 +43,7 @@ export const completeRegistrationSchema = Yup.object().shape({
     accept: Yup.bool().oneOf([true], 'Вы должны принять условия'),
 });
 
+
 export const logInSchema = Yup.object().shape({
     email: Yup.string()
         .email(ERROR_MESSAGES.EMAIL_INVALID)
@@ -73,9 +66,9 @@ export const validationQuestionsSchema = Yup.object().shape({
         }),
     personnel: Yup.string()
         .when('hasExperience', {
-        is: true,
-        then: Yup.string().min(3, ERROR_MESSAGES.ANSWER_QUESTION)
-    }),
+            is: true,
+            then: Yup.string().min(3, ERROR_MESSAGES.ANSWER_QUESTION)
+        }),
     hasSite_access: Yup.bool()
         .required(ERROR_MESSAGES.ANSWER_QUESTION),
     site_access: Yup.array()
@@ -85,6 +78,7 @@ export const validationQuestionsSchema = Yup.object().shape({
         }),
     term: Yup.string().min(3, ERROR_MESSAGES.ANSWER_QUESTION)
 });
+
 
 export const companySchema = Yup.object().shape({
     name: Yup.string()
@@ -103,12 +97,14 @@ export const companySchema = Yup.object().shape({
         .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID),
 });
 
+
 export const branchSchema = Yup.object().shape({
     name: Yup.string()
         .required(ERROR_MESSAGES.BRANCH_NAME_REQUIRED),
     address: Yup.string()
         .required(ERROR_MESSAGES.BRANCH_ADDRESS_REQUIRED),
 });
+
 
 export const contactPersonSchema = Yup.object().shape({
     first_name: Yup.string()
@@ -126,3 +122,7 @@ export const contactPersonSchema = Yup.object().shape({
     gender: Yup.string().required(ERROR_MESSAGES.GENDER_REQUIRED),
 });
 
+
+export const applicationSchema = Yup.object().shape({
+    position: Yup.string().required(ERROR_MESSAGES.POSITION_REQUIRED),
+});

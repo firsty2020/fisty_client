@@ -14,7 +14,7 @@ import {
     removeIndustryOptionsResolvedSelector,
     updateIndustryOptionResoledSelector,
 } from './configsReducer';
-import { scrollToRef } from '../../../utils';
+import { scrollToRef } from '../../../helpers/utils';
 import ConfigFormList from './ConfigFormList';
 
 

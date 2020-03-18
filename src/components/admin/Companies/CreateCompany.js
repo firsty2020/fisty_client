@@ -3,7 +3,7 @@ import { Button, Container, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { companySchema } from '../../../validation';
+import { companySchema } from '../../../helpers/schemas';
 import { createCompany } from './companiesApi';
 import {
     createCompanyPendingSelector,
@@ -18,7 +18,7 @@ import { When } from 'react-if';
 import messages from '../../../constants/messages';
 import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
 import Select from 'react-select';
-import { generateSelectOptions } from '../../../utils';
+import { generateSelectOptions } from '../../../helpers/utils';
 
 
 const sourceOptions = [

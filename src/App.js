@@ -14,7 +14,7 @@ import './App.css';
 
 const Admin = lazy(() => import('./components/admin/Dashboard'));
 const Recruiter = lazy(() => import('./components/recruiter/Dashboard'));
-const Company = lazy(() => import('./components/company/Company.js'));
+const Company = lazy(() => import('./components/company/CompanyDashboard.js'));
 
 
 const App = () => (

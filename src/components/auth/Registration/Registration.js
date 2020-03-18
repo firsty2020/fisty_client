@@ -11,7 +11,7 @@ import { SuccessNotice } from '../../ui';
 import { AuthFormContainer } from '../../ui/';
 import { registerUser } from '../auth';
 import { authPendingSelector, authSuccessSelector } from '../authReducer';
-import { userRegistrationSchema } from '../../../validation';
+import { userRegistrationSchema } from '../../../helpers/schemas';
 import ERROR_MESSAGES from '../../../constants/messages'
 
 

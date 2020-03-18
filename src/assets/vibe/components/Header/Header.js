@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ToggleSidebarButton from './components/ToggleSidebarButton';
 
-import {Navbar, NavbarToggler, Collapse, Nav} from 'reactstrap';
-import {matchPath} from 'react-router-dom';
-import PageLoader from '../PageLoader/PageLoader';
+import { Navbar, NavbarToggler, Collapse, Nav } from 'reactstrap';
+import { matchPath } from 'react-router-dom';
 
 export default class Header extends Component {
     constructor(props) {

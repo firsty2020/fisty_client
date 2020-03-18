@@ -4,7 +4,7 @@ import { Col, Dropdown, Form, InputGroup } from 'react-bootstrap';
 import { authPendingSelector, authSuccessSelector } from '../authReducer';
 import { completeRegistration } from '../auth';
 import { push } from 'connected-react-router'
-import { completeRegistrationSchema } from '../../../validation';
+import { completeRegistrationSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
 import { bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
@@ -20,7 +20,7 @@ import {
     generateMonths,
     generateYears,
     transFormDatesArray,
-} from '../../../utils';
+} from '../../../helpers/utils';
 import Select from 'react-select';
 
 
