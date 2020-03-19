@@ -184,61 +184,63 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Вид оформления </p>
-                                    <Form.Check
-                                        inline
-                                        custom
-                                        name="formalization_view"
-                                        value={values.formalization_view}
-                                        label="Трудовой договор"
-                                        type="radio"
-                                        id="formalization_view_contract"
-                                        onChange={() => setFieldValue('formalization_view', 'трудовой договор')}
-                                        onBlur={(e) => setFieldTouched('formalization_view', e)}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        custom
-                                        name="formalization_view"
-                                        value={values.formalization_view}
-                                        label="Самозанятый"
-                                        type="radio"
-                                        id="formalization_view_self_employed"
-                                        onChange={() => setFieldValue('formalization_view', 'самозанятый')}
-                                        onBlur={(e) => setFieldTouched('formalization_view', e)}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        custom
-                                        name="formalization_view"
-                                        value={values.formalization_view}
-                                        label="Договор гражданско-правового характера"
-                                        type="radio"
-                                        id="formalization_view_contract_civil"
-                                        onChange={() => setFieldValue('formalization_view', 'договор гражданско-правового характера')}
-                                        onBlur={(e) => setFieldTouched('formalization_view', e)}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        custom
-                                        name="formalization_view"
-                                        value={values.formalization_view}
-                                        label="Агентский договор"
-                                        type="radio"
-                                        id="formalization_view_contract_agent"
-                                        onChange={() => setFieldValue('formalization_view', 'агентский договор')}
-                                        onBlur={(e) => setFieldTouched('formalization_view', e)}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        custom
-                                        name="formalization_view"
-                                        value={values.formalization_view}
-                                        label="Другое"
-                                        type="radio"
-                                        id="formalization_view_other"
-                                        onChange={() => setFieldValue('formalization_view', 'другое')}
-                                        onBlur={(e) => setFieldTouched('formalization_view', e)}
-                                    />
+                                    <div className="d-flex justify-content-between">
+                                        <Form.Check
+                                            inline
+                                            custom
+                                            name="formalization_view"
+                                            value={values.formalization_view}
+                                            label="Трудовой договор"
+                                            type="radio"
+                                            id="formalization_view_contract"
+                                            onChange={() => setFieldValue('formalization_view', 'трудовой договор')}
+                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            custom
+                                            name="formalization_view"
+                                            value={values.formalization_view}
+                                            label="Самозанятый"
+                                            type="radio"
+                                            id="formalization_view_self_employed"
+                                            onChange={() => setFieldValue('formalization_view', 'самозанятый')}
+                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            custom
+                                            name="formalization_view"
+                                            value={values.formalization_view}
+                                            label="Договор гражданско-правового характера"
+                                            type="radio"
+                                            id="formalization_view_contract_civil"
+                                            onChange={() => setFieldValue('formalization_view', 'договор гражданско-правового характера')}
+                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            custom
+                                            name="formalization_view"
+                                            value={values.formalization_view}
+                                            label="Агентский договор"
+                                            type="radio"
+                                            id="formalization_view_contract_agent"
+                                            onChange={() => setFieldValue('formalization_view', 'агентский договор')}
+                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            custom
+                                            name="formalization_view"
+                                            value={values.formalization_view}
+                                            label="Другое"
+                                            type="radio"
+                                            id="formalization_view_other"
+                                            onChange={() => setFieldValue('formalization_view', 'другое')}
+                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                        />
+                                    </div>
                                     <br/>
                                 </Form.Group>
                                 <Form.Group>
