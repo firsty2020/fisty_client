@@ -1,24 +1,40 @@
 import React, {useEffect} from 'react';
-import { ApplicationForm } from '../ui';
+import {AlertNotice, ApplicationForm} from '../ui';
 import { connect } from 'react-redux';
 import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
+import { createApplication } from '../../common/api';
+import {
+    createApplicationPendingSelector,
+    createApplicationResolvedSelector
+} from '../../common/reducer';
+import { push } from 'connected-react-router';
+import { When } from 'react-if';
 
 
-const CreateApplication = ({ user, getAuthUser }) => {
+const CreateApplication = ({ user, created, getAuthUser, createApplication, push }) => {
+
+    useEffect(() => {
+        if (created) {
+            setTimeout(() => push('/company'), 2000);
+        }
+    }, [ created, push ]);
 
     useEffect(() => {
         getAuthUser();
     }, [ getAuthUser ]);
 
-    console.log(user, 'user')
 
     const submitApplication = (values) => {
-        console.log(values, 'values')
+        values.company = user.company;
+        createApplication(values);
     };
 
     return (
         <div>
+            <When condition={!!created}>
+                <AlertNotice type="success" message="Вы успешно подали заявку"/>
+            </When>
             <ApplicationForm
                 onSubmitApplication={submitApplication}
                 pending={false}
@@ -30,9 +46,11 @@ const CreateApplication = ({ user, getAuthUser }) => {
 
 const mapStateToProps = state => ({
     user: userSelector(state),
+    pending: createApplicationPendingSelector(state),
+    created: createApplicationResolvedSelector(state),
 });
 
-const mapDispatchToProps = { getAuthUser };
+const mapDispatchToProps = { getAuthUser, createApplication, push };
 
 
 CreateApplication.propTypes = {

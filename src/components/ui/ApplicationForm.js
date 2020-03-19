@@ -54,7 +54,7 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                             job_description: '',
                             bonus_enabled: false,
                             salary: '',
-                            formalization_view: '',
+                            formalization_type: '',
                             responsibilities: '',
                             citizenship: '',
                             gender: '',
@@ -188,57 +188,57 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         <Form.Check
                                             inline
                                             custom
-                                            name="formalization_view"
-                                            value={values.formalization_view}
+                                            name="formalization_type"
+                                            value={values.formalization_type}
                                             label="Трудовой договор"
                                             type="radio"
-                                            id="formalization_view_contract"
-                                            onChange={() => setFieldValue('formalization_view', 'трудовой договор')}
-                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                            id="formalization_type_contract"
+                                            onChange={() => setFieldValue('formalization_type', 'трудовой договор')}
+                                            onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
                                             inline
                                             custom
-                                            name="formalization_view"
-                                            value={values.formalization_view}
+                                            name="formalization_type"
+                                            value={values.formalization_type}
                                             label="Самозанятый"
                                             type="radio"
-                                            id="formalization_view_self_employed"
-                                            onChange={() => setFieldValue('formalization_view', 'самозанятый')}
-                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                            id="formalization_type_self_employed"
+                                            onChange={() => setFieldValue('formalization_type', 'самозанятый')}
+                                            onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
                                             inline
                                             custom
-                                            name="formalization_view"
-                                            value={values.formalization_view}
+                                            name="formalization_type"
+                                            value={values.formalization_type}
                                             label="Договор гражданско-правового характера"
                                             type="radio"
-                                            id="formalization_view_contract_civil"
-                                            onChange={() => setFieldValue('formalization_view', 'договор гражданско-правового характера')}
-                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                            id="formalization_type_contract_civil"
+                                            onChange={() => setFieldValue('formalization_type', 'договор гражданско-правового характера')}
+                                            onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
                                             inline
                                             custom
-                                            name="formalization_view"
-                                            value={values.formalization_view}
+                                            name="formalization_type"
+                                            value={values.formalization_type}
                                             label="Агентский договор"
                                             type="radio"
-                                            id="formalization_view_contract_agent"
-                                            onChange={() => setFieldValue('formalization_view', 'агентский договор')}
-                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                            id="formalization_type_contract_agent"
+                                            onChange={() => setFieldValue('formalization_type', 'агентский договор')}
+                                            onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
                                             inline
                                             custom
-                                            name="formalization_view"
-                                            value={values.formalization_view}
+                                            name="formalization_type"
+                                            value={values.formalization_type}
                                             label="Другое"
                                             type="radio"
-                                            id="formalization_view_other"
-                                            onChange={() => setFieldValue('formalization_view', 'другое')}
-                                            onBlur={(e) => setFieldTouched('formalization_view', e)}
+                                            id="formalization_type_other"
+                                            onChange={() => setFieldValue('formalization_type', 'другое')}
+                                            onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                     </div>
                                     <br/>
