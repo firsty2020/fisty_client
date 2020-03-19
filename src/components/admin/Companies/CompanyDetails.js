@@ -97,6 +97,13 @@ const CompanyDetails = ({
                     variant="primary">Контактные лица
                 </Button>
             </Link>
+            <Link to={`${match.url}/applications/create`}
+                  className="ml-2">
+                <Button
+                    onClick={() => null}
+                    variant="primary">Создать заявку
+                </Button>
+            </Link>
         </div>
     );
 

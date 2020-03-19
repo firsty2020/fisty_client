@@ -41,6 +41,7 @@ const CountriesDropdown = ({
             options={options}
             onBlur={onBlur}
             onChange={onChange}
+            isMulti={!!extended}
         />
     );
 };

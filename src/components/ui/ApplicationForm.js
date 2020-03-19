@@ -70,6 +70,9 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                             mobile_availability: '',
                             appearance_requirements: '',
                             comments: '',
+                            city: '',
+                            address: '',
+                            responsibilities_comments: ''
                         }}
                         validationSchema={applicationSchema}
                         onSubmit={(values) => {
@@ -268,9 +271,9 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                     <p>Другое</p>
                                     <Form.Control
                                         as="textarea"
-                                        name="comments"
+                                        name="responsibilities_comments"
                                         placeholder="Комментарии"
-                                        value={values.comments}
+                                        value={values.responsibilities_comments}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
@@ -283,8 +286,8 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         value={values.citizenship}
                                         name="citizenship"
                                         placeHolder="Выберите из списка"
-                                        onBlur={(e) => setFieldTouched('citizenship', e)}
-                                        onChange={(e) => setFieldValue('citizenship', e)}
+                                        onBlur={(e) => setFieldTouched('citizenship', e || [])}
+                                        onChange={(e) => setFieldValue('citizenship', e || [])}
                                         className={touched.citizenship && errors.citizenship ? 'is-invalid' : ''}
                                     />
                                     {touched.citizenship && errors.citizenship ? (
@@ -466,7 +469,10 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         label="Нет"
                                         type="radio"
                                         id="_has_driver_license_no"
-                                        onChange={() => setFieldValue('_has_driver_license', false)}
+                                        onChange={(e) => {
+                                            setFieldValue('driver_license', []);
+                                            setFieldValue('_has_driver_license', false)
+                                        }}
                                         onBlur={(e) => setFieldTouched('_has_driver_license', e)}
                                     />
                                     <br/>
@@ -529,6 +535,9 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
+                                    {touched.city && errors.city ? (
+                                        <p className="mt-1 invalid-feedback-visible">{errors.city}</p>
+                                    ) : null}
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Адрес хабов / магазинов / точек, куда приглашать кандитатов *</p>
@@ -539,11 +548,13 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
+                                    {touched.address && errors.address ? (
+                                        <p className="mt-1 invalid-feedback-visible">{errors.address}</p>
+                                    ) : null}
                                 </Form.Group>
                                 <div className="text-center">
                                     <Button
                                         disabled={pending}
-                                        size="lg"
                                         type="submit"
                                         variant="primary">Подать Заявку
                                     </Button>

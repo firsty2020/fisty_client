@@ -10,6 +10,7 @@ import UpdateContactPerson from './Companies/ContactPersons/UpdateContactPerson'
 import Locations from './Configs/Locations';
 import Industries from './Configs/Industries';
 import Specifications from './Configs/Specifications';
+import CreateApplication from './Companies/CreateApplication';
 
 
 export const navigation =  {
@@ -108,6 +109,11 @@ export const adminRoutes = [
         path: '/admin/companies/:companyId/contact-persons/:contactPersonId',
         component: UpdateContactPerson,
         name: 'Контактные Лица',
+    },
+    {
+        path: '/admin/companies/:companyId/applications/create',
+        component: CreateApplication,
+        name: 'Создать заявку',
     },
     {
         path: '/admin/companies/branches/create',

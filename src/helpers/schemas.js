@@ -143,4 +143,6 @@ export const applicationSchema = Yup.object().shape({
     gender: Yup.array().required(ERROR_MESSAGES.GENDER_REQUIRED),
     education: Yup.array().required(ERROR_MESSAGES.EDUCATION_REQUIRED),
     russian_level: Yup.string().oneOf(['родной', 'с акцентом']).required(ERROR_MESSAGES.RUSSIAN_LEVEL_REQUIRED),
+    city: Yup.string().required(ERROR_MESSAGES.CITY_REQUIRED),
+    address: Yup.string().required(ERROR_MESSAGES.ADDRESS_REQUIRED),
 });

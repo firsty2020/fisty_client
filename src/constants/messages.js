@@ -5,7 +5,7 @@ export default {
     EMAIL_REQUIRED: 'Введите почтовый адрес',
     PHONE_INVALID: 'Введите действительный номер телефона',
     PHONE_REQUIRED: 'Введите номер телефона',
-    CITY_REQUIRED: 'Выберите город проживания',
+    CITY_REQUIRED: 'Введите город',
     COUNTRY_REQUIRED: 'Выберите страну проживания',
     CITIZENSHIP_REQUIRED: 'Выберите гражданство',
     PASSWORD_REQUIRED: 'Введите пароль',
@@ -37,5 +37,6 @@ export default {
     ONLY_NUMBERS: 'Введите цифрами',
     AGE_REQUIRED: 'Укажите желаемый возраст',
     RUSSIAN_LEVEL_REQUIRED: 'Укажите уровень владения русским языком',
+    ADDRESS_REQUIRED: 'Введите адрес',
 };
 

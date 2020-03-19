@@ -81,16 +81,6 @@ export const generateDays = () => {
 
 export const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
-/**
- * @param dob string like 1958-12-31
- * @return {{month: *, year: *, day: *}}
- */
-
-export const parseDobString = (dob) => {
-    const [ year, month, day ] = dob.split('-');
-    return { year, month, day };
-};
-
 
 /**
  * @param url string like https://sheltered-meadow-55057.herokuapp.com/api/v0/industries/94/
@@ -133,7 +123,7 @@ export const transformReactSelectFields = (fields, source) => {
 export const clearEmptyFields = (data) => {
     for (let key in data) {
         if (!data.hasOwnProperty(key)) continue;
-        if (!data[key]) {
+        if (data[key] === undefined || data[key] === '') {
             delete data[key]
         } else if(typeof data[key] === 'object' && data[key].length === '0') {
             delete data[key];
