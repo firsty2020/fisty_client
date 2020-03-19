@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {Switch, Route, Link} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
 import Logo from '../../assets/images/logo_white.png';
 import { navigation, routes } from './companyRoutes';
-import { Button } from 'react-bootstrap';
 
 
 const MOBILE_SIZE = 992;

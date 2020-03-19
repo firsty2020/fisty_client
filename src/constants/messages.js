@@ -18,7 +18,7 @@ export default {
     DOB_YEAR_REQUIRED: 'Выберите год вашего рождения',
     DOB_MONTH_REQUIRED: 'Выберите месяц вашего рождения',
     DOB_DAY_REQUIRED: 'Выберите день вашего рождения',
-    EDUCATION_REQUIRED: 'Выберите ваше образование',
+    EDUCATION_REQUIRED: 'Выберите образование',
     LANGUAGES_REQUIRED: 'Выберите хотя бы один язык',
     ANSWER_QUESTION: 'Пожалуйста, ответьте на этот вопрос',
     COMPANY_NAME_RUSSIAN_REQUIRED: 'Введите название компании на русском языке',
@@ -31,5 +31,11 @@ export default {
     COMPANY_CREATED_SUCCESS: 'Вы успешно создали компанию',
     GENDER_REQUIRED: 'Укажите пол',
     POSITION_REQUIRED: 'Введите наименоване должности',
+    EMPLOYEES_COUNT_REQUIRED: 'Введите необходимое количество сотрудников',
+    EMPLOYEES_COUNT_INVALID: 'Введите количество сотрудников в цифрах',
+    JOB_DESCRIPTION_REQUIRED: 'Опишите условия работы',
+    ONLY_NUMBERS: 'Введите цифрами',
+    AGE_REQUIRED: 'Укажите желаемый возраст',
+    RUSSIAN_LEVEL_REQUIRED: 'Укажите уровень владения русским языком',
 };
 

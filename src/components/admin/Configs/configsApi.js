@@ -34,7 +34,6 @@ import {
     removeSpecificationOptionFailed,
     removeLocationResolved,
     removeLocationFailed,
-    updateLocationPending,
     updateLocationResolved,
     updateLocationFailed,
 } from './configsActions';

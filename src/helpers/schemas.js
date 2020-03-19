@@ -125,4 +125,22 @@ export const contactPersonSchema = Yup.object().shape({
 
 export const applicationSchema = Yup.object().shape({
     position: Yup.string().required(ERROR_MESSAGES.POSITION_REQUIRED),
+    employees_count: Yup.string()
+        .matches(REGEX.NUMERIC, ERROR_MESSAGES.EMPLOYEES_COUNT_INVALID)
+        .required(ERROR_MESSAGES.EMPLOYEES_COUNT_REQUIRED),
+    job_description: Yup.string().required(ERROR_MESSAGES.JOB_DESCRIPTION_REQUIRED),
+    bonus_enabled: Yup.bool(),
+    salary: Yup.string().matches(REGEX.NUMERIC_DECIMAL),
+    citizenship: Yup.string().required(ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
+    age: Yup.object().shape({
+        from: Yup.string()
+            .required(ERROR_MESSAGES.AGE_REQUIRED)
+            .matches(REGEX.NUMERIC, ERROR_MESSAGES.ONLY_NUMBERS),
+        to: Yup.string()
+            .required(ERROR_MESSAGES.AGE_REQUIRED)
+            .matches(REGEX.NUMERIC, ERROR_MESSAGES.ONLY_NUMBERS),
+    }),
+    gender: Yup.array().required(ERROR_MESSAGES.GENDER_REQUIRED),
+    education: Yup.array().required(ERROR_MESSAGES.EDUCATION_REQUIRED),
+    russian_level: Yup.string().oneOf(['родной', 'с акцентом']).required(ERROR_MESSAGES.RUSSIAN_LEVEL_REQUIRED),
 });

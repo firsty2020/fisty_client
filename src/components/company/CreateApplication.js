@@ -1,63 +1,43 @@
-import React from 'react';
-import { Container, Form, } from 'react-bootstrap';
-import { applicationSchema } from '../../helpers/schemas';
-import { Formik } from 'formik';
+import React, {useEffect} from 'react';
+import { ApplicationForm } from '../ui';
+import { connect } from 'react-redux';
+import { getAuthUser } from '../auth/auth';
+import { userSelector } from '../auth/authReducer';
 
-const CreateApplication = () => {
+
+const CreateApplication = ({ user, getAuthUser }) => {
+
+    useEffect(() => {
+        getAuthUser();
+    }, [ getAuthUser ]);
+
+    console.log(user, 'user')
+
+    const submitApplication = (values) => {
+        console.log(values, 'values')
+    };
+
     return (
         <div>
-            <Container>
-                <h3 className="text-center mt-4">Заявкa</h3>
-                <div className="mt-5">
-                    <Formik
-                        initialValues={{
-                            position: '',
-                            // english_name: '',
-                            // source: '',
-                            // type: '',
-                            // industry: '',
-                            // specification: '',
-                            // website: '',
-                            // social_link: '',
-                            // contact_number: ''
-                        }}
-                        validationSchema={applicationSchema}
-                        onSubmit={(values) => {
-                            // handleCreateCompany(values);
-                        }}
-                    >
-                        {({
-                              values,
-                              errors,
-                              touched,
-                              handleChange,
-                              handleBlur,
-                              handleSubmit,
-                              setFieldTouched,
-                              setFieldValue,
-                          }) => (
-                            <Form onSubmit={handleSubmit}>
-                                <p>Наименование должности *</p>
-                                <Form.Control
-                                    type="text"
-                                    name="position"
-                                    placeholder="Введите наименование должности"
-                                    value={values.position}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                                {touched.position && errors.position ? (
-                                    <span className="mt-1 invalid-feedback-visible">{errors.position}</span>
-                                ) : null}
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
-            </Container>
+            <ApplicationForm
+                onSubmitApplication={submitApplication}
+                pending={false}
+            />
         </div>
     );
 };
 
 
+const mapStateToProps = state => ({
+    user: userSelector(state),
+});
 
-export default CreateApplication;
+const mapDispatchToProps = { getAuthUser };
+
+
+CreateApplication.propTypes = {
+
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateApplication);

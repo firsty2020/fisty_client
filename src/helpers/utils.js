@@ -117,3 +117,27 @@ export const generateSelectOptions = (list, value, label) => {
         return acc;
     }, [])
 };
+
+export const transformReactSelectFields = (fields, source) => {
+    fields.map((field) => {
+        if (typeof source[field] === 'object' && source[field].length) {
+            source[field] = source[field].map(item => item.value);
+        } else if (typeof source[field] === 'object') {
+            source[field] = source[field].value;
+        }
+        return null;
+    });
+    return source;
+};
+
+export const clearEmptyFields = (data) => {
+    for (let key in data) {
+        if (!data.hasOwnProperty(key)) continue;
+        if (!data[key]) {
+            delete data[key]
+        } else if(typeof data[key] === 'object' && data[key].length === '0') {
+            delete data[key];
+        }
+    }
+    return data;
+};

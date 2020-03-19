@@ -6,3 +6,4 @@ export { default as LoadSpinner } from './LoadSpinner';
 export { default as TableList} from './TableList';
 export { default as Popover } from './Popover';
 export { default as ConfirmationModal } from './ConfirmationModal';
+export { default as ApplicationForm } from './ApplicationForm';
