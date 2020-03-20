@@ -5,8 +5,8 @@ import { oneOf, string } from 'prop-types';
 
 const AlertNotice = ({ message, type }) => {
     return (
-        <div className="text-center">
-            <Alert variant={type}>
+        <div className="text-center position-fixed right-fixed-alert">
+            <Alert variant={type} className="green-shadow">
                 {message}
             </Alert>
         </div>

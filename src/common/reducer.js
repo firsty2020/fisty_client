@@ -4,30 +4,31 @@ import {
     CREATE_APPLICATION_RESOLVED,
 } from '../constants/actionTypes';
 
-const initialState = { getUsersPending: false, getUsersError: null, users: [] };
+
+const initialState = { createApplicationPending: false, createApplicationResolved: null };
+
 
 export const common = (state = initialState, action) => {
     switch (action.type) {
+        case '@@router/LOCATION_CHANGE':
+            return initialState;
         case CREATE_APPLICATION_PENDING:
             return {
-                ...state,
                 createApplicationPending: true,
                 createApplicationResolved: false,
             };
         case CREATE_APPLICATION_FAILED:
             return {
-                ...state,
                 createApplicationPending: false,
                 createApplicationResolved: false,
             };
         case CREATE_APPLICATION_RESOLVED:
             return {
-                ...state,
                 createApplicationPending: false,
                 createApplicationResolved: true,
             };
 
-              default:
+        default:
             return state;
     }
 };

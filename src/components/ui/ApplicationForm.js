@@ -52,7 +52,7 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                             position: '',
                             employees_count: '',
                             job_description: '',
-                            bonus_enabled: false,
+                            bonus_enabled: '',
                             salary: '',
                             formalization_type: '',
                             responsibilities: '',
@@ -72,7 +72,9 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                             comments: '',
                             city: '',
                             address: '',
-                            responsibilities_comments: ''
+                            responsibilities_comments: '',
+                            schedule: '',
+
                         }}
                         validationSchema={applicationSchema}
                         onSubmit={(values) => {
@@ -140,7 +142,7 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Бонусы </p>
+                                    <p>Бонусы *</p>
                                     <Form.Check
                                         inline
                                         custom
@@ -169,7 +171,7 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Примерный совокупный заработок в месяц</p>
+                                    <p>Примерный совокупный заработок в месяц *</p>
                                     <Form.Control
                                         type="number"
                                         name="salary"
@@ -183,7 +185,7 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Вид оформления </p>
+                                    <p>Вид оформления *</p>
                                     <div className="d-flex justify-content-between">
                                         <Form.Check
                                             inline
@@ -241,10 +243,12 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                     </div>
-                                    <br/>
+                                    {touched.formalization_type && errors.formalization_type ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.formalization_type}</span>
+                                    ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Функционал</p>
+                                    <p>Функционал *</p>
                                     <Form.Control
                                         as="textarea"
                                         name="responsibilities"
@@ -253,9 +257,12 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
+                                    {touched.responsibilities && errors.responsibilities ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.responsibilities}</span>
+                                    ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>График работы</p>
+                                    <p>График работы *</p>
                                     <Select
                                         name="schedule"
                                         placeholder="Выберите из списка"
@@ -264,9 +271,8 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                         onBlur={(e) => setFieldTouched('schedule', e)}
                                         onChange={(e) => setFieldValue('schedule', e)}
                                     />
-
-                                    {touched.source && errors.source ? (
-                                        <span className="mt-1 invalid-feedback-visible">{errors.source}</span>
+                                    {touched.schedule && errors.schedule ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.schedule}</span>
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>

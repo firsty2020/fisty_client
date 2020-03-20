@@ -38,5 +38,11 @@ export default {
     AGE_REQUIRED: 'Укажите желаемый возраст',
     RUSSIAN_LEVEL_REQUIRED: 'Укажите уровень владения русским языком',
     ADDRESS_REQUIRED: 'Введите адрес',
+    BONUSES_REQUIRED: 'Укажите есть ли бонусы',
+    SALARY_INVALID: 'Введите зарплату цифрами',
+    SALARY_REQUIRED: 'Введите зарплату',
+    FORMALIZATION_TYPE_REQUIRED: 'Укажите тип договора',
+    RESPONSIBILITIES_REQUIRED: 'Опишите обязаности',
+    SCHEDULE_REQUIRED: 'Укажите график'
 };
 

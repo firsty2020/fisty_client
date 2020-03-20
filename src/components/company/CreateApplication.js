@@ -10,6 +10,7 @@ import {
 } from '../../common/reducer';
 import { push } from 'connected-react-router';
 import { When } from 'react-if';
+import { baseURL } from '../../axios';
 
 
 const CreateApplication = ({ user, created, getAuthUser, createApplication, push }) => {
@@ -26,7 +27,7 @@ const CreateApplication = ({ user, created, getAuthUser, createApplication, push
 
 
     const submitApplication = (values) => {
-        values.company = user.company;
+        values.company = `${baseURL}companies/${user.company}/`;
         createApplication(values);
     };
 

@@ -98,3 +98,14 @@ button:disabled {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)!important;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)!important;
 }
+
+.right-fixed-alert {
+    right: 0;
+    margin-right: 10px;
+    z-index: 999;
+}
+
+.green-shadow {
+    box-shadow: 0 0 5px 3px #22b66e;
+    margin-bottom: 0;
+}
