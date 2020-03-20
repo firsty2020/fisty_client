@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import {AlertNotice, ApplicationForm} from '../../ui';
 import { connect } from 'react-redux';
-import { createApplication } from '../../../common/api';
+import { createApplication } from '../../../common/commonApi';
 import { baseURL } from '../../../axios';
 import {
     createApplicationPendingSelector,
     createApplicationResolvedSelector
-} from '../../../common/reducer';
+} from '../../../common/commonReducer';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
 

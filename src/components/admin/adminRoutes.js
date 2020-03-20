@@ -11,6 +11,7 @@ import Locations from './Configs/Locations';
 import Industries from './Configs/Industries';
 import Specifications from './Configs/Specifications';
 import CreateApplication from './Companies/CreateApplication';
+import Applications from './Applications';
 
 
 export const navigation =  {
@@ -32,6 +33,12 @@ export const navigation =  {
             icon: 'Briefcase',
             url: '/admin/companies',
             matcher: '/companies',
+        },
+        {
+            name: 'Заявки',
+            icon: 'FileText',
+            url: '/admin/applications',
+            matcher: '/applications',
         },
         {
             name: 'Настройки',
@@ -111,7 +118,7 @@ export const adminRoutes = [
         name: 'Контактные Лица',
     },
     {
-        path: '/admin/companies/:companyId/applications/create',
+        path: '/admin/companies/:companyId/application/create',
         component: CreateApplication,
         name: 'Создать заявку',
     },
@@ -119,6 +126,11 @@ export const adminRoutes = [
         path: '/admin/companies/branches/create',
         component: CreateBranch,
         name: 'Создать бранч'
+    },
+    {
+        path: '/admin/applications',
+        component: Applications,
+        name: 'Заявки'
     },
     {
         path: '/admin/configs/industries',

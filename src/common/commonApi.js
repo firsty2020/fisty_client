@@ -2,8 +2,8 @@ import api from '../axios';
 import {
     createApplicationFailed,
     createApplicationPending,
-    createApplicationResolved
-} from './actions';
+    createApplicationResolved,
+} from './commonActions';
 
 
 export const createApplication = (data) => {
@@ -12,6 +12,7 @@ export const createApplication = (data) => {
         api
             .post('applications/', data)
             .then(() => dispatch(createApplicationResolved()))
-            .catch((err) => dispatch(createApplicationFailed(err)))
+            .catch((err) => dispatch(createApplicationFailed()))
     }
 };
+

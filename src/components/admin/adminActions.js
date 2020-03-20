@@ -2,6 +2,9 @@ import {
     ADMIN_GET_USERS_PENDING,
     ADMIN_GET_USERS_FAILED,
     ADMIN_GET_USERS_RESOLVED,
+    ADMIN_GET_APPLICATIONS_PENDING,
+    ADMIN_GET_APPLICATIONS_FAILED,
+    ADMIN_GET_APPLICATIONS_RESOLVED,
 } from '../../constants/actionTypes';
 
 
@@ -23,3 +26,19 @@ export const getUsersResolved = (users) => ({
 /******************************************/
 
 
+/*** Actions for fetching applications ***/
+
+export const getApplicationsPending = () => ({
+    type: ADMIN_GET_APPLICATIONS_PENDING,
+});
+
+export const getApplicationsFailed = () => ({
+    type: ADMIN_GET_APPLICATIONS_FAILED,
+});
+
+export const getApplicationsResolved = (applications) => ({
+    type: ADMIN_GET_APPLICATIONS_RESOLVED,
+    payload: applications,
+});
+
+/******************************************/

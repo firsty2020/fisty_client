@@ -3,11 +3,11 @@ import {AlertNotice, ApplicationForm} from '../ui';
 import { connect } from 'react-redux';
 import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
-import { createApplication } from '../../common/api';
+import { createApplication } from '../../common/commonApi';
 import {
     createApplicationPendingSelector,
     createApplicationResolvedSelector
-} from '../../common/reducer';
+} from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 import { When } from 'react-if';
 import { baseURL } from '../../axios';

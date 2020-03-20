@@ -17,6 +17,9 @@ import {
     ADMIN_UPDATE_CONTACT_PERSON_PENDING,
     ADMIN_UPDATE_CONTACT_PERSON_FAILED,
     ADMIN_UPDATE_CONTACT_PERSON_RESOLVED,
+    ADMIN_GET_APPLICATIONS_PENDING,
+    ADMIN_GET_APPLICATIONS_FAILED,
+    ADMIN_GET_APPLICATIONS_RESOLVED,
 } from '../../constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
@@ -24,7 +27,7 @@ import { companies } from './Companies/companiesReducer';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
 
-const test = (state = initialState, action) => {
+const common = (state = initialState, action) => {
     switch (action.type) {
         case ADMIN_GET_USERS_PENDING:
             return {
@@ -170,6 +173,27 @@ const test = (state = initialState, action) => {
                 updateContactPersonResolved: true,
             };
 
+        case ADMIN_GET_APPLICATIONS_PENDING:
+            return {
+                getApplicationsPending: true,
+                getApplicationsFailed: false,
+                applications: [],
+            };
+
+        case ADMIN_GET_APPLICATIONS_FAILED:
+            return {
+                getApplicationsPending: false,
+                getApplicationsFailed: true,
+                applications: [],
+            };
+
+        case ADMIN_GET_APPLICATIONS_RESOLVED:
+            return {
+                getApplicationsPending: false,
+                getApplicationsFailed: false,
+                applications: action.payload,
+            };
+
         default:
             return state;
     }
@@ -177,23 +201,26 @@ const test = (state = initialState, action) => {
 
 
 export const admin =  combineReducers({
-    test,
+    common,
     configs,
     companies,
 });
 
 
-export const usersSelector = (state) => state.admin.test.users;
-export const usersErrorSelector = (state) => state.admin.test.getUsersError;
-export const usersPendingSelector = (state) => state.admin.test.getUsersPending;
+export const usersSelector = (state) => state.admin.common.users;
+export const usersErrorSelector = (state) => state.admin.common.getUsersError;
+export const usersPendingSelector = (state) => state.admin.common.getUsersPending;
 
-export const contactPersonCreatedSelector = state => state.admin.test.createContactPersonResolved;
-export const createContactPersonPendingSelector = state => state.admin.test.createContactPersonPending;
+export const contactPersonCreatedSelector = state => state.admin.common.createContactPersonResolved;
+export const createContactPersonPendingSelector = state => state.admin.common.createContactPersonPending;
 
-export const contactPersonsSelector = state => state.admin.test.contactPersons;
-export const contactPersonSelector = state => state.admin.test.contactPerson;
+export const contactPersonsSelector = state => state.admin.common.contactPersons;
+export const contactPersonSelector = state => state.admin.common.contactPerson;
 
-export const removeContactPersonResolvedSelector = state => state.admin.test.removeContactPersonResolved;
+export const removeContactPersonResolvedSelector = state => state.admin.common.removeContactPersonResolved;
 
-export const updateContactPersonResolvedSelector = state => state.admin.test.updateContactPersonResolved;
+export const updateContactPersonResolvedSelector = state => state.admin.common.updateContactPersonResolved;
+
+export const applicationsSelector = state => state.admin.common.applications;
+export const getApplicationsPendingSelector = state => state.admin.common.getApplicationsPending;
 

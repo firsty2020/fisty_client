@@ -97,7 +97,7 @@ const CompanyDetails = ({
                     variant="primary">Контактные лица
                 </Button>
             </Link>
-            <Link to={`${match.url}/applications/create`}
+            <Link to={`${match.url}/application/create`}
                   className="ml-2">
                 <Button
                     onClick={() => null}
