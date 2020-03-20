@@ -8,6 +8,7 @@ import {
     clearEmptyFields,
     transformReactSelectFields
 } from '../../helpers/utils';
+import { Link } from 'react-router-dom';
 
 
 const scheduleOptions = [
@@ -41,7 +42,7 @@ const updateCheckboxValue = (setFieldValue, value, fieldName, values) => {
 };
 
 
-const ApplicationForm = ({ onSubmitApplication, pending }) => {
+const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
     return (
         <div>
             <Container>
@@ -561,6 +562,14 @@ const ApplicationForm = ({ onSubmitApplication, pending }) => {
                                     ) : null}
                                 </Form.Group>
                                 <div className="text-center">
+                                    {backUrl ?
+                                        <Link to={backUrl}>
+                                            <Button
+                                                className="mr-2"
+                                                variant="secondary">Отменить
+                                            </Button>
+                                        </Link>
+                                        : null}
                                     <Button
                                         disabled={pending}
                                         type="submit"

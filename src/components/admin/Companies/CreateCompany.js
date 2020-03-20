@@ -19,6 +19,7 @@ import messages from '../../../constants/messages';
 import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
 import Select from 'react-select';
 import { generateSelectOptions } from '../../../helpers/utils';
+import {Link} from 'react-router-dom';
 
 
 const sourceOptions = [
@@ -28,6 +29,7 @@ const sourceOptions = [
 
 
 const typeOptions = [
+    { value: 'малый', label: 'Малый бизнес' },
     { value: 'средний', label: 'Средний бизнес' },
     { value: 'крупный', label: 'Крупный бизнес' },
 ];
@@ -232,6 +234,12 @@ const CreateCompany = ({
                             ) : null}
                         </Form.Group>
                         <div className="text-center">
+                            <Link to={'/admin/companies'}>
+                                <Button
+                                    className="mr-2"
+                                    variant="secondary">Отменить
+                                </Button>
+                            </Link>
                             <Button
                                 disabled={pending}
                                 type="submit">Создать

@@ -53,6 +53,7 @@ const UpdateContactPerson = ({
                     />
                 </When>
                 <ContactPerson
+                    match={match}
                     onSubmit={(values) => handleUpdateContactPerson(values)}
                     contactPerson={contactPerson}
                     isUpdating

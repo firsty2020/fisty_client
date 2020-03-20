@@ -9,7 +9,7 @@ export default function SidebarToggleButton({isSidebarCollapsed, toggleSidebar})
         <Button onClick={toggleSidebar}
                 className={`m-r sidebar-toggle ${chevronClassName}`}
                 aria-label={screenReaderLabel}>
-            <FA name={'chevron-left'}/>
+            <FA name={'bars'}/>
         </Button>
     );
 }

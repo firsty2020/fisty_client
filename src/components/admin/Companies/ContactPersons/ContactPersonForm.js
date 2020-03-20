@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { getContactPersonRoles } from '../../Configs/Roles/rolesApi';
 import { contactPersonRolesSelector } from '../../Configs/configsReducer';
 import Select from 'react-select';
-import {generateSelectOptions} from '../../../../helpers/utils';
+import { generateSelectOptions } from '../../../../helpers/utils';
+import { Link } from 'react-router-dom';
+
 
 const genderOptions = [
     { value: 'мужской', label: 'Мужской' },
@@ -36,6 +38,7 @@ const fillForm = (contactPerson, roles) => {
 const ContactPersonForm = ({
                                roles,
                                pending,
+                               match,
                                contactPerson,
                                isUpdating,
                                getRoles,
@@ -184,6 +187,12 @@ const ContactPersonForm = ({
                             ) : null}
                         </Form.Group>
                         <div className="text-center">
+                            <Link to={`/admin/companies/${match.params.companyId}/contact-persons`}>
+                                <Button
+                                    className="mr-2"
+                                    variant="secondary">Отменить
+                                </Button>
+                            </Link>
                             <Button
                                 disabled={pending}
                                 type="submit">{isUpdating ? 'Сохранить' : 'Создать'}

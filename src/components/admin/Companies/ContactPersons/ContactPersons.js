@@ -8,7 +8,7 @@ import {
     contactPersonsSelector,
     removeContactPersonResolvedSelector
 } from '../../adminReducer';
-import { ConfirmationModal } from '../../../ui';
+import { BackButton, ConfirmationModal } from '../../../ui';
 
 
 const ContactPersons = ({
@@ -47,6 +47,7 @@ const ContactPersons = ({
                 question="Вы уверены что хотите удалить это контактное лицо?"
             />
             <Container className="mt-10-auto" fluid>
+                <BackButton path={`/admin/companies/${params.company}`}/>
                 <div className="mb-3">
                     <Link to={`${match.url}/create`}>
                         <Button

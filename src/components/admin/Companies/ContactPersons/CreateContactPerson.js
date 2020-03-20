@@ -9,27 +9,29 @@ import { contactPersonRolesSelector } from '../../Configs/configsReducer';
 import { createContactPerson } from './contactPersonApi';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
-import ContactPerson from './ContactPersonForm';
+import ContactPersonForm from './ContactPersonForm';
 import { baseURL } from '../../../../axios';
+import { push } from 'connected-react-router';
 
 
 const CreateContactPerson = ({
                                  pending,
                                  created,
-                                 history,
                                  match,
+                                 push,
                                  createContactPerson,
                              }) => {
+
 
     useEffect(() => {
         if (created) {
             setTimeout(
                 () =>
-                    history.push(`/admin/companies/${match.params.companyId}/contact-persons`),
+                    push(`/admin/companies/${match.params.companyId}/contact-persons`),
                 3000
             );
         }
-    }, [ created, history, match ]);
+    }, [ created, match, push ]);
 
     const handleCreateContactPerson = (values) => {
         const contactPerson = {...values};
@@ -48,7 +50,8 @@ const CreateContactPerson = ({
                         message="Вы успешно создали контактное лицо"
                     />
                 </When>
-                <ContactPerson
+                <ContactPersonForm
+                    match={match}
                     onSubmit={(values) => handleCreateContactPerson(values)}
                     pending={pending} />
             </Container>
@@ -65,6 +68,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     createContactPerson,
+    push,
 };
 
 
