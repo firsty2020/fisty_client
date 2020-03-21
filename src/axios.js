@@ -11,7 +11,6 @@ const instance = axios.create({
     baseURL,
 });
 
-
 instance.interceptors.request.use(
     (request) => {
         const token = localStorage.getItem('auth_token');
@@ -62,7 +61,9 @@ const handleTokenRefresh = (error, message, refreshToken) => {
 
 const transformError = (error) => {
     const errors = [];
-    if (error.length) {
+    if (typeof error === 'string') {
+        return error;
+    } else if (error.length && typeof error !== 'string') {
         return error.join('\n');
     } else {
         for (const field in error) {

@@ -20,6 +20,7 @@ import brand_logo_3 from '../../assets/images/brands/brand_logo3.png';
 import brand_logo_4 from '../../assets/images/brands/brand_logo4.png';
 import brand_logo_5 from '../../assets/images/brands/brand_logo5.png';
 import './Landing.css';
+import { Link } from 'react-router-dom';
 
 
 const Landing = () => {
@@ -42,10 +43,11 @@ const Landing = () => {
                                 <span className="working_location">По всей России</span>
                             </div>
                         </div>
-                        <button
-                            className="button--big button--color-main main">заказать
-                            подбор
-                        </button>
+                        <Link to="/login">
+                            <button
+                                className="button--big button--color-main main">заказать подбор
+                            </button>
+                        </Link>
                         <div className="lang_block">
                             <p className="selected_lang" tabIndex="0">rus
                                 <span className="icon-chevron"></span></p>
