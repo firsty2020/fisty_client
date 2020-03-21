@@ -1,5 +1,6 @@
 import CompanyDashboard from './CompanyDashboard';
 import CreateApplication from './CreateApplication';
+import Applications from './Applications';
 
 
 export const routes = [
@@ -10,6 +11,10 @@ export const routes = [
     {
         path: '/company/application/create',
         component: CreateApplication,
+    },
+    {
+        path: '/company/applications',
+        component: Applications,
     },
 ];
 
@@ -26,6 +31,11 @@ export const navigation =  {
             name: 'Подать Заявку',
             url: '/company/application/create',
             icon: 'Edit3',
+        },
+        {
+            name: 'Заявки',
+            url: '/company/applications',
+            icon: 'FileText',
         },
     ],
     bottom: [

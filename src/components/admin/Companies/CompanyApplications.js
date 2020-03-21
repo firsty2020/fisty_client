@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import { TableList } from '../ui';
-import { getApplications } from '../../common/commonApi';
+import { BackButton, TableList } from '../../ui';
+import { getApplications } from '../../../common/commonApi';
 import {
     applicationsSelector,
     getApplicationsPendingSelector
-} from '../../common/commonReducer';
+} from '../../../common/commonReducer';
+import { Button } from 'react-bootstrap';
+import { PlusCircle } from 'react-feather';
+import { Link } from 'react-router-dom';
 
 
 const companiesTableLayout = {
@@ -19,11 +22,12 @@ const companiesTableLayout = {
     ],
 };
 
-const Applications = ({ applications, getApplications, pending }) => {
+
+const CompanyApplications = ({ applications, pending, match, getApplications }) => {
 
     useEffect(() => {
-        getApplications();
-    }, [ getApplications ]);
+        getApplications({ company: match.params.companyId });
+    }, [ getApplications, match.params.companyId ]);
 
     const handleClickOnRow = (item) => {
 
@@ -31,6 +35,18 @@ const Applications = ({ applications, getApplications, pending }) => {
 
     return (
         <div>
+            <BackButton path={`/admin/companies/${match.params.companyId}`} />
+            <div className="mb-3">
+                <Link
+                    to={`${match.url}/create`}>
+                    <Button variant="primary">
+                        <PlusCircle
+                            size={20}
+                            className="align-sub"
+                        /> Создать
+                    </Button>
+                </Link>
+            </div>
             <TableList
                 onClickRow={(item) => handleClickOnRow(item)}
                 layout={companiesTableLayout}
@@ -51,9 +67,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = { getApplications };
 
 
-Applications.propTypes = {
+CompanyApplications.propTypes = {
 
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Applications);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyApplications);

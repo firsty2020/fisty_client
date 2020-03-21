@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { companySelector } from './companiesReducer';
@@ -34,7 +34,7 @@ const CompanyDetails = ({
         const specificationId = extractIdFromUrl(company.specification);
         industryId && getIndustryOption(industryId);
         specificationId && getSpecificationOption(specificationId);
-    }, [ (company || {}).id, getIndustryOption, getSpecificationOption ]);
+    }, [ getIndustryOption, getSpecificationOption ]);
 
     if (!company) {
         return null;
@@ -98,15 +98,13 @@ const CompanyDetails = ({
                     variant="primary">Контактные лица
                 </Button>
             </Link>
-            <Link to={`${match.url}/application/create`}>
+            <Link to={`${match.url}/application`}>
                 <Button
-                    onClick={() => null}
-                    variant="primary">Создать заявку
+                    variant="primary">Заявки
                 </Button>
             </Link>
         </div>
     );
-
 };
 
 

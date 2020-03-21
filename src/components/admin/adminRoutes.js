@@ -12,6 +12,7 @@ import Industries from './Configs/Industries';
 import Specifications from './Configs/Specifications';
 import CreateApplication from './Companies/CreateApplication';
 import Applications from './Applications';
+import CompanyApplications from './Companies/CompanyApplications';
 
 
 export const navigation =  {
@@ -121,6 +122,11 @@ export const adminRoutes = [
         path: '/admin/companies/:companyId/application/create',
         component: CreateApplication,
         name: 'Создать заявку',
+    },
+    {
+        path: '/admin/companies/:companyId/application',
+        component: CompanyApplications,
+        name: 'Заявки',
     },
     {
         path: '/admin/companies/branches/create',

@@ -2,6 +2,8 @@ import {
     CREATE_APPLICATION_PENDING,
     CREATE_APPLICATION_FAILED,
     CREATE_APPLICATION_RESOLVED,
+    GET_APPLICATIONS_PENDING,
+    GET_APPLICATIONS_FAILED, GET_APPLICATIONS_RESOLVED,
 } from '../constants/actionTypes';
 
 
@@ -28,6 +30,27 @@ export const common = (state = initialState, action) => {
                 createApplicationResolved: true,
             };
 
+        case GET_APPLICATIONS_PENDING:
+            return {
+                getApplicationsPending: true,
+                getApplicationsFailed: false,
+                applications: [],
+            };
+
+        case GET_APPLICATIONS_FAILED:
+            return {
+                getApplicationsPending: false,
+                getApplicationsFailed: true,
+                applications: [],
+            };
+
+        case GET_APPLICATIONS_RESOLVED:
+            return {
+                getApplicationsPending: false,
+                getApplicationsFailed: false,
+                applications: action.payload,
+            };
+
         default:
             return state;
     }
@@ -37,3 +60,5 @@ export const common = (state = initialState, action) => {
 export const createApplicationPendingSelector = (state) => state.common.createApplicationPending;
 export const createApplicationResolvedSelector = (state) => state.common.createApplicationResolved;
 
+export const applicationsSelector = state => state.common.applications;
+export const getApplicationsPendingSelector = state => state.common.getApplicationsPending;

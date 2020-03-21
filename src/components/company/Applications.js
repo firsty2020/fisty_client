@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { TableList } from '../ui';
 import { getApplications } from '../../common/commonApi';
@@ -6,6 +6,8 @@ import {
     applicationsSelector,
     getApplicationsPendingSelector
 } from '../../common/commonReducer';
+import { getAuthUser } from '../auth/auth';
+import { userSelector } from '../auth/authReducer';
 
 
 const companiesTableLayout = {
@@ -19,20 +21,21 @@ const companiesTableLayout = {
     ],
 };
 
-const Applications = ({ applications, getApplications, pending }) => {
+const Applications = ({ applications, pending, user, getAuthUser, getApplications }) => {
 
     useEffect(() => {
-        getApplications();
-    }, [ getApplications ]);
+        getAuthUser();
+    }, [ getAuthUser ]);
 
-    const handleClickOnRow = (item) => {
+    useEffect(() => {
+        if (!user) return;
+        getApplications({ company: user.company });
+    }, [ getApplications, user ]);
 
-    };
 
     return (
         <div>
             <TableList
-                onClickRow={(item) => handleClickOnRow(item)}
                 layout={companiesTableLayout}
                 data={applications}
                 showSpinner={!!pending}
@@ -45,10 +48,10 @@ const Applications = ({ applications, getApplications, pending }) => {
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
     pending: getApplicationsPendingSelector(state),
-
+    user: userSelector(state),
 });
 
-const mapDispatchToProps = { getApplications };
+const mapDispatchToProps = { getApplications, getAuthUser };
 
 
 Applications.propTypes = {

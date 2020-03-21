@@ -17,9 +17,6 @@ import {
     ADMIN_UPDATE_CONTACT_PERSON_PENDING,
     ADMIN_UPDATE_CONTACT_PERSON_FAILED,
     ADMIN_UPDATE_CONTACT_PERSON_RESOLVED,
-    ADMIN_GET_APPLICATIONS_PENDING,
-    ADMIN_GET_APPLICATIONS_FAILED,
-    ADMIN_GET_APPLICATIONS_RESOLVED,
 } from '../../constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
@@ -173,27 +170,6 @@ const common = (state = initialState, action) => {
                 updateContactPersonResolved: true,
             };
 
-        case ADMIN_GET_APPLICATIONS_PENDING:
-            return {
-                getApplicationsPending: true,
-                getApplicationsFailed: false,
-                applications: [],
-            };
-
-        case ADMIN_GET_APPLICATIONS_FAILED:
-            return {
-                getApplicationsPending: false,
-                getApplicationsFailed: true,
-                applications: [],
-            };
-
-        case ADMIN_GET_APPLICATIONS_RESOLVED:
-            return {
-                getApplicationsPending: false,
-                getApplicationsFailed: false,
-                applications: action.payload,
-            };
-
         default:
             return state;
     }
@@ -220,7 +196,4 @@ export const contactPersonSelector = state => state.admin.common.contactPerson;
 export const removeContactPersonResolvedSelector = state => state.admin.common.removeContactPersonResolved;
 
 export const updateContactPersonResolvedSelector = state => state.admin.common.updateContactPersonResolved;
-
-export const applicationsSelector = state => state.admin.common.applications;
-export const getApplicationsPendingSelector = state => state.admin.common.getApplicationsPending;
 

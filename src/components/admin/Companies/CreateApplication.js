@@ -15,7 +15,7 @@ const CreateApplication = ({ match, pending, created, createApplication, push })
 
     useEffect(() => {
         if (created) {
-            setTimeout(() => push(`/admin/companies/${match.params.companyId}`), 2000);
+            setTimeout(() => push(`/admin/companies/${match.params.companyId}/application`), 2000);
         }
     }, [ created, push, match.params.companyId ]);
 

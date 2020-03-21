@@ -3,6 +3,9 @@ import {
     createApplicationFailed,
     createApplicationPending,
     createApplicationResolved,
+    getApplicationsFailed,
+    getApplicationsPending,
+    getApplicationsResolved,
 } from './commonActions';
 
 
@@ -16,3 +19,13 @@ export const createApplication = (data) => {
     }
 };
 
+
+export const getApplications = (params) => {
+    return dispatch => {
+        dispatch(getApplicationsPending());
+        api
+            .get('applications/', { params })
+            .then((res) => dispatch(getApplicationsResolved(res.data.results)))
+            .catch(() => dispatch(getApplicationsFailed()))
+    }
+};
