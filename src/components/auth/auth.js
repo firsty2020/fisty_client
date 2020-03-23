@@ -13,7 +13,7 @@ import {
     fetchUserError,
     setPasswordPending,
     setPasswordResolved,
-    setPasswordFailed,
+    setPasswordFailed, fetchUserPending,
 } from './authActions';
 import api from '../../axios';
 
@@ -66,6 +66,7 @@ export const getAuthUser = () => {
     return dispatch => {
         if (!userId)
             return dispatch(fetchUserError('Not authenticated'));
+        dispatch(fetchUserPending());
         api
             .get(`users/${userId}/`,)
             .then((res) => dispatch(fetchUserSuccess(res.data)))

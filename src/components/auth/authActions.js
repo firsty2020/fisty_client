@@ -12,7 +12,7 @@ import {
     AUTH_GET_USER_FAILED,
     AUTH_SET_PASSWORD_PENDING,
     AUTH_SET_PASSWORD_RESOLVED,
-    AUTH_SET_PASSWORD_FAILED,
+    AUTH_SET_PASSWORD_FAILED, AUTH_GET_USER_PENDING,
 } from '../../constants/actionTypes';
 
 
@@ -53,6 +53,10 @@ export const loginSuccess = () => ({
 export const loginError = (error) => ({
     type: AUTH_LOGIN_FAILED,
     payload: error,
+});
+
+export const fetchUserPending = () => ({
+    type: AUTH_GET_USER_PENDING,
 });
 
 export const fetchUserSuccess = (user) => ({

@@ -7,7 +7,8 @@ import {
     getApplicationsPendingSelector
 } from '../../common/commonReducer';
 import { getAuthUser } from '../auth/auth';
-import { userSelector } from '../auth/authReducer';
+import {getUserPendingSelector, userSelector} from '../auth/authReducer';
+import { extractIdFromUrl } from '../../helpers/utils';
 
 
 const companiesTableLayout = {
@@ -21,7 +22,13 @@ const companiesTableLayout = {
     ],
 };
 
-const Applications = ({ applications, pending, user, getAuthUser, getApplications }) => {
+const Applications = ({ applications,
+                          pendingApplications,
+                          pendingUser,
+                          user,
+                          getAuthUser,
+                          getApplications,
+                      }) => {
 
     useEffect(() => {
         getAuthUser();
@@ -29,7 +36,7 @@ const Applications = ({ applications, pending, user, getAuthUser, getApplication
 
     useEffect(() => {
         if (!user) return;
-        getApplications({ company: user.company });
+        getApplications({ company: extractIdFromUrl(user.company) });
     }, [ getApplications, user ]);
 
 
@@ -38,7 +45,7 @@ const Applications = ({ applications, pending, user, getAuthUser, getApplication
             <TableList
                 layout={companiesTableLayout}
                 data={applications}
-                showSpinner={!!pending}
+                showSpinner={!!(pendingUser || pendingApplications)}
             />
         </div>
     );
@@ -47,8 +54,9 @@ const Applications = ({ applications, pending, user, getAuthUser, getApplication
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    pending: getApplicationsPendingSelector(state),
+    pendingApplications: getApplicationsPendingSelector(state),
     user: userSelector(state),
+    pendingUser: getUserPendingSelector(state),
 });
 
 const mapDispatchToProps = { getApplications, getAuthUser };
