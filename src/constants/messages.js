@@ -43,6 +43,8 @@ export default {
     SALARY_REQUIRED: 'Введите зарплату',
     FORMALIZATION_TYPE_REQUIRED: 'Укажите тип договора',
     RESPONSIBILITIES_REQUIRED: 'Опишите обязаности',
-    SCHEDULE_REQUIRED: 'Укажите график'
+    SCHEDULE_REQUIRED: 'Укажите график',
+    LOCATION_REQUIRED: 'Укажите местонахождение',
+    CONTACT_PERSON_REQUIRED: 'Укажите контактное лицо'
 };
 

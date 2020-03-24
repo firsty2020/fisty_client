@@ -103,6 +103,14 @@ export const branchSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.BRANCH_NAME_REQUIRED),
     address: Yup.string()
         .required(ERROR_MESSAGES.BRANCH_ADDRESS_REQUIRED),
+    city: Yup.string()
+        .required(ERROR_MESSAGES.CITY_REQUIRED),
+    location: Yup.string()
+        .required(ERROR_MESSAGES.LOCATION_REQUIRED),
+    company: Yup.string()
+        .required(),
+    contact_person: Yup.array()
+        .required(ERROR_MESSAGES.CONTACT_PERSON_REQUIRED),
 });
 
 

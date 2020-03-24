@@ -98,9 +98,15 @@ const CompanyDetails = ({
                     variant="primary">Контактные лица
                 </Button>
             </Link>
-            <Link to={`${match.url}/application`}>
+            <Link to={`${match.url}/application`}
+                  className="mr-2">
                 <Button
                     variant="primary">Заявки
+                </Button>
+            </Link>
+            <Link to={`${match.url}/branches`}>
+                <Button
+                    variant="primary">Бранчи
                 </Button>
             </Link>
         </div>

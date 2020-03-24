@@ -103,7 +103,13 @@ export const transFormDatesArray = (array) => array.reduce((acc, curr) => {
 export const generateSelectOptions = (list, value, label) => {
     if (!list) return null;
     return list.reduce((acc, curr) => {
-        acc.push({value: curr[value], label: curr[label] });
+        let __label;
+        if (typeof label === 'function') {
+            __label = label(curr)
+        } else {
+            __label = curr[label];
+        }
+        acc.push({value: curr[value], label: __label });
         return acc;
     }, [])
 };

@@ -1,0 +1,55 @@
+import {
+    ADMIN_CREATE_BRANCH_FAILED,
+    ADMIN_CREATE_BRANCH_PENDING,
+    ADMIN_CREATE_BRANCH_RESOLVED, ADMIN_GET_BRANCHES_FAILED,
+    ADMIN_GET_BRANCHES_PENDING,
+    ADMIN_GET_BRANCHES_RESOLVED
+} from '../../../../constants/actionTypes';
+
+
+export const branches = (state = {}, action) => {
+    switch (action.type) {
+        case ADMIN_CREATE_BRANCH_PENDING:
+            return {
+                branchCreated: false,
+                createCompanyPending: true
+            };
+        case ADMIN_CREATE_BRANCH_RESOLVED:
+            return {
+                branchCreated: true,
+                createCompanyPending: false
+            };
+        case ADMIN_CREATE_BRANCH_FAILED:
+            return {
+                branchCreated: false,
+                createCompanyPending: false
+            };
+
+        case ADMIN_GET_BRANCHES_PENDING:
+            return {
+                branches: [],
+                getBranchesPending: true,
+                branchCreated: false
+            };
+        case ADMIN_GET_BRANCHES_RESOLVED:
+            return {
+                branches: action.payload,
+                getBranchesPending: false,
+            };
+        case ADMIN_GET_BRANCHES_FAILED:
+            return {
+                branches: [],
+                getBranchesPending: false
+            };
+
+        default:
+            return state;
+    }
+};
+
+
+export const createBranchPendingSelector = state => state.admin.branches.createCompanyPending;
+export const createBranchResolvedSelector = state => state.admin.branches.branchCreated;
+
+export const branchesSelector = state => state.admin.branches.branches;
+export const getBranchesPendingSelector = state => state.admin.branches.getBranchesPending;

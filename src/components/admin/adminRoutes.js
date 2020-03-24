@@ -1,7 +1,6 @@
 import UserList from './Users/Users';
 import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
-import CreateBranch from './Companies/CreateBranch';
 import CreateContactPerson from './Companies/ContactPersons/CreateContactPerson';
 import Roles from './Configs/Roles/Roles';
 import CompanyDetails from './Companies/CompanyDetails';
@@ -12,7 +11,9 @@ import Industries from './Configs/Industries';
 import Specifications from './Configs/Specifications';
 import CreateApplication from './Companies/CreateApplication';
 import Applications from './Applications';
-import CompanyApplications from './Companies/CompanyApplications';
+import CompanyApplications from './Companies/Applications';
+import CreateBranch from './Companies/Branches/CreateBranch';
+import Branches from './Companies/Branches/Branches';
 
 
 export const navigation =  {
@@ -129,9 +130,14 @@ export const adminRoutes = [
         name: 'Заявки',
     },
     {
-        path: '/admin/companies/branches/create',
+        path: '/admin/companies/:companyId/branches/create',
         component: CreateBranch,
         name: 'Создать бранч'
+    },
+    {
+        path: '/admin/companies/:companyId/branches',
+        component: Branches,
+        name: 'Бранчи'
     },
     {
         path: '/admin/applications',

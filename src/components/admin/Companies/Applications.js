@@ -23,7 +23,7 @@ const companiesTableLayout = {
 };
 
 
-const CompanyApplications = ({ applications, pending, match, getApplications }) => {
+const Applications = ({ applications, pending, match, getApplications }) => {
 
     useEffect(() => {
         getApplications({ company: match.params.companyId });
@@ -67,9 +67,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = { getApplications };
 
 
-CompanyApplications.propTypes = {
+Applications.propTypes = {
 
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompanyApplications);
+export default connect(mapStateToProps, mapDispatchToProps)(Applications);
