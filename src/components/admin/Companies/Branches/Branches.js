@@ -10,9 +10,18 @@ import {
     branchRemovedSelector,
     getBranchesPendingSelector
 } from './branchReducer';
+import { push } from 'connected-react-router';
 
 
-const Branches = ({ match, pending, removed, branches, getBranches, removeBranch }) => {
+const Branches = ({
+                      match,
+                      pending,
+                      removed,
+                      branches,
+                      getBranches,
+                      removeBranch,
+                      push,
+                  }) => {
 
     const [ branchIdToRemove, setBranchIdToRemove ] = useState(null);
 
@@ -54,7 +63,7 @@ const Branches = ({ match, pending, removed, branches, getBranches, removeBranch
                         </Button>
                     </Link>
                 </div>
-                <Table>
+                <Table hover>
                     <thead>
                     <tr>
                         <th>Название</th>
@@ -66,22 +75,30 @@ const Branches = ({ match, pending, removed, branches, getBranches, removeBranch
                     <tbody>
                     {(branches || []).map((branch) => {
                         return (
-                            <tr key={branch.id}>
+                            <tr key={branch.id}
+                                className="cursor-pointer"
+                                onClick={() => push(`${match.url}/${branch.id}`)}
+                            >
                                 <td>{branch.name}</td>
                                 <td>{branch.address}</td>
                                 <td>{branch.location_name}</td>
                                 <td>
                                     <div className="d-flex justify-content-around">
                                         <Trash
-                                            onClick={() => setBranchIdToRemove(branch.id)}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setBranchIdToRemove(branch.id)
+                                            }}
                                             className="cursor-pointer"
                                             color="red"/>
-                                        <Link to={`${match.url}/${branch.id}`}>
-                                            <Edit
-                                                className="cursor-pointer"
-                                                color="blue"
-                                            />
-                                        </Link>
+                                        <Edit
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                push(`${match.url}/edit/${branch.id}`)
+                                            }}
+                                            className="cursor-pointer"
+                                            color="blue"
+                                        />
                                     </div>
                                 </td>
                             </tr>
@@ -105,6 +122,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getBranches,
     removeBranch,
+    push,
 };
 
 
