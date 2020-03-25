@@ -14,6 +14,7 @@ import Applications from './Applications';
 import CompanyApplications from './Companies/Applications';
 import CreateBranch from './Companies/Branches/CreateBranch';
 import Branches from './Companies/Branches/Branches';
+import UpdateBranch from './Companies/Branches/UpdateBranch';
 
 
 export const navigation =  {
@@ -133,6 +134,11 @@ export const adminRoutes = [
         path: '/admin/companies/:companyId/branches/create',
         component: CreateBranch,
         name: 'Создать бранч'
+    },
+    {
+        path: '/admin/companies/:companyId/branches/:branchId',
+        component: UpdateBranch,
+        name: 'Править бранч'
     },
     {
         path: '/admin/companies/:companyId/branches',

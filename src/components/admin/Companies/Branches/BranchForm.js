@@ -16,11 +16,30 @@ import { baseURL } from '../../../../axios';
 import { Link } from 'react-router-dom';
 
 
+const fillForm = (initialValues, data, locationsOptions, contactPersonsOptions) => {
+    for (let key in initialValues) {
+        if (initialValues.hasOwnProperty(key) && key !== 'contact_person' && key !== 'location')
+            initialValues[key] = data[key];
+    }
+    initialValues.location = locationsOptions.find(option => option.value === data.location);
+    initialValues.contact_person = contactPersonsOptions.filter(option => data.contact_person.includes(option.value));
+};
+
+const formValues = {
+    name: '',
+    address: '',
+    location: '',
+    contact_person: [],
+    company:  '',
+};
+
+
 const BranchForm = ({
                         match,
                         locations,
                         contactPersons,
                         pending,
+                        branch,
                         getLocations,
                         getContactPersons,
                         onSubmit,
@@ -28,6 +47,11 @@ const BranchForm = ({
 
     const [ locationsOptions, setLocationsOptions ] = useState([]);
     const [ contactPersonOptions, setContactPersonOptions ] = useState([]);
+
+    useEffect(() => {
+        console.log( '1112')
+        formValues.company = `${baseURL}companies/${match.params.companyId}/`;
+    }, [ formValues, match.params.companyId ]);
 
     useEffect(() => {
         const params = { company: match.params.companyId, show_all: true };
@@ -51,17 +75,20 @@ const BranchForm = ({
         }
     }, [ contactPersons ]);
 
+    if (branch
+        && contactPersons
+        && contactPersons.length
+        && locations
+        && locations.length
+    ) {
+        fillForm(formValues, branch, locationsOptions, contactPersonOptions);
+    }
+
     return (
         <div>
             <Formik
-                initialValues={{
-                    name: '',
-                    address: '',
-                    city: '',
-                    location: '',
-                    contact_person: [],
-                    company:  `${baseURL}companies/${match.params.companyId}/`
-                }}
+                enableReinitialize
+                initialValues={formValues}
                 validationSchema={branchSchema}
                 onSubmit={(values) => {
                     const branchData = JSON.parse(JSON.stringify(values));
@@ -69,6 +96,7 @@ const BranchForm = ({
                         ['location', 'contact_person'],
                         branchData,
                     );
+                    branchData.city = 'Temp'
                     onSubmit(transformedData);
                 }}
             >
@@ -111,20 +139,6 @@ const BranchForm = ({
                                 <span className="mt-1 invalid-feedback-visible">{errors.address}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">Город *</p>
-                        <Form.Group>
-                            <Form.Control
-                                type="text"
-                                name="city"
-                                placeholder="Введите город"
-                                value={values.city}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
-                            {touched.city && errors.city ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.city}</span>
-                            ) : null}
-                        </Form.Group>
                         <p className="form-control-label">Местонахождение *</p>
                         <Form.Group>
                             <Select
@@ -164,7 +178,7 @@ const BranchForm = ({
                             </Link>
                             <Button
                                 disabled={pending}
-                                type="submit">Создать
+                                type="submit">{branch ? 'Обновить' : 'Создать'}
                             </Button>
                         </div>
                     </Form>

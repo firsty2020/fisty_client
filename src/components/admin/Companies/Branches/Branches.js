@@ -1,21 +1,46 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, Container, Table } from 'react-bootstrap';
 import { Edit, PlusCircle, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { BackButton } from '../../../ui';
-import { getBranches } from './branchApi';
-import {branchesSelector, getBranchesPendingSelector} from './branchReducer';
+import { BackButton, ConfirmationModal } from '../../../ui';
+import { getBranches, removeBranch } from './branchApi';
+import {
+    branchesSelector,
+    branchRemovedSelector,
+    getBranchesPendingSelector
+} from './branchReducer';
 
 
-const Branches = ({ match, pending, branches, getBranches }) => {
+const Branches = ({ match, pending, removed, branches, getBranches, removeBranch }) => {
+
+    const [ branchIdToRemove, setBranchIdToRemove ] = useState(null);
+
+    const params = { company: match.params.companyId };
 
     useEffect(() => {
-        getBranches({ company: match.params.companyId });
-    }, [ getBranches, match.params.companyId ]);
+        getBranches(params);
+    }, [ getBranches, params.company ]);
+
+    useEffect(() => {
+        if (removed) {
+            getBranches(params);
+        }
+    }, [ getBranches, removed, params.company ]);
+
+    const handleRemoveBranch = () => {
+        removeBranch(branchIdToRemove);
+        setBranchIdToRemove(null);
+    };
 
     return (
         <div>
+            <ConfirmationModal
+                show={!!branchIdToRemove}
+                onConfirm={handleRemoveBranch}
+                onCancel={() => setBranchIdToRemove(null)}
+                question="Вы уверены что хотите удалить этот бранч?"
+            />
             <Container className="mt-10-auto" fluid>
                 <BackButton path={`/admin/companies/${match.params.companyId}`}/>
                 <div className="mb-3">
@@ -33,7 +58,7 @@ const Branches = ({ match, pending, branches, getBranches }) => {
                     <thead>
                     <tr>
                         <th>Название</th>
-                        <th>Адресс</th>
+                        <th>Адрес</th>
                         <th>Город</th>
                         <th width="5%">Действия</th>
                     </tr>
@@ -48,7 +73,7 @@ const Branches = ({ match, pending, branches, getBranches }) => {
                                 <td>
                                     <div className="d-flex justify-content-around">
                                         <Trash
-                                            onClick={() => alert(branch.id)}
+                                            onClick={() => setBranchIdToRemove(branch.id)}
                                             className="cursor-pointer"
                                             color="red"/>
                                         <Link to={`${match.url}/${branch.id}`}>
@@ -69,15 +94,18 @@ const Branches = ({ match, pending, branches, getBranches }) => {
     );
 };
 
+
 const mapStateToProps = state => ({
     branches: branchesSelector(state),
     pending: getBranchesPendingSelector(state),
+    removed: branchRemovedSelector(state),
 });
+
 
 const mapDispatchToProps = {
     getBranches,
+    removeBranch,
 };
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Branches);
