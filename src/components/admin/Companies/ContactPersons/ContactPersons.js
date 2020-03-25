@@ -49,7 +49,7 @@ const ContactPersons = ({
             <Container className="mt-10-auto" fluid>
                 <BackButton path={`/admin/companies/${params.company}`}/>
                 <div className="mb-3">
-                    <Link to={`${match.url}/create`}>
+                    <Link to={`/admin/companies/${params.company}/contact-person/create`}>
                         <Button
                             variant="primary">
                             <PlusCircle

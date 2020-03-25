@@ -111,7 +111,7 @@ export const adminRoutes = [
         name: 'Контактные Лица',
     },
     {
-        path: '/admin/companies/:companyId/contact-persons/create',
+        path: '/admin/companies/:companyId/contact-person/create',
         component: CreateContactPerson,
         name: 'Контактные Лица',
     },
@@ -131,14 +131,14 @@ export const adminRoutes = [
         name: 'Заявки',
     },
     {
-        path: '/admin/companies/:companyId/branches/create',
+        path: '/admin/companies/:companyId/branch/create',
         component: CreateBranch,
-        name: 'Создать бранч'
+        name: 'Создать бранч',
     },
     {
         path: '/admin/companies/:companyId/branches/:branchId',
         component: UpdateBranch,
-        name: 'Править бранч'
+        name: 'Править бранч',
     },
     {
         path: '/admin/companies/:companyId/branches',

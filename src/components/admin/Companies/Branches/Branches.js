@@ -44,7 +44,7 @@ const Branches = ({ match, pending, removed, branches, getBranches, removeBranch
             <Container className="mt-10-auto" fluid>
                 <BackButton path={`/admin/companies/${match.params.companyId}`}/>
                 <div className="mb-3">
-                    <Link to={`${match.url}/create`}>
+                    <Link to={`/admin/companies/${match.params.companyId}/branch/create`}>
                         <Button
                             variant="primary">
                             <PlusCircle
@@ -69,7 +69,7 @@ const Branches = ({ match, pending, removed, branches, getBranches, removeBranch
                             <tr key={branch.id}>
                                 <td>{branch.name}</td>
                                 <td>{branch.address}</td>
-                                <td>{branch.city}</td>
+                                <td>{branch.location_name}</td>
                                 <td>
                                     <div className="d-flex justify-content-around">
                                         <Trash

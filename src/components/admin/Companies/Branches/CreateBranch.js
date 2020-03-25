@@ -11,7 +11,7 @@ import {
 } from './branchReducer';
 import { push } from 'connected-react-router';
 import {AlertNotice} from '../../../ui';
-import {When} from "react-if";
+import { When } from "react-if";
 
 
 const CreateBranch = ({ match, pending, created, createBranch, push }) => {

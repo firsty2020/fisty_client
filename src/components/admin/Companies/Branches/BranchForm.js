@@ -17,21 +17,25 @@ import { Link } from 'react-router-dom';
 
 
 const fillForm = (initialValues, data, locationsOptions, contactPersonsOptions) => {
+    const values = {};
     for (let key in initialValues) {
         if (initialValues.hasOwnProperty(key) && key !== 'contact_person' && key !== 'location')
-            initialValues[key] = data[key];
+            values[key] = data[key];
     }
-    initialValues.location = locationsOptions.find(option => option.value === data.location);
-    initialValues.contact_person = contactPersonsOptions.filter(option => data.contact_person.includes(option.value));
+    values.location = locationsOptions.find(option => option.value === data.location);
+    values.contact_person = contactPersonsOptions.filter(option => data.contact_person.includes(option.value));
+    return values;
 };
 
-const formValues = {
+const initialValues = {
     name: '',
     address: '',
     location: '',
     contact_person: [],
     company:  '',
 };
+
+let formValues;
 
 
 const BranchForm = ({
@@ -49,7 +53,6 @@ const BranchForm = ({
     const [ contactPersonOptions, setContactPersonOptions ] = useState([]);
 
     useEffect(() => {
-        console.log( '1112')
         formValues.company = `${baseURL}companies/${match.params.companyId}/`;
     }, [ formValues, match.params.companyId ]);
 
@@ -81,7 +84,9 @@ const BranchForm = ({
         && locations
         && locations.length
     ) {
-        fillForm(formValues, branch, locationsOptions, contactPersonOptions);
+        formValues = fillForm(initialValues, branch, locationsOptions, contactPersonOptions);
+    } else {
+        formValues = initialValues;
     }
 
     return (

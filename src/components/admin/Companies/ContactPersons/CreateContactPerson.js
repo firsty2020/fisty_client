@@ -52,6 +52,7 @@ const CreateContactPerson = ({
                 </When>
                 <ContactPersonForm
                     match={match}
+                    contact-person={null}
                     onSubmit={(values) => handleCreateContactPerson(values)}
                     pending={pending} />
             </Container>
