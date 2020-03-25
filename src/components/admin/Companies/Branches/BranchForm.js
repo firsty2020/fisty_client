@@ -96,7 +96,6 @@ const BranchForm = ({
                         ['location', 'contact_person'],
                         branchData,
                     );
-                    branchData.city = 'Temp'
                     onSubmit(transformedData);
                 }}
             >

@@ -37,7 +37,7 @@ export const branches = (state = {}, action) => {
 
         case ADMIN_GET_BRANCHES_PENDING:
             return {
-                branches: [],
+                ...state,
                 getBranchesPending: true,
                 branchCreated: false
             };
@@ -60,6 +60,7 @@ export const branches = (state = {}, action) => {
             };
         case ADMIN_REMOVE_BRANCH_RESOLVED:
             return {
+                ...state,
                 branchRemoved: true,
                 removeBranchPending: false,
             };
