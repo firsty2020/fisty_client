@@ -78,7 +78,6 @@ const common = (state = initialState, action) => {
                 ...state,
                 getContactPersonsPending: true,
                 getContactPersonsFailed: false,
-                contactPersons: [],
                 createContactPersonResolved: false,
                 updateContactPersonResolved: false,
             };

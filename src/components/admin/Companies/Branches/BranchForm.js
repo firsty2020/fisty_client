@@ -54,7 +54,7 @@ const BranchForm = ({
 
     useEffect(() => {
         formValues.company = `${baseURL}companies/${match.params.companyId}/`;
-    }, [ formValues, match.params.companyId ]);
+    }, [ match.params.companyId ]);
 
     useEffect(() => {
         const params = { company: match.params.companyId, show_all: true };

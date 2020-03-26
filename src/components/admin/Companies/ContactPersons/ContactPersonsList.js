@@ -11,9 +11,12 @@ import {
 import { BackButton, ConfirmationModal } from '../../../ui';
 
 
-const ContactPersons = ({
+const ContactPersonsList = ({
                             match,
+                            params,
                             contactPersons,
+                            backPath,
+                            pathToCreate,
                             contactPersonRemoved,
                             getContactPersons,
                             removeContactPerson,
@@ -21,17 +24,16 @@ const ContactPersons = ({
 
     const [ contactPersonToRemove, setContactPersonToRemove ] = useState(null);
 
-    const params = { company: match.params.companyId };
 
     useEffect(() => {
         getContactPersons(params);
-    }, [ getContactPersons, params.company ]);
+    }, [ ]);
 
     useEffect(() => {
         if (contactPersonRemoved) {
             getContactPersons(params);
         }
-    }, [ getContactPersons, contactPersonRemoved , params.company ]);
+    }, [ getContactPersons, contactPersonRemoved ]);
 
     const handleRemoveContactPerson = () => {
         removeContactPerson(contactPersonToRemove);
@@ -47,9 +49,9 @@ const ContactPersons = ({
                 question="Вы уверены что хотите удалить это контактное лицо?"
             />
             <Container className="mt-10-auto" fluid>
-                <BackButton path={`/admin/companies/${params.company}`}/>
+                <BackButton path={backPath}/>
                 <div className="mb-3">
-                    <Link to={`/admin/companies/${params.company}/contact-person/create`}>
+                    <Link to={pathToCreate}>
                         <Button
                             variant="primary">
                             <PlusCircle
@@ -83,7 +85,7 @@ const ContactPersons = ({
                                             onClick={() => setContactPersonToRemove(contactPerson.id)}
                                             className="cursor-pointer"
                                             color="red"/>
-                                        <Link to={`${match.url}/${contactPerson.id}`}>
+                                        <Link to={`${match.url}/edit/${contactPerson.id}`}>
                                             <Edit
                                                 className="cursor-pointer"
                                                 color="blue"
@@ -113,4 +115,4 @@ const mapDispatchToProps = {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactPersons);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactPersonsList);

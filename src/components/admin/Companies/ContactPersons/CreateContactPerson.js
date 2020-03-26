@@ -10,7 +10,6 @@ import { createContactPerson } from './contactPersonApi';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
 import ContactPersonForm from './ContactPersonForm';
-import { baseURL } from '../../../../axios';
 import { push } from 'connected-react-router';
 
 
@@ -18,6 +17,8 @@ const CreateContactPerson = ({
                                  pending,
                                  created,
                                  match,
+                                 successPath,
+                                 entity,
                                  push,
                                  createContactPerson,
                              }) => {
@@ -27,15 +28,15 @@ const CreateContactPerson = ({
         if (created) {
             setTimeout(
                 () =>
-                    push(`/admin/companies/${match.params.companyId}/contact-persons`),
+                    push(successPath),
                 3000
             );
         }
-    }, [ created, match, push ]);
+    }, [ created, push, successPath ]);
 
     const handleCreateContactPerson = (values) => {
         const contactPerson = {...values};
-        contactPerson.company = `${baseURL}companies/${match.params.companyId}/`;
+        contactPerson[entity.name] = entity.url;
         contactPerson.gender = contactPerson.gender.value;
         contactPerson.role = contactPerson.role.value;
         createContactPerson(contactPerson);
@@ -51,6 +52,7 @@ const CreateContactPerson = ({
                     />
                 </When>
                 <ContactPersonForm
+                    cancelPath={successPath}
                     match={match}
                     contact-person={null}
                     onSubmit={(values) => handleCreateContactPerson(values)}

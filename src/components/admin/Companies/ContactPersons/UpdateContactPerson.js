@@ -3,12 +3,13 @@ import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
-import ContactPerson from './ContactPersonForm';
+import ContactPersonForm from './ContactPersonForm';
 import { getContactPerson, updateContactPerson } from './contactPersonApi';
 import {
     contactPersonSelector,
     updateContactPersonResolvedSelector
 } from '../../adminReducer';
+import { push } from 'connected-react-router';
 
 
 const UpdateContactPerson = ({
@@ -17,8 +18,10 @@ const UpdateContactPerson = ({
                                  match,
                                  updated,
                                  contactPerson,
+                                 successPath,
                                  getContactPerson,
                                  updateContactPerson,
+                                 push,
                              }) => {
 
     useEffect(() => {
@@ -30,11 +33,11 @@ const UpdateContactPerson = ({
         if (updated) {
             setTimeout(
                 () =>
-                    history.push(`/admin/companies/${match.params.companyId}/contact-persons`),
+                    push(successPath),
                 3000
             );
         }
-    }, [ updated, history, match ]);
+    }, [ updated, history, successPath, push ]);
 
     const handleUpdateContactPerson = (values) => {
         const __contactPerson = { ...contactPerson, ...values };
@@ -52,8 +55,9 @@ const UpdateContactPerson = ({
                         message="Вы успешно обновили контактное лицо"
                     />
                 </When>
-                <ContactPerson
+                <ContactPersonForm
                     match={match}
+                    cancelPath={successPath}
                     onSubmit={(values) => handleUpdateContactPerson(values)}
                     contactPerson={contactPerson}
                     isUpdating
@@ -72,6 +76,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getContactPerson,
     updateContactPerson,
+    push,
 };
 
 

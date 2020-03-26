@@ -1,11 +1,10 @@
 import UserList from './Users/Users';
 import Companies from './Companies/Companies';
 import CreateCompany from './Companies/CreateCompany';
-import CreateContactPerson from './Companies/ContactPersons/CreateContactPerson';
 import Roles from './Configs/Roles/Roles';
 import CompanyDetails from './Companies/CompanyDetails';
-import ContactPersons from './Companies/ContactPersons/ContactPersons';
-import UpdateContactPerson from './Companies/ContactPersons/UpdateContactPerson';
+import ContactPersons from './Companies/ContactPersons';
+import BranchContactPersons from './Companies/Branches/ContactPersons';
 import Locations from './Configs/Locations';
 import Industries from './Configs/Industries';
 import Specifications from './Configs/Specifications';
@@ -16,6 +15,14 @@ import CreateBranch from './Companies/Branches/CreateBranch';
 import Branches from './Companies/Branches/Branches';
 import UpdateBranch from './Companies/Branches/UpdateBranch';
 import BranchDetails from './Companies/Branches/BranchDetails';
+import CreateCompanyContactPerson
+    from './Companies/CreateCompanyContactPerson';
+import CreateBranchContactPerson
+    from './Companies/Branches/CreateBranchContactPerson';
+import UpdateCompanyContactPerson
+    from './Companies/UpdateCompanyContacPerson';
+import UpdateBranchContactPerson
+    from './Companies/Branches/UpdateBranchContactPerson';
 
 
 export const navigation =  {
@@ -109,17 +116,17 @@ export const adminRoutes = [
     {
         path: '/admin/companies/:companyId/contact-persons',
         component: ContactPersons,
-        name: 'Контактные Лица',
+        name: 'Контактные лица компании',
     },
     {
-        path: '/admin/companies/:companyId/contact-person/create',
-        component: CreateContactPerson,
-        name: 'Контактные Лица',
+        path: '/admin/companies/:companyId/contact-persons/create',
+        component: CreateCompanyContactPerson,
+        name: 'Создать контактное лицо компании',
     },
     {
-        path: '/admin/companies/:companyId/contact-persons/:contactPersonId',
-        component: UpdateContactPerson,
-        name: 'Контактные Лица',
+        path: '/admin/companies/:companyId/contact-persons/edit/:contactPersonId',
+        component: UpdateCompanyContactPerson,
+        name: 'Править контактное лицо компании',
     },
     {
         path: '/admin/companies/:companyId/application/create',
@@ -140,6 +147,21 @@ export const adminRoutes = [
         path: '/admin/companies/:companyId/branches/edit/:branchId',
         component: UpdateBranch,
         name: 'Править бранч',
+    },
+    {
+        path: '/admin/companies/:companyId/branches/:branchId/contact-persons',
+        component: BranchContactPersons,
+        name: 'Контактные лица бранча',
+    },
+    {
+        path: '/admin/companies/:companyId/branches/:branchId/contact-persons/edit/:contactPersonId',
+        component: UpdateBranchContactPerson,
+        name: 'Править контактное лицо бранча',
+    },
+    {
+        path: '/admin/companies/:companyId/branches/:branchId/contact-persons/create',
+        component: CreateBranchContactPerson,
+        name: 'Создать контактное лицо бранча',
     },
     {
         path: '/admin/companies/:companyId/branches/:branchId',

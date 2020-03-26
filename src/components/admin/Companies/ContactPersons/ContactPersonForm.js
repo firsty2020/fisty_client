@@ -26,19 +26,23 @@ const initialValues = {
     gender: '',
 };
 
+let formValues;
 
-const fillForm = (contactPerson, roles) => {
+
+const fillForm = (initialValues, contactPerson, roles) => {
+    const values = {};
     for (let key in initialValues) {
-        initialValues[key] = contactPerson[key];
+        values[key] = contactPerson[key];
     }
-    initialValues.gender = genderOptions.find(option => option.value === contactPerson.gender);
-    initialValues.role = generateSelectOptions(roles, 'url', 'name').find(role => role.value === contactPerson.role);
+    values.gender = genderOptions.find(option => option.value === contactPerson.gender);
+    values.role = generateSelectOptions(roles, 'url', 'name').find(role => role.value === contactPerson.role);
+    return values;
 };
 
 const ContactPersonForm = ({
                                roles,
                                pending,
-                               match,
+                               cancelPath,
                                contactPerson,
                                isUpdating,
                                getRoles,
@@ -49,21 +53,21 @@ const ContactPersonForm = ({
         getRoles();
     }, [ getRoles ]);
 
-    useEffect(() => {
-        if (isUpdating && contactPerson && roles) {
-            fillForm(contactPerson, roles);
-        }
-    },[ contactPerson, isUpdating, roles ]);
-
     if (isUpdating && !contactPerson) {
         return null;
+    }
+
+    if (contactPerson && roles) {
+        formValues = fillForm(initialValues, contactPerson, roles);
+    } else {
+        formValues = initialValues;
     }
 
     return (
         <div>
             <Formik
                 enableReinitialize
-                initialValues={initialValues}
+                initialValues={formValues}
                 validationSchema={contactPersonSchema}
                 onSubmit={(values) => {
                     onSubmit(values);
@@ -187,7 +191,7 @@ const ContactPersonForm = ({
                             ) : null}
                         </Form.Group>
                         <div className="text-center">
-                            <Link to={`/admin/companies/${match.params.companyId}/contact-persons`}>
+                            <Link to={cancelPath}>
                                 <Button
                                     className="mr-2"
                                     variant="secondary">Отменить
