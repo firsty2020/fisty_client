@@ -11,7 +11,7 @@ import {
     transformReactSelectFields
 } from '../../../../helpers/utils';
 import { getContactPersons } from '../ContactPersons/contactPersonApi';
-import { contactPersonsSelector } from '../../adminReducer';
+import {contactPersonsSelector, contactPersonsState} from '../../adminReducer';
 import { baseURL } from '../../../../axios';
 import { Link } from 'react-router-dom';
 

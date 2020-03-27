@@ -109,7 +109,7 @@ export const generateSelectOptions = (list, value, label) => {
         } else {
             __label = curr[label];
         }
-        acc.push({value: curr[value], label: __label });
+        acc.push({ value: curr[value], label: __label });
         return acc;
     }, [])
 };

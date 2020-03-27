@@ -8,13 +8,18 @@ import {
     getContactPersonsFailed,
     getContactPersonsPending,
     getContactPersonsResolved,
+    linkContactPersonFailed,
+    linkContactPersonPending,
+    linkContactPersonResolved,
     removeContactPersonFailed,
     removeContactPersonPending,
-    removeContactPersonResolved, updateContactPersonFailed,
+    removeContactPersonResolved,
+    updateContactPersonFailed,
     updateContactPersonPending,
     updateContactPersonResolved
 } from './contactPersonActions';
 import api from '../../../../axios';
+
 
 export const createContactPerson = (data) => {
     return dispatch => {
@@ -26,6 +31,7 @@ export const createContactPerson = (data) => {
     }
 };
 
+
 export const getContactPersons = (params) => {
     return dispatch => {
         dispatch(getContactPersonsPending());
@@ -35,6 +41,7 @@ export const getContactPersons = (params) => {
             .catch((err) => dispatch(getContactPersonsFailed()))
     }
 };
+
 
 export const getContactPerson = (id) => {
     return dispatch => {
@@ -46,6 +53,7 @@ export const getContactPerson = (id) => {
     }
 };
 
+
 export const removeContactPerson = (id) => {
     return dispatch => {
         dispatch(removeContactPersonPending());
@@ -56,6 +64,7 @@ export const removeContactPerson = (id) => {
     }
 };
 
+
 export const updateContactPerson = (contactPerson) => {
     return dispatch => {
         dispatch(updateContactPersonPending());
@@ -63,5 +72,15 @@ export const updateContactPerson = (contactPerson) => {
             .patch(`contact-person/${contactPerson.id}/`, contactPerson)
             .then(() => dispatch(updateContactPersonResolved()))
             .catch(() => dispatch(updateContactPersonFailed()))
+    }
+};
+
+export const linkContactPerson = (data) => {
+    return dispatch => {
+        dispatch(linkContactPersonPending());
+        api
+            .post('companies/contact-person-relations/link/', data)
+            .then(() => dispatch(linkContactPersonResolved()))
+            .catch((err) => dispatch(linkContactPersonFailed()))
     }
 };

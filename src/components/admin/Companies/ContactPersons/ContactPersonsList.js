@@ -1,39 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import { Button, Container, Table } from 'react-bootstrap';
-import { Edit, PlusCircle, Trash } from 'react-feather';
+import React, { useState } from 'react';
+import { Container, Table } from 'react-bootstrap';
+import { Edit, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getContactPersons, removeContactPerson } from './contactPersonApi';
-import {
-    contactPersonsSelector,
-    removeContactPersonResolvedSelector
-} from '../../adminReducer';
-import { BackButton, ConfirmationModal } from '../../../ui';
+import { removeContactPerson } from './contactPersonApi';
+import { ConfirmationModal } from '../../../ui';
 
 
 const ContactPersonsList = ({
-                            match,
-                            params,
-                            contactPersons,
-                            backPath,
-                            pathToCreate,
-                            contactPersonRemoved,
-                            getContactPersons,
-                            removeContactPerson,
-                        }) => {
+                                match,
+                                contactPersons,
+                                children,
+                                removeContactPerson,
+                            }) => {
 
     const [ contactPersonToRemove, setContactPersonToRemove ] = useState(null);
-
-
-    useEffect(() => {
-        getContactPersons(params);
-    }, [ ]);
-
-    useEffect(() => {
-        if (contactPersonRemoved) {
-            getContactPersons(params);
-        }
-    }, [ getContactPersons, contactPersonRemoved ]);
 
     const handleRemoveContactPerson = () => {
         removeContactPerson(contactPersonToRemove);
@@ -49,17 +30,8 @@ const ContactPersonsList = ({
                 question="Вы уверены что хотите удалить это контактное лицо?"
             />
             <Container className="mt-10-auto" fluid>
-                <BackButton path={backPath}/>
-                <div className="mb-3">
-                    <Link to={pathToCreate}>
-                        <Button
-                            variant="primary">
-                            <PlusCircle
-                                size={20}
-                                className="align-sub"
-                            /> Создать
-                        </Button>
-                    </Link>
+                <div>
+                    {children}
                 </div>
                 <Table>
                     <thead>
@@ -103,16 +75,10 @@ const ContactPersonsList = ({
     );
 };
 
-const mapStateToProps = state => ({
-    contactPersons: contactPersonsSelector(state),
-    contactPersonRemoved: removeContactPersonResolvedSelector(state),
-});
 
 const mapDispatchToProps = {
-    getContactPersons,
     removeContactPerson,
 };
 
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactPersonsList);
+export default connect(null, mapDispatchToProps)(ContactPersonsList);

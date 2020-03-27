@@ -17,11 +17,15 @@ import {
     ADMIN_UPDATE_CONTACT_PERSON_PENDING,
     ADMIN_UPDATE_CONTACT_PERSON_FAILED,
     ADMIN_UPDATE_CONTACT_PERSON_RESOLVED,
+    ADMIN_LINK_CONTACT_PERSON_PENDING,
+    ADMIN_LINK_CONTACT_PERSON_FAILED, ADMIN_LINK_CONTACT_PERSON_RESOLVED,
 } from '../../constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
 import { companies } from './Companies/companiesReducer';
 import { branches } from './Companies/Branches/branchReducer';
+import { createSelector } from 'reselect';
+import {baseURL} from '../../axios';
 
 const initialState = { getUsersPending: false, getUsersError: null, users: [] };
 
@@ -80,6 +84,7 @@ const common = (state = initialState, action) => {
                 getContactPersonsFailed: false,
                 createContactPersonResolved: false,
                 updateContactPersonResolved: false,
+                linkContactPersonResolved: false,
             };
 
         case ADMIN_GET_CONTACT_PERSONS_FAILED:
@@ -95,7 +100,7 @@ const common = (state = initialState, action) => {
                 ...state,
                 getContactPersonsPending: false,
                 getContactPersonsFailed: false,
-                contactPersons: action.payload,
+                contactPersons: [...action.payload ],
             };
 
         case ADMIN_REMOVE_CONTACT_PERSON_PENDING:
@@ -170,6 +175,28 @@ const common = (state = initialState, action) => {
                 updateContactPersonResolved: true,
             };
 
+        case ADMIN_LINK_CONTACT_PERSON_PENDING:
+            return {
+                ...state,
+                linkContactPersonPending: true,
+                linkContactPersonFailed: false,
+                linkContactPersonResolved: false,
+            };
+
+        case ADMIN_LINK_CONTACT_PERSON_FAILED:
+            return {
+                ...state,
+                linkContactPersonPending: false,
+                linkContactPersonResolved: false,
+            };
+
+        case ADMIN_LINK_CONTACT_PERSON_RESOLVED:
+            return {
+                ...state,
+                linkContactPersonPending: false,
+                linkContactPersonResolved: true,
+            };
+
         default:
             return state;
     }
@@ -194,7 +221,24 @@ export const createContactPersonPendingSelector = state => state.admin.common.cr
 export const contactPersonsSelector = state => state.admin.common.contactPersons;
 export const contactPersonSelector = state => state.admin.common.contactPerson;
 
+export const branchContactPersonsSelector = (state, props) => {
+    if (state.admin.common.contactPersons) {
+        return  state.admin.common.contactPersons.filter(i => i.branch_url === `${baseURL}companies/branch/${props.match.params.branchId}/`);
+    }
+    return [];
+};
+
+export const excludeBranchContactPersons = (state, props) => {
+    if (state.admin.common.contactPersons) {
+        return  state.admin.common.contactPersons.filter(i => i.branch_url !== `${baseURL}companies/branch/${props.params.branch}/`);
+    }
+    return [];
+};
+
 export const removeContactPersonResolvedSelector = state => state.admin.common.removeContactPersonResolved;
 
 export const updateContactPersonResolvedSelector = state => state.admin.common.updateContactPersonResolved;
 
+export const linkContactPersonPendingSelector = state => state.admin.common.linkContactPersonPending;
+
+export const linkContactPersonResolvedSelector = state => state.admin.common.linkContactPersonResolved;

@@ -7,10 +7,13 @@ import {
     ADMIN_GET_CONTACT_PERSON_RESOLVED,
     ADMIN_GET_CONTACT_PERSONS_FAILED,
     ADMIN_GET_CONTACT_PERSONS_PENDING,
-    ADMIN_GET_CONTACT_PERSONS_RESOLVED,
+    ADMIN_GET_CONTACT_PERSONS_RESOLVED, ADMIN_LINK_CONTACT_PERSON_FAILED,
+    ADMIN_LINK_CONTACT_PERSON_PENDING,
+    ADMIN_LINK_CONTACT_PERSON_RESOLVED,
     ADMIN_REMOVE_CONTACT_PERSON_FAILED,
     ADMIN_REMOVE_CONTACT_PERSON_PENDING,
-    ADMIN_REMOVE_CONTACT_PERSON_RESOLVED, ADMIN_UPDATE_CONTACT_PERSON_FAILED,
+    ADMIN_REMOVE_CONTACT_PERSON_RESOLVED,
+    ADMIN_UPDATE_CONTACT_PERSON_FAILED,
     ADMIN_UPDATE_CONTACT_PERSON_PENDING,
     ADMIN_UPDATE_CONTACT_PERSON_RESOLVED
 } from '../../../../constants/actionTypes';
@@ -99,6 +102,23 @@ export const updateContactPersonResolved = (contactPerson) => ({
 
 export const updateContactPersonFailed = () => ({
     type: ADMIN_UPDATE_CONTACT_PERSON_FAILED,
+});
+
+/******************************************/
+
+
+/*** Actions for fetching contact persons ***/
+
+export const linkContactPersonPending = () => ({
+    type: ADMIN_LINK_CONTACT_PERSON_PENDING,
+});
+
+export const linkContactPersonResolved = () => ({
+    type: ADMIN_LINK_CONTACT_PERSON_RESOLVED,
+});
+
+export const linkContactPersonFailed = () => ({
+    type: ADMIN_LINK_CONTACT_PERSON_FAILED,
 });
 
 /******************************************/

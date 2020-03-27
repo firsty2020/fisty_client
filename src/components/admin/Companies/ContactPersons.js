@@ -1,26 +1,71 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ContactPersonsList from './ContactPersons/ContactPersonsList';
+import {BackButton} from '../../ui';
+import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
+import {PlusCircle} from 'react-feather';
+import {
+    contactPersonsSelector,
+    removeContactPersonResolvedSelector,
+} from '../adminReducer';
+import { getContactPersons } from './ContactPersons/contactPersonApi';
+import {connect} from 'react-redux';
 
 
-const ContactPersons = ({ match }) => {
+const ContactPersons = ({
+                            match,
+                            contactPersons,
+                            contactPersonRemoved,
+                            getContactPersons
+                        }) => {
 
     const params = { company: match.params.companyId };
-    
+
+    useEffect(() => {
+        getContactPersons(params);
+    }, [ getContactPersons, params.branch ]);
+
+    useEffect(() => {
+        if (contactPersonRemoved) {
+            getContactPersons(params);
+        }
+    }, [ getContactPersons, contactPersonRemoved, params.company ]);
+
     return (
         <div>
             <ContactPersonsList
+                contactPersons={contactPersons}
                 match={match}
                 params={params}
-                backPath={`/admin/companies/${params.company}`}
-                pathToCreate={`${match.url}/create`}
-            />
+            >
+                <BackButton path={`/admin/companies/${params.company}`}/>
+                <div className="mb-3">
+                    <Link to={`${match.url}/create`}>
+                        <Button
+                            variant="primary">
+                            <PlusCircle
+                                size={20}
+                                className="align-sub"
+                            /> Создать
+                        </Button>
+                    </Link>
+                </div>
+            </ContactPersonsList>
         </div>
     );
 };
 
 
-ContactPersons.propTypes = {
+const mapStateToProps = () => {
+    return (state, props) => ({
+        contactPersons: contactPersonsSelector(state),
+        contactPersonRemoved: removeContactPersonResolvedSelector(state),
+    });
+};
+
+const mapDispatchToProps = {
+    getContactPersons,
 };
 
 
-export default ContactPersons;
+export default connect(mapStateToProps, mapDispatchToProps)(ContactPersons);
