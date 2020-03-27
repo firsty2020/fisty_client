@@ -53,6 +53,10 @@ const ContactPersonsList = ({
                                 <td>{contactPerson.phone_number}</td>
                                 <td>
                                     <div className="d-flex justify-content-around">
+                                        <div className="cursor-pointer"
+                                             style={{color: '#fcba03', fontSize: '19px'}}>
+                                            <i className="fa fa-user-times"></i>
+                                        </div>
                                         <Trash
                                             onClick={() => setContactPersonToRemove(contactPerson.id)}
                                             className="cursor-pointer"
