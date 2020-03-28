@@ -102,7 +102,7 @@ button:disabled {
 .right-fixed-alert {
     right: 0;
     margin-right: 10px;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .green-shadow {

@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { removeContactPerson } from './contactPersonApi';
 import { ConfirmationModal } from '../../../ui';
-
+import { UserMinus } from 'react-feather';
 
 const ContactPersonsList = ({
                                 match,
                                 contactPersons,
                                 children,
                                 removeContactPerson,
+                                onUnlinkContactPerson,
                             }) => {
 
     const [ contactPersonToRemove, setContactPersonToRemove ] = useState(null);
@@ -44,7 +45,7 @@ const ContactPersonsList = ({
                     </tr>
                     </thead>
                     <tbody>
-                    {(contactPersons|| []).map((contactPerson) => {
+                    {((contactPersons && contactPersons.length) ? contactPersons : []).map((contactPerson) => {
                         return (
                             <tr key={contactPerson.id}>
                                 <td>{contactPerson.first_name}</td>
@@ -52,20 +53,28 @@ const ContactPersonsList = ({
                                 <td>{contactPerson.email}</td>
                                 <td>{contactPerson.phone_number}</td>
                                 <td>
-                                    <div className="d-flex justify-content-around">
-                                        <div className="cursor-pointer"
-                                             style={{color: '#fcba03', fontSize: '19px'}}>
-                                            <i className="fa fa-user-times"></i>
-                                        </div>
-                                        <Trash
+                                    <div className="d-flex justify-content-around align-items-end">
+                                        { onUnlinkContactPerson ? (<div
+                                            onClick={() => onUnlinkContactPerson(contactPerson)}
+                                            title="Удалить из контакных лиц"
+                                            className="cursor-pointer">
+                                            <UserMinus/>
+                                        </div>) : null }
+                                        <div
+                                            title="Удалить"
                                             onClick={() => setContactPersonToRemove(contactPerson.id)}
-                                            className="cursor-pointer"
-                                            color="red"/>
+                                            className="cursor-pointer">
+                                            <Trash color="red"/>
+                                        </div>
+
                                         <Link to={`${match.url}/edit/${contactPerson.id}`}>
-                                            <Edit
-                                                className="cursor-pointer"
-                                                color="blue"
-                                            />
+                                            <div
+                                                title="Редактировать"
+                                                className="cursor-pointer">
+                                                <Edit color="blue"
+                                                />
+                                            </div>
+
                                         </Link>
                                     </div>
                                 </td>

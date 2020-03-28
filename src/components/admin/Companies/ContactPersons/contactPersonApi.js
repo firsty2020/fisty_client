@@ -14,6 +14,9 @@ import {
     removeContactPersonFailed,
     removeContactPersonPending,
     removeContactPersonResolved,
+    unLinkContactPersonFailed,
+    unLinkContactPersonPending,
+    unLinkContactPersonResolved,
     updateContactPersonFailed,
     updateContactPersonPending,
     updateContactPersonResolved
@@ -32,12 +35,12 @@ export const createContactPerson = (data) => {
 };
 
 
-export const getContactPersons = (params) => {
+export const getContactPersons = (params, uid) => {
     return dispatch => {
         dispatch(getContactPersonsPending());
         api
             .get('contact-person/', { params })
-            .then((res) => dispatch(getContactPersonsResolved(res.data.results)))
+            .then((res) => dispatch(getContactPersonsResolved(res.data.results, uid)))
             .catch((err) => dispatch(getContactPersonsFailed()))
     }
 };
@@ -82,5 +85,15 @@ export const linkContactPerson = (data) => {
             .post('companies/contact-person-relations/link/', data)
             .then(() => dispatch(linkContactPersonResolved()))
             .catch((err) => dispatch(linkContactPersonFailed()))
+    }
+};
+
+export const unLinkContactPerson = (data) => {
+    return dispatch => {
+        dispatch(unLinkContactPersonPending());
+        api
+            .post('companies/contact-person-relations/unlink/', data)
+            .then(() => dispatch(unLinkContactPersonResolved()))
+            .catch((err) => dispatch(unLinkContactPersonFailed()))
     }
 };

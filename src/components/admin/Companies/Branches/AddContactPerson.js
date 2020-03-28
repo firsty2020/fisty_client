@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import {
-    contactPersonsSelector, excludeBranchContactPersons,
+    contactPersonsState,
     linkContactPersonPendingSelector,
     linkContactPersonResolvedSelector,
 } from '../../adminReducer';
@@ -13,6 +13,8 @@ import { baseURL } from '../../../../axios';
 import { AlertNotice } from '../../../ui';
 import { When } from "react-if";
 
+
+const uid = Math.random().toString(36).replace('0.', '');
 
 
 const AddContactPerson = ({
@@ -26,9 +28,10 @@ const AddContactPerson = ({
                           }) => {
 
     const [ contactPerson, setContactPerson ] = useState(null);
+    const [ filteredContactPersons, setFilteredContactPersons ] = useState(null);
 
     useEffect(() => {
-        getContactPersons({ company: params.company })
+        getContactPersons({ company: params.company }, uid)
     }, [ getContactPersons, params.company ]);
 
     useEffect(() => {
@@ -36,6 +39,13 @@ const AddContactPerson = ({
             setTimeout(onHide.bind(null, true), 2000);
         }
     }, [ linked, onHide ]);
+    
+    useEffect(() => {
+        if (contactPersons && contactPersons.length) {
+            const filtered = contactPersons.filter((item) => item.branch_url !== `${baseURL}companies/branch/${params.branch}/` );
+            setFilteredContactPersons(filtered);
+        }
+    }, [ contactPersons, params.branch]);
 
     const handleAddContactPerson = () => {
         linkContactPerson({
@@ -68,7 +78,7 @@ const AddContactPerson = ({
                         onChange={(e) => setContactPerson(e)}
                         placeholder="Выберите из списка"
                         options={generateSelectOptions(
-                            contactPersons,
+                            filteredContactPersons,
                             'url',
                             (contactPerson) => `${contactPerson.first_name} ${contactPerson.last_name}`
                         )}
@@ -89,11 +99,14 @@ const AddContactPerson = ({
 };
 
 
-const mapStateToProps = () => (state, props) => ({
-    contactPersons: excludeBranchContactPersons(state, props),
-    linked: linkContactPersonResolvedSelector(state),
-    pending: linkContactPersonPendingSelector(state),
-});
+const mapStateToProps = () => {
+    const contactPersonsSelector = contactPersonsState(uid);
+    return (state, props) => ({
+        contactPersons: contactPersonsSelector(state),
+        linked: linkContactPersonResolvedSelector(state),
+        pending: linkContactPersonPendingSelector(state),
+    });
+};
 
 const mapDispatchToProps = {
     getContactPersons,
