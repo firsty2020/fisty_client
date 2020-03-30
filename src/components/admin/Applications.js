@@ -25,14 +25,9 @@ const Applications = ({ applications, getApplications, pending }) => {
         getApplications();
     }, [ getApplications ]);
 
-    const handleClickOnRow = (item) => {
-
-    };
-
     return (
         <div>
             <TableList
-                onClickRow={(item) => handleClickOnRow(item)}
                 layout={companiesTableLayout}
                 data={applications}
                 showSpinner={!!pending}

@@ -13,7 +13,7 @@ const initialState = { createApplicationPending: false, createApplicationResolve
 export const common = (state = initialState, action) => {
     switch (action.type) {
         case '@@router/LOCATION_CHANGE':
-            return initialState;
+            return { ...state, ...initialState };
         case CREATE_APPLICATION_PENDING:
             return {
                 createApplicationPending: true,
