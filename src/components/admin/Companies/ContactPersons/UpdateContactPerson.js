@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
 import ContactPersonForm from './ContactPersonForm';
-import { getContactPerson, updateContactPerson } from './contactPersonApi';
+import {
+    getContactPerson,
+    resetContactPersonUpdated,
+    updateContactPerson
+} from './contactPersonActions';
 import {
     contactPersonSelector,
     updateContactPersonResolvedSelector
@@ -21,19 +25,22 @@ const UpdateContactPerson = ({
                                  successPath,
                                  getContactPerson,
                                  updateContactPerson,
+                                 resetContactPersonUpdated,
                                  push,
                              }) => {
 
     useEffect(() => {
         const { contactPersonId } = match.params;
         getContactPerson(contactPersonId);
-    }, [ match, getContactPerson ]);
+    }, [ match.params.contactPersonId, getContactPerson ]);
 
     useEffect(() => {
         if (updated) {
             setTimeout(
-                () =>
-                    push(successPath),
+                () => {
+                    push(successPath);
+                    resetContactPersonUpdated();
+                },
                 3000
             );
         }
@@ -76,6 +83,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getContactPerson,
     updateContactPerson,
+    resetContactPersonUpdated,
     push,
 };
 

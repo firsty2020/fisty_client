@@ -45,7 +45,7 @@ import {
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
     ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
-} from '../../../constants/actionTypes';
+} from '../../../helpers/constants/actionTypes';
 
 
 export const configs = (state = {}, action) => {

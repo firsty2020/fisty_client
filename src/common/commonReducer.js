@@ -4,7 +4,7 @@ import {
     CREATE_APPLICATION_RESOLVED,
     GET_APPLICATIONS_PENDING,
     GET_APPLICATIONS_FAILED, GET_APPLICATIONS_RESOLVED,
-} from '../constants/actionTypes';
+} from '../helpers/constants/actionTypes';
 
 
 const initialState = { createApplicationPending: false, createApplicationResolved: null };

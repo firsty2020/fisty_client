@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { getUsers } from './usersApi';
 import { connect } from 'react-redux';
-import {
-    usersSelector,
-    usersErrorSelector,
-    usersPendingSelector
-} from '../adminReducer';
+import { usersSelector } from '../adminReducer';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { push } from 'connected-react-router';
 import { TableList } from '../../ui';
@@ -34,7 +30,7 @@ const statusOptions = [
 ];
 
 
-const Users = ({ users, match, getUsers, getUsersPending, push }) => {
+const Users = ({ users, match, getUsers, push }) => {
 
     const [ status, setStatus ] = useState(statusOptions[statusOptions.length - 1]);
 
@@ -71,7 +67,6 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
                 <TableList
                     layout={usersTableLayout}
                     data={users}
-                    showSpinner={!!getUsersPending}
                 />
             </div>
         </div>
@@ -81,8 +76,6 @@ const Users = ({ users, match, getUsers, getUsersPending, push }) => {
 
 const mapStateToProps = state => ({
     users: usersSelector(state),
-    getUsersError: usersErrorSelector(state),
-    getUsersPending: usersPendingSelector(state),
 });
 
 const mapDispatchToProps = { getUsers, push };

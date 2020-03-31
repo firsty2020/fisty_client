@@ -1,18 +1,17 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { arrayOf, bool, func, object, shape, string } from 'prop-types';
-import { EmptyListPlaceholder, LoadSpinner } from './index';
+import { arrayOf, func, object, shape, string } from 'prop-types';
+import { EmptyListPlaceholder, } from './index';
+import {isLoadingSelector} from '../admin/adminReducer';
+import { connect } from 'react-redux';
 
 
-const TableList = ({ layout, data, showSpinner, onClickRow }) => {
+const TableList = ({ layout, data, isLoading, onClickRow }) => {
 
-
-    if (showSpinner) {
-        return <LoadSpinner/>
-    }
-
-    if (!data || !data.length) {
+    if ((!data || !data.length) && !isLoading) {
         return <EmptyListPlaceholder/>;
+    } else if (!data || !data.length) {
+        return null;
     }
     return (
         <div className="cursor-pointer">
@@ -49,8 +48,11 @@ TableList.propTypes = {
         createRow: func.isRequired,
     }).isRequired,
     data: arrayOf(object),
-    showSpinner: bool.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+    isLoading: isLoadingSelector(state),
+});
 
-export default TableList;
+
+export default connect(mapStateToProps, null)(TableList);

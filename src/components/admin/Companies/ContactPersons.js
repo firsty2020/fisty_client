@@ -1,22 +1,26 @@
 import React, {useEffect} from 'react';
 import ContactPersonsList from './ContactPersons/ContactPersonsList';
-import {BackButton} from '../../ui';
-import {Link} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
-import {PlusCircle} from 'react-feather';
+import { BackButton } from '../../ui';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { PlusCircle } from 'react-feather';
 import {
     contactPersonsSelector,
     removeContactPersonResolvedSelector,
 } from '../adminReducer';
-import { getContactPersons } from './ContactPersons/contactPersonApi';
-import {connect} from 'react-redux';
+import {
+    getContactPersons,
+    resetContactPersonRemoved
+} from './ContactPersons/contactPersonActions';
+import { connect } from 'react-redux';
 
 
 const ContactPersons = ({
                             match,
                             contactPersons,
                             contactPersonRemoved,
-                            getContactPersons
+                            getContactPersons,
+                            resetContactPersonRemoved,
                         }) => {
 
     const params = { company: match.params.companyId };
@@ -28,6 +32,7 @@ const ContactPersons = ({
     useEffect(() => {
         if (contactPersonRemoved) {
             getContactPersons(params);
+            resetContactPersonRemoved();
         }
     }, [ getContactPersons, contactPersonRemoved, params.company ]);
 
@@ -65,6 +70,7 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = {
     getContactPersons,
+    resetContactPersonRemoved,
 };
 
 

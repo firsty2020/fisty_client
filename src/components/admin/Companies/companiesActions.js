@@ -7,7 +7,7 @@ import {
     ADMIN_GET_COMPANIES_RESOLVED,
     ADMIN_GET_COMPANY_FAILED,
     ADMIN_GET_COMPANY_RESOLVED,
-} from '../../../constants/actionTypes';
+} from '../../../helpers/constants/actionTypes';
 
 /*** Actions for creating a company ***/
 

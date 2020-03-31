@@ -15,7 +15,7 @@ import {
 } from '../Configs/configsReducer';
 import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
-import messages from '../../../constants/messages';
+import messages from '../../../helpers/constants/messages';
 import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
 import Select from 'react-select';
 import { generateSelectOptions } from '../../../helpers/utils';

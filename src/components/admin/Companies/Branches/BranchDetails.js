@@ -9,7 +9,7 @@ import { branchSelector } from './branchReducer';
 import {
     getContactPerson,
     getContactPersons
-} from '../ContactPersons/contactPersonApi';
+} from '../ContactPersons/contactPersonActions';
 
 
 const BranchDetails = ({ match, branch, getBranch, getContactPersons }) => {

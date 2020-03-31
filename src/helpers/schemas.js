@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import ERROR_MESSAGES from '../constants/messages';
+import ERROR_MESSAGES from './constants/messages';
 import { REGEX } from './regex-rules';
 
 export const userRegistrationSchema = Yup.object().shape({

@@ -1,3 +1,8 @@
+import {
+    ADMIN_CREATE_CONTACT_PERSON,
+    API_REQUEST
+} from './constants/actionTypes';
+
 export const generateMonths = () => ([
     {
         label: 'Январь',
@@ -137,3 +142,10 @@ export const clearEmptyFields = (data) => {
     }
     return data;
 };
+
+export const createApiAction = (payload) => ({
+    type: API_REQUEST,
+    payload
+});
+
+export const generateUId = () => Math.random().toString(36).replace('0.', '');

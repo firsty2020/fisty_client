@@ -5,7 +5,9 @@ import { admin } from './components/admin/adminReducer';
 import { common } from './common/commonReducer';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
+import apiMiddleware from './apiMiddleware';
 import { createBrowserHistory } from 'history';
+import { compose } from 'redux';
 
 export const history = createBrowserHistory();
 
@@ -20,10 +22,15 @@ const createRootReducer = (history) => combineReducers({
 
 export const store = createStore(
     createRootReducer(history),
-    applyMiddleware(
-        routerMiddleware(history),
-        thunk,
+    compose(
+        applyMiddleware(
+            routerMiddleware(history),
+            thunk,
+            apiMiddleware,
+            ),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     )
+
 );
 
 

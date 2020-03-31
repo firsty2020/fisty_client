@@ -3,27 +3,28 @@ import { Button, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import {
     contactPersonsState,
-    linkContactPersonPendingSelector,
+    isLoadingSelector,
     linkContactPersonResolvedSelector,
 } from '../../adminReducer';
-import { getContactPersons, linkContactPerson } from '../ContactPersons/contactPersonApi';
+import {
+    getContactPersons,
+    linkContactPerson,
+    resetContactPersonLinked,
+} from '../ContactPersons/contactPersonActions';
 import { connect } from 'react-redux';
-import { generateSelectOptions } from '../../../../helpers/utils';
+import { generateSelectOptions, generateUId } from '../../../../helpers/utils';
 import { baseURL } from '../../../../axios';
-import { AlertNotice } from '../../../ui';
-import { When } from "react-if";
 
 
-const uid = Math.random().toString(36).replace('0.', '');
+const uid = generateUId;
 
 
 const AddContactPerson = ({
                               show,
                               contactPersons,
                               params,
-                              linked,
+                              pending,
                               getContactPersons,
-                              linkContactPerson,
                               onHide,
                           }) => {
 
@@ -34,12 +35,7 @@ const AddContactPerson = ({
         getContactPersons({ company: params.company }, uid)
     }, [ getContactPersons, params.company ]);
 
-    useEffect(() => {
-        if (linked) {
-            setTimeout(onHide.bind(null, true), 2000);
-        }
-    }, [ linked, onHide ]);
-    
+
     useEffect(() => {
         if (contactPersons && contactPersons.length) {
             const filtered = contactPersons.filter((item) => item.branch_url !== `${baseURL}companies/branch/${params.branch}/` );
@@ -47,27 +43,14 @@ const AddContactPerson = ({
         }
     }, [ contactPersons, params.branch]);
 
-    const handleAddContactPerson = () => {
-        linkContactPerson({
-            branch: `${baseURL}companies/branch/${params.branch}/`,
-            contact_person: contactPerson.value
-        });
-    };
-
     if (!contactPersons) {
         return null;
     }
 
     return (
         <div>
-            <When condition={!!linked}>
-                <AlertNotice
-                    type="success"
-                    message="Вы успешно добавили контактное лицо"
-                />
-            </When>
             <Modal
-                onHide={onHide}
+                onHide={() => null}
                 show={show}
                 centered>
                 <Modal.Body>
@@ -86,11 +69,11 @@ const AddContactPerson = ({
                 </Modal.Body>
                 <Modal.Footer className="justify-content-center">
                     <Button
-                        onClick={onHide}
+                        onClick={() => onHide()}
                         variant="secondary" >Отменить</Button>
                     <Button
-                        onClick={handleAddContactPerson}
-                        disabled={!contactPerson}
+                        onClick={() => onHide(contactPerson)}
+                        disabled={!contactPerson || pending}
                         variant="primary">Добавить</Button>
                 </Modal.Footer>
             </Modal>
@@ -101,16 +84,17 @@ const AddContactPerson = ({
 
 const mapStateToProps = () => {
     const contactPersonsSelector = contactPersonsState(uid);
-    return (state, props) => ({
+    return (state) => ({
         contactPersons: contactPersonsSelector(state),
         linked: linkContactPersonResolvedSelector(state),
-        pending: linkContactPersonPendingSelector(state),
+        pending: isLoadingSelector(state),
     });
 };
 
 const mapDispatchToProps = {
     getContactPersons,
     linkContactPerson,
+    resetContactPersonLinked,
 };
 
 

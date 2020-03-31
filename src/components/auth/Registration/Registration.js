@@ -12,7 +12,7 @@ import { AuthFormContainer } from '../../ui/';
 import { registerUser } from '../auth';
 import { authPendingSelector, authSuccessSelector } from '../authReducer';
 import { userRegistrationSchema } from '../../../helpers/schemas';
-import ERROR_MESSAGES from '../../../constants/messages'
+import ERROR_MESSAGES from '../../../helpers/constants/messages'
 
 
 class Registration extends Component {

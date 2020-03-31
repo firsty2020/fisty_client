@@ -46,7 +46,7 @@ import {
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED
-} from '../../../constants/actionTypes';
+} from '../../../helpers/constants/actionTypes';
 
 
 /*** Actions for creating options for industry field ***/

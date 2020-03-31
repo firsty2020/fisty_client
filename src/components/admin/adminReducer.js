@@ -1,29 +1,20 @@
 import {
-    ADMIN_GET_USERS_PENDING,
-    ADMIN_GET_USERS_FAILED,
-    ADMIN_GET_USERS_RESOLVED,
-    ADMIN_CREATE_CONTACT_PERSON_PENDING,
-    ADMIN_CREATE_CONTACT_PERSON_FAILED,
-    ADMIN_CREATE_CONTACT_PERSON_RESOLVED,
-    ADMIN_GET_CONTACT_PERSONS_PENDING,
-    ADMIN_GET_CONTACT_PERSONS_FAILED,
-    ADMIN_GET_CONTACT_PERSONS_RESOLVED,
-    ADMIN_REMOVE_CONTACT_PERSON_PENDING,
-    ADMIN_REMOVE_CONTACT_PERSON_FAILED,
-    ADMIN_REMOVE_CONTACT_PERSON_RESOLVED,
-    ADMIN_GET_CONTACT_PERSON_PENDING,
-    ADMIN_GET_CONTACT_PERSON_FAILED,
-    ADMIN_GET_CONTACT_PERSON_RESOLVED,
-    ADMIN_UPDATE_CONTACT_PERSON_PENDING,
-    ADMIN_UPDATE_CONTACT_PERSON_FAILED,
-    ADMIN_UPDATE_CONTACT_PERSON_RESOLVED,
-    ADMIN_LINK_CONTACT_PERSON_PENDING,
-    ADMIN_LINK_CONTACT_PERSON_FAILED,
-    ADMIN_LINK_CONTACT_PERSON_RESOLVED,
-    ADMIN_UNLINK_CONTACT_PERSON_RESOLVED,
-    ADMIN_UNLINK_CONTACT_PERSON_FAILED,
-    ADMIN_UNLINK_CONTACT_PERSON_PENDING,
-} from '../../constants/actionTypes';
+    ADMIN_CREATE_CONTACT_PERSON,
+    API_REQUEST,
+    ADMIN_GET_USERS,
+    API_REQUEST_END,
+    ADMIN_GET_CONTACT_PERSONS,
+    ADMIN_REMOVE_CONTACT_PERSON,
+    ADMIN_GET_CONTACT_PERSON,
+    ADMIN_UPDATE_CONTACT_PERSON,
+    ADMIN_LINK_CONTACT_PERSON,
+    ADMIN_UNLINK_CONTACT_PERSON,
+    ADMIN_SET_CONTACT_PERSON_UPDATED,
+    ADMIN_SET_CONTACT_PERSON_CREATED,
+    ADMIN_SET_CONTACT_PERSON_REMOVED,
+    ADMIN_SET_CONTACT_PERSON_UNLINKED,
+    ADMIN_SET_CONTACT_PERSON_LINKED,
+} from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
 import { companies } from './Companies/companiesReducer';
@@ -31,200 +22,107 @@ import { branches } from './Companies/Branches/branchReducer';
 import { createSelector } from 'reselect';
 
 
-const initialState = { getUsersPending: false, getUsersError: null, users: [] };
-
-const common = (state = initialState, action) => {
+const common = (state = {}, action) => {
     switch (action.type) {
-        case ADMIN_GET_USERS_PENDING:
+
+        case API_REQUEST:
             return {
                 ...state,
-                getUsersPending: true,
-                getUsersError: null,
-                users: []
-            };
-        case ADMIN_GET_USERS_FAILED:
-            return {
-                ...state,
-                getUsersError: action.payload,
-                getUsersPending: false,
-                users: []
-            };
-        case ADMIN_GET_USERS_RESOLVED:
-            return {
-                ...state,
-                users: action.payload,
-                getUsersPending: false,
-                getUsersError: null
+                isLoading: true,
             };
 
-        case ADMIN_CREATE_CONTACT_PERSON_PENDING:
+        case API_REQUEST_END:
             return {
                 ...state,
-                createContactPersonPending: true,
-                createContactPersonFailed: false,
-                createContactPersonResolved: false,
+                isLoading: false,
             };
 
-        case ADMIN_CREATE_CONTACT_PERSON_FAILED:
+        case ADMIN_GET_USERS:
             return {
                 ...state,
-                createContactPersonPending: false,
-                createContactPersonFailed: true,
-                createContactPersonResolved: false,
+                users: action.payload.results,
             };
 
-        case ADMIN_CREATE_CONTACT_PERSON_RESOLVED:
+        case ADMIN_CREATE_CONTACT_PERSON:
             return {
                 ...state,
-                createContactPersonPending: false,
-                createContactPersonFailed: false,
-                createContactPersonResolved: true,
+                contactPersonCreated: true,
             };
 
-        case ADMIN_GET_CONTACT_PERSONS_PENDING:
+        case ADMIN_SET_CONTACT_PERSON_CREATED:
             return {
                 ...state,
-                getContactPersonsPending: true,
-                getContactPersonsFailed: false,
-                createContactPersonResolved: false,
-                updateContactPersonResolved: false,
-                linkContactPersonResolved: false,
-                unLinkContactPersonResolved: false,
+                contactPersonCreated: action.payload,
             };
 
-        case ADMIN_GET_CONTACT_PERSONS_FAILED:
+        case ADMIN_GET_CONTACT_PERSONS:
             return {
                 ...state,
-                getContactPersonsPending: false,
-                getContactPersonsFailed: true,
-                contactPersons: [],
-            };
-
-        case ADMIN_GET_CONTACT_PERSONS_RESOLVED:
-            return {
-                ...state,
-                getContactPersonsPending: false,
-                getContactPersonsFailed: false,
                 contactPersons: action.id ?  {
                     ...state.contactPersons,
-                    [ action.id ]: action.payload ,
-                } : action.payload,
+                    [ action.id ]: action.payload.results ,
+                } : action.payload.results,
+                /*getContactPersonsPending: true,
+                getContactPersonsFailed: false,
+                contactPersonCreated: false,
+                updateContactPersonResolved: false,
+                linkContactPersonResolved: false,
+                unLinkContactPersonResolved: false,*/
             };
 
-        case ADMIN_REMOVE_CONTACT_PERSON_PENDING:
+
+        case ADMIN_REMOVE_CONTACT_PERSON:
             return {
                 ...state,
-                removeContactPersonPending: true,
-                removeContactPersonFailed: false,
-                removeContactPersonResolved: false,
+                contactPersonRemoved: true,
             };
 
-        case ADMIN_REMOVE_CONTACT_PERSON_FAILED:
+        case ADMIN_SET_CONTACT_PERSON_REMOVED:
             return {
                 ...state,
-                removeContactPersonPending: false,
-                removeContactPersonFailed: true,
-                removeContactPersonResolved: false,
+                contactPersonRemoved: action.payload,
             };
 
-        case ADMIN_REMOVE_CONTACT_PERSON_RESOLVED:
+        case ADMIN_SET_CONTACT_PERSON_UNLINKED:
             return {
                 ...state,
-                removeContactPersonPending: false,
-                removeContactPersonFailed: false,
-                removeContactPersonResolved: true,
+                contactPersonUnLinked: action.payload,
             };
 
-        case ADMIN_GET_CONTACT_PERSON_PENDING:
+        case ADMIN_SET_CONTACT_PERSON_LINKED:
             return {
                 ...state,
-                getContactPersonPending: true,
-                getContactPersonFailed: false,
-                contactPerson: null,
+                contactPersonLinked: action.payload,
             };
 
-        case ADMIN_GET_CONTACT_PERSON_FAILED:
+        case ADMIN_GET_CONTACT_PERSON:
             return {
                 ...state,
-                getContactPersonPending: false,
-                getContactPersonFailed: true,
-                contactPerson: null,
-            };
-
-        case ADMIN_GET_CONTACT_PERSON_RESOLVED:
-            return {
-                ...state,
-                getContactPersonPending: false,
-                getContactPersonFailed: false,
                 contactPerson: action.payload,
             };
 
-        case ADMIN_UPDATE_CONTACT_PERSON_PENDING:
+        case ADMIN_UPDATE_CONTACT_PERSON:
             return {
                 ...state,
-                updateContactPersonPending: true,
-                updateContactPersonFailed: false,
-                updateContactPersonResolved: false,
+                contactPersonUpdated: true,
             };
 
-        case ADMIN_UPDATE_CONTACT_PERSON_FAILED:
+        case ADMIN_SET_CONTACT_PERSON_UPDATED:
             return {
                 ...state,
-                updateContactPersonPending: false,
-                updateContactPersonFailed: true,
-                updateContactPersonResolved: false,
+                contactPersonUpdated: action.payload,
             };
 
-        case ADMIN_UPDATE_CONTACT_PERSON_RESOLVED:
+        case ADMIN_LINK_CONTACT_PERSON:
             return {
                 ...state,
-                updateContactPersonPending: false,
-                updateContactPersonFailed: false,
-                updateContactPersonResolved: true,
+                contactPersonLinked: true,
             };
 
-        case ADMIN_LINK_CONTACT_PERSON_PENDING:
+        case ADMIN_UNLINK_CONTACT_PERSON:
             return {
                 ...state,
-                linkContactPersonPending: true,
-                linkContactPersonFailed: false,
-                linkContactPersonResolved: false,
-            };
-
-        case ADMIN_LINK_CONTACT_PERSON_FAILED:
-            return {
-                ...state,
-                linkContactPersonPending: false,
-                linkContactPersonResolved: false,
-            };
-
-        case ADMIN_LINK_CONTACT_PERSON_RESOLVED:
-            return {
-                ...state,
-                linkContactPersonPending: false,
-                linkContactPersonResolved: true,
-            };
-
-        case ADMIN_UNLINK_CONTACT_PERSON_PENDING:
-            return {
-                ...state,
-                unLinkContactPersonPending: true,
-                unLinkContactPersonFailed: false,
-                unLinkContactPersonResolved: false,
-            };
-
-        case ADMIN_UNLINK_CONTACT_PERSON_FAILED:
-            return {
-                ...state,
-                unLinkContactPersonPending: false,
-                unLinkContactPersonResolved: false,
-            };
-
-        case ADMIN_UNLINK_CONTACT_PERSON_RESOLVED:
-            return {
-                ...state,
-                unLinkContactPersonPending: false,
-                unLinkContactPersonResolved: true,
+                contactPersonUnLinked: true,
             };
         default:
             return state;
@@ -239,15 +137,14 @@ export const admin =  combineReducers({
     branches,
 });
 
+export const isLoadingSelector = (state) => state.admin.common.isLoading;
 
 export const usersSelector = (state) => state.admin.common.users;
-export const usersErrorSelector = (state) => state.admin.common.getUsersError;
-export const usersPendingSelector = (state) => state.admin.common.getUsersPending;
 
-export const contactPersonCreatedSelector = state => state.admin.common.createContactPersonResolved;
-export const createContactPersonPendingSelector = state => state.admin.common.createContactPersonPending;
+export const contactPersonCreatedSelector = state => state.admin.common.contactPersonCreated;
 
 export const contactPersonsSelector = state => state.admin.common.contactPersons;
+
 export const contactPersonSelector = state => state.admin.common.contactPerson;
 
 export const contactPersonsState = (uid = null) => createSelector(
@@ -261,12 +158,10 @@ export const contactPersonsState = (uid = null) => createSelector(
     }
 );
 
-export const removeContactPersonResolvedSelector = state => state.admin.common.removeContactPersonResolved;
+export const removeContactPersonResolvedSelector = state => state.admin.common.contactPersonRemoved;
 
-export const updateContactPersonResolvedSelector = state => state.admin.common.updateContactPersonResolved;
+export const updateContactPersonResolvedSelector = state => state.admin.common.contactPersonUpdated;
 
-export const linkContactPersonPendingSelector = state => state.admin.common.linkContactPersonPending;
-export const linkContactPersonResolvedSelector = state => state.admin.common.linkContactPersonResolved;
+export const linkContactPersonResolvedSelector = state => state.admin.common.contactPersonLinked;
 
-export const unLinkContactPersonPendingSelector = state => state.admin.common.unLinkContactPersonPending;
-export const unLinkContactPersonResolvedSelector = state => state.admin.common.unLinkContactPersonResolved;
+export const unLinkContactPersonResolvedSelector = state => state.admin.common.contactPersonUnLinked;

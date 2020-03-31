@@ -7,7 +7,7 @@ import {
     ADMIN_GET_COMPANIES_FAILED,
     ADMIN_GET_COMPANY_RESOLVED,
     ADMIN_GET_COMPANY_FAILED,
-} from '../../../constants/actionTypes';
+} from '../../../helpers/constants/actionTypes';
 
 
 export const companies = (state = {}, action) => {

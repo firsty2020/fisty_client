@@ -3,10 +3,13 @@ import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {
     contactPersonCreatedSelector,
-    createContactPersonPendingSelector,
+    isLoadingSelector
 } from '../../adminReducer';
 import { contactPersonRolesSelector } from '../../Configs/configsReducer';
-import { createContactPerson } from './contactPersonApi';
+import {
+    createContactPerson,
+    resetContactPersonCreated
+} from './contactPersonActions';
 import { AlertNotice } from '../../../ui';
 import { When } from 'react-if';
 import ContactPersonForm from './ContactPersonForm';
@@ -21,14 +24,17 @@ const CreateContactPerson = ({
                                  entity,
                                  push,
                                  createContactPerson,
+                                 resetContactPersonCreated,
                              }) => {
 
 
     useEffect(() => {
         if (created) {
             setTimeout(
-                () =>
-                    push(successPath),
+                () => {
+                    push(successPath);
+                    resetContactPersonCreated();
+                },
                 3000
             );
         }
@@ -66,11 +72,12 @@ const CreateContactPerson = ({
 const mapStateToProps = state => ({
     roles: contactPersonRolesSelector(state),
     created: contactPersonCreatedSelector(state),
-    pending: createContactPersonPendingSelector(state),
+    pending: isLoadingSelector(state),
 });
 
 const mapDispatchToProps = {
     createContactPerson,
+    resetContactPersonCreated,
     push,
 };
 

@@ -1,9 +1,6 @@
 import {
-    getUsersPending,
-    getUsersFailed,
-    getUsersResolved,
-} from '../adminActions';
-import api from '../../../axios';
+    ADMIN_GET_USERS, API_REQUEST,
+} from '../../../helpers/constants/actionTypes';
 
 
 export const getUsers = (status) => {
@@ -11,11 +8,13 @@ export const getUsers = (status) => {
     if (status !== 'all') {
         params = { status }
     }
-    return dispatch => {
-        dispatch(getUsersPending());
-        api
-            .get('users/', { params })
-            .then((res) => dispatch(getUsersResolved(res.data.results)))
-            .catch(error => dispatch(getUsersFailed(error)));
-    };
+    return {
+        type: API_REQUEST,
+        payload: {
+            url: 'users/',
+            method: 'GET',
+            data: params ,
+            label: ADMIN_GET_USERS,
+        }
+    }
 };

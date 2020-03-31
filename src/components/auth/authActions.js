@@ -13,7 +13,7 @@ import {
     AUTH_SET_PASSWORD_PENDING,
     AUTH_SET_PASSWORD_RESOLVED,
     AUTH_SET_PASSWORD_FAILED, AUTH_GET_USER_PENDING,
-} from '../../constants/actionTypes';
+} from '../../helpers/constants/actionTypes';
 
 
 export const userRegisterPending = () => ({

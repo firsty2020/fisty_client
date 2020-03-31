@@ -1,22 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import ContactPersonsList from '../ContactPersons/ContactPersonsList';
-import {AlertNotice, BackButton, ConfirmationModal} from '../../../ui';
+import { AlertNotice, BackButton, ConfirmationModal } from '../../../ui';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { PlusCircle, Link as LinkIcon } from 'react-feather';
 import AddContactPerson from './AddContactPerson';
 import {
     getContactPersons,
+    linkContactPerson,
     unLinkContactPerson,
-} from '../ContactPersons/contactPersonApi';
+    resetContactPersonRemoved,
+    resetContactPersonUnlinked,
+    resetContactPersonLinked,
+} from '../ContactPersons/contactPersonActions';
 import { connect } from 'react-redux';
 import {
     contactPersonsState,
-    removeContactPersonResolvedSelector, unLinkContactPersonResolvedSelector
+    linkContactPersonResolvedSelector,
+    removeContactPersonResolvedSelector,
+    unLinkContactPersonResolvedSelector
 } from '../../adminReducer';
-import {When} from "react-if";
+import { When } from 'react-if';
+import { baseURL } from '../../../../axios';
+import { generateUId } from '../../../../helpers/utils';
 
-const uid = Math.random().toString(36).replace('0.', '');
+
+const uid = generateUId();
 
 
 const ContactPersons = ({
@@ -24,8 +33,13 @@ const ContactPersons = ({
                             contactPersons,
                             contactPersonRemoved,
                             contactPersonUnlinked,
+                            contactPersonLinked,
                             getContactPersons,
                             unLinkContactPerson,
+                            resetContactPersonRemoved,
+                            resetContactPersonUnlinked,
+                            resetContactPersonLinked,
+                            linkContactPerson,
                         }) => {
 
     const [ isAddingContactPerson, setIsAddingContactPerson ] = useState(null);
@@ -34,20 +48,34 @@ const ContactPersons = ({
     const params = { branch: match.params.branchId };
 
     useEffect(() => {
-        getContactPersons(params, uid);
+        updateListAndResetState();
     }, [ getContactPersons, params.branch ]);
 
     useEffect(() => {
-        if (contactPersonRemoved || contactPersonUnlinked) {
-            getContactPersons(params, uid);
+        if (contactPersonRemoved || contactPersonUnlinked || contactPersonLinked) {
+            updateListAndResetState(true);
         }
-    }, [ getContactPersons, contactPersonRemoved, contactPersonUnlinked, params.branch ]);
+    }, [ contactPersonRemoved, contactPersonUnlinked, contactPersonLinked ]);
 
-    const handleModalClose = (linked) => {
-        setIsAddingContactPerson(false);
-        if (linked) {
-            getContactPersons(params, uid);
+    const updateListAndResetState = (resetState = false) => {
+        getContactPersons(params, uid);
+        if (!resetState) return;
+        if (contactPersonRemoved) {
+            setTimeout(resetContactPersonRemoved, 2000);
         }
+        if (contactPersonUnlinked) {
+            setTimeout(resetContactPersonUnlinked, 2000)
+        }
+        if (contactPersonLinked) {
+            setIsAddingContactPerson(false);
+            setTimeout(resetContactPersonLinked, 2000);
+        }
+    };
+
+    const handleModalClose = (contactPerson = null) => {
+        if (!contactPerson)
+            return setIsAddingContactPerson(false);
+        handleLinkContactPerson(contactPerson);
     };
 
     const handleUnlinkContactPerson = () => {
@@ -58,8 +86,21 @@ const ContactPersons = ({
         setContactPersonToUnlink(null);
     };
 
+    const handleLinkContactPerson = (contactPerson) => {
+        linkContactPerson({
+            branch: `${baseURL}companies/branch/${match.params.branchId}/`,
+            contact_person: contactPerson.value
+        });
+    };
+
     return (
         <div>
+            <When condition={!!contactPersonLinked}>
+                <AlertNotice
+                    type="success"
+                    message="Вы успешно добавили контактное лицо"
+                />
+            </When>
             <When condition={!!contactPersonUnlinked}>
                 <AlertNotice
                     type="success"
@@ -112,10 +153,11 @@ const ContactPersons = ({
 
 const mapStateToProps = () => {
     const contactPersonsSelector = contactPersonsState(uid);
-    return (state, props) => ({
+    return (state) => ({
         contactPersons: contactPersonsSelector(state),
         contactPersonRemoved: removeContactPersonResolvedSelector(state),
         contactPersonUnlinked: unLinkContactPersonResolvedSelector(state),
+        contactPersonLinked: linkContactPersonResolvedSelector(state),
     });
 };
 
@@ -124,6 +166,10 @@ const mapStateToProps = () => {
 const mapDispatchToProps = {
     getContactPersons,
     unLinkContactPerson,
+    resetContactPersonRemoved,
+    resetContactPersonUnlinked,
+    resetContactPersonLinked,
+    linkContactPerson,
 };
 
 

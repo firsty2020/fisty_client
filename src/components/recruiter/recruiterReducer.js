@@ -5,7 +5,7 @@ import {
     RECRUITER_ANSWERS_SUBMIT_PENDING,
     RECRUITER_ANSWERS_SUBMIT_FAILED,
     RECRUITER_ANSWERS_SUBMIT_RESOLVED
-} from '../../constants/actionTypes';
+} from '../../helpers/constants/actionTypes';
 
 export const dashboard = (state = { questions: []}, action) => {
     switch (action.type) {

@@ -5,7 +5,7 @@ import {
     CREATE_APPLICATION_FAILED,
     CREATE_APPLICATION_PENDING,
     CREATE_APPLICATION_RESOLVED,
-} from '../constants/actionTypes';
+} from '../helpers/constants/actionTypes';
 
 /*** Actions for creating an application ***/
 

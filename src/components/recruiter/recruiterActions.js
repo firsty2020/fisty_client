@@ -5,7 +5,7 @@ import {
     RECRUITER_ANSWERS_SUBMIT_PENDING,
     RECRUITER_ANSWERS_SUBMIT_RESOLVED,
     RECRUITER_ANSWERS_SUBMIT_FAILED,
-} from '../../constants/actionTypes';
+} from '../../helpers/constants/actionTypes';
 
 
 export const loadQuestionsPending = () => ({

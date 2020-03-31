@@ -6,7 +6,7 @@ import {AuthFormContainer, SuccessNotice} from '../../ui';
 import { REGEX } from '../../../helpers/regex-rules';
 import classNames from 'classnames';
 import * as Yup from 'yup';
-import ERROR_MESSAGES from '../../../constants/messages';
+import ERROR_MESSAGES from '../../../helpers/constants/messages';
 import { setPassword } from '../auth';
 import {
     setPasswordPendingSelector,

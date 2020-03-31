@@ -3,7 +3,7 @@ import { Container, Table } from 'react-bootstrap';
 import { Edit, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeContactPerson } from './contactPersonApi';
+import { removeContactPerson } from './contactPersonActions';
 import { ConfirmationModal } from '../../../ui';
 import { UserMinus } from 'react-feather';
 

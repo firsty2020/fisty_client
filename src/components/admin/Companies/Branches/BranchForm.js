@@ -10,7 +10,7 @@ import {
     generateSelectOptions,
     transformReactSelectFields
 } from '../../../../helpers/utils';
-import { getContactPersons } from '../ContactPersons/contactPersonApi';
+import { getContactPersons } from '../ContactPersons/contactPersonActions';
 import {contactPersonsSelector, contactPersonsState} from '../../adminReducer';
 import { baseURL } from '../../../../axios';
 import { Link } from 'react-router-dom';

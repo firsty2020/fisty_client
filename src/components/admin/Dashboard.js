@@ -3,6 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
 import Logo from '../../assets/images/logo_white.png';
 import { navigation, adminRoutes } from './adminRoutes';
+import { connect } from 'react-redux';
+import { isLoadingSelector } from './adminReducer';
+import { LoadSpinner } from '../ui';
 
 
 const MOBILE_SIZE = 992;
@@ -29,10 +32,13 @@ class Dashboard extends Component {
 
 
     render() {
+
         const { sidebarCollapsed } = this.state;
         const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
         return (
             <div className={`app ${sidebarCollapsedClass}`}>
+                { this.props.isLoading ? <LoadSpinner/> : null}
+
                 <div className="app-body">
                     <SidebarNav
                         nav={navigation}
@@ -69,5 +75,9 @@ class Dashboard extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    isLoading: isLoadingSelector(state)
+});
 
-export default Dashboard;
+
+export default connect(mapStateToProps, null)(Dashboard);
