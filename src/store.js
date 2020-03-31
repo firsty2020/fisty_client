@@ -20,18 +20,31 @@ const createRootReducer = (history) => combineReducers({
     common,
 });
 
-export const store = createStore(
+let _store = createStore(
     createRootReducer(history),
-    compose(
-        applyMiddleware(
-            routerMiddleware(history),
-            thunk,
-            apiMiddleware,
-            ),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    )
+    applyMiddleware(
+        routerMiddleware(history),
+        thunk,
+        apiMiddleware,
+    ),
 
 );
 
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+    _store = createStore(
+        createRootReducer(history),
+        compose(
+            applyMiddleware(
+                routerMiddleware(history),
+                thunk,
+                apiMiddleware,
+            ),
+            window.__REDUX_DEVTOOLS_EXTENSION__(),
+        )
+
+    );
+}
+
+export const store = _store;
 
 export default createRootReducer;
