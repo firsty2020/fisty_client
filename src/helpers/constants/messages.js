@@ -45,6 +45,17 @@ export default {
     RESPONSIBILITIES_REQUIRED: 'Опишите обязаности',
     SCHEDULE_REQUIRED: 'Укажите график',
     LOCATION_REQUIRED: 'Укажите местонахождение',
-    CONTACT_PERSON_REQUIRED: 'Укажите контактное лицо'
+    CONTACT_PERSON_REQUIRED: 'Укажите контактное лицо',
+    FIELD_TYPE_REQUIRED: 'Укажите тип поля',
+    FIELD_NAME_REQUIRED: 'Введите название поля',
+    FIELD_DISPLAY_NAME_REQUIRED: 'Введите отображаемое название поля',
+    FIELD_PLACEHOLDER_REQUIRED: 'Введите placeholder поля',
+    FIELD_TOOLTIP_VALUE_REQUIRED: 'Введите tooltip поля',
+    FIELD_POSITION_REQUIRED: 'Введите порядочный номер поля',
+    FIELD_POSITION_INVALID: 'Введите действительный порядочный номер',
+    FILE_FORMAT_INVALID: 'Неверный формат файла',
+    DATE_FORMAT_REQUIRED: 'Выберите формат даты',
+    CHOICES_REQUIRED: 'Выберите варианты выбора',
+
 };
 

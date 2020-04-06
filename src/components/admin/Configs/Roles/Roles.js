@@ -72,7 +72,7 @@ const Roles = ({
                 onCancel={() => setRoleToDelete(null)}
                 question="Вы уверены что хотите удалить эту роль?"
             />
-            <Container className="mt-10-auto" fluid>
+            <Container className="mt-10-auto">
                 <h3 className="text-center mb-4">Контактные Лица</h3>
                 <div className="mb-3">
                     <Button

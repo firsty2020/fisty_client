@@ -121,7 +121,7 @@ export const generateSelectOptions = (list, value, label) => {
 
 export const transformReactSelectFields = (fields, source) => {
     fields.map((field) => {
-        if (typeof source[field] === 'object' && source[field].length) {
+        if (Array.isArray(source[field]) && source[field].length) {
             source[field] = source[field].map(item => item.value);
         } else if (typeof source[field] === 'object') {
             source[field] = source[field].value;
@@ -136,8 +136,10 @@ export const clearEmptyFields = (data) => {
         if (!data.hasOwnProperty(key)) continue;
         if (data[key] === undefined || data[key] === '') {
             delete data[key]
-        } else if(typeof data[key] === 'object' && data[key].length === '0') {
+        } else if(Array.isArray(data[key]) && !data[key].length) {
             delete data[key];
+        } else if (typeof data[key] === 'object' && data[key].length === undefined) {
+            clearEmptyFields(data[key]);
         }
     }
     return data;
@@ -149,3 +151,5 @@ export const createApiAction = (payload) => ({
 });
 
 export const generateUId = () => Math.random().toString(36).replace('0.', '');
+
+export const copyObject = (object) => JSON.parse(JSON.stringify(object));

@@ -23,6 +23,7 @@ import UpdateCompanyContactPerson
     from './Companies/UpdateCompanyContacPerson';
 import UpdateBranchContactPerson
     from './Companies/Branches/UpdateBranchContactPerson';
+import DynamicFields from './Configs/DynamicFields/DynamicFields';
 
 
 export const navigation =  {
@@ -78,6 +79,12 @@ export const navigation =  {
                     icon: 'Users',
                     url: '/admin/configs/roles',
                     matcher: '/roles',
+                },
+                {
+                    name: 'Динамичные поля',
+                    icon: 'Sliders',
+                    url: '/admin/configs/dynamic-fields',
+                    matcher: '/dynamic-fields',
                 },
             ]
         },
@@ -197,5 +204,10 @@ export const adminRoutes = [
         path: '/admin/configs/locations',
         component: Locations,
         name: 'Местонахождения'
+    },
+    {
+        path: '/admin/configs/dynamic-fields',
+        component: DynamicFields,
+        name: 'Динамичные поля'
     },
 ];

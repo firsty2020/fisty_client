@@ -1,4 +1,5 @@
 @import "index.css";
+@import "../node_modules/react-tagsinput/react-tagsinput.css";
 
 @font-face {
     font-family: "icomoon";
@@ -108,4 +109,8 @@ button:disabled {
 .green-shadow {
     box-shadow: 0 0 5px 3px #22b66e;
     margin-bottom: 0;
+}
+
+.label-padding-0 label {
+    padding: 0;
 }

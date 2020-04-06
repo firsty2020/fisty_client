@@ -9,6 +9,10 @@ html {
     scroll-behavior: smooth;
 }
 
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;

@@ -155,3 +155,32 @@ export const applicationSchema = Yup.object().shape({
     responsibilities: Yup.string().required(ERROR_MESSAGES.RESPONSIBILITIES_REQUIRED),
     schedule: Yup.string().required(ERROR_MESSAGES.SCHEDULE_REQUIRED),
 });
+
+
+export const dynamicFieldSchema = Yup.object().shape({
+    field_type: Yup.string().required(ERROR_MESSAGES.FIELD_TYPE_REQUIRED),
+    name: Yup.string().required(ERROR_MESSAGES.FIELD_NAME_REQUIRED),
+    display_name: Yup.string().required(ERROR_MESSAGES.FIELD_DISPLAY_NAME_REQUIRED),
+    position: Yup.number().positive(ERROR_MESSAGES.FIELD_POSITION_INVALID).required(ERROR_MESSAGES.FIELD_POSITION_REQUIRED),
+    placeholder: Yup.string().required(ERROR_MESSAGES.FIELD_PLACEHOLDER_REQUIRED),
+    tooltip_value: Yup.string().required(ERROR_MESSAGES.FIELD_TOOLTIP_VALUE_REQUIRED),
+    is_required: Yup.bool(),
+    field_configuration: Yup.mixed()
+        .when('field_type', (field_type, schema) => {
+            switch (field_type) {
+                case 'date':
+                    return Yup.object().shape({
+                        date_format: Yup.string().required(ERROR_MESSAGES.DATE_FORMAT_REQUIRED)
+                    });
+                case 'file':
+                    return Yup.object().shape({
+                        file_extensions: Yup.array()
+                    });
+                case 'choice':
+                    return Yup.object().shape({
+                        choices: Yup.array().required(ERROR_MESSAGES.CHOICES_REQUIRED)
+                    });
+                default: return schema;
+            }
+    })
+});

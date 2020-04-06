@@ -45,11 +45,30 @@ import {
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
     ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
+    API_REQUEST,
+    API_REQUEST_END,
+    ADMIN_CONFIGS_CREATE_DYNAMIC_FIELD,
+    ADMIN_CONFIGS_GET_DYNAMIC_FIELDS,
+    ADMIN_CONFIGS_SET_DYNAMIC_FIELD_CREATED,
+    ADMIN_CONFIGS_REMOVE_DYNAMIC_FIELD,
+    ADMIN_CONFIGS_SET_DYNAMIC_FIELD_REMOVED,
+    ADMIN_CONFIGS_UPDATE_DYNAMIC_FIELD, ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED,
 } from '../../../helpers/constants/actionTypes';
 
 
 export const configs = (state = {}, action) => {
     switch (action.type) {
+        case API_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            };
+
+        case API_REQUEST_END:
+            return {
+                ...state,
+                isLoading: false,
+            };
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
             return {
                 ...state,
@@ -366,6 +385,47 @@ export const configs = (state = {}, action) => {
                 updateLocationResolved: true
             };
 
+        case ADMIN_CONFIGS_CREATE_DYNAMIC_FIELD:
+            return {
+                ...state,
+                dynamicFieldCreated: true,
+            };
+
+        case ADMIN_CONFIGS_GET_DYNAMIC_FIELDS:
+            return {
+                ...state,
+                dynamicFields: action.payload.results
+            };
+
+        case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_CREATED:
+            return {
+                ...state,
+                dynamicFieldCreated: action.payload
+            };
+
+        case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_REMOVED:
+            return {
+                ...state,
+                dynamicFieldRemoved: action.payload
+            };
+
+        case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED:
+            return {
+                ...state,
+                dynamicFieldUpdated: action.payload
+            };
+
+        case ADMIN_CONFIGS_REMOVE_DYNAMIC_FIELD:
+            return {
+                ...state,
+                dynamicFieldRemoved: true,
+            };
+        case ADMIN_CONFIGS_UPDATE_DYNAMIC_FIELD:
+            return {
+                ...state,
+                dynamicFieldUpdated: true,
+            };
+
         default:
             return state;
     }
@@ -406,3 +466,8 @@ export const createLocationResolvedSelector = state => state.admin.configs.creat
 export const locationsSelector = state => state.admin.configs.locations;
 export const removeLocationResolvedSelector = state => state.admin.configs.removeLocationResolved;
 export const updateLocationResolvedSelector = state => state.admin.configs.updateLocationResolved;
+
+export const dynamicFieldCreatedSelector = state => state.admin.configs.dynamicFieldCreated;
+export const dynamicFieldRemovedSelector = state => state.admin.configs.dynamicFieldRemoved;
+export const dynamicFieldUpdatedSelector = state => state.admin.configs.dynamicFieldUpdated;
+export const dynamicFieldsSelector = state => state.admin.configs.dynamicFields;
