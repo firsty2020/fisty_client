@@ -10,6 +10,7 @@ import { dynamicFieldUpdatedSelector } from '../configsReducer';
 import DynamicFieldForm from './DynamicFieldForm';
 import { clearEmptyFields, copyObject } from '../../../../helpers/utils';
 import { isLoadingSelector } from '../../adminReducer';
+import { findConfigForFieldType } from './dynamicFields';
 
 
 const UpdateDynamicField = ({
@@ -29,30 +30,11 @@ const UpdateDynamicField = ({
         }
     }, [ updated, onClose, resetDynamicFieldUpdated ]);
 
+
+
     const handleUpdateDynamicField = (data) => {
         const fieldData = clearEmptyFields(copyObject(data));
-        switch (data.field_type) {
-            case 'text':
-                delete fieldData.field_configuration.choices;
-                delete fieldData.field_configuration.date_format;
-                delete fieldData.field_configuration.file_extensions;
-                break;
-            case 'file':
-                delete fieldData.field_configuration.choices;
-                delete fieldData.field_configuration.date_format;
-                break;
-            case 'date':
-                delete fieldData.field_configuration.choices;
-                delete fieldData.field_configuration.file_extensions;
-                break;
-            case 'choice':
-                delete fieldData.field_configuration.date_format;
-                delete fieldData.field_configuration.file_extensions;
-                break;
-            default:
-                break;
-
-        }
+        fieldData.field_configuration = findConfigForFieldType(fieldData);
         updateDynamicField({ ...dynamicField, ...fieldData });
     };
 

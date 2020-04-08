@@ -10,6 +10,7 @@ import { dynamicFieldCreatedSelector } from '../configsReducer';
 import DynamicFieldForm from './DynamicFieldForm';
 import { clearEmptyFields, copyObject } from '../../../../helpers/utils';
 import { isLoadingSelector } from '../../adminReducer';
+import { findConfigForFieldType } from './dynamicFields';
 
 
 const CreateDynamicField = ({
@@ -36,26 +37,7 @@ const CreateDynamicField = ({
     const cleanupData = (data) => {
         const fieldData = clearEmptyFields(copyObject(data));
         fieldData.project = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/projects/1/';
-        switch (data.field_type) {
-            case 'text':
-                 delete fieldData.field_configuration;
-                 break;
-            case 'file':
-                delete fieldData.field_configuration.choices;
-                delete fieldData.field_configuration.date_format;
-                break;
-            case 'date':
-                delete fieldData.field_configuration.choices;
-                delete fieldData.field_configuration.file_extensions;
-                break;
-            case 'choice':
-                delete fieldData.field_configuration.date_format;
-                delete fieldData.field_configuration.file_extensions;
-                break;
-            default:
-                break;
-
-        }
+        fieldData.field_configuration = findConfigForFieldType(fieldData);
         return fieldData;
     };
 

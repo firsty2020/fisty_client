@@ -5,7 +5,6 @@ import LabeledFieldHolder from '../../../ui/FormFieldLabeled';
 import { RadioButton, TagsInputField } from '../../../ui';
 import Select from 'react-select';
 import { Formik } from 'formik';
-import {generateSelectOptions} from '../../../../helpers/utils';
 
 
 const dateFormatOptions = [
