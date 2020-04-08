@@ -163,7 +163,7 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getSpecificationOptionsPending: false,
-                specificationOptions: action.payload,
+                specificationOption: action.payload,
             };
 
         case ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING:
@@ -178,14 +178,14 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getSpecificationOptionsPending: false,
-                specificationOptions: [],
+                specificationOption: [],
             };
 
         case ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED:
             return {
                 ...state,
                 getSpecificationOptionsPending: false,
-                specificationOptions: action.payload,
+                specificationOption: action.payload,
             };
 
         case ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED:

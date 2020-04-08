@@ -1,17 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { companySelector } from './companiesReducer';
 import { getCompany } from './companiesApi';
 import { connect } from 'react-redux';
-import Table from 'react-bootstrap/Table';
 import {
     industryOptionSelector,
     specificationOptionSelector,
 } from '../Configs/configsReducer';
 import { getIndustryOption, getSpecificationOption } from '../Configs/configsApi';
 import { extractIdFromUrl } from '../../../helpers/utils';
-import { BackButton } from '../../ui';
+import { BackButton, DetailsTable } from '../../ui';
+
+
+const companyDetailsTableLayout = ({
+                                       id,
+                                       name,
+                                       english_name,
+                                       type,
+                                       contact_number,
+                                       website,
+                                       social_link,
+                                       source,
+}) => [
+    { title: 'ID',                      value: id },
+    { title: 'Название',                value: name },
+    { title: 'Название на английском',  value: english_name },
+    { title: 'Тип бизнеса',             value: type },
+    { title: 'Контактный номер',        value: contact_number },
+    { title: 'Сайт',                    value: website },
+    { title: 'Соц. сети',               value: social_link },
+    { title: 'Источник',                value: source },
+];
 
 
 const CompanyDetails = ({
@@ -34,33 +54,19 @@ const CompanyDetails = ({
         const specificationId = extractIdFromUrl(company.specification);
         industryId && getIndustryOption(industryId);
         specificationId && getSpecificationOption(specificationId);
-    }, [ getIndustryOption, getSpecificationOption ]);
+    }, [ getIndustryOption, getSpecificationOption, company ]);
 
     if (!company) {
         return null;
+
     }
 
     return (
         <div>
             <BackButton path="/admin/companies" />
-            <Table responsive className="company-details-table">
-                <tbody>
-                <tr>
-                    <td>ID</td>
-                    <td>{company.id}</td>
-                </tr>
-                <tr>
-                    <td>Название</td>
-                    <td>{company.name}</td>
-                </tr>
-                <tr>
-                    <td>Название на английском</td>
-                    <td>{company.english_name}</td>
-                </tr>
-                <tr>
-                    <td>Тип бизнеса</td>
-                    <td>{company.type}</td>
-                </tr>
+            <DetailsTable
+                data={companyDetailsTableLayout(company)}
+            >
                 {industry ?
                     <tr>
                         <td>Индустрия</td>
@@ -73,24 +79,7 @@ const CompanyDetails = ({
                         <td>{specification.name}</td>
                     </tr> : null
                 }
-                <tr>
-                    <td>Контактный номер</td>
-                    <td>{company.contact_number}</td>
-                </tr>
-                <tr>
-                    <td>Сайт</td>
-                    <td className="bold">{company.website}</td>
-                </tr>
-                <tr>
-                    <td>Соц. сети</td>
-                    <td className="bold">{company.social_link}</td>
-                </tr>
-                <tr>
-                    <td>Источник</td>
-                    <td className="bold">{company.source}</td>
-                </tr>
-                </tbody>
-            </Table>
+            </DetailsTable>
             <Link to={`${match.url}/contact-persons`}
                   className="mr-2">
                 <Button

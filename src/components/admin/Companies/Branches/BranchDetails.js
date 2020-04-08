@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Table from 'react-bootstrap/Table';
 import { getBranch } from './branchApi';
-import { BackButton } from '../../../ui';
+import { BackButton, DetailsTable } from '../../../ui';
 import { branchSelector } from './branchReducer';
-import {
-    getContactPerson,
-    getContactPersons
-} from '../ContactPersons/contactPersonActions';
+import { getContactPersons } from '../ContactPersons/contactPersonActions';
+
+
+const branchDetailsTableLayout = ({ id, name, address, location_name }) => [
+    { title: 'ID',              value: id },
+    { title: 'Название',        value: name },
+    { title: 'Адрес',           value: address },
+    { title: 'Местонахождение', value: location_name },
+];
 
 
 const BranchDetails = ({ match, branch, getBranch, getContactPersons }) => {
@@ -26,30 +30,12 @@ const BranchDetails = ({ match, branch, getBranch, getContactPersons }) => {
     return (
         <div>
             <BackButton path={`/admin/companies/${match.params.companyId}/branches`} />
-            <Table responsive className="company-details-table">
-                <tbody>
-                    <tr>
-                        <td>ID</td>
-                        <td>{branch.id}</td>
-                    </tr>
-                    <tr>
-                        <td>Название</td>
-                        <td>{branch.name}</td>
-                    </tr>
-                    <tr>
-                        <td>Адрес</td>
-                        <td>{branch.address}</td>
-                    </tr>
-                    <tr>
-                        <td>Местонахождение</td>
-                        <td>{branch.location_name}</td>
-                    </tr>
-                </tbody>
-            </Table>
+            <DetailsTable
+                data={branchDetailsTableLayout(branch)}
+            />
             <Link to={`${match.url}/contact-persons`}
                   className="mr-2">
                 <Button
-                    onClick={() => null}
                     variant="primary">Контактные лица
                 </Button>
             </Link>

@@ -1,7 +1,7 @@
-.company-details-table tr>td:first-child {
+.details-table tr>td:first-child {
     width: 30%;
 }
 
-.company-details-table tr>td:last-child {
+.details-table tr>td:last-child {
     font-weight: bold;
 }

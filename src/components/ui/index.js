@@ -10,3 +10,4 @@ export { default as ApplicationForm } from './ApplicationForm';
 export { default as BackButton } from './BackButton';
 export { default as TagsInputField } from './TagsInputField/TagsInputField';
 export { default as RadioButton } from './RadioButton';
+export { default as DetailsTable } from './DetailsTable';
