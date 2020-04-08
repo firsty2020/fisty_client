@@ -1,11 +1,8 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BackButton, TableList } from '../../ui';
-import { getApplications } from '../../../common/commonApi';
-import {
-    applicationsSelector,
-    getApplicationsPendingSelector
-} from '../../../common/commonReducer';
+import { getApplications } from '../../../common/commonActions';
+import { applicationsSelector } from '../../../common/commonReducer';
 import { Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
@@ -23,7 +20,7 @@ const companiesTableLayout = {
 };
 
 
-const Applications = ({ applications, pending, match, getApplications }) => {
+const Applications = ({ applications, match, getApplications }) => {
 
     useEffect(() => {
         getApplications({ company: match.params.companyId });
@@ -51,7 +48,6 @@ const Applications = ({ applications, pending, match, getApplications }) => {
                 onClickRow={(item) => handleClickOnRow(item)}
                 layout={companiesTableLayout}
                 data={applications}
-                showSpinner={!!pending}
             />
         </div>
     );
@@ -60,8 +56,6 @@ const Applications = ({ applications, pending, match, getApplications }) => {
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    pending: getApplicationsPendingSelector(state),
-
 });
 
 const mapDispatchToProps = { getApplications };

@@ -1,54 +1,34 @@
 import {
-    CREATE_APPLICATION_PENDING,
-    CREATE_APPLICATION_FAILED,
-    CREATE_APPLICATION_RESOLVED,
-    GET_APPLICATIONS_PENDING,
-    GET_APPLICATIONS_FAILED, GET_APPLICATIONS_RESOLVED,
+    API_REQUEST,
+    API_REQUEST_END,
+    CREATE_APPLICATION,
+    GET_APPLICATIONS,
 } from '../helpers/constants/actionTypes';
 
 
-const initialState = { createApplicationPending: false, createApplicationResolved: null };
-
-
-export const common = (state = initialState, action) => {
+export const common = (state = {}, action) => {
     switch (action.type) {
-        case '@@router/LOCATION_CHANGE':
-            return { ...state, ...initialState };
-        case CREATE_APPLICATION_PENDING:
+
+        case API_REQUEST:
             return {
-                createApplicationPending: true,
-                createApplicationResolved: false,
-            };
-        case CREATE_APPLICATION_FAILED:
-            return {
-                createApplicationPending: false,
-                createApplicationResolved: false,
-            };
-        case CREATE_APPLICATION_RESOLVED:
-            return {
-                createApplicationPending: false,
-                createApplicationResolved: true,
+                ...state,
+                isLoading: true,
             };
 
-        case GET_APPLICATIONS_PENDING:
+        case API_REQUEST_END:
             return {
-                getApplicationsPending: true,
-                getApplicationsFailed: false,
-                applications: [],
+                ...state,
+                isLoading: false,
             };
 
-        case GET_APPLICATIONS_FAILED:
+        case CREATE_APPLICATION:
             return {
-                getApplicationsPending: false,
-                getApplicationsFailed: true,
-                applications: [],
+                applicationCreated: true,
             };
 
-        case GET_APPLICATIONS_RESOLVED:
+        case GET_APPLICATIONS:
             return {
-                getApplicationsPending: false,
-                getApplicationsFailed: false,
-                applications: action.payload,
+                applications: action.payload.results,
             };
 
         default:
@@ -57,8 +37,6 @@ export const common = (state = initialState, action) => {
 };
 
 
-export const createApplicationPendingSelector = (state) => state.common.createApplicationPending;
-export const createApplicationResolvedSelector = (state) => state.common.createApplicationResolved;
+export const createApplicationResolvedSelector = (state) => state.common.applicationCreated;
 
 export const applicationsSelector = state => state.common.applications;
-export const getApplicationsPendingSelector = state => state.common.getApplicationsPending;

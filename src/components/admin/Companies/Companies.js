@@ -54,7 +54,6 @@ const Companies = ({ companies, getCompanies, getCompaniesPending, history }) =>
                     onClickRow={(item) => handleClickOnRow(item)}
                     layout={companiesTableLayout}
                     data={companies}
-                    showSpinner={!!getCompaniesPending}
                 />
             </div>
         </div>

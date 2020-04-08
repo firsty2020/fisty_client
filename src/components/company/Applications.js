@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { TableList } from '../ui';
-import { getApplications } from '../../common/commonApi';
-import {
-    applicationsSelector,
-    getApplicationsPendingSelector
-} from '../../common/commonReducer';
+import { getApplications } from '../../common/commonActions';
+import { applicationsSelector } from '../../common/commonReducer';
 import { getAuthUser } from '../auth/auth';
-import {getUserPendingSelector, userSelector} from '../auth/authReducer';
+import { userSelector } from '../auth/authReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
+import { isLoadingSelector } from '../admin/adminReducer';
 
 
 const companiesTableLayout = {
@@ -23,8 +21,7 @@ const companiesTableLayout = {
 };
 
 const Applications = ({ applications,
-                          pendingApplications,
-                          pendingUser,
+                          pending,
                           user,
                           getAuthUser,
                           getApplications,
@@ -45,7 +42,6 @@ const Applications = ({ applications,
             <TableList
                 layout={companiesTableLayout}
                 data={applications}
-                showSpinner={!!(pendingUser || pendingApplications)}
             />
         </div>
     );
@@ -54,9 +50,8 @@ const Applications = ({ applications,
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    pendingApplications: getApplicationsPendingSelector(state),
+    pending: isLoadingSelector(state),
     user: userSelector(state),
-    pendingUser: getUserPendingSelector(state),
 });
 
 const mapDispatchToProps = { getApplications, getAuthUser };

@@ -3,16 +3,21 @@ import {AlertNotice, ApplicationForm} from '../ui';
 import { connect } from 'react-redux';
 import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
-import { createApplication } from '../../common/commonApi';
-import {
-    createApplicationPendingSelector,
-    createApplicationResolvedSelector
-} from '../../common/commonReducer';
+import { createApplication } from '../../common/commonActions';
+import { createApplicationResolvedSelector } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 import { When } from 'react-if';
+import { isLoadingSelector } from '../admin/adminReducer';
 
 
-const CreateApplication = ({ user, created, getAuthUser, createApplication, push }) => {
+const CreateApplication = ({
+                               user,
+                               created,
+                               pending,
+                               getAuthUser,
+                               createApplication,
+                               push,
+                           }) => {
 
     useEffect(() => {
         if (created) {
@@ -30,6 +35,7 @@ const CreateApplication = ({ user, created, getAuthUser, createApplication, push
         createApplication(values);
     };
 
+
     return (
         <div>
             <When condition={!!created}>
@@ -37,7 +43,7 @@ const CreateApplication = ({ user, created, getAuthUser, createApplication, push
             </When>
             <ApplicationForm
                 onSubmitApplication={submitApplication}
-                pending={false}
+                pending={pending}
             />
         </div>
     );
@@ -46,7 +52,7 @@ const CreateApplication = ({ user, created, getAuthUser, createApplication, push
 
 const mapStateToProps = state => ({
     user: userSelector(state),
-    pending: createApplicationPendingSelector(state),
+    pending: isLoadingSelector(state),
     created: createApplicationResolvedSelector(state),
 });
 

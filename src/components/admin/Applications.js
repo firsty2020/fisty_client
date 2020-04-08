@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { TableList } from '../ui';
-import { getApplications } from '../../common/commonApi';
-import {
-    applicationsSelector,
-    getApplicationsPendingSelector
-} from '../../common/commonReducer';
+import { getApplications } from '../../common/commonActions';
+import { applicationsSelector } from '../../common/commonReducer';
+import { isLoadingSelector } from './adminReducer';
 
 
 const companiesTableLayout = {
@@ -30,7 +28,6 @@ const Applications = ({ applications, getApplications, pending }) => {
             <TableList
                 layout={companiesTableLayout}
                 data={applications}
-                showSpinner={!!pending}
             />
         </div>
     );
@@ -39,7 +36,7 @@ const Applications = ({ applications, getApplications, pending }) => {
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    pending: getApplicationsPendingSelector(state),
+    pending: isLoadingSelector(state),
 
 });
 
