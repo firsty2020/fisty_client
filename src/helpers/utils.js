@@ -1,87 +1,4 @@
-import {
-    ADMIN_CREATE_CONTACT_PERSON,
-    API_REQUEST
-} from './constants/actionTypes';
-
-export const generateMonths = () => ([
-    {
-        label: 'Январь',
-        value: '01',
-    },
-    {
-        label: 'Февраль',
-        value: '02',
-    },
-    {
-        label: 'Март',
-        value: '03',
-    },
-    {
-        label: 'Апрель',
-        value: '04',
-    },
-    {
-        label: 'Май',
-        value: '05',
-    },
-    {
-        label: 'Июнь',
-        value: '06',
-    },
-    {
-        label: 'Июль',
-        value: '07',
-    },
-    {
-        label: 'Август',
-        value: '08',
-    },
-    {
-        label: 'Сентябрь',
-        value: '09',
-    },
-    {
-        label: 'Октябрь',
-        value: '10',
-    },
-    {
-        label: 'Ноябрь',
-        value: '11',
-    },
-    {
-        label: 'Декабрь',
-        value: '12',
-    }
-]);
-
-
-/**
- * Generate years [ ... 1990, 1991, 1992 ...]
- * yearsToGenerate: number
- * @returns {number[]}
- */
-export const generateYears = (yearsToGenerate = 60) => {
-    const currentYear = new Date().getFullYear();
-    const years = new Array(yearsToGenerate);
-    for (let i = 0; i <= yearsToGenerate; i++) {
-        years.push(currentYear - i);
-    }
-    return years;
-};
-
-
-/**
- * a dummy function to return an array of numbers [0 - 31]
- * @returns {number[]}
- */
-export const generateDays = () => {
-    const daysToGenerate = 31;
-    const days = new Array(daysToGenerate);
-    for (let i = daysToGenerate - 1; i >= 0; i--) {
-        days.push(daysToGenerate - i);
-    }
-    return days;
-};
+import { API_REQUEST } from './constants/actionTypes';
 
 
 export const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
@@ -94,15 +11,6 @@ export const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 export const extractIdFromUrl = (url) => {
     return url && url.split('/').slice(-2, -1).join('');
 };
-
-
-export const transFormDatesArray = (array) => array.reduce((acc, curr) => {
-    acc.push({
-        label: curr,
-        value: curr,
-    });
-    return acc;
-}, []);
 
 
 export const generateSelectOptions = (list, value, label) => {
@@ -153,3 +61,18 @@ export const createApiAction = (payload) => ({
 export const generateUId = () => Math.random().toString(36).replace('0.', '');
 
 export const copyObject = (object) => JSON.parse(JSON.stringify(object));
+
+export const findConfigForFieldType = ({ field_configuration, field_type }) => {
+    const mapping = {
+        text: '',
+        file: 'file_extensions',
+        date: 'date_format',
+        choice: 'choices'
+    };
+
+    if  (mapping[field_type] && field_configuration[mapping[field_type]]) {
+        return { [mapping[field_type]]: field_configuration[mapping[field_type]]}
+
+    }
+    return {};
+};

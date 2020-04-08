@@ -10,7 +10,7 @@ import { dynamicFieldCreatedSelector } from '../configsReducer';
 import DynamicFieldForm from './DynamicFieldForm';
 import { clearEmptyFields, copyObject } from '../../../../helpers/utils';
 import { isLoadingSelector } from '../../adminReducer';
-import { findConfigForFieldType } from './dynamicFields';
+import { findConfigForFieldType } from '../../../../helpers/utils';
 
 
 const CreateDynamicField = ({
