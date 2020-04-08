@@ -9,7 +9,7 @@ import Locations from './Configs/Locations';
 import Industries from './Configs/Industries';
 import Specifications from './Configs/Specifications';
 import CreateApplication from './Companies/CreateApplication';
-import Applications from './Applications';
+import Applications from './Applications/Applications';
 import CompanyApplications from './Companies/Applications';
 import CreateBranch from './Companies/Branches/CreateBranch';
 import Branches from './Companies/Branches/Branches';
@@ -24,6 +24,7 @@ import UpdateCompanyContactPerson
 import UpdateBranchContactPerson
     from './Companies/Branches/UpdateBranchContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
+import ApplicationDetails from './Applications/ApplicationDetails';
 
 
 export const navigation =  {
@@ -179,6 +180,11 @@ export const adminRoutes = [
         path: '/admin/companies/:companyId/branches',
         component: Branches,
         name: 'Бранчи'
+    },
+    {
+        path: '/admin/applications/:applicationId',
+        component: ApplicationDetails,
+        name: 'Детали заявки'
     },
     {
         path: '/admin/applications',

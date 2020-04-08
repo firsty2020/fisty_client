@@ -12,7 +12,7 @@ const DetailsTable = ({ data, children }) => (
             {(data || []).map(({ title, value }) => (
                 <tr key={title}>
                     <td>{title}</td>
-                    <td>{value}</td>
+                    <td>{value ? value : '-'}</td>
                 </tr>
             ))}
             {children}

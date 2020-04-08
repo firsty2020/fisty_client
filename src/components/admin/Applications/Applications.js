@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import { TableList } from '../ui';
-import { getApplications } from '../../common/commonActions';
-import { applicationsSelector } from '../../common/commonReducer';
-import { isLoadingSelector } from './adminReducer';
+import { TableList } from '../../ui';
+import { getApplications } from '../../../common/commonActions';
+import { applicationsSelector } from '../../../common/commonReducer';
+import { push } from 'connected-react-router';
 
 
 const companiesTableLayout = {
@@ -17,7 +17,7 @@ const companiesTableLayout = {
     ],
 };
 
-const Applications = ({ applications, getApplications, pending }) => {
+const Applications = ({ applications, getApplications, push }) => {
 
     useEffect(() => {
         getApplications();
@@ -26,6 +26,7 @@ const Applications = ({ applications, getApplications, pending }) => {
     return (
         <div>
             <TableList
+                onClickRow={({id}) => push(`/admin/applications/${id}`)}
                 layout={companiesTableLayout}
                 data={applications}
             />
@@ -36,11 +37,9 @@ const Applications = ({ applications, getApplications, pending }) => {
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    pending: isLoadingSelector(state),
-
 });
 
-const mapDispatchToProps = { getApplications };
+const mapDispatchToProps = { getApplications, push };
 
 
 Applications.propTypes = {

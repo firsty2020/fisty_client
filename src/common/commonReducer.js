@@ -2,6 +2,7 @@ import {
     API_REQUEST,
     API_REQUEST_END,
     CREATE_APPLICATION,
+    GET_APPLICATION,
     GET_APPLICATIONS,
 } from '../helpers/constants/actionTypes';
 
@@ -31,6 +32,11 @@ export const common = (state = {}, action) => {
                 applications: action.payload.results,
             };
 
+        case GET_APPLICATION:
+            return {
+                application: action.payload,
+            };
+
         default:
             return state;
     }
@@ -40,3 +46,4 @@ export const common = (state = {}, action) => {
 export const createApplicationResolvedSelector = (state) => state.common.applicationCreated;
 
 export const applicationsSelector = state => state.common.applications;
+export const applicationSelector = state => state.common.application;

@@ -401,7 +401,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         inline
                                         custom
                                         name="education"
-                                        value="wuu"
+                                        value={values.education}
                                         label="Высшее"
                                         type="checkbox"
                                         id="education_high"
