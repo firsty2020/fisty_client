@@ -34,7 +34,7 @@ export const getCompanies = () => {
 export const getCompany = (id) => {
     return dispatch => {
         api
-            .get(`companies/${id}`)
+            .get(`companies/${id}/`)
             .then((res) => dispatch(getCompanyResolved(res.data)))
             .catch(() => dispatch(getCompanyFailed()))
     }

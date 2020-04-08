@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import {BackButton, DetailsTable, TableList} from '../../ui';
+import { BackButton, DetailsTable } from '../../ui';
 import { getApplication } from '../../../common/commonActions';
-import {applicationSelector} from '../../../common/commonReducer';
-import {getCompany} from '../Companies/companiesApi';
-import {companySelector} from '../Companies/companiesReducer';
-import {extractIdFromUrl} from '../../../helpers/utils';
-import {Link} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
+import { applicationSelector } from '../../../common/commonReducer';
+import { getCompany } from '../Companies/companiesApi';
+import { companySelector } from '../Companies/companiesReducer';
+import { extractIdFromUrl } from '../../../helpers/utils';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 
 const applicationDetailsTableLayout = ({
@@ -47,7 +47,7 @@ const applicationDetailsTableLayout = ({
     { title: 'Гражданство',                                 value: citizenship.join(', ') },
     { title: 'Пол',                                         value: gender.join(', ') },
     { title: 'Возраст',                                     value: `от  ${age.join(' до ')}` },
-    { title: 'Образование',                                 value: education },
+    { title: 'Образование',                                 value: education ? education.join(', ') : '-' },
     { title: 'Уровень владения русским языком',             value: russian_level },
     { title: 'Другие языки',                                value: other_languages ? other_languages.join(', ') : '-' },
     { title: 'Наличие водительских прав',                   value: driver_license ? driver_license.join(', ') : '-' },
@@ -77,7 +77,7 @@ const ApplicationDetails = ({
             const companyId = extractIdFromUrl(application.company);
             getCompany(companyId);
         }
-    }, [ getCompany, application ]);
+    }, [ getCompany ]);
 
     if (!application) {
         return null;
