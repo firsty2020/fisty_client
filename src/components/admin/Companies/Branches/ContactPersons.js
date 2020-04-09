@@ -129,7 +129,7 @@ const ContactPersons = ({
                 <div className="mb-3">
                     <Link to={`${match.url}/create`} className="mr-2">
                         <Button
-                            variant="primary">
+                            variant="warning">
                             <PlusCircle
                                 size={20}
                                 className="align-sub"
@@ -138,7 +138,7 @@ const ContactPersons = ({
                     </Link>
                     <Button
                         onClick={() => setIsAddingContactPerson(true)}
-                        variant="primary">
+                        variant="warning">
                         <LinkIcon
                             size={20}
                             className="align-sub"

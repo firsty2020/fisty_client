@@ -145,6 +145,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Бонусы *</p>
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="bonus_enabled"
@@ -156,6 +157,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('bonus_enabled', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         value={values.bonus_enabled}
@@ -189,6 +191,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <p>Вид оформления *</p>
                                     <div className="d-flex justify-content-between">
                                         <Form.Check
+                                            className="warning-control-custom"
                                             inline
                                             custom
                                             name="formalization_type"
@@ -200,6 +203,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
+                                            className="warning-control-custom"
                                             inline
                                             custom
                                             name="formalization_type"
@@ -211,6 +215,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
+                                            className="warning-control-custom"
                                             inline
                                             custom
                                             name="formalization_type"
@@ -222,6 +227,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
+                                            className="warning-control-custom"
                                             inline
                                             custom
                                             name="formalization_type"
@@ -233,6 +239,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                         <Form.Check
+                                            className="warning-control-custom"
                                             inline
                                             custom
                                             name="formalization_type"
@@ -306,6 +313,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Пол *</p>
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="gender"
@@ -317,6 +325,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('gender', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="gender"
@@ -365,6 +374,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Образование *</p>
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="education"
@@ -376,6 +386,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="education"
@@ -387,6 +398,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="education"
@@ -398,6 +410,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="education"
@@ -415,6 +428,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Уровень владения русским языком *</p>
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="russian_level"
@@ -426,6 +440,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('russian_level', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="russian_level"
@@ -460,6 +475,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Наличие водительских прав</p>
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="_has_driver_license"
@@ -471,6 +487,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('_has_driver_license', e)}
                                     />
                                     <Form.Check
+                                        className="warning-control-custom"
                                         inline
                                         custom
                                         name="_has_driver_license"
@@ -573,7 +590,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <Button
                                         disabled={pending}
                                         type="submit"
-                                        variant="primary">Подать Заявку
+                                        variant="warning">Подать Заявку
                                     </Button>
                                 </div>
                             </Form>

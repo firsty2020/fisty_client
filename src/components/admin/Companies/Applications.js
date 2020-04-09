@@ -36,7 +36,7 @@ const Applications = ({ applications, match, getApplications }) => {
             <div className="mb-3">
                 <Link
                     to={`${match.url}/create`}>
-                    <Button variant="primary">
+                    <Button variant="warning">
                         <PlusCircle
                             size={20}
                             className="align-sub"

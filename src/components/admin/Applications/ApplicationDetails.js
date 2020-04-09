@@ -99,7 +99,7 @@ const ApplicationDetails = ({
             <Link to={`${match.url}/vacancies`}
                   className="mr-2">
                 <Button
-                    variant="primary">Вакансии
+                    variant="warning">Вакансии
                 </Button>
             </Link>
         </div>

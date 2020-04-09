@@ -198,6 +198,7 @@ const ContactPersonForm = ({
                                 </Button>
                             </Link>
                             <Button
+                                variant="warning"
                                 disabled={pending}
                                 type="submit">{isUpdating ? 'Сохранить' : 'Создать'}
                             </Button>

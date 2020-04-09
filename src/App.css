@@ -111,6 +111,20 @@ button:disabled {
     margin-bottom: 0;
 }
 
-.label-padding-0 label {
+#label-padding-0 label {
     padding: 0;
+}
+
+.warning-control-custom .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #f0ad4e!important;
+}
+
+.warning-control-custom .custom-control-input:checked:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #f0ad4e
+}
+.warning-control-custom .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem #f0ad4e
+}
+.warning-control-custom .custom-control-input:active ~ .custom-control-label::before {
+    background-color: #f0ad4e;
 }

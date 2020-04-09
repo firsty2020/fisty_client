@@ -74,7 +74,7 @@ const AddContactPerson = ({
                     <Button
                         onClick={() => onHide(contactPerson)}
                         disabled={!contactPerson || pending}
-                        variant="primary">Добавить</Button>
+                        variant="warning">Добавить</Button>
                 </Modal.Footer>
             </Modal>
         </div>

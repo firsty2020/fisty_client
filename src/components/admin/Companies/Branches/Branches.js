@@ -55,7 +55,7 @@ const Branches = ({
                 <div className="mb-3">
                     <Link to={`/admin/companies/${match.params.companyId}/branch/create`}>
                         <Button
-                            variant="primary">
+                            variant="warning">
                             <PlusCircle
                                 size={20}
                                 className="align-sub"

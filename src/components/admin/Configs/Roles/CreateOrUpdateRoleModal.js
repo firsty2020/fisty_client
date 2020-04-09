@@ -70,6 +70,7 @@ const CreateOrUpdateRoleModal = ({ role, pending, onSubmit, onClose }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Check
+                                        className="warning-control-custom"
                                         name="create_user"
                                         checked={values.create_user}
                                         value={values.create_user}

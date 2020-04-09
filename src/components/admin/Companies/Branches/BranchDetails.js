@@ -36,7 +36,7 @@ const BranchDetails = ({ match, branch, getBranch, getContactPersons }) => {
             <Link to={`${match.url}/contact-persons`}
                   className="mr-2">
                 <Button
-                    variant="primary">Контактные лица
+                    variant="warning">Контактные лица
                 </Button>
             </Link>
         </div>

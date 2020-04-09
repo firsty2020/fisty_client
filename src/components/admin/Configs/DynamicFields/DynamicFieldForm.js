@@ -80,7 +80,7 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                                     value={values.field_type}
                                     checked={values.field_type === 'text'}
                                     custom
-                                    label="Ввод"
+                                    label="Текст"
                                     inline
                                     name="field_type"
                                     onChange={() => setFieldValue('field_type', 'text')}
@@ -93,7 +93,7 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                                     onChange={() => setFieldValue('field_type', 'file')}
                                     onBlur={(e) => setFieldTouched('field_type', e)}
                                     custom
-                                    label="Файл"
+                                    label="Загрузка Файла"
                                     name="field_type"
                                 />
                                 <RadioButton
@@ -109,7 +109,7 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                                 <RadioButton
                                     value={values.field_type}
                                     custom
-                                    className="label-padding-0"
+                                    id="label-padding-0"
                                     label="Выпадающий список"
                                     inline
                                     name="field_type"
@@ -245,6 +245,7 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                                 label=''
                                 inline
                                 custom
+                                className="warning-control-custom"
                                 type="checkbox"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
@@ -259,6 +260,7 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                             variant="secondary" >Отменить</Button>
                         <Button
                             type="submit"
+                            variant="warning"
                             disabled={pending}>{field ? 'Сохранить' : 'Создать'}
                         </Button>
                     </Form>

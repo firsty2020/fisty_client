@@ -39,7 +39,7 @@ const Companies = ({ companies, getCompanies, getCompaniesPending, history }) =>
                     <Col lg={4} md={4} sm={4} xs={4}
                          className="d-flex justify-content-end align-items-end">
                         <Link to="/admin/companies/create">
-                            <Button variant="primary">
+                            <Button variant="warning">
                                 <PlusCircle
                                     size={20}
                                     className="align-sub"

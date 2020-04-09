@@ -241,6 +241,7 @@ const CreateCompany = ({
                                 </Button>
                             </Link>
                             <Button
+                                variant="warning"
                                 disabled={pending}
                                 type="submit">Создать
                             </Button>

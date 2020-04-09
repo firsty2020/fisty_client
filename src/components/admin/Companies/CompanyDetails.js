@@ -84,18 +84,18 @@ const CompanyDetails = ({
                   className="mr-2">
                 <Button
                     onClick={() => null}
-                    variant="primary">Контактные лица
+                    variant="warning">Контактные лица
                 </Button>
             </Link>
             <Link to={`${match.url}/application`}
                   className="mr-2">
                 <Button
-                    variant="primary">Заявки
+                    variant="warning">Заявки
                 </Button>
             </Link>
             <Link to={`${match.url}/branches`}>
                 <Button
-                    variant="primary">Бранчи
+                    variant="warning">Бранчи
                 </Button>
             </Link>
         </div>

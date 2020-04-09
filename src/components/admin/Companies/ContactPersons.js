@@ -47,7 +47,7 @@ const ContactPersons = ({
                 <div className="mb-3">
                     <Link to={`${match.url}/create`}>
                         <Button
-                            variant="primary">
+                            variant="warning">
                             <PlusCircle
                                 size={20}
                                 className="align-sub"

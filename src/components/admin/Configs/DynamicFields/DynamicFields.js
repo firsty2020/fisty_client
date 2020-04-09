@@ -98,7 +98,7 @@ const DynamicFields = ({
                 <div className="mb-3">
                     <Button
                         onClick={() => setIsAddingField(true)}
-                        variant="primary">
+                        variant="warning">
                         <PlusCircle
                             size={20}
                             className="align-sub"

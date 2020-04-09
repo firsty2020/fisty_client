@@ -8,6 +8,7 @@ const RadioButton = (props) => {
 
     return (
         <Form.Check
+            className="warning-control-custom"
             type="radio"
             id={id}
             {...props}

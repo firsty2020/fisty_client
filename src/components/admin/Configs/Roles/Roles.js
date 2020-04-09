@@ -77,7 +77,7 @@ const Roles = ({
                 <div className="mb-3">
                     <Button
                         onClick={() => setIsCreatingRole(true)}
-                        variant="primary">
+                        variant="warning">
                         <PlusCircle
                             size={20}
                             className="align-sub"

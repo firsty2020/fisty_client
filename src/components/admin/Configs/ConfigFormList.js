@@ -94,7 +94,7 @@ const ConfigFormList = ({
                                             <Button
                                                 disabled={pending}
                                                 type="submit"
-                                                variant="outline-primary">Сохранить
+                                                variant="outline-warning">Сохранить
                                             </Button>
                                         </InputGroup.Append>
                                         {touched[itemName] && errors[itemName] ? (

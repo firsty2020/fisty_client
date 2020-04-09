@@ -6,7 +6,7 @@ import './LoadSpinner.css'
 const LoadSpinner = () => (
     <div className="text-center m-a-xl centered-spinner">
         <Spinner
-            variant="primary"
+            variant="warning"
             animation="border"
         />
     </div>
