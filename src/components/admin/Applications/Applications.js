@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { TableList } from '../../ui';
-import { getApplications } from '../../../common/commonActions';
-import { applicationsSelector } from '../../../common/commonReducer';
+import { getApplications } from '../../common/commonActions';
+import { applicationsSelector } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 
 

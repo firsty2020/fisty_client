@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { TableList } from '../ui';
-import { getApplications } from '../../common/commonActions';
-import { applicationsSelector } from '../../common/commonReducer';
+import { getApplications } from '../common/commonActions';
+import { applicationsSelector } from '../common/commonReducer';
 import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
-import { isLoadingSelector } from '../admin/adminReducer';
+import { push } from 'connected-react-router';
 
 
 const companiesTableLayout = {
@@ -20,11 +20,13 @@ const companiesTableLayout = {
     ],
 };
 
-const Applications = ({ applications,
-                          pending,
+const Applications = ({
+                          applications,
                           user,
+                          match,
                           getAuthUser,
                           getApplications,
+                          push,
                       }) => {
 
     useEffect(() => {
@@ -36,12 +38,12 @@ const Applications = ({ applications,
         getApplications({ company: extractIdFromUrl(user.company) });
     }, [ getApplications, user ]);
 
-
     return (
         <div>
             <TableList
                 layout={companiesTableLayout}
                 data={applications}
+                onClickRow={({ id }) => push(`${match.url}/${id}`)}
             />
         </div>
     );
@@ -50,11 +52,10 @@ const Applications = ({ applications,
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    pending: isLoadingSelector(state),
     user: userSelector(state),
 });
 
-const mapDispatchToProps = { getApplications, getAuthUser };
+const mapDispatchToProps = { getApplications, getAuthUser, push };
 
 
 Applications.propTypes = {

@@ -2,8 +2,8 @@ import {
     CREATE_APPLICATION,
     GET_APPLICATION,
     GET_APPLICATIONS,
-} from '../helpers/constants/actionTypes';
-import { createApiAction } from '../helpers/utils';
+} from '../../helpers/constants/actionTypes';
+import { createApiAction } from '../../helpers/utils';
 
 
 export const createApplication = (data) => createApiAction({

@@ -3,14 +3,15 @@ import { Form } from 'react-bootstrap';
 import { generateUId } from '../../helpers/utils';
 
 
-const RadioButton = (props) => (
+const CheckBox = (props) => (
     <Form.Check
-        className="warning-control-custom"
-        type="radio"
         id={generateUId()}
+        label=''
+        className="warning-control-custom"
+        type="checkbox"
         {...props}
     />
 );
 
 
-export default RadioButton;
+export default CheckBox;

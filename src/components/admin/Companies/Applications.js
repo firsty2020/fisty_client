@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BackButton, TableList } from '../../ui';
-import { getApplications } from '../../../common/commonActions';
-import { applicationsSelector } from '../../../common/commonReducer';
+import { getApplications } from '../../common/commonActions';
+import { applicationsSelector } from '../../common/commonReducer';
 import { Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import { Link } from 'react-router-dom';

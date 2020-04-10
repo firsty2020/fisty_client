@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { auth } from './components/auth/authReducer';
 import { dashboard } from './components/recruiter/recruiterReducer';
 import { admin } from './components/admin/adminReducer';
-import { common } from './common/commonReducer';
+import { common } from './components/common/commonReducer';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import apiMiddleware from './apiMiddleware';

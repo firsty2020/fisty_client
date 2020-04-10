@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { BackButton, DetailsTable } from '../../ui';
-import { getApplication } from '../../../common/commonActions';
-import { applicationSelector } from '../../../common/commonReducer';
-import { getCompany } from '../Companies/companiesApi';
-import { companySelector } from '../Companies/companiesReducer';
-import { extractIdFromUrl } from '../../../helpers/utils';
+import { BackButton, DetailsTable } from '../ui';
+import { getApplication } from './commonActions';
+import { applicationSelector } from './commonReducer';
+import { getCompany } from '../admin/Companies/companiesApi';
+import { companySelector } from '../admin/Companies/companiesReducer';
+import { extractIdFromUrl } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { getUserFromToken } from '../auth/auth';
 
 
 const applicationDetailsTableLayout = ({
@@ -58,6 +59,8 @@ const applicationDetailsTableLayout = ({
     { title: 'Куда приглашать кандитатов',                  value: address },
 ];
 
+const user = getUserFromToken();
+
 
 const ApplicationDetails = ({
                                 application,
@@ -65,7 +68,6 @@ const ApplicationDetails = ({
                                 match,
                                 getApplication,
                                 getCompany,
-
                             }) => {
 
     useEffect(() => {
@@ -83,10 +85,9 @@ const ApplicationDetails = ({
         return null;
     }
 
-
     return (
         <div>
-            <BackButton path='/admin/applications'/>
+            <BackButton path={`/${user.role}/applications`}/>
             <DetailsTable
                 data={applicationDetailsTableLayout(application)}>
                 {company ?
@@ -96,12 +97,11 @@ const ApplicationDetails = ({
                     </tr> : null
                 }
             </DetailsTable>
-            <Link to={`${match.url}/vacancies`}
-                  className="mr-2">
-                <Button
-                    variant="warning">Вакансии
-                </Button>
-            </Link>
+            {(user || {}).role === 'admin' ? (
+                <Link to={`${match.url}/vacancies`} className="mr-2">
+                    <Button variant="warning">Вакансии</Button>
+                </Link>) : null
+            }
         </div>
     );
 };

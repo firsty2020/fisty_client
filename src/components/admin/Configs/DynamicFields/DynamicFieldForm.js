@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Form, Row} from 'react-bootstrap';
 import { dynamicFieldSchema } from '../../../../helpers/schemas';
 import LabeledFieldHolder from '../../../ui/FormFieldLabeled';
-import { RadioButton, TagsInputField } from '../../../ui';
+import { CheckBox, RadioButton, TagsInputField } from '../../../ui';
 import Select from 'react-select';
 import { Formik } from 'formik';
 
@@ -241,12 +241,9 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                             controlId="required-field"
                             label="Обязательное поле"
                         >
-                            <Form.Check
-                                label=''
+                            <CheckBox
                                 inline
                                 custom
-                                className="warning-control-custom"
-                                type="checkbox"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 name="is_required"

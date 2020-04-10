@@ -1,16 +1,16 @@
-import CompanyDashboard from './CompanyDashboard';
 import CreateApplication from './CreateApplication';
 import Applications from './Applications';
+import ApplicationDetails from '../common/ApplicationDetails';
 
 
-export const routes = [
-    {
-        path: '/company',
-        component: CompanyDashboard,
-    },
+export const companyRoutes = [
     {
         path: '/company/application/create',
         component: CreateApplication,
+    },
+    {
+        path: '/company/applications/:applicationId',
+        component: ApplicationDetails,
     },
     {
         path: '/company/applications',
@@ -19,7 +19,7 @@ export const routes = [
 ];
 
 
-export const navigation =  {
+export const companyNavigation =  {
     top: [
         {
             name: 'Кабинет',

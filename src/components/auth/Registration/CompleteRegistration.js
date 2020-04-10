@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Dropdown, Form, InputGroup } from 'react-bootstrap';
-import { authPendingSelector, authSuccessSelector } from '../authReducer';
-import { completeRegistration } from '../auth';
+import { isLoadingSelector, registrationCompletedSelector } from '../authReducer';
+import { completeRegistration } from '../authActions';
 import { push } from 'connected-react-router'
 import { completeRegistrationSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
@@ -379,15 +379,15 @@ const CompleteRegistration = ({
 
 
 const mapStateToProps = state => ({
-    pending: authPendingSelector(state),
-    success: authSuccessSelector(state),
+    pending: isLoadingSelector(state),
+    success: registrationCompletedSelector(state),
 });
 
 const mapDispatchToProps = { completeRegistration, push };
 
 
 CompleteRegistration.propTypes = {
-    pending: bool.isRequired,
+    pending: bool,
     success: bool.isRequired,
     match: shape({
         params: shape(

@@ -7,9 +7,9 @@ import { REGEX } from '../../../helpers/regex-rules';
 import classNames from 'classnames';
 import * as Yup from 'yup';
 import ERROR_MESSAGES from '../../../helpers/constants/messages';
-import { setPassword } from '../auth';
+import { setPassword } from '../authActions';
 import {
-    setPasswordPendingSelector,
+    isLoadingSelector,
     setPasswordResolvedSelector
 } from '../../auth/authReducer';
 import { When } from 'react-if';
@@ -113,7 +113,7 @@ const SetPassword = ({ match, setPasswordResolved, pending, setPassword, push })
 
 const mapStateToProps = state => ({
     setPasswordResolved: setPasswordResolvedSelector(state),
-    pending: setPasswordPendingSelector(state),
+    pending: isLoadingSelector(state),
 });
 
 

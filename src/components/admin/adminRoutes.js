@@ -24,10 +24,10 @@ import UpdateCompanyContactPerson
 import UpdateBranchContactPerson
     from './Companies/Branches/UpdateBranchContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
-import ApplicationDetails from './Applications/ApplicationDetails';
+import ApplicationDetails from '../common/ApplicationDetails';
 
 
-export const navigation =  {
+export const adminNavigation =  {
     top: [
         {
             name: 'Кабинет',

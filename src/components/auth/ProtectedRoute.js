@@ -3,14 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { getUserFromToken } from './auth';
 
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({ render, role, ...rest }) => {
 
     const authUser = getUserFromToken();
 
     return (
         <Route {...rest} render={(props) => (
-            authUser && authUser.role === rest.role ?
-                <Component {...props} /> : <Redirect to='/login' />)}
+            authUser && authUser.role === role ?
+                render(props) : <Redirect to='/login' />)}
         />);
 };
 

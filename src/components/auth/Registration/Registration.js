@@ -9,8 +9,8 @@ import classNames from 'classnames';
 import { If, Then, Else, When } from 'react-if';
 import { SuccessNotice } from '../../ui';
 import { AuthFormContainer } from '../../ui/';
-import { registerUser } from '../auth';
-import { authPendingSelector, authSuccessSelector } from '../authReducer';
+import { registerUser } from '../authActions';
+import { isLoadingSelector, userRegisteredSelector } from '../authReducer';
 import { userRegistrationSchema } from '../../../helpers/schemas';
 import ERROR_MESSAGES from '../../../helpers/constants/messages'
 
@@ -174,15 +174,15 @@ class Registration extends Component {
 }
 
 const mapStateToProps = state => ({
-    registrationPending: authPendingSelector(state),
-    registrationSuccess: authSuccessSelector(state),
+    registrationPending: isLoadingSelector(state),
+    registrationSuccess: userRegisteredSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ registerUser }, dispatch);
 
 
 Registration.propTypes = {
-    registrationPending: bool.isRequired,
+    registrationPending: bool,
     registrationSuccess: bool.isRequired,
     registerUser: func.isRequired,
 };

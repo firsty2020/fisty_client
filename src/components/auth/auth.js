@@ -1,55 +1,7 @@
 import jwt_decode from 'jwt-decode';
-import {
-    userRegisterPending,
-    userRegisterSuccess,
-    userRegisterError,
-    completeRegistrationPending,
-    completeRegistrationError,
-    completeRegistrationSuccess,
-    loginPending,
-    loginSuccess,
-    loginError,
-    fetchUserSuccess,
-    fetchUserError,
-    setPasswordPending,
-    setPasswordResolved,
-    setPasswordFailed, fetchUserPending,
-} from './authActions';
+import { getUser } from './authActions';
 import api from '../../axios';
 
-
-export const registerUser = (credentials) => {
-    return dispatch => {
-        dispatch(userRegisterPending());
-        api
-            .post('registration-request/', credentials)
-            .then(() => dispatch(userRegisterSuccess()))
-            .catch(error => dispatch(userRegisterError(error)));
-    };
-};
-
-export const completeRegistration = (userDetails, passwordToken) => {
-    return dispatch => {
-        dispatch(completeRegistrationPending());
-        api
-            .post(`auth-users/sign-up/${passwordToken}/`, userDetails)
-            .then(() => dispatch(completeRegistrationSuccess()))
-            .catch(error => dispatch(completeRegistrationError(error)));
-    };
-};
-
-export const getAuthToken = (username, password) => {
-    return dispatch => {
-        dispatch(loginPending());
-        api
-            .post('token/', {username, password})
-            .then((res) => {
-                storeTokens(res.data.access, res.data.refresh);
-                dispatch(loginSuccess());
-            })
-            .catch(error => dispatch(loginError(error)));
-    }
-};
 
 export const refreshExpiredToken = (refreshToken) => {
     return new Promise((resolve, rej) => {
@@ -63,25 +15,9 @@ export const refreshExpiredToken = (refreshToken) => {
 
 export const getAuthUser = () => {
     const userId = (getUserFromToken() || {}).user_id;
-    return dispatch => {
-        if (!userId)
-            return dispatch(fetchUserError('Not authenticated'));
-        dispatch(fetchUserPending());
-        api
-            .get(`users/${userId}/`,)
-            .then((res) => dispatch(fetchUserSuccess(res.data)))
-            .catch(error => dispatch(fetchUserError(error)));
-    }
-};
-
-export const setPassword = (passwords, token) => {
-    return dispatch => {
-        dispatch(setPasswordPending());
-        api
-            .post(`auth-users/set-password/${token}/`, passwords)
-            .then((res) => dispatch(setPasswordResolved()))
-            .catch(() => dispatch(setPasswordFailed()));
-    }
+    if (!userId)
+        return;
+    return getUser(userId);
 };
 
 export const getUserFromToken = () => {
@@ -95,7 +31,7 @@ export const getUserFromToken = () => {
     return decoded;
 };
 
-const storeTokens = (token, refreshToken) => {
+export const storeTokens = (token, refreshToken) => {
     localStorage.setItem('auth_token', token);
     localStorage.setItem('refresh_token', refreshToken);
 };

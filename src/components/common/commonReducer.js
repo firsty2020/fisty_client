@@ -4,7 +4,7 @@ import {
     CREATE_APPLICATION,
     GET_APPLICATION,
     GET_APPLICATIONS,
-} from '../helpers/constants/actionTypes';
+} from '../../helpers/constants/actionTypes';
 
 
 export const common = (state = {}, action) => {

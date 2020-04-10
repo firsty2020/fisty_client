@@ -9,6 +9,8 @@ import {
     transformReactSelectFields
 } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
+import RadioButton from './RadioButton';
+import { CheckBox } from './index';
 
 
 const scheduleOptions = [
@@ -144,27 +146,21 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Бонусы *</p>
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <RadioButton
                                         inline
                                         custom
                                         name="bonus_enabled"
                                         value={values.bonus_enabled}
                                         label="Есть"
-                                        type="radio"
-                                        id="bonus_yes"
                                         onChange={() => setFieldValue('bonus_enabled', true)}
                                         onBlur={(e) => setFieldTouched('bonus_enabled', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <RadioButton
                                         inline
                                         custom
                                         value={values.bonus_enabled}
                                         name="bonus_enabled"
                                         label="Нет"
-                                        type="radio"
-                                        id="bonus_no"
                                         onChange={() => setFieldValue('bonus_enabled', false)}
                                         onBlur={(e) => setFieldTouched('bonus_enabled', e)}
                                     />
@@ -190,63 +186,48 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Вид оформления *</p>
                                     <div className="d-flex justify-content-between">
-                                        <Form.Check
-                                            className="warning-control-custom"
+                                        <RadioButton
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Трудовой договор"
-                                            type="radio"
-                                            id="formalization_type_contract"
                                             onChange={() => setFieldValue('formalization_type', 'трудовой договор')}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <Form.Check
-                                            className="warning-control-custom"
+                                        <RadioButton
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Самозанятый"
-                                            type="radio"
-                                            id="formalization_type_self_employed"
                                             onChange={() => setFieldValue('formalization_type', 'самозанятый')}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <Form.Check
-                                            className="warning-control-custom"
+                                        <RadioButton
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Договор гражданско-правового характера"
-                                            type="radio"
-                                            id="formalization_type_contract_civil"
                                             onChange={() => setFieldValue('formalization_type', 'договор гражданско-правового характера')}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <Form.Check
-                                            className="warning-control-custom"
+                                        <RadioButton
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Агентский договор"
-                                            type="radio"
-                                            id="formalization_type_contract_agent"
                                             onChange={() => setFieldValue('formalization_type', 'агентский договор')}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <Form.Check
-                                            className="warning-control-custom"
+                                        <RadioButton
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Другое"
-                                            type="radio"
-                                            id="formalization_type_other"
                                             onChange={() => setFieldValue('formalization_type', 'другое')}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
@@ -312,27 +293,21 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Пол *</p>
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <CheckBox
                                         inline
                                         custom
                                         name="gender"
                                         value={values.gender}
                                         label="Мужской"
-                                        type="checkbox"
-                                        id="gender_male"
                                         onChange={() => updateCheckboxValue(setFieldValue, 'мужской', 'gender', values.gender)}
                                         onBlur={(e) => setFieldTouched('gender', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <CheckBox
                                         inline
                                         custom
                                         name="gender"
                                         value={values.gender}
                                         label="Женский"
-                                        type="checkbox"
-                                        id="gender_female"
                                         onChange={() => updateCheckboxValue(setFieldValue, 'женский', 'gender', values.gender)}
                                         onBlur={(e) => setFieldTouched('gender', e)}
                                     />
@@ -373,51 +348,40 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Row>
                                 <Form.Group>
                                     <p>Образование *</p>
-                                    <Form.Check
+                                    <CheckBox
                                         className="warning-control-custom"
                                         inline
                                         custom
                                         name="education"
                                         value={values.education}
                                         label="Среднее"
-                                        type="checkbox"
-                                        id="education_school"
                                         onChange={() => updateCheckboxValue(setFieldValue, 'среднее', 'education', values.education)}
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <CheckBox
                                         inline
                                         custom
                                         name="education"
                                         value={values.education}
                                         label="Среднее специальное"
-                                        type="checkbox"
-                                        id="education_school_spec"
                                         onChange={() => updateCheckboxValue(setFieldValue, 'среднее специальное', 'education', values.education)}
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <CheckBox
                                         inline
                                         custom
                                         name="education"
                                         value={values.education}
                                         label="Высшее неоконченное"
-                                        type="checkbox"
-                                        id="education_not_high"
                                         onChange={() => updateCheckboxValue(setFieldValue, 'высшее неоконченное', 'education', values.education)}
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <CheckBox
                                         inline
                                         custom
                                         name="education"
                                         value={values.education}
                                         label="Высшее"
-                                        type="checkbox"
-                                        id="education_high"
                                         onChange={() => updateCheckboxValue(setFieldValue, 'Высшее', 'education', values.education)}
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
@@ -427,27 +391,21 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Уровень владения русским языком *</p>
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <RadioButton
                                         inline
                                         custom
                                         name="russian_level"
                                         value={values.russian_level}
                                         label="Родной"
-                                        type="radio"
-                                        id="russian_level_native"
                                         onChange={() => setFieldValue('russian_level', 'родной')}
                                         onBlur={(e) => setFieldTouched('russian_level', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <RadioButton
                                         inline
                                         custom
                                         name="russian_level"
                                         value={values.russian_level}
                                         label="С акцентом"
-                                        type="radio"
-                                        id="russian_level_accent"
                                         onChange={() => setFieldValue('russian_level', 'с акцентом')}
                                         onBlur={(e) => setFieldTouched('russian_level', e)}
                                     />
@@ -474,27 +432,21 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Наличие водительских прав</p>
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <RadioButton
                                         inline
                                         custom
                                         name="_has_driver_license"
                                         value={values._has_driver_license}
                                         label="Да"
-                                        type="radio"
-                                        id="_has_driver_license_yes"
                                         onChange={() => setFieldValue('_has_driver_license', true)}
                                         onBlur={(e) => setFieldTouched('_has_driver_license', e)}
                                     />
-                                    <Form.Check
-                                        className="warning-control-custom"
+                                    <RadioButton
                                         inline
                                         custom
                                         name="_has_driver_license"
                                         value={values._has_driver_license}
                                         label="Нет"
-                                        type="radio"
-                                        id="_has_driver_license_no"
                                         onChange={(e) => {
                                             setFieldValue('driver_license', []);
                                             setFieldValue('_has_driver_license', false)

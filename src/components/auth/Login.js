@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { authPendingSelector, authSuccessSelector } from './authReducer';
+import { isLoadingSelector, tokensSelector } from './authReducer';
 import { push } from 'connected-react-router';
 import { Formik } from 'formik';
-import { bool, func } from 'prop-types';
+import {bool, func, object} from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getAuthToken, getUserFromToken } from './auth';
+import { getUserFromToken, storeTokens } from './auth';
+import { getAuthToken } from './authActions';
 import { AuthFormContainer } from '../ui';
 import { logInSchema } from '../../helpers/schemas';
 
@@ -17,13 +18,14 @@ const redirectToDashboard = (push) => {
     push(`/${user.role}`);
 };
 
-const Login = ({ authPending, authSuccess, getAuthToken, push }) => {
+const Login = ({ authPending, tokens, getAuthToken, push }) => {
 
     useEffect(() => {
-        if (authSuccess) {
+        if (tokens) {
+            storeTokens(tokens.access, tokens.refresh);
             redirectToDashboard(push);
         }
-    }, [ authSuccess, push ]);
+    }, [ tokens, push ]);
 
     useEffect(() => {
         localStorage.clear();
@@ -89,7 +91,7 @@ const Login = ({ authPending, authSuccess, getAuthToken, push }) => {
                     )}
                 </Formik>
                 <div className="login-link-text">
-                    <Link to="/register">Забыл пароль?</Link>
+                    <Link to="/register">Забыли пароль?</Link>
                     <hr/>
                     <Link to="/register">Зарегистрироваться</Link>
                 </div>
@@ -99,16 +101,16 @@ const Login = ({ authPending, authSuccess, getAuthToken, push }) => {
 };
 
 const mapStateToProps = state => ({
-    authPending: authPendingSelector(state),
-    authSuccess: authSuccessSelector(state),
+    authPending: isLoadingSelector(state),
+    tokens: tokensSelector(state),
 });
 
 const mapDispatchToProps = { getAuthToken, push };
 
 
 Login.propTypes = {
-    authPending: bool.isRequired,
-    authSuccess: bool.isRequired,
+    authPending: bool,
+    tokens: object,
     getAuthToken: func.isRequired,
     push: func.isRequired,
 };

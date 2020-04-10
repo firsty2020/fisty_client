@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {AlertNotice, ApplicationForm} from '../../ui';
 import { connect } from 'react-redux';
-import { createApplication } from '../../../common/commonActions';
+import { createApplication } from '../../common/commonActions';
 import { baseURL } from '../../../axios';
-import { createApplicationResolvedSelector } from '../../../common/commonReducer';
+import { createApplicationResolvedSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
 import { isLoadingSelector } from '../adminReducer';

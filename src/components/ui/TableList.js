@@ -8,11 +8,12 @@ import { connect } from 'react-redux';
 
 const TableList = ({ layout, data, isLoading, onClickRow }) => {
 
-    if ((!data || !data.length) && !isLoading) {
+    if ((data && !data.length) && !isLoading) {
         return <EmptyListPlaceholder/>;
     } else if (!data || !data.length) {
         return null;
     }
+    
     return (
         <div className="cursor-pointer">
             <Table
@@ -38,7 +39,6 @@ const TableList = ({ layout, data, isLoading, onClickRow }) => {
             </Table>
         </div>
         );
-
 };
 
 

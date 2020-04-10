@@ -53,7 +53,7 @@
 }
 
 button:disabled {
-    background-color: var(--disabled-button-color);
+    background-color: var(--disabled-button-color)!important;
 }
 
 .table-responsive::-webkit-scrollbar {
