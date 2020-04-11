@@ -26,7 +26,7 @@ const NavSingleItem = ({item}) => {
             <li className="nav-item">
                 <NavLink
                     isActive={(match, location) =>
-                            match || location.pathname.includes(item.matcher)}
+                            match || (location.pathname.includes(item.matcher) && location.pathname.indexOf(item.excludePath) === -1)}
                     to={url}
                     exact={true}
                     activeClassName="active">

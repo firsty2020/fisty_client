@@ -61,12 +61,22 @@ const adminRoutes = [
         name: 'Править контактное лицо компании',
     },
     {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies',
+        component: Vacancies,
+        name: 'Вакансии'
+    },
+    {
+        path: '/admin/companies/:companyId/applications/:applicationId',
+        component: ApplicationDetails,
+        name: 'Детали заявки',
+    },
+    {
         path: '/admin/companies/:companyId/application/create',
         component: CreateApplication,
         name: 'Создать заявку',
     },
     {
-        path: '/admin/companies/:companyId/application',
+        path: '/admin/companies/:companyId/applications',
         component: withApplicationsTableLayout(CompanyApplications),
         name: 'Заявки',
     },

@@ -87,7 +87,7 @@ const CompanyDetails = ({
                     variant="warning">Контактные лица
                 </Button>
             </Link>
-            <Link to={`${match.url}/application`}
+            <Link to={`${match.url}/applications`}
                   className="mr-2">
                 <Button
                     variant="warning">Заявки

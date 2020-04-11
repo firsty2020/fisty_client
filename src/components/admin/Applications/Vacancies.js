@@ -54,17 +54,17 @@ const Vacancies = ({
     const [ isCreatingVacancy, setIsCreatingVacancy ] = useState(false);
     const [ vacancyIdToRemove, setVacancyIdToRemove ] = useState(null);
     const [ successAlert, setSuccessAlert ] = useState('');
-    const applicationId = useRef(match.params.applicationId);
+    const applicationId = match.params.applicationId;
 
     useEffect(() => {
-        getVacancies(applicationId.current);
-        getApplication(applicationId.current);
+        getVacancies(applicationId);
+        getApplication(applicationId);
     }, [ getVacancies, getApplication]);
 
     useEffect(() => {
         if (created) {
             autoToggleAlert('Вы успешно создали вакансию', setSuccessAlert);
-            getVacancies(applicationId.current);
+            getVacancies(applicationId);
             resetVacancyCreated();
         }
     }, [ created, getVacancies, resetVacancyCreated ]);
@@ -72,7 +72,7 @@ const Vacancies = ({
     useEffect(() => {
         if (removed) {
             autoToggleAlert('Вы успешно удалили вакансию', setSuccessAlert);
-            getVacancies(applicationId.current);
+            getVacancies(applicationId);
             resetVacancyRemoved();
         }
     }, [ removed, getVacancies, resetVacancyRemoved ]);
@@ -89,6 +89,13 @@ const Vacancies = ({
         setVacancyIdToRemove(null);
 
         resetVacancyRemoved();
+    };
+
+    const detectBackPath = () => {
+        if (match.params.companyId) {
+            return `/admin/companies/${match.params.companyId}/applications/${applicationId}`
+        }
+        return `/admin/applications/${applicationId}`
     };
 
     return (
@@ -112,7 +119,7 @@ const Vacancies = ({
                 onCancel={() => setVacancyIdToRemove(null)}
                 onConfirm={handleRemoveVacancy}
                 show={!!vacancyIdToRemove} />
-            <BackButton path={`/admin/applications/${applicationId.current}`} />
+            <BackButton path={detectBackPath()} />
             <CreateButton onClick={() => setIsCreatingVacancy(true)}/>
             <TableList
                 onDeleteItem={({ url }) => setVacancyIdToRemove(extractIdFromUrl(url))}

@@ -23,6 +23,7 @@ const adminNavigation =  {
             icon: 'FileText',
             url: '/admin/applications',
             matcher: '/applications',
+            excludePath: 'companies'
         },
         {
             name: 'Настройки',

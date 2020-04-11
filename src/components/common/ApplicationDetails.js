@@ -85,9 +85,17 @@ const ApplicationDetails = ({
         return null;
     }
 
+    const detectBackPath = (role) => {
+        if (match.params.companyId) {
+            return `/${role}/companies/${match.params.companyId}/applications`
+        } else {
+            return `/${role}/applications`;
+        }
+    };
+
     return (
         <div>
-            <BackButton path={`/${user.role}/applications`}/>
+            <BackButton path={detectBackPath(user.role)}/>
             <DetailsTable
                 data={applicationDetailsTableLayout(application)}>
                 {company ?

@@ -34,7 +34,7 @@ const CreateApplication = ({
                 <AlertNotice type="success" message="Вы успешно создали заявку"/>
             </When>
             <ApplicationForm
-                backUrl={`/admin/companies/${match.params.companyId}`}
+                backUrl={`/admin/companies/${match.params.companyId}/applications`}
                 onSubmitApplication={submitApplication}
                 pending={pending}
             />

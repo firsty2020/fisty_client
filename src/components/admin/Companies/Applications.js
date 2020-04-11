@@ -6,9 +6,10 @@ import { applicationsSelector } from '../../common/commonReducer';
 import { Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 
-const Applications = ({ applications, layout, match, getApplications }) => {
+const Applications = ({ applications, layout, match, getApplications, push }) => {
 
     useEffect(() => {
         getApplications({ company: match.params.companyId });
@@ -19,7 +20,7 @@ const Applications = ({ applications, layout, match, getApplications }) => {
             <BackButton path={`/admin/companies/${match.params.companyId}`} />
             <div className="mb-3">
                 <Link
-                    to={`${match.url}/create`}>
+                    to={`/admin/companies/${match.params.companyId}/application/create`}>
                     <Button variant="warning">
                         <PlusCircle
                             size={20}
@@ -29,6 +30,7 @@ const Applications = ({ applications, layout, match, getApplications }) => {
                 </Link>
             </div>
             <TableList
+                onClickRow={({id}) => push(`${match.url}/${id}`)}
                 layout={layout}
                 data={applications}
             />
@@ -41,7 +43,7 @@ const mapStateToProps = state => ({
     applications: applicationsSelector(state),
 });
 
-const mapDispatchToProps = { getApplications };
+const mapDispatchToProps = { getApplications, push };
 
 
 Applications.propTypes = {
