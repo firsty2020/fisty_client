@@ -3,25 +3,22 @@ import { renderErrorToast } from './components/ui/ErrorToast/ErrorToast';
 import { refreshExpiredToken } from './components/auth/auth';
 
 
-let refreshedRequestUrl = '';
-
 export const baseURL = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/';
+
 
 const instance = axios.create({
     baseURL,
 });
 
+
 instance.interceptors.request.use(
     (request) => {
-        const token = localStorage.getItem('auth_token');
-        if (token) {
-            request.headers.Authorization = `Bearer ${token}`;
-        }
-        request.headers['Accept-Language'] = 'ru';
+        setHeaders(request);
         return request;
     },
     (error) => Promise.reject(error));
 
+let refreshedRequestUrl = '';
 
 instance.interceptors.response.use(
     (response) => response,
@@ -36,12 +33,20 @@ instance.interceptors.response.use(
             && error.response.status === 401) {
             return handleTokenRefresh(error, errorMessage, refreshToken);
         }
-        if (error.response && error.response.status === 401) {
-             setTimeout(() => window.location.pathname = 'login', 3000);
-        }
+        handleNotAuthorizedError(error);
         renderErrorToast(errorMessage);
         return Promise.reject(errorMessage);
     });
+
+const handleNotAuthorizedError = (error) => {
+    const loginPath = '/login';
+    if (error.response
+        && error.response.status === 401
+        && window.location.pathname !== loginPath
+    ) {
+        setTimeout(() => window.location.pathname = loginPath, 2000);
+    }
+};
 
 
 const handleTokenRefresh = (error, message, refreshToken) => {
@@ -81,6 +86,15 @@ const transformError = (error) => {
         }
     }
     return errors.join('');
+};
+
+
+const setHeaders = (req) => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+    }
+    req.headers['Accept-Language'] = 'ru';
 };
 
 

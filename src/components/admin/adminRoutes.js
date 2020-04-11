@@ -15,92 +15,15 @@ import CreateBranch from './Companies/Branches/CreateBranch';
 import Branches from './Companies/Branches/Branches';
 import UpdateBranch from './Companies/Branches/UpdateBranch';
 import BranchDetails from './Companies/Branches/BranchDetails';
-import CreateCompanyContactPerson
-    from './Companies/CreateCompanyContactPerson';
-import CreateBranchContactPerson
-    from './Companies/Branches/CreateBranchContactPerson';
-import UpdateCompanyContactPerson
-    from './Companies/UpdateCompanyContacPerson';
-import UpdateBranchContactPerson
-    from './Companies/Branches/UpdateBranchContactPerson';
+import CreateContactPerson
+    from './Companies/contactPerson/CreateContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
 import ApplicationDetails from '../common/ApplicationDetails';
+import withEntity from '../common/HOC/WithEntity';
+import UpdateContactPerson from './Companies/contactPerson/UpdateContactPerson';
 
 
-export const adminNavigation =  {
-    top: [
-        {
-            name: 'Кабинет',
-            url: '/admin',
-            icon: 'Home',
-        },
-        { divider: true },
-        {
-            name: 'Пользователи',
-            icon: 'Users',
-            url: '/admin/users/all',
-            matcher: '/users'
-        },
-        {
-            name: 'Компании',
-            icon: 'Briefcase',
-            url: '/admin/companies',
-            matcher: '/companies',
-        },
-        {
-            name: 'Заявки',
-            icon: 'FileText',
-            url: '/admin/applications',
-            matcher: '/applications',
-        },
-        {
-            name: 'Настройки',
-            icon: 'Settings',
-            children: [
-                {
-                    name: 'Отрасль',
-                    icon: 'GitBranch',
-                    url: '/admin/configs/industries',
-                    matcher: '/industries',
-                },
-                {
-                    name: 'Специфика',
-                    icon: 'Aperture',
-                    url: '/admin/configs/specifications',
-                    matcher: '/specifications',
-                },
-                {
-                    name: 'Местонахождения',
-                    icon: 'MapPin',
-                    url: '/admin/configs/locations',
-                    matcher: '/locations',
-                },
-                {
-                    name: 'Роли',
-                    icon: 'Users',
-                    url: '/admin/configs/roles',
-                    matcher: '/roles',
-                },
-                {
-                    name: 'Динамичные поля',
-                    icon: 'Sliders',
-                    url: '/admin/configs/dynamic-fields',
-                    matcher: '/dynamic-fields',
-                },
-            ]
-        },
-    ],
-    bottom: [
-        {
-            name: 'Выйти',
-            url: '/login',
-            icon: 'LogOut',
-        },
-    ],
-};
-
-
-export const adminRoutes = [
+const adminRoutes = [
     {
         path: '/admin/users/:status',
         component: UserList,
@@ -128,12 +51,12 @@ export const adminRoutes = [
     },
     {
         path: '/admin/companies/:companyId/contact-persons/create',
-        component: CreateCompanyContactPerson,
+        component: withEntity(CreateContactPerson, 'company'),
         name: 'Создать контактное лицо компании',
     },
     {
         path: '/admin/companies/:companyId/contact-persons/edit/:contactPersonId',
-        component: UpdateCompanyContactPerson,
+        component: withEntity(UpdateContactPerson,'company'),
         name: 'Править контактное лицо компании',
     },
     {
@@ -163,12 +86,12 @@ export const adminRoutes = [
     },
     {
         path: '/admin/companies/:companyId/branches/:branchId/contact-persons/edit/:contactPersonId',
-        component: UpdateBranchContactPerson,
+        component: withEntity(UpdateContactPerson, 'branch'),
         name: 'Править контактное лицо бранча',
     },
     {
         path: '/admin/companies/:companyId/branches/:branchId/contact-persons/create',
-        component: CreateBranchContactPerson,
+        component: withEntity(CreateContactPerson, 'branch'),
         name: 'Создать контактное лицо бранча',
     },
     {
@@ -217,3 +140,6 @@ export const adminRoutes = [
         name: 'Динамичные поля'
     },
 ];
+
+
+export default adminRoutes

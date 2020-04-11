@@ -27,7 +27,6 @@ const CreateContactPerson = ({
                                  resetContactPersonCreated,
                              }) => {
 
-
     useEffect(() => {
         if (created) {
             setTimeout(

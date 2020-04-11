@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getBranch } from './branchApi';
 import { BackButton, DetailsTable } from '../../../ui';
 import { branchSelector } from './branchReducer';
-import { getContactPersons } from '../ContactPersons/contactPersonActions';
+import { getContactPersons } from '../contactPerson/contactPersonActions';
 
 
 const branchDetailsTableLayout = ({ id, name, address, location_name }) => [

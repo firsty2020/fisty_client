@@ -10,7 +10,7 @@ import {
     getContactPersons,
     linkContactPerson,
     resetContactPersonLinked,
-} from '../ContactPersons/contactPersonActions';
+} from '../contactPerson/contactPersonActions';
 import { connect } from 'react-redux';
 import { generateSelectOptions, generateUId } from '../../../../helpers/utils';
 import { baseURL } from '../../../../axios';

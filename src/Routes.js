@@ -8,9 +8,10 @@ import {
     Registration,
     SetPassword,
 } from './components';
-import { adminRoutes, adminNavigation } from './components/admin/adminRoutes';
+import adminRoutes from './components/admin/adminRoutes';
+import adminNavigation from './components/admin/adminNavigation';
 import { companyNavigation, companyRoutes } from './components/company/companyRoutes';
-import {LoadSpinner} from './components/ui';
+import { LoadSpinner } from './components/ui';
 
 
 const Admin = lazy(() => import('./components/common/Dashboard'));
