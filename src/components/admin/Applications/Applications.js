@@ -6,18 +6,7 @@ import { applicationsSelector } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 
 
-const companiesTableLayout = {
-    headings: [
-        '#', 'должность', 'тип договора', 'оклад',
-        'кол-во сотрудников',
-    ],
-    createRow: (application, index) => [
-        index + 1, application.position, application.formalization_type,
-        application.salary + ' р.', application.employees_count,
-    ],
-};
-
-const Applications = ({ applications, getApplications, push }) => {
+const Applications = ({ applications, layout, getApplications, push }) => {
 
     useEffect(() => {
         getApplications();
@@ -27,7 +16,7 @@ const Applications = ({ applications, getApplications, push }) => {
         <div>
             <TableList
                 onClickRow={({id}) => push(`/admin/applications/${id}`)}
-                layout={companiesTableLayout}
+                layout={layout}
                 data={applications}
             />
         </div>

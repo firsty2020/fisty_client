@@ -19,9 +19,10 @@ import CreateContactPerson
     from './Companies/contactPerson/CreateContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
 import ApplicationDetails from '../common/ApplicationDetails';
-import withEntity from '../common/HOC/WithEntity';
+import withEntity from './Companies/contactPerson/withEntity';
 import UpdateContactPerson from './Companies/contactPerson/UpdateContactPerson';
-
+import withApplicationsTableLayout from './Applications/withApplicationsTableLayout';
+import Vacancies from './Applications/Vacancies';
 
 const adminRoutes = [
     {
@@ -66,7 +67,7 @@ const adminRoutes = [
     },
     {
         path: '/admin/companies/:companyId/application',
-        component: CompanyApplications,
+        component: withApplicationsTableLayout(CompanyApplications),
         name: 'Заявки',
     },
     {
@@ -105,13 +106,18 @@ const adminRoutes = [
         name: 'Бранчи'
     },
     {
+        path: '/admin/applications/:applicationId/vacancies',
+        component: Vacancies,
+        name: 'Вакансии'
+    },
+    {
         path: '/admin/applications/:applicationId',
         component: ApplicationDetails,
         name: 'Детали заявки'
     },
     {
         path: '/admin/applications',
-        component: Applications,
+        component: withApplicationsTableLayout(Applications),
         name: 'Заявки'
     },
     {

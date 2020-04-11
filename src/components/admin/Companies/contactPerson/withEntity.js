@@ -1,5 +1,5 @@
 import React from 'react';
-import { baseURL } from '../../../axios';
+import { baseURL } from '../../../../axios';
 import { string } from 'prop-types';
 
 const withEntity = (WrappedComponent, entityName) => (props) => {

@@ -79,7 +79,7 @@ const ApplicationDetails = ({
             const companyId = extractIdFromUrl(application.company);
             getCompany(companyId);
         }
-    }, [ getCompany ]);
+    }, [ getCompany, application ]);
 
     if (!application) {
         return null;

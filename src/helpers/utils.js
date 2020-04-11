@@ -76,3 +76,8 @@ export const findConfigForFieldType = ({ field_configuration, field_type }) => {
     }
     return {};
 };
+
+export const autoToggleAlert = (message, stateModifier) => {
+    stateModifier(message);
+    setTimeout(() => stateModifier(''), 2000);
+};

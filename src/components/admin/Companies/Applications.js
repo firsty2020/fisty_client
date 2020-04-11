@@ -8,27 +8,11 @@ import { PlusCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
 
 
-const companiesTableLayout = {
-    headings: [
-        '#', 'должность', 'тип договора', 'оклад',
-        'кол-во сотрудников',
-    ],
-    createRow: (application, index) => [
-        index + 1, application.position, application.formalization_type,
-        application.salary + ' р.', application.employees_count,
-    ],
-};
-
-
-const Applications = ({ applications, match, getApplications }) => {
+const Applications = ({ applications, layout, match, getApplications }) => {
 
     useEffect(() => {
         getApplications({ company: match.params.companyId });
     }, [ getApplications, match.params.companyId ]);
-
-    const handleClickOnRow = (item) => {
-
-    };
 
     return (
         <div>
@@ -45,8 +29,7 @@ const Applications = ({ applications, match, getApplications }) => {
                 </Link>
             </div>
             <TableList
-                onClickRow={(item) => handleClickOnRow(item)}
-                layout={companiesTableLayout}
+                layout={layout}
                 data={applications}
             />
         </div>
