@@ -12,6 +12,7 @@ import {
 
 export const companies = (state = {}, action) => {
     switch (action.type) {
+
         case ADMIN_CREATE_COMPANY_PENDING:
             return {
                 ...state,
@@ -73,6 +74,5 @@ export const createCompanySuccessSelector = (state) => state.admin.companies.com
 export const createCompanyPendingSelector = (state) => state.admin.companies.createCompanyPending;
 
 export const companiesSelector = (state) => state.admin.companies.companies;
-export const getCompaniesPendingSelector = state => state.admin.companies.getCompaniesPending;
 
 export const companySelector = state => state.admin.companies.company;

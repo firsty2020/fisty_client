@@ -10,9 +10,10 @@ import { If, Then, Else, When } from 'react-if';
 import { SuccessNotice } from '../../ui';
 import { AuthFormContainer } from '../../ui/';
 import { registerUser } from '../authActions';
-import { isLoadingSelector, userRegisteredSelector } from '../authReducer';
+import { userRegisteredSelector } from '../authReducer';
 import { userRegistrationSchema } from '../../../helpers/schemas';
 import ERROR_MESSAGES from '../../../helpers/constants/messages'
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 class Registration extends Component {

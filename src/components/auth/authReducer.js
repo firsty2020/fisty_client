@@ -1,6 +1,4 @@
 import {
-    API_REQUEST,
-    API_REQUEST_END,
     AUTH_USER_REGISTER,
     AUTH_COMPLETE_REGISTRATION,
     AUTH_LOGIN,
@@ -23,17 +21,6 @@ export const auth = (state = initialState, action) => {
                 registrationCompleted: false,
                 tokens: null
             };
-        case API_REQUEST:
-            return {
-                ...state,
-                isLoading: true,
-            };
-
-        case API_REQUEST_END:
-            return {
-                ...state,
-                isLoading: false,
-            };
 
         case AUTH_USER_REGISTER:
             return { ...state, userRegistered: true };
@@ -53,8 +40,6 @@ export const auth = (state = initialState, action) => {
             return state;
     }
 };
-
-export const isLoadingSelector = state => state.auth.isLoading;
 
 export const userSelector = state => state.auth.user;
 

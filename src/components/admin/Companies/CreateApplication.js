@@ -6,7 +6,7 @@ import { baseURL } from '../../../axios';
 import { createApplicationResolvedSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
-import { isLoadingSelector } from '../adminReducer';
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 const CreateApplication = ({

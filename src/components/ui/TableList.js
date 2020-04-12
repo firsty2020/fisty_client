@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { arrayOf, func, object, shape, string } from 'prop-types';
 import { EmptyListPlaceholder, } from './index';
-import { isLoadingSelector } from '../admin/adminReducer';
+import { isLoadingSelector } from '../common/commonReducer';
 import { connect } from 'react-redux';
 import { Trash } from 'react-feather';
 

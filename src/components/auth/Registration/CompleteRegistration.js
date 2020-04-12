@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Col, Dropdown, Form, InputGroup } from 'react-bootstrap';
-import { isLoadingSelector, registrationCompletedSelector } from '../authReducer';
+import { registrationCompletedSelector } from '../authReducer';
 import { completeRegistration } from '../authActions';
 import { push } from 'connected-react-router'
 import { completeRegistrationSchema } from '../../../helpers/schemas';
@@ -22,6 +22,7 @@ import {
     transFormDatesArray,
 } from '../../../helpers/dates';
 import Select from 'react-select';
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 const monthsOptions = generateMonths();

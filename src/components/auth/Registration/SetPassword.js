@@ -8,12 +8,10 @@ import classNames from 'classnames';
 import * as Yup from 'yup';
 import ERROR_MESSAGES from '../../../helpers/constants/messages';
 import { setPassword } from '../authActions';
-import {
-    isLoadingSelector,
-    setPasswordResolvedSelector
-} from '../../auth/authReducer';
+import { setPasswordResolvedSelector} from '../../auth/authReducer';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 const validationSchema = Yup.object().shape({

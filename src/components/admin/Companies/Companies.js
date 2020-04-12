@@ -5,7 +5,7 @@ import { PlusCircle } from 'react-feather';
 import { TableList } from '../../ui';
 import { Link } from 'react-router-dom';
 import { getCompanies } from './companiesApi';
-import { companiesSelector, getCompaniesPendingSelector } from './companiesReducer';
+import { companiesSelector } from './companiesReducer';
 import './Companies.css';
 
 
@@ -20,7 +20,7 @@ const companiesTableLayout = {
     ],
 };
 
-const Companies = ({ companies, getCompanies, getCompaniesPending, history }) => {
+const Companies = ({ companies, getCompanies, history }) => {
 
     useEffect(() => {
         getCompanies();
@@ -63,7 +63,6 @@ const Companies = ({ companies, getCompanies, getCompaniesPending, history }) =>
 
 const mapStateToProps = state => ({
     companies: companiesSelector(state),
-    getCompaniesPending: getCompaniesPendingSelector(state),
 });
 
 const mapDispatchToProps = { getCompanies, };

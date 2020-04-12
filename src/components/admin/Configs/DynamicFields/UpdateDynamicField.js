@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { dynamicFieldUpdatedSelector } from '../configsReducer';
 import DynamicFieldForm from './DynamicFieldForm';
 import { clearEmptyFields, copyObject, findConfigForFieldType } from '../../../../helpers/utils';
-import { isLoadingSelector } from '../../adminReducer';
+import { isLoadingSelector } from '../../../common/commonReducer';
 
 
 const UpdateDynamicField = ({

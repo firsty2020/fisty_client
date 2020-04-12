@@ -1,8 +1,6 @@
 import {
     ADMIN_CREATE_CONTACT_PERSON,
-    API_REQUEST,
     ADMIN_GET_USERS,
-    API_REQUEST_END,
     ADMIN_GET_CONTACT_PERSONS,
     ADMIN_REMOVE_CONTACT_PERSON,
     ADMIN_GET_CONTACT_PERSON,
@@ -24,18 +22,6 @@ import { createSelector } from 'reselect';
 
 const common = (state = {}, action) => {
     switch (action.type) {
-
-        case API_REQUEST:
-            return {
-                ...state,
-                isLoading: true,
-            };
-
-        case API_REQUEST_END:
-            return {
-                ...state,
-                isLoading: false,
-            };
 
         case ADMIN_GET_USERS:
             return {
@@ -62,12 +48,6 @@ const common = (state = {}, action) => {
                     ...state.contactPersons,
                     [ action.id ]: action.payload.results ,
                 } : action.payload.results,
-                /*getContactPersonsPending: true,
-                getContactPersonsFailed: false,
-                contactPersonCreated: false,
-                updateContactPersonResolved: false,
-                linkContactPersonResolved: false,
-                unLinkContactPersonResolved: false,*/
             };
 
 
@@ -136,8 +116,6 @@ export const admin =  combineReducers({
     companies,
     branches,
 });
-
-export const isLoadingSelector = (state) => state.admin.common.isLoading;
 
 export const usersSelector = (state) => state.admin.common.users;
 

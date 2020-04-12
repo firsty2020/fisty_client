@@ -45,8 +45,6 @@ import {
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
     ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
-    API_REQUEST,
-    API_REQUEST_END,
     ADMIN_CONFIGS_CREATE_DYNAMIC_FIELD,
     ADMIN_CONFIGS_GET_DYNAMIC_FIELDS,
     ADMIN_CONFIGS_SET_DYNAMIC_FIELD_CREATED,
@@ -58,17 +56,7 @@ import {
 
 export const configs = (state = {}, action) => {
     switch (action.type) {
-        case API_REQUEST:
-            return {
-                ...state,
-                isLoading: true,
-            };
 
-        case API_REQUEST_END:
-            return {
-                ...state,
-                isLoading: false,
-            };
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
             return {
                 ...state,

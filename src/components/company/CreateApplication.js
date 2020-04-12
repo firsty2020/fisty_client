@@ -7,7 +7,7 @@ import { createApplication } from '../common/commonActions';
 import { createApplicationResolvedSelector } from '../common/commonReducer';
 import { push } from 'connected-react-router';
 import { When } from 'react-if';
-import { isLoadingSelector } from '../admin/adminReducer';
+import { isLoadingSelector } from '../common/commonReducer';
 
 
 const CreateApplication = ({

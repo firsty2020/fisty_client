@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
 import Logo from '../../assets/images/logotype-Firsty.png';
 import { connect } from 'react-redux';
-import { isLoadingSelector } from '../admin/adminReducer';
+import { isLoadingSelector } from '../common/commonReducer';
 import { LoadSpinner } from '../ui';
 
 
@@ -33,12 +33,12 @@ class Dashboard extends Component {
     render() {
 
         const { sidebarCollapsed } = this.state;
-        const { navigation, routes } = this.props;
+        const { navigation, routes, isLoading } = this.props;
 
         const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
         return (
             <div className={`app ${sidebarCollapsedClass}`}>
-                { this.props.isLoading ? <LoadSpinner/> : null}
+                { isLoading ? <LoadSpinner/> : null}
                 <div className="app-body">
                     <SidebarNav
                         nav={navigation}

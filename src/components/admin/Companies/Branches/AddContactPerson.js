@@ -3,7 +3,6 @@ import { Button, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import {
     contactPersonsState,
-    isLoadingSelector,
     linkContactPersonResolvedSelector,
 } from '../../adminReducer';
 import {
@@ -14,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { generateSelectOptions, generateUId } from '../../../../helpers/utils';
 import { baseURL } from '../../../../axios';
+import { isLoadingSelector } from '../../../common/commonReducer';
 
 
 const uid = generateUId;

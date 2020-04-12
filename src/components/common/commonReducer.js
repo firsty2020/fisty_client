@@ -13,6 +13,7 @@ import {
 
 
 export const common = (state = {}, action) => {
+
     switch (action.type) {
 
         case API_REQUEST:
@@ -50,6 +51,8 @@ export const common = (state = {}, action) => {
     }
 };
 
+
+export const isLoadingSelector = (state) => state.common.isLoading;
 
 export const createApplicationResolvedSelector = (state) => state.common.applicationCreated;
 
