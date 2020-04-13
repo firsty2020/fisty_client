@@ -24,6 +24,7 @@ import UpdateContactPerson from './Companies/contactPerson/UpdateContactPerson';
 import withApplicationsTableLayout from './Applications/withApplicationsTableLayout';
 import Vacancies from './Applications/Vacancies';
 import VacanyDetails from './Applications/VacanyDetails';
+import Projects from './Applications/Projects';
 
 
 const adminRoutes = [
@@ -63,9 +64,14 @@ const adminRoutes = [
         name: 'Править контактное лицо компании',
     },
     {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects',
+        component: Projects,
+        name: 'Проекты'
+    },
+    {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId',
         component: VacanyDetails,
-        name: 'Вакансии'
+        name: 'Детали вакансии'
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies',
@@ -123,9 +129,14 @@ const adminRoutes = [
         name: 'Бранчи'
     },
     {
+        path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects',
+        component: Projects,
+        name: 'Проекты'
+    },
+    {
         path: '/admin/applications/:applicationId/vacancies/:vacancyId',
         component: VacanyDetails,
-        name: 'Вакансии'
+        name: 'Детали вакансии'
     },
     {
         path: '/admin/applications/:applicationId/vacancies',

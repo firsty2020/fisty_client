@@ -12,6 +12,7 @@ import {
     ADMIN_SET_CONTACT_PERSON_REMOVED,
     ADMIN_SET_CONTACT_PERSON_UNLINKED,
     ADMIN_SET_CONTACT_PERSON_LINKED,
+    ADMIN_GET_PROJECTS,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
@@ -24,22 +25,13 @@ const common = (state = {}, action) => {
     switch (action.type) {
 
         case ADMIN_GET_USERS:
-            return {
-                ...state,
-                users: action.payload.results,
-            };
+            return { ...state, users: action.payload.results };
 
         case ADMIN_CREATE_CONTACT_PERSON:
-            return {
-                ...state,
-                contactPersonCreated: true,
-            };
+            return { ...state, contactPersonCreated: true };
 
         case ADMIN_SET_CONTACT_PERSON_CREATED:
-            return {
-                ...state,
-                contactPersonCreated: action.payload,
-            };
+            return { ...state, contactPersonCreated: action.payload };
 
         case ADMIN_GET_CONTACT_PERSONS:
             return {
@@ -52,58 +44,35 @@ const common = (state = {}, action) => {
 
 
         case ADMIN_REMOVE_CONTACT_PERSON:
-            return {
-                ...state,
-                contactPersonRemoved: true,
-            };
+            return { ...state, contactPersonRemoved: true };
 
         case ADMIN_SET_CONTACT_PERSON_REMOVED:
-            return {
-                ...state,
-                contactPersonRemoved: action.payload,
-            };
+            return { ...state, contactPersonRemoved: action.payload };
 
         case ADMIN_SET_CONTACT_PERSON_UNLINKED:
-            return {
-                ...state,
-                contactPersonUnLinked: action.payload,
-            };
+            return { ...state, contactPersonUnLinked: action.payload };
 
         case ADMIN_SET_CONTACT_PERSON_LINKED:
-            return {
-                ...state,
-                contactPersonLinked: action.payload,
-            };
+            return { ...state, contactPersonLinked: action.payload };
 
         case ADMIN_GET_CONTACT_PERSON:
-            return {
-                ...state,
-                contactPerson: action.payload,
-            };
+            return { ...state, contactPerson: action.payload };
 
         case ADMIN_UPDATE_CONTACT_PERSON:
-            return {
-                ...state,
-                contactPersonUpdated: true,
-            };
+            return { ...state, contactPersonUpdated: true };
 
         case ADMIN_SET_CONTACT_PERSON_UPDATED:
-            return {
-                ...state,
-                contactPersonUpdated: action.payload,
-            };
+            return { ...state, contactPersonUpdated: action.payload };
 
         case ADMIN_LINK_CONTACT_PERSON:
-            return {
-                ...state,
-                contactPersonLinked: true,
-            };
+            return { ...state, contactPersonLinked: true };
 
         case ADMIN_UNLINK_CONTACT_PERSON:
-            return {
-                ...state,
-                contactPersonUnLinked: true,
-            };
+            return { ...state, contactPersonUnLinked: true };
+
+        case ADMIN_GET_PROJECTS:
+            return { ...state, projects: action.payload.results };
+
         default:
             return state;
     }
@@ -143,3 +112,5 @@ export const updateContactPersonResolvedSelector = state => state.admin.common.c
 export const linkContactPersonResolvedSelector = state => state.admin.common.contactPersonLinked;
 
 export const unLinkContactPersonResolvedSelector = state => state.admin.common.contactPersonUnLinked;
+
+export const projectsSelector = state => state.admin.common.projects;

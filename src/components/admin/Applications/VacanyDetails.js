@@ -25,7 +25,7 @@ const VacancyDetails = ({ match, vacancy, getVacancy }) => {
         return null;
     }
 
-    const  generateBackPath = () => {
+    const generateBackPath = () => {
         const { companyId, applicationId } = match.params;
         if (companyId) {
             return `/admin/companies/${companyId}/applications/${applicationId}/vacancies`

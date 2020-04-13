@@ -1,6 +1,5 @@
-import {
-    ADMIN_GET_USERS, API_REQUEST,
-} from '../../../helpers/constants/actionTypes';
+import { ADMIN_GET_USERS } from '../../../helpers/constants/actionTypes';
+import { createApiAction } from '../../../helpers/utils';
 
 
 export const getUsers = (status) => {
@@ -8,13 +7,10 @@ export const getUsers = (status) => {
     if (status !== 'all') {
         params = { status }
     }
-    return {
-        type: API_REQUEST,
-        payload: {
-            url: 'users/',
-            method: 'GET',
-            data: params ,
-            label: ADMIN_GET_USERS,
-        }
-    }
+    return createApiAction({
+        url: 'users/',
+        method: 'GET',
+        data: params ,
+        label: ADMIN_GET_USERS,
+    });
 };
