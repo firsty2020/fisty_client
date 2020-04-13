@@ -13,3 +13,4 @@ export { default as RadioButton } from './RadioButton';
 export { default as DetailsTable } from './DetailsTable';
 export { default as CheckBox } from './CheckBox';
 export { default as CreateButton } from './CreateButton';
+export { default as PrimaryButton } from './PrimaryButton';

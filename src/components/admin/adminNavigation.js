@@ -16,7 +16,7 @@ const adminNavigation =  {
             name: 'Компании',
             icon: 'Briefcase',
             url: '/admin/companies',
-            matcher: '/companies',
+            matcher: '/compan',
         },
         {
             name: 'Заявки',

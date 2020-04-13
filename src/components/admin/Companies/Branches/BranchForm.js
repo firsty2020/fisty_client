@@ -181,6 +181,7 @@ const BranchForm = ({
                                 </Button>
                             </Link>
                             <Button
+                                variant="warning"
                                 disabled={pending}
                                 type="submit">{branch ? 'Обновить' : 'Создать'}
                             </Button>

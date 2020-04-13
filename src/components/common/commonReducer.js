@@ -6,6 +6,7 @@ import {
     GET_APPLICATION,
     GET_APPLICATIONS,
     GET_VACANCIES,
+    GET_VACANCY,
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
@@ -33,6 +34,9 @@ export const common = (state = {}, action) => {
 
         case GET_VACANCIES:
             return { ...state,  vacancies: action.payload.results };
+
+        case GET_VACANCY:
+            return { ...state,  vacancy: action.payload };
 
         case CREATE_VACANCY:
             return { ...state, vacancyCreated: true };
@@ -62,3 +66,4 @@ export const applicationSelector = state => state.common.application;
 export const vacanciesSelector = state => state.common.vacancies;
 export const vacancyCreatedSelector = state => state.common.vacancyCreated;
 export const vacancyRemovedSelector = state => state.common.vacancyRemoved;
+export const vacancySelector = state => state.common.vacancy;

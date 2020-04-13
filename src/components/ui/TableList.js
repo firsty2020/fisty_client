@@ -24,7 +24,9 @@ const TableList = ({ layout, data, isLoading, onClickRow, onDeleteItem }) => {
             >
                 <thead>
                 <tr>
-                    {layout.headings.map((heading) => <th key={heading}>{heading}</th>)}
+                    {layout.headings.map((heading) =>
+                        <th key={heading}>{heading}</th>
+                    )}
                 </tr>
                 </thead>
                 <tbody>

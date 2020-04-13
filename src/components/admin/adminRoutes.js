@@ -23,6 +23,8 @@ import withEntity from './Companies/contactPerson/withEntity';
 import UpdateContactPerson from './Companies/contactPerson/UpdateContactPerson';
 import withApplicationsTableLayout from './Applications/withApplicationsTableLayout';
 import Vacancies from './Applications/Vacancies';
+import VacanyDetails from './Applications/VacanyDetails';
+
 
 const adminRoutes = [
     {
@@ -59,6 +61,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/contact-persons/edit/:contactPersonId',
         component: withEntity(UpdateContactPerson,'company'),
         name: 'Править контактное лицо компании',
+    },
+    {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId',
+        component: VacanyDetails,
+        name: 'Вакансии'
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies',
@@ -114,6 +121,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/branches',
         component: Branches,
         name: 'Бранчи'
+    },
+    {
+        path: '/admin/applications/:applicationId/vacancies/:vacancyId',
+        component: VacanyDetails,
+        name: 'Вакансии'
     },
     {
         path: '/admin/applications/:applicationId/vacancies',

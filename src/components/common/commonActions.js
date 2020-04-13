@@ -4,6 +4,7 @@ import {
     GET_APPLICATION,
     GET_APPLICATIONS,
     GET_VACANCIES,
+    GET_VACANCY,
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
@@ -37,6 +38,12 @@ export const getVacancies = (applicationId) => createApiAction({
     method: 'GET',
     data: { application: applicationId },
     label: GET_VACANCIES,
+});
+
+export const getVacancy = (id) => createApiAction({
+    url: `vacancy/${id}`,
+    method: 'GET',
+    label: GET_VACANCY,
 });
 
 export const createVacancy = (data) => createApiAction({

@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { BackButton, DetailsTable } from '../ui';
+import {BackButton, DetailsTable, PrimaryButton} from '../ui';
 import { getApplication } from './commonActions';
 import { applicationSelector } from './commonReducer';
 import { getCompany } from '../admin/Companies/companiesActions';
 import { companySelector } from '../admin/Companies/companiesReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import { getUserFromToken } from '../auth/auth';
 
 
@@ -107,7 +106,7 @@ const ApplicationDetails = ({
             </DetailsTable>
             {(user || {}).role === 'admin' ? (
                 <Link to={`${match.url}/vacancies`} className="mr-2">
-                    <Button variant="warning">Вакансии</Button>
+                    <PrimaryButton text="Вакансии"/>
                 </Link>) : null
             }
         </div>

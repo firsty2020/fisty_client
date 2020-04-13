@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
     AlertNotice,
@@ -123,7 +123,7 @@ const Vacancies = ({
             <CreateButton onClick={() => setIsCreatingVacancy(true)}/>
             <TableList
                 onDeleteItem={({ url }) => setVacancyIdToRemove(extractIdFromUrl(url))}
-                onClickRow={({url}) => null/*push(`${match.url}/${extractIdFromUrl(url)}`)*/}
+                onClickRow={({url}) => push(`${match.url}/${extractIdFromUrl(url)}`)}
                 layout={vacanciesTableLayout}
                 data={vacancies}
             />
