@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { branchSchema } from '../../../../helpers/schemas';
+import { branchSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { getLocations } from '../../Configs/configsApi';
-import { locationsSelector } from '../../Configs/configsReducer';
+import { getLocations } from '../Configs/configsApi';
+import { locationsSelector } from '../Configs/configsReducer';
 import {
     generateSelectOptions,
     transformReactSelectFields
-} from '../../../../helpers/utils';
+} from '../../../helpers/utils';
 import { getContactPersons } from '../contactPerson/contactPersonActions';
-import {contactPersonsSelector, contactPersonsState} from '../../adminReducer';
-import { baseURL } from '../../../../axios';
+import {contactPersonsSelector, contactPersonsState} from '../adminReducer';
+import { baseURL } from '../../../axios';
 import { Link } from 'react-router-dom';
 
 

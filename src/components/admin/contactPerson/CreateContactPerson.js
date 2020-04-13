@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { contactPersonCreatedSelector } from '../../adminReducer';
-import { contactPersonRolesSelector } from '../../Configs/configsReducer';
+import { contactPersonCreatedSelector } from '../adminReducer';
+import { contactPersonRolesSelector } from '../Configs/configsReducer';
 import {
     createContactPerson,
     resetContactPersonCreated
 } from './contactPersonActions';
-import { AlertNotice } from '../../../ui';
+import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
 import ContactPersonForm from './ContactPersonForm';
 import { push } from 'connected-react-router';
-import { isLoadingSelector } from '../../../common/commonReducer';
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 const CreateContactPerson = ({

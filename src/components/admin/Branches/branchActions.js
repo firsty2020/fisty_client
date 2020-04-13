@@ -14,7 +14,7 @@ import {
     ADMIN_UPDATE_BRANCH_FAILED,
     ADMIN_UPDATE_BRANCH_PENDING,
     ADMIN_UPDATE_BRANCH_RESOLVED,
-} from '../../../../helpers/constants/actionTypes';
+} from '../../../helpers/constants/actionTypes';
 
 
 /*** Actions for creating a branch ***/

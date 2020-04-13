@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
-import { contactPersonSchema } from '../../../../helpers/schemas';
+import { contactPersonSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
-import { getContactPersonRoles } from '../../Configs/Roles/rolesApi';
-import { contactPersonRolesSelector } from '../../Configs/configsReducer';
+import { getContactPersonRoles } from '../Configs/Roles/rolesApi';
+import { contactPersonRolesSelector } from '../Configs/configsReducer';
 import Select from 'react-select';
-import { generateSelectOptions } from '../../../../helpers/utils';
+import { generateSelectOptions } from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
 
 

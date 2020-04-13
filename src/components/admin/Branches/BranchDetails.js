@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getBranch } from './branchApi';
-import { BackButton, DetailsTable } from '../../../ui';
+import { BackButton, DetailsTable } from '../../ui';
 import { branchSelector } from './branchReducer';
 import { getContactPersons } from '../contactPerson/contactPersonActions';
 

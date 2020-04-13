@@ -11,8 +11,8 @@ import {
     ADMIN_SET_CONTACT_PERSON_UPDATED,
     ADMIN_UNLINK_CONTACT_PERSON,
     ADMIN_UPDATE_CONTACT_PERSON,
-} from '../../../../helpers/constants/actionTypes';
-import { createApiAction } from '../../../../helpers/utils';
+} from '../../../helpers/constants/actionTypes';
+import { createApiAction } from '../../../helpers/utils';
 
 
 export const createContactPerson = (data) => createApiAction({

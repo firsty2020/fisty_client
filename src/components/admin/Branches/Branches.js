@@ -3,7 +3,7 @@ import { Button, Container, Table } from 'react-bootstrap';
 import { Edit, PlusCircle, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { BackButton, ConfirmationModal } from '../../../ui';
+import { BackButton, ConfirmationModal } from '../../ui';
 import { getBranches, removeBranch } from './branchApi';
 import {
     branchesSelector,

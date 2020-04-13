@@ -8,7 +8,7 @@ import {
     updateBranchResolvedSelector
 } from './branchReducer';
 import BranchForm from './BranchForm';
-import { AlertNotice } from '../../../ui';
+import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
 

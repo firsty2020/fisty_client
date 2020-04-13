@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { AlertNotice } from '../../../ui';
+import { AlertNotice } from '../../ui';
 import { When } from 'react-if';
 import ContactPersonForm from './ContactPersonForm';
 import {
@@ -12,7 +12,7 @@ import {
 import {
     contactPersonSelector,
     updateContactPersonResolvedSelector
-} from '../../adminReducer';
+} from '../adminReducer';
 import { push } from 'connected-react-router';
 
 

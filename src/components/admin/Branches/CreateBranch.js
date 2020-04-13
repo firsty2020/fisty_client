@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { locationsSelector } from '../../Configs/configsReducer';
-import { contactPersonsSelector } from '../../adminReducer';
+import { locationsSelector } from '../Configs/configsReducer';
+import { contactPersonsSelector } from '../adminReducer';
 import BranchForm from './BranchForm';
 import { createBranch } from './branchApi';
 import {
@@ -10,7 +10,7 @@ import {
     createBranchResolvedSelector
 } from './branchReducer';
 import { push } from 'connected-react-router';
-import {AlertNotice} from '../../../ui';
+import {AlertNotice} from '../../ui';
 import { When } from "react-if";
 
 

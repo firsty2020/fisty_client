@@ -4,16 +4,16 @@ import Select from 'react-select';
 import {
     contactPersonsState,
     linkContactPersonResolvedSelector,
-} from '../../adminReducer';
+} from '../adminReducer';
 import {
     getContactPersons,
     linkContactPerson,
     resetContactPersonLinked,
 } from '../contactPerson/contactPersonActions';
 import { connect } from 'react-redux';
-import { generateSelectOptions, generateUId } from '../../../../helpers/utils';
-import { baseURL } from '../../../../axios';
-import { isLoadingSelector } from '../../../common/commonReducer';
+import { generateSelectOptions, generateUId } from '../../../helpers/utils';
+import { baseURL } from '../../../axios';
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 const uid = generateUId;

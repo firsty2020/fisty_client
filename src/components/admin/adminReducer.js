@@ -17,7 +17,7 @@ import {
 import { combineReducers } from 'redux';
 import { configs } from './Configs/configsReducer';
 import { companies } from './Companies/companiesReducer';
-import { branches } from './Companies/Branches/branchReducer';
+import { branches } from './Branches/branchReducer';
 import { createSelector } from 'reselect';
 
 

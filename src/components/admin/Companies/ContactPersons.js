@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import ContactPersonsList from './contactPerson/ContactPersonsList';
+import ContactPersonsList from '../contactPerson/ContactPersonsList';
 import { BackButton } from '../../ui';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -11,7 +11,7 @@ import {
 import {
     getContactPersons,
     resetContactPersonRemoved
-} from './contactPerson/contactPersonActions';
+} from '../contactPerson/contactPersonActions';
 import { connect } from 'react-redux';
 
 

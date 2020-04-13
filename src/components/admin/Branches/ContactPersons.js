@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ContactPersonsList from '../contactPerson/ContactPersonsList';
-import { AlertNotice, BackButton, ConfirmationModal } from '../../../ui';
+import { AlertNotice, BackButton, ConfirmationModal } from '../../ui';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { PlusCircle, Link as LinkIcon } from 'react-feather';
@@ -19,10 +19,10 @@ import {
     linkContactPersonResolvedSelector,
     removeContactPersonResolvedSelector,
     unLinkContactPersonResolvedSelector
-} from '../../adminReducer';
+} from '../adminReducer';
 import { When } from 'react-if';
-import { baseURL } from '../../../../axios';
-import { generateUId } from '../../../../helpers/utils';
+import { baseURL } from '../../../axios';
+import { generateUId } from '../../../helpers/utils';
 
 
 const uid = generateUId();
