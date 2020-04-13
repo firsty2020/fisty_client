@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { companySelector } from './companiesReducer';
-import { getCompany } from './companiesApi';
+import { getCompany } from './companiesActions';
 import { connect } from 'react-redux';
 import {
     industryOptionSelector,
@@ -46,7 +46,7 @@ const CompanyDetails = ({
 
     useEffect(() => {
         getCompany(match.params.companyId);
-    }, [ getCompany, match ]);
+    }, [ getCompany, match.params.companyId ]);
 
     useEffect(() => {
         if (!company) return;

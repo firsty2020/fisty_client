@@ -151,7 +151,7 @@ export const configs = (state = {}, action) => {
             return {
                 ...state,
                 getSpecificationOptionsPending: false,
-                specificationOption: action.payload,
+                specificationOptions: action.payload,
             };
 
         case ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_PENDING:

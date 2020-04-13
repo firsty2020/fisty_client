@@ -36,7 +36,7 @@ const adminRoutes = [
         name: 'Компании'
     },
     {
-        path: '/admin/companies/create',
+        path: '/admin/company/create',
         component: CreateCompany,
         name: 'Создать компанию'
     },

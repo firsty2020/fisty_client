@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BackButton, DetailsTable } from '../ui';
 import { getApplication } from './commonActions';
 import { applicationSelector } from './commonReducer';
-import { getCompany } from '../admin/Companies/companiesApi';
+import { getCompany } from '../admin/Companies/companiesActions';
 import { companySelector } from '../admin/Companies/companiesReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
 import { Link } from 'react-router-dom';

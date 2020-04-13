@@ -1,60 +1,35 @@
 import {
-    ADMIN_CREATE_COMPANY_FAILED,
-    ADMIN_CREATE_COMPANY_PENDING,
-    ADMIN_CREATE_COMPANY_RESOLVED,
-    ADMIN_GET_COMPANIES_FAILED,
-    ADMIN_GET_COMPANIES_PENDING,
-    ADMIN_GET_COMPANIES_RESOLVED,
-    ADMIN_GET_COMPANY_FAILED,
-    ADMIN_GET_COMPANY_RESOLVED,
+    ADMIN_CREATE_COMPANY,
+    ADMIN_GET_COMPANIES,
+    ADMIN_GET_COMPANY,
+    ADMIN_SET_COMPANY_CREATED,
 } from '../../../helpers/constants/actionTypes';
+import { createApiAction } from '../../../helpers/utils';
 
-/*** Actions for creating a company ***/
 
-export const createCompanyPending = () => ({
-    type: ADMIN_CREATE_COMPANY_PENDING,
+export const createCompany = (data) => createApiAction({
+    url: 'companies/',
+    method: 'POST',
+    data,
+    label: ADMIN_CREATE_COMPANY,
 });
 
-export const createCompanyFailed = (err) => ({
-    type: ADMIN_CREATE_COMPANY_FAILED,
-    error: err,
+
+export const getCompanies = () => createApiAction({
+    url: 'companies/',
+    method: 'GET',
+    label: ADMIN_GET_COMPANIES,
 });
 
-export const createCompanyResolved = () => ({
-    type: ADMIN_CREATE_COMPANY_RESOLVED,
+
+export const resetCompanyCreated = () => ({
+    type: ADMIN_SET_COMPANY_CREATED,
+    payload: false,
 });
 
-/******************************************/
 
-
-/*** Actions for fetching companies ***/
-
-export const getCompaniesPending = () => ({
-    type: ADMIN_GET_COMPANIES_PENDING,
+export const getCompany = (id) => createApiAction({
+    url: `companies/${id}`,
+    method: 'GET',
+    label: ADMIN_GET_COMPANY,
 });
-
-export const getCompaniesResolved = (companies) => ({
-    type: ADMIN_GET_COMPANIES_RESOLVED,
-    payload: companies,
-});
-
-export const getCompaniesFailed = (companies) => ({
-    type: ADMIN_GET_COMPANIES_FAILED,
-    payload: companies,
-});
-
-/******************************************/
-
-
-/*** Actions for fetching a single company ***/
-
-export const getCompanyResolved = (company) => ({
-    type: ADMIN_GET_COMPANY_RESOLVED,
-    payload: company,
-});
-
-export const getCompanyFailed = () => ({
-    type: ADMIN_GET_COMPANY_FAILED,
-});
-
-/******************************************/

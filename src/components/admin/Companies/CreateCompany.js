@@ -4,11 +4,8 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { companySchema } from '../../../helpers/schemas';
-import { createCompany } from './companiesApi';
-import {
-    createCompanyPendingSelector,
-    createCompanySuccessSelector,
-} from './companiesReducer';
+import { createCompany, resetCompanyCreated } from './companiesActions';
+import { createCompanyResolvedSelector } from './companiesReducer';
 import {
     industryOptionsSelector,
     specificationOptionsSelector
@@ -19,7 +16,8 @@ import messages from '../../../helpers/constants/messages';
 import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
 import Select from 'react-select';
 import { generateSelectOptions } from '../../../helpers/utils';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { isLoadingSelector } from '../../common/commonReducer';
 
 
 const sourceOptions = [
@@ -43,6 +41,7 @@ const CreateCompany = ({
                            push,
                            getIndustryOptions,
                            getSpecificationOptions,
+                           resetCompanyCreated,
                        }) => {
 
     const handleCreateCompany = (companyData) => {
@@ -63,9 +62,10 @@ const CreateCompany = ({
         if (created) {
             setTimeout(() => {
                 push('/admin/companies');
-            }, 3000);
+                resetCompanyCreated();
+            }, 2000);
         }
-    }, [ created, push ]);
+    }, [ created, push, resetCompanyCreated ]);
 
 
     useEffect(() => {
@@ -255,8 +255,8 @@ const CreateCompany = ({
 
 
 const mapStateToProps = state => ({
-    pending: createCompanyPendingSelector(state),
-    created: createCompanySuccessSelector(state),
+    pending: isLoadingSelector(state),
+    created: createCompanyResolvedSelector(state),
     industryOptions: industryOptionsSelector(state),
     specificationOptions: specificationOptionsSelector(state),
 });
@@ -266,6 +266,7 @@ const mapDispatchToProps = {
     push,
     getIndustryOptions,
     getSpecificationOptions,
+    resetCompanyCreated,
 };
 
 

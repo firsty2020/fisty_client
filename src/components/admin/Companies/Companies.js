@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PlusCircle } from 'react-feather';
 import { TableList } from '../../ui';
 import { Link } from 'react-router-dom';
-import { getCompanies } from './companiesApi';
+import { getCompanies } from './companiesActions';
 import { companiesSelector } from './companiesReducer';
 import './Companies.css';
 
@@ -38,7 +38,7 @@ const Companies = ({ companies, getCompanies, history }) => {
                     <Col lg={4} md={4} sm={4} xs={3}/>
                     <Col lg={4} md={4} sm={4} xs={4}
                          className="d-flex justify-content-end align-items-end">
-                        <Link to="/admin/companies/create">
+                        <Link to="/admin/company/create">
                             <Button variant="warning">
                                 <PlusCircle
                                     size={20}
