@@ -134,9 +134,9 @@ export const applicationSchema = Yup.object().shape({
     employees_count: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.EMPLOYEES_COUNT_INVALID)
         .required(ERROR_MESSAGES.EMPLOYEES_COUNT_REQUIRED),
-    job_description: Yup.string().required(ERROR_MESSAGES.JOB_DESCRIPTION_REQUIRED),
-    bonus_enabled: Yup.bool().required(ERROR_MESSAGES.BONUSES_REQUIRED),
-    salary: Yup.string().matches(REGEX.NUMERIC_DECIMAL, ERROR_MESSAGES.SALARY_INVALID).required(ERROR_MESSAGES.SALARY_REQUIRED),
+    job_description: Yup.string(),
+    bonus_enabled: Yup.bool(),
+    salary: Yup.string().matches(REGEX.NUMERIC, ERROR_MESSAGES.SALARY_INVALID).required(ERROR_MESSAGES.SALARY_REQUIRED),
     citizenship: Yup.string().required(ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
     age: Yup.object().shape({
         from: Yup.string()
@@ -151,7 +151,7 @@ export const applicationSchema = Yup.object().shape({
     russian_level: Yup.string().oneOf(['родной', 'с акцентом']).required(ERROR_MESSAGES.RUSSIAN_LEVEL_REQUIRED),
     city: Yup.string().required(ERROR_MESSAGES.CITY_REQUIRED),
     address: Yup.string().required(ERROR_MESSAGES.ADDRESS_REQUIRED),
-    formalization_type: Yup.string().required(ERROR_MESSAGES.FORMALIZATION_TYPE_REQUIRED),
+    formalization_type: Yup.array().required(ERROR_MESSAGES.FORMALIZATION_TYPE_REQUIRED),
     responsibilities: Yup.string().required(ERROR_MESSAGES.RESPONSIBILITIES_REQUIRED),
     schedule: Yup.string().required(ERROR_MESSAGES.SCHEDULE_REQUIRED),
 });

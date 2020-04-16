@@ -24,7 +24,7 @@ import UpdateContactPerson from './contactPerson/UpdateContactPerson';
 import withApplicationsTableLayout from './Applications/withApplicationsTableLayout';
 import Vacancies from './Applications/Vacancies';
 import VacanyDetails from './Applications/VacanyDetails';
-import Projects from './Applications/Projects';
+import Projects from './Projects/Projects';
 
 
 const adminRoutes = [

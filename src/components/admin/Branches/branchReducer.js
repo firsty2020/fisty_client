@@ -5,9 +5,7 @@ import {
     ADMIN_GET_BRANCH_FAILED,
     ADMIN_GET_BRANCH_PENDING,
     ADMIN_GET_BRANCH_RESOLVED,
-    ADMIN_GET_BRANCHES_FAILED,
-    ADMIN_GET_BRANCHES_PENDING,
-    ADMIN_GET_BRANCHES_RESOLVED,
+    ADMIN_GET_BRANCHES,
     ADMIN_REMOVE_BRANCH_FAILED,
     ADMIN_REMOVE_BRANCH_PENDING,
     ADMIN_REMOVE_BRANCH_RESOLVED,
@@ -35,21 +33,12 @@ export const branches = (state = {}, action) => {
                 createCompanyPending: false
             };
 
-        case ADMIN_GET_BRANCHES_PENDING:
+
+        case ADMIN_GET_BRANCHES:
             return {
                 ...state,
-                getBranchesPending: true,
-                branchCreated: false
-            };
-        case ADMIN_GET_BRANCHES_RESOLVED:
-            return {
-                branches: action.payload,
+                branches: action.payload.results,
                 getBranchesPending: false,
-            };
-        case ADMIN_GET_BRANCHES_FAILED:
-            return {
-                branches: [],
-                getBranchesPending: false
             };
 
         case ADMIN_REMOVE_BRANCH_PENDING:

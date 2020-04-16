@@ -2,10 +2,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import * as Yup from 'yup';
 import {
     createLocation,
-    getLocations,
     removeLocation,
     updateLocation,
 } from './configsApi';
+import { getLocations } from './configsActions';
 import {
     createLocationPendingSelector,
     createLocationResolvedSelector,

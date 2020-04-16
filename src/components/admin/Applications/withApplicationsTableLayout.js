@@ -10,7 +10,7 @@ const withApplicationsTableLayout = (WrappedComponent) => (props) => {
             'кол-во сотрудников',
         ],
         createRow: (application, index) => [
-            index + 1, application.position, application.formalization_type,
+            index + 1, application.position, application.formalization_type.join(', '),
             application.salary + ' р.', application.employees_count,
         ],
     };

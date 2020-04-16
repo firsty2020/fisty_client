@@ -38,9 +38,6 @@ import {
     ADMIN_CONFIGS_CREATE_LOCATION_PENDING,
     ADMIN_CONFIGS_CREATE_LOCATION_FAILED,
     ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED,
-    ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
-    ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
-    ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
     ADMIN_CONFIGS_REMOVE_LOCATION_FAILED,
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_LOCATION_FAILED,
@@ -50,7 +47,9 @@ import {
     ADMIN_CONFIGS_SET_DYNAMIC_FIELD_CREATED,
     ADMIN_CONFIGS_REMOVE_DYNAMIC_FIELD,
     ADMIN_CONFIGS_SET_DYNAMIC_FIELD_REMOVED,
-    ADMIN_CONFIGS_UPDATE_DYNAMIC_FIELD, ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED,
+    ADMIN_CONFIGS_UPDATE_DYNAMIC_FIELD,
+    ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED,
+    ADMIN_CONFIGS_GET_LOCATIONS,
 } from '../../../helpers/constants/actionTypes';
 
 
@@ -325,24 +324,13 @@ export const configs = (state = {}, action) => {
                 createLocationResolved: true,
             };
 
-        case ADMIN_CONFIGS_GET_LOCATIONS_PENDING:
+        case ADMIN_CONFIGS_GET_LOCATIONS:
             return {
                 ...state,
+                locations: action.payload.results,
                 createLocationResolved: false,
                 removeLocationResolved: false,
                 updateLocationResolved: false,
-            };
-
-        case ADMIN_CONFIGS_GET_LOCATIONS_FAILED:
-            return {
-                ...state,
-                locations: [],
-            };
-
-        case ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED:
-            return {
-                ...state,
-                locations: action.payload,
             };
 
         case ADMIN_CONFIGS_REMOVE_LOCATION_FAILED:

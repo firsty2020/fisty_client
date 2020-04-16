@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {AlertNotice, ApplicationForm} from '../ui';
+import { AlertNotice } from '../ui';
 import { connect } from 'react-redux';
 import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
@@ -8,6 +8,7 @@ import { createApplicationResolvedSelector } from '../common/commonReducer';
 import { push } from 'connected-react-router';
 import { When } from 'react-if';
 import { isLoadingSelector } from '../common/commonReducer';
+import ApplicationForm from '../common/ApplicationForm';
 
 
 const CreateApplication = ({

@@ -157,16 +157,6 @@ export const createLocation = (name) => {
     };
 };
 
-export const getLocations = (params) => {
-    return dispatch => {
-        dispatch(getLocationsPending());
-        api
-            .get('locations/', { params })
-            .then((res) => dispatch(getLocationsResolved(res.data.results)))
-            .catch(() => dispatch(getLocationsFailed()))
-    };
-};
-
 export const removeLocation = (id) => {
     return dispatch => {
         api

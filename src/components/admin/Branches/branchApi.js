@@ -3,8 +3,6 @@ import {
     createBranchFailed,
     createBranchPending,
     createBranchResolved,
-    getBranchesPending,
-    getBranchesResolved,
     getBranchFailed,
     getBranchPending,
     getBranchResolved,
@@ -26,18 +24,6 @@ export const createBranch = (data) => {
             .catch((err) => dispatch(createBranchFailed()));
     }
 };
-
-
-export const getBranches = (params) => {
-    return dispatch => {
-        dispatch(getBranchesPending());
-        api
-            .get('companies/branch/', { params })
-            .then((res) => dispatch(getBranchesResolved(res.data.results)))
-            .catch(() => dispatch(createBranchFailed()));
-    }
-};
-
 
 export const getBranch = (id) => {
     return dispatch => {

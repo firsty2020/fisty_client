@@ -9,8 +9,7 @@ import {
     transformReactSelectFields
 } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
-import RadioButton from './RadioButton';
-import { CheckBox } from './index';
+import { CheckBox, RadioButton } from '../ui';
 
 
 const scheduleOptions = [
@@ -131,7 +130,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Условия работы *</p>
+                                    <p>Условия работы </p>
                                     <Form.Control
                                         as="textarea"
                                         name="job_description"
@@ -145,7 +144,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Бонусы *</p>
+                                    <p>Бонусы </p>
                                     <RadioButton
                                         inline
                                         custom
@@ -165,12 +164,9 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onBlur={(e) => setFieldTouched('bonus_enabled', e)}
                                     />
                                     <br/>
-                                    {touched.bonus_enabled && errors.bonus_enabled ? (
-                                        <span className="mt-1 invalid-feedback-visible">{errors.bonus_enabled}</span>
-                                    ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Примерный совокупный заработок в месяц *</p>
+                                    <p>Примерный совокупный заработок в месяц * - net</p>
                                     <Form.Control
                                         type="number"
                                         name="salary"
@@ -186,49 +182,49 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p>Вид оформления *</p>
                                     <div className="d-flex justify-content-between">
-                                        <RadioButton
+                                        <CheckBox
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Трудовой договор"
-                                            onChange={() => setFieldValue('formalization_type', 'трудовой договор')}
+                                            onChange={() => updateCheckboxValue(setFieldValue, 'трудовой договор', 'formalization_type', values.formalization_type)}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <RadioButton
+                                        <CheckBox
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Самозанятый"
-                                            onChange={() => setFieldValue('formalization_type', 'самозанятый')}
+                                            onChange={() => updateCheckboxValue(setFieldValue, 'самозанятый', 'formalization_type', values.formalization_type)}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <RadioButton
+                                        <CheckBox
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Договор гражданско-правового характера"
-                                            onChange={() => setFieldValue('formalization_type', 'договор гражданско-правового характера')}
+                                            onChange={() => updateCheckboxValue(setFieldValue, 'договор гражданско-правового характера', 'formalization_type', values.formalization_type)}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <RadioButton
+                                        <CheckBox
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Агентский договор"
-                                            onChange={() => setFieldValue('formalization_type', 'агентский договор')}
+                                            onChange={() => updateCheckboxValue(setFieldValue, 'агентский договор', 'formalization_type', values.formalization_type)}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
-                                        <RadioButton
+                                        <CheckBox
                                             inline
                                             custom
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Другое"
-                                            onChange={() => setFieldValue('formalization_type', 'другое')}
+                                            onChange={() => updateCheckboxValue(setFieldValue, 'другое', 'formalization_type', values.formalization_type)}
                                             onBlur={(e) => setFieldTouched('formalization_type', e)}
                                         />
                                     </div>

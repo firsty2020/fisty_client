@@ -18,9 +18,7 @@ import {
     ADMIN_CONFIGS_GET_INDUSTRIES_RESOLVED,
     ADMIN_CONFIGS_GET_INDUSTRY_FAILED,
     ADMIN_CONFIGS_GET_INDUSTRY_RESOLVED,
-    ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
-    ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
-    ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
+    ADMIN_CONFIGS_GET_LOCATIONS,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTION_RESOLVED,
     ADMIN_CONFIGS_GET_SPECIFICATION_OPTIONS_FAILED,
@@ -45,8 +43,9 @@ import {
     ADMIN_CONFIGS_UPDATE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
-    ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED
+    ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED,
 } from '../../../helpers/constants/actionTypes';
+import { createApiAction } from '../../../helpers/utils';
 
 
 /*** Actions for creating options for industry field ***/
@@ -315,22 +314,12 @@ export const createLocationResolved = () => ({
 /******************************************/
 
 
-/*** Actions for fetching locations  ***/
-
-export const getLocationsPending = () => ({
-    type: ADMIN_CONFIGS_GET_LOCATIONS_PENDING,
+export const getLocations = (params) => createApiAction({
+    url: 'locations/',
+    method: 'GET',
+    data: params,
+    label: ADMIN_CONFIGS_GET_LOCATIONS,
 });
-
-export const getLocationsFailed = () => ({
-    type: ADMIN_CONFIGS_GET_LOCATIONS_FAILED,
-});
-
-export const getLocationsResolved = (locations) => ({
-    type: ADMIN_CONFIGS_GET_LOCATIONS_RESOLVED,
-    payload: locations
-});
-
-/******************************************/
 
 
 /*** Actions for removing a single location  ***/

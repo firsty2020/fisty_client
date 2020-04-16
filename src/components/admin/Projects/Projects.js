@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { BackButton, CreateButton, TableList } from '../../ui';
 import { getProjects } from '../adminActions';
 import { projectsSelector } from '../adminReducer';
+import CreateProject from './CreateProject';
 
 
 const projectsTableLayout = {
@@ -16,6 +17,8 @@ const projectsTableLayout = {
 };
 
 const Projects = ({ projects, match, getProjects }) => {
+
+    const [ isCreatingProject, setIsCreatingProject ] = useState(true);
 
     useEffect(() => {
         const { vacancyId } = match.params;
@@ -33,7 +36,11 @@ const Projects = ({ projects, match, getProjects }) => {
     return (
         <div>
             <BackButton path={generateBackPath()}/>
-            <CreateButton/>
+            <CreateButton
+                onClick={() => setIsCreatingProject(true)}/>
+            {/*{isCreatingProject ? (
+                <CreateProject match={match} />
+                ) : null}*/}
             <TableList
                 layout={projectsTableLayout}
                 data={projects}

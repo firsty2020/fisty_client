@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {AlertNotice, ApplicationForm} from '../../ui';
+import { AlertNotice } from '../../ui';
 import { connect } from 'react-redux';
 import { createApplication } from '../../common/commonActions';
 import { baseURL } from '../../../axios';
@@ -7,6 +7,7 @@ import { createApplicationResolvedSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
 import { isLoadingSelector } from '../../common/commonReducer';
+import ApplicationForm from '../../common/ApplicationForm';
 
 
 const CreateApplication = ({
@@ -19,7 +20,7 @@ const CreateApplication = ({
 
     useEffect(() => {
         if (created) {
-            setTimeout(() => push(`/admin/companies/${match.params.companyId}/application`), 2000);
+            setTimeout(() => push(`/admin/companies/${match.params.companyId}/applications`), 2000);
         }
     }, [ created, push, match.params.companyId ]);
 

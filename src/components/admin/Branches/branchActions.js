@@ -5,9 +5,7 @@ import {
     ADMIN_GET_BRANCH_FAILED,
     ADMIN_GET_BRANCH_PENDING,
     ADMIN_GET_BRANCH_RESOLVED,
-    ADMIN_GET_BRANCHES_FAILED,
-    ADMIN_GET_BRANCHES_PENDING,
-    ADMIN_GET_BRANCHES_RESOLVED,
+    ADMIN_GET_BRANCHES,
     ADMIN_REMOVE_BRANCH_FAILED,
     ADMIN_REMOVE_BRANCH_PENDING,
     ADMIN_REMOVE_BRANCH_RESOLVED,
@@ -15,6 +13,7 @@ import {
     ADMIN_UPDATE_BRANCH_PENDING,
     ADMIN_UPDATE_BRANCH_RESOLVED,
 } from '../../../helpers/constants/actionTypes';
+import { createApiAction } from '../../../helpers/utils';
 
 
 /*** Actions for creating a branch ***/
@@ -34,22 +33,12 @@ export const createBranchResolved = () => ({
 /******************************************/
 
 
-/*** Actions for fetching branches ***/
-
-export const getBranchesPending = () => ({
-    type: ADMIN_GET_BRANCHES_PENDING,
+export const getBranches = (params) => createApiAction({
+    url: 'companies/branch/',
+    method: 'GET',
+    data: params,
+    label: ADMIN_GET_BRANCHES,
 });
-
-export const getBranchesFailed = () => ({
-    type: ADMIN_GET_BRANCHES_FAILED,
-});
-
-export const getBranchesResolved = (branches) => ({
-    type: ADMIN_GET_BRANCHES_RESOLVED,
-    payload: branches,
-});
-
-/******************************************/
 
 
 /*** Actions for fetching a single branch ***/

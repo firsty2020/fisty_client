@@ -4,12 +4,13 @@ import { Edit, PlusCircle, Trash } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BackButton, ConfirmationModal } from '../../ui';
-import { getBranches, removeBranch } from './branchApi';
+import { removeBranch } from './branchApi';
 import {
     branchesSelector,
     branchRemovedSelector,
     getBranchesPendingSelector
 } from './branchReducer';
+import { getBranches } from './branchActions';
 import { push } from 'connected-react-router';
 
 

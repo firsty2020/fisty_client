@@ -1,5 +1,5 @@
 .registration-form-container {
-    background-color: #ffffff;
+    background-color: #F47421;
     border-radius: 3px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
     padding: 35px 35px 40px;
@@ -11,7 +11,7 @@
 .registration-container {
     min-height: 100vh;
     display: flex;
-    background-color: var(--grey-bg-color);
+    background-color: var(--content-bg-color);
 }
 
 .logo-container {
@@ -24,7 +24,7 @@
 }
 
 .logo_blue {
-    width: 80px;
+    width: 250px;
 }
 
 .title-container {
@@ -59,12 +59,12 @@
 .round-button-container button {
     padding: 10px 50px 11px;
     border: 0;
-    background: #333;
     border-radius: 100px;
     font-size: 16px;
-    color: #fff;
     cursor: pointer;
     outline: none!important;
+    color: #000000;
+    background-color: #ffffff;
 }
 
 .login-link-text {

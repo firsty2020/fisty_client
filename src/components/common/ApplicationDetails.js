@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {BackButton, DetailsTable, PrimaryButton} from '../ui';
+import { BackButton, DetailsTable, PrimaryButton } from '../ui';
 import { getApplication } from './commonActions';
 import { applicationSelector } from './commonReducer';
 import { getCompany } from '../admin/Companies/companiesActions';
