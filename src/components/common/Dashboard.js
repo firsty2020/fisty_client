@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
-import Logo from '../../assets/images/logotype-Firsty-03.png';
+import Logo from '../../assets/images/logotype-Firsty.png';
 import { connect } from 'react-redux';
 import { isLoadingSelector } from '../common/commonReducer';
 import { LoadSpinner } from '../ui';
