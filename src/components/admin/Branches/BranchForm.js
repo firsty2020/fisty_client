@@ -14,6 +14,7 @@ import { getContactPersons } from '../contactPerson/contactPersonActions';
 import { contactPersonsSelector } from '../adminReducer';
 import { baseURL } from '../../../axios';
 import { Link } from 'react-router-dom';
+import { DropDown } from '../../ui';
 
 
 const fillForm = (initialValues, data, locationsOptions, contactPersonsOptions) => {
@@ -145,7 +146,7 @@ const BranchForm = ({
                         </Form.Group>
                         <p className="form-control-label">Местонахождение *</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="location"
                                 placeholder="Введите местонахождение"
                                 value={values.location}
@@ -159,7 +160,7 @@ const BranchForm = ({
                         </Form.Group>
                         <p className="form-control-label">Контакнтные лица *</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 type="text"
                                 name="contact_person"
                                 placeholder="Выберите из списка"

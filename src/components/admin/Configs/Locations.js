@@ -10,7 +10,8 @@ import {
     createLocationPendingSelector,
     createLocationResolvedSelector,
     locationsSelector,
-    removeLocationResolvedSelector, updateLocationResolvedSelector
+    removeLocationResolvedSelector,
+    updateLocationResolvedSelector,
 } from './configsReducer';
 import { connect } from 'react-redux';
 import ConfigFormList from './ConfigFormList';

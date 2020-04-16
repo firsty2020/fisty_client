@@ -5,6 +5,10 @@ import {
     ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_PENDING,
     ADMIN_CONFIGS_ADD_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_CATEGORIES_GET,
+    ADMIN_CONFIGS_CATEGORY_CREATE,
+    ADMIN_CONFIGS_CATEGORY_DELETE,
+    ADMIN_CONFIGS_CATEGORY_RESET_STATE,
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_FAILED,
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_PENDING,
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_RESOLVED,
@@ -44,6 +48,10 @@ import {
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_PENDING,
     ADMIN_CONFIGS_UPDATE_SPECIFICATION_OPTION_RESOLVED,
+    DELETE,
+    GET,
+    PATCH,
+    POST,
 } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
 
@@ -348,3 +356,33 @@ export const updateLocationResolved = () => ({
 });
 
 /******************************************/
+
+export const createCategory = (name) => createApiAction({
+    url: 'categories/',
+    method: POST,
+    data: { name },
+    label: ADMIN_CONFIGS_CATEGORY_CREATE,
+});
+
+export const getCategories = () => createApiAction({
+    url: 'categories/',
+    method: GET,
+    label: ADMIN_CONFIGS_CATEGORIES_GET,
+});
+
+export const removeCategory = (id) => createApiAction({
+    url: `categories/${id}`,
+    method: DELETE,
+    label: ADMIN_CONFIGS_CATEGORY_DELETE,
+});
+
+export const updateCategory = ({ id, name }) => createApiAction({
+    url: `categories/${id}/`,
+    method: PATCH,
+    data: { name },
+    label: ADMIN_CONFIGS_CATEGORY_DELETE,
+});
+
+export const resetCategoryState = () => ({
+    type: ADMIN_CONFIGS_CATEGORY_RESET_STATE,
+});

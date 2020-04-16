@@ -6,12 +6,11 @@ import {
     Col,
     Table,
     InputGroup,
-    Modal,
     Container,
 } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Trash, Edit } from 'react-feather';
-import { Popover } from '../../ui';
+import { ConfirmationModal, Popover } from '../../ui';
 
 
 let setFormikFieldValue;
@@ -31,19 +30,13 @@ const ConfigFormList = ({
                             setItemToDelete,
                             handleEditItem,
                             handleItemDelete,
-                        }) => (
+                        }) =>  (
     <div>
-        <Modal
+        <ConfirmationModal
             show={!!itemToDelete}
-            centered>
-            <Modal.Body>
-                <p className="text-center mt-1">Вы уверены что хотите удалить эту опцию?</p>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setItemToDelete(null)}>Нет</Button>
-                <Button variant="danger" onClick={handleItemDelete}>Да</Button>
-            </Modal.Footer>
-        </Modal>
+            question="Вы уверены что хотите удалить эту опцию?"
+            onCancel={() => setItemToDelete(null)}
+            onConfirm={handleItemDelete}/>
         <Container>
             <Row>
                 <Col>
@@ -54,6 +47,7 @@ const ConfigFormList = ({
                         validationSchema={validationSchema}
                         onSubmit={(values, { resetForm }) => {
                             if (itemToEdit) {
+                                console.log(itemToEdit, 'itemToEdit')
                                 updateItem({ id: itemToEdit, name: values[itemName] });
                                 setItemToEdit(null);
                             } else {
@@ -114,19 +108,18 @@ const ConfigFormList = ({
                         </tr>
                         </thead>
                         <tbody>
-                        {(itemList || []).map(({ id, name }) => (
-                            <tr key={id}>
+                        {(itemList || []).map(({ id, url, name }) => (
+                            <tr key={id || url}>
                                 <td>{name}</td>
                                 <td>
                                     <div className="d-flex justify-content-around">
-                                        <div onClick={() => setItemToDelete(id)}>
+                                        <div onClick={() => setItemToDelete(id || url)}>
                                             <Trash
-
                                                 className="cursor-pointer"
                                                 color="red"
                                             />
                                         </div>
-                                        <div onClick={() => handleEditItem({ id, name, setFieldValue: setFormikFieldValue })}>
+                                        <div onClick={() => handleEditItem({ id, name, url, setFieldValue: setFormikFieldValue })}>
                                             <Edit
 
                                                 className="cursor-pointer"

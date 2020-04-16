@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { generateSelectOptions, generateUId } from '../../../helpers/utils';
 import { baseURL } from '../../../axios';
 import { isLoadingSelector } from '../../common/commonReducer';
+import { DropDown } from '../../ui';
 
 
 const uid = generateUId;
@@ -55,7 +56,7 @@ const AddContactPerson = ({
                 centered>
                 <Modal.Body>
                     <p className="text-center mt-1">Добавить контактное лицо</p>
-                    <Select
+                    <DropDown
                         name="contact_person"
                         value={contactPerson}
                         onChange={(e) => setContactPerson(e)}

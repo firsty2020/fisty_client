@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Form, Row} from 'react-bootstrap';
 import { dynamicFieldSchema } from '../../../../helpers/schemas';
 import LabeledFieldHolder from '../../../ui/FormFieldLabeled';
-import { CheckBox, RadioButton, TagsInputField } from '../../../ui';
-import Select from 'react-select';
+import { CheckBox, RadioButton, TagsInputField, DropDown } from '../../../ui';
 import { Formik } from 'formik';
 
 
@@ -221,7 +220,7 @@ const DynamicFieldForm = ({ pending, field, onSubmit, onClose }) => {
                             <LabeledFieldHolder
                                 label="Формат даты *"
                             >
-                                <Select
+                                <DropDown
                                     name="field_configuration.date_format"
                                     value={values.field_configuration.date_format}
                                     onBlur={(e) => setFieldTouched('field_configuration.date_format', e)}

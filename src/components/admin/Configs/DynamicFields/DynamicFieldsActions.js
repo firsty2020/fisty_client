@@ -7,12 +7,13 @@ import {
     ADMIN_CONFIGS_SET_DYNAMIC_FIELD_REMOVED,
     ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED,
     ADMIN_CONFIGS_UPDATE_DYNAMIC_FIELD,
+    POST,
 } from '../../../../helpers/constants/actionTypes';
 
 
 export const createDynamicField = (data) => createApiAction({
     url: 'standard-fields/',
-    method: 'POST',
+    method: POST,
     data,
     label: ADMIN_CONFIGS_CREATE_DYNAMIC_FIELD,
 });

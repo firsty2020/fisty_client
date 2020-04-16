@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 import Select from 'react-select';
+import { DropDown } from '../../ui';
 
 
 let countriesOptions = [
@@ -36,7 +37,7 @@ const CountriesDropdown = ({
     }
 
     return (
-        <Select
+        <DropDown
             name={name}
             value={value}
             placeholder={placeHolder}

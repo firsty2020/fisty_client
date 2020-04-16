@@ -59,6 +59,12 @@ const adminNavigation =  {
                     url: '/admin/configs/dynamic-fields',
                     matcher: '/dynamic-fields',
                 },
+                {
+                    name: 'Категории',
+                    icon: 'Tag',
+                    url: '/admin/configs/categories',
+                    matcher: '/categories',
+                },
             ]
         },
     ],

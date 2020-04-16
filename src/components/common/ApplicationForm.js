@@ -2,14 +2,13 @@ import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { applicationSchema } from '../../helpers/schemas';
 import { Formik } from 'formik';
-import Select from 'react-select';
 import CountriesDropdown from '../auth/Registration/CountriesDropdown';
 import {
     clearEmptyFields,
     transformReactSelectFields
 } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
-import { CheckBox, RadioButton } from '../ui';
+import { CheckBox, DropDown, RadioButton } from '../ui';
 
 
 const scheduleOptions = [
@@ -248,7 +247,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>График работы *</p>
-                                    <Select
+                                    <DropDown
                                         name="schedule"
                                         placeholder="Выберите из списка"
                                         value={values.schedule}
@@ -412,7 +411,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     Другие языки
-                                    <Select
+                                    <DropDown
                                         className="mt-3"
                                         name="other_languages"
                                         value={values.other_languages}
@@ -420,8 +419,8 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         onChange={(e) => setFieldValue('other_languages', e || [])}
                                         options={languageOptions}
                                         placeholder="Выберите языки"
-                                        isMulti>
-                                    </Select>
+                                        isMulti
+                                    />
                                     {touched.languages && errors.languages ? (
                                         <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
                                     ) : null}
@@ -451,7 +450,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     />
                                     <br/>
                                     {values._has_driver_license ? (
-                                        <Select
+                                        <DropDown
                                             className="mt-3"
                                             name="driver_license"
                                             value={values.driver_license}
@@ -459,8 +458,8 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                             onChange={(e) => setFieldValue('driver_license', e || [])}
                                             options={driverLicenceOptions}
                                             placeholder="Выберите категории"
-                                            isMulti>
-                                        </Select>
+                                            isMulti
+                                        />
                                     ) : null }
                                     {touched.driver_license && errors.driver_license ? (
                                         <p className="mt-1 invalid-feedback-visible">{errors.driver_license}</p>

@@ -23,8 +23,9 @@ import withEntity from './contactPerson/withEntity';
 import UpdateContactPerson from './contactPerson/UpdateContactPerson';
 import withApplicationsTableLayout from './Applications/withApplicationsTableLayout';
 import Vacancies from './Applications/Vacancies';
-import VacanyDetails from './Applications/VacanyDetails';
+import VacancyDetails from './Applications/VacancyDetails';
 import Projects from './Projects/Projects';
+import Categories from './Configs/Categories';
 
 
 const adminRoutes = [
@@ -70,7 +71,7 @@ const adminRoutes = [
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId',
-        component: VacanyDetails,
+        component: VacancyDetails,
         name: 'Детали вакансии'
     },
     {
@@ -135,7 +136,7 @@ const adminRoutes = [
     },
     {
         path: '/admin/applications/:applicationId/vacancies/:vacancyId',
-        component: VacanyDetails,
+        component: VacancyDetails,
         name: 'Детали вакансии'
     },
     {
@@ -177,6 +178,11 @@ const adminRoutes = [
         path: '/admin/configs/dynamic-fields',
         component: DynamicFields,
         name: 'Динамичные поля'
+    },
+    {
+        path: '/admin/configs/categories',
+        component: Categories,
+        name: 'Категории'
     },
 ];
 

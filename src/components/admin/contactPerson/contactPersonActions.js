@@ -11,13 +11,15 @@ import {
     ADMIN_SET_CONTACT_PERSON_UPDATED,
     ADMIN_UNLINK_CONTACT_PERSON,
     ADMIN_UPDATE_CONTACT_PERSON,
+    GET,
+    POST,
 } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
 
 
 export const createContactPerson = (data) => createApiAction({
     url: 'contact-person/',
-    method: 'POST',
+    method: POST,
     data ,
     label: ADMIN_CREATE_CONTACT_PERSON,
 });
@@ -25,7 +27,7 @@ export const createContactPerson = (data) => createApiAction({
 
 export const getContactPersons = (params, id) => createApiAction({
     url: 'contact-person/',
-    method: 'GET',
+    method: GET,
     data: params,
     label: ADMIN_GET_CONTACT_PERSONS,
     id
@@ -56,14 +58,14 @@ export const updateContactPerson = (contactPerson) => createApiAction({
 
 export const linkContactPerson = (data) => createApiAction({
     url: 'companies/contact-person-relations/link/',
-    method: 'POST',
+    method: POST,
     data,
     label: ADMIN_LINK_CONTACT_PERSON,
 });
 
 export const unLinkContactPerson = (data) => createApiAction( {
     url: 'companies/contact-person-relations/unlink/',
-    method: 'POST',
+    method: POST,
     data,
     label: ADMIN_UNLINK_CONTACT_PERSON,
 });

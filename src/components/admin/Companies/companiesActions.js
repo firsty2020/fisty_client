@@ -3,13 +3,14 @@ import {
     ADMIN_GET_COMPANIES,
     ADMIN_GET_COMPANY,
     ADMIN_SET_COMPANY_CREATED,
+    POST,
 } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
 
 
 export const createCompany = (data) => createApiAction({
     url: 'companies/',
-    method: 'POST',
+    method: POST,
     data,
     label: ADMIN_CREATE_COMPANY,
 });

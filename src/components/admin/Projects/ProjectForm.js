@@ -9,6 +9,7 @@ import { locationsSelector } from '../Configs/configsReducer';
 import { generateSelectOptions } from '../../../helpers/utils';
 import { getBranches } from '../Branches/branchActions';
 import { branchesSelector } from '../Branches/branchReducer';
+import { DropDown } from '../../ui';
 
 
 const ProjectForm = ({ locations, branches, match, getBranches, getLocations }) => {
@@ -59,7 +60,7 @@ const ProjectForm = ({ locations, branches, match, getBranches, getLocations }) 
                         </Form.Group>
                        <p className="form-control-label">Местонахождение</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="location"
                                 value={values.location}
                                 options={generateSelectOptions(locations, 'url', 'name')}
@@ -73,7 +74,7 @@ const ProjectForm = ({ locations, branches, match, getBranches, getLocations }) 
                         </Form.Group>
                         <p className="form-control-label">Бранчи</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="branch"
                                 value={values.branch}
                                 options={generateSelectOptions(branches, 'url', 'name')}

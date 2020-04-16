@@ -50,6 +50,11 @@ import {
     ADMIN_CONFIGS_UPDATE_DYNAMIC_FIELD,
     ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED,
     ADMIN_CONFIGS_GET_LOCATIONS,
+    ADMIN_CONFIGS_CATEGORY_CREATE,
+    ADMIN_CONFIGS_CATEGORIES_GET,
+    ADMIN_CONFIGS_CATEGORY_DELETE,
+    ADMIN_CONFIGS_CATEGORY_UPDATE,
+    ADMIN_CONFIGS_CATEGORY_RESET_STATE,
 } from '../../../helpers/constants/actionTypes';
 
 
@@ -402,6 +407,26 @@ export const configs = (state = {}, action) => {
                 dynamicFieldUpdated: true,
             };
 
+        case ADMIN_CONFIGS_CATEGORY_CREATE:
+            return { ...state,  categoryCreated: true };
+
+        case ADMIN_CONFIGS_CATEGORIES_GET:
+            return { ...state,  categories: action.payload.results };
+
+        case ADMIN_CONFIGS_CATEGORY_DELETE:
+            return { ...state, categoryDeleted: true };
+
+        case ADMIN_CONFIGS_CATEGORY_UPDATE:
+            return { ...state, categoryUpdated: true };
+
+        case ADMIN_CONFIGS_CATEGORY_RESET_STATE:
+            return {
+                ...state,
+                categoryCreated: false,
+                categoryDeleted: false,
+                categoryUpdated: false
+            };
+
         default:
             return state;
     }
@@ -447,3 +472,8 @@ export const dynamicFieldCreatedSelector = state => state.admin.configs.dynamicF
 export const dynamicFieldRemovedSelector = state => state.admin.configs.dynamicFieldRemoved;
 export const dynamicFieldUpdatedSelector = state => state.admin.configs.dynamicFieldUpdated;
 export const dynamicFieldsSelector = state => state.admin.configs.dynamicFields;
+
+export const categoryCreatedSelector = state => state.admin.configs.categoryCreated;
+export const categoriesSelector = state => state.admin.configs.categories;
+export const categoryDeletedSelector = state => state.admin.configs.categoryDeleted;
+export const categoryUpdatedSelector = state => state.admin.configs.categoryUpdated;

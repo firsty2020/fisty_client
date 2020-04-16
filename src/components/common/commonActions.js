@@ -1,10 +1,12 @@
 import {
     CREATE_APPLICATION,
     CREATE_VACANCY,
+    GET,
     GET_APPLICATION,
     GET_APPLICATIONS,
     GET_VACANCIES,
     GET_VACANCY,
+    POST,
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
@@ -14,7 +16,7 @@ import { createApiAction } from '../../helpers/utils';
 
 export const createApplication = (data) => createApiAction({
     url: 'applications/',
-    method: 'POST',
+    method: POST,
     data,
     label: CREATE_APPLICATION,
 });
@@ -22,7 +24,7 @@ export const createApplication = (data) => createApiAction({
 
 export const getApplications = (params) => createApiAction({
     url: 'applications/',
-    method: 'GET',
+    method: GET,
     data: params,
     label: GET_APPLICATIONS,
 });
@@ -42,13 +44,13 @@ export const getVacancies = (applicationId) => createApiAction({
 
 export const getVacancy = (id) => createApiAction({
     url: `vacancy/${id}`,
-    method: 'GET',
+    method: GET,
     label: GET_VACANCY,
 });
 
 export const createVacancy = (data) => createApiAction({
     url: 'vacancy/',
-    method: 'POST',
+    method: POST,
     data,
     label: CREATE_VACANCY,
 });

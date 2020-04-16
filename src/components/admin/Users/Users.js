@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { usersSelector } from '../adminReducer';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { push } from 'connected-react-router';
-import { TableList } from '../../ui';
+import { DropDown, TableList } from '../../ui';
 import Select from 'react-select';
 
 
@@ -53,7 +53,7 @@ const Users = ({ users, match, getUsers, push }) => {
             <div className="mt-10-auto">
                 <Row>
                     <Col lg={4} md={4} sm={4}>
-                        <Select
+                        <DropDown
                             name="filter"
                             value={status}
                             placeholder="Фильтровать по статусу"

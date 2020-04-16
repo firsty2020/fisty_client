@@ -8,6 +8,7 @@ import { contactPersonRolesSelector } from '../Configs/configsReducer';
 import Select from 'react-select';
 import { generateSelectOptions } from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
+import { DropDown } from '../../ui';
 
 
 const genderOptions = [
@@ -132,7 +133,7 @@ const ContactPersonForm = ({
                         </Form.Group>
                         <p className="form-control-label">Роль</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 type="text"
                                 name="role"
                                 options={generateSelectOptions(roles, 'url', 'name')}
@@ -177,7 +178,7 @@ const ContactPersonForm = ({
                         </Form.Group>
                         <Form.Group>
                             Пол
-                            <Select
+                            <DropDown
                                 name="gender"
                                 value={values.gender}
                                 options={genderOptions}

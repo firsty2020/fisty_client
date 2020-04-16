@@ -5,7 +5,7 @@ import { arrayOf, string, shape, bool, func } from 'prop-types';
 import { Formik } from 'formik';
 import { When } from 'react-if';
 import { validationQuestionsSchema } from '../../helpers/schemas';
-import Select from 'react-select';
+import { DropDown } from '../ui';
 
 
 const sitesOptions = [
@@ -148,15 +148,15 @@ const QuestionsModal = ({ thresholdPassed, submitPending }) => {
                                         <When condition={!!values.hasSite_access}>
                                             <Col className="pl-0">
                                                 <span>К каким работным сайтам у вас есть доступ?</span>
-                                                <Select
+                                                <DropDown
                                                     name="site_access"
                                                     value={values.site_access}
                                                     onBlur={(e) => setFieldTouched('site_access', e)}
                                                     onChange={(e) => setFieldValue('site_access', e)}
                                                     options={sitesOptions}
                                                     placeholder="Выберите сайты"
-                                                    isMulti>
-                                                </Select>
+                                                    isMulti
+                                                />
                                                 {touched.site_access && errors.site_access ? (
                                                     <span className="mt-1 invalid-feedback-visible">{errors.site_access}</span>
                                                 ) : null}

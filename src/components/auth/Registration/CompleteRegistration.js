@@ -21,8 +21,8 @@ import {
     generateYears,
     transFormDatesArray,
 } from '../../../helpers/dates';
-import Select from 'react-select';
 import { isLoadingSelector } from '../../common/commonReducer';
+import { DropDown } from '../../ui';
 
 
 const monthsOptions = generateMonths();
@@ -174,7 +174,7 @@ const CompleteRegistration = ({
                             </Form.Group>
                             <Form.Group>
                                 Пол
-                                <Select
+                                <DropDown
                                     name="gender"
                                     value={values.gender}
                                     options={genderOptions}
@@ -190,7 +190,7 @@ const CompleteRegistration = ({
                                 <p className="form-control-label">Дата рождения</p>
                                 <Form.Row>
                                     <Col>
-                                        <Select
+                                        <DropDown
                                             name="date_of_birth.year"
                                             value={values.date_of_birth.year}
                                             placeholder="Год"
@@ -203,7 +203,7 @@ const CompleteRegistration = ({
                                         ) : null}
                                     </Col>
                                     <Col>
-                                        <Select
+                                        <DropDown
                                             name="date_of_birth.month"
                                             value={values.date_of_birth.month}
                                             placeholder="Месяц"
@@ -217,7 +217,7 @@ const CompleteRegistration = ({
                                         ) : null}
                                     </Col>
                                     <Col>
-                                        <Select
+                                        <DropDown
                                             name="date_of_birth.day"
                                             placeholder="День"
                                             value={values.date_of_birth.day}
@@ -290,7 +290,7 @@ const CompleteRegistration = ({
                             </Form.Group>
                             <Form.Group>
                                 Образование
-                                <Select
+                                <DropDown
                                     name="education"
                                     placeholder="Выберите образование"
                                     value={values.education}
@@ -305,7 +305,7 @@ const CompleteRegistration = ({
                             </Form.Group>
                             <Form.Group>
                                 Знание языков
-                                <Select
+                                <DropDown
                                     name="languages"
                                     value={values.languages}
                                     onBlur={(e) => setFieldTouched('languages', e || [])}
@@ -313,7 +313,7 @@ const CompleteRegistration = ({
                                     options={languageOptions}
                                     placeholder="Выберите языки"
                                     isMulti>
-                                </Select>
+                                </DropDown>
                                 {touched.languages && errors.languages ? (
                                     <span className="mt-1 invalid-feedback-visible">{errors.languages}</span>
                                 ) : null}

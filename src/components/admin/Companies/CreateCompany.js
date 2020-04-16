@@ -10,7 +10,7 @@ import {
     industryOptionsSelector,
     specificationOptionsSelector
 } from '../Configs/configsReducer';
-import { AlertNotice } from '../../ui';
+import { AlertNotice, DropDown } from '../../ui';
 import { When } from 'react-if';
 import messages from '../../../helpers/constants/messages';
 import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
@@ -136,7 +136,7 @@ const CreateCompany = ({
                         </Form.Group>
                         <p className="form-control-label">Источник *</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="source"
                                 placeholder="Выберите из списка"
                                 value={values.source}
@@ -151,7 +151,7 @@ const CreateCompany = ({
                         </Form.Group>
                         <p className="form-control-label">Отрасль </p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="industry"
                                 value={values.industry}
                                 placeholder="Выберите из списка"
@@ -165,7 +165,7 @@ const CreateCompany = ({
                         </Form.Group>
                         <p className="form-control-label">Специфика</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="specification"
                                 value={values.specification}
                                 placeholder="Выберите из списка"
@@ -179,7 +179,7 @@ const CreateCompany = ({
                         </Form.Group>
                         <p className="form-control-label">Тип Компании *</p>
                         <Form.Group>
-                            <Select
+                            <DropDown
                                 name="type"
                                 placeholder="Выберите из списка"
                                 value={values.type}
