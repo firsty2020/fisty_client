@@ -27,7 +27,7 @@ const subcategoriesTableLayout = {
         '#', 'название', 'категория', 'действия'
     ],
     createRow: (subcategory, index) => [
-        index + 1, subcategory.name, subcategory.category,
+        index + 1, subcategory.name, subcategory.category_name,
     ],
 };
 
