@@ -47,7 +47,6 @@ const ConfigFormList = ({
                         validationSchema={validationSchema}
                         onSubmit={(values, { resetForm }) => {
                             if (itemToEdit) {
-                                console.log(itemToEdit, 'itemToEdit')
                                 updateItem({ id: itemToEdit, name: values[itemName] });
                                 setItemToEdit(null);
                             } else {

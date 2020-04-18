@@ -15,17 +15,18 @@ import CreateBranch from './Branches/CreateBranch';
 import Branches from './Branches/Branches';
 import UpdateBranch from './Branches/UpdateBranch';
 import BranchDetails from './Branches/BranchDetails';
-import CreateContactPerson
-    from './contactPerson/CreateContactPerson';
+import CreateContactPerson from './contactPerson/CreateContactPerson';
 import DynamicFields from './Configs/DynamicFields/DynamicFields';
 import ApplicationDetails from '../common/ApplicationDetails';
 import withEntity from './contactPerson/withEntity';
 import UpdateContactPerson from './contactPerson/UpdateContactPerson';
-import withApplicationsTableLayout from './Applications/withApplicationsTableLayout';
+import withApplicationsTableLayout
+    from './Applications/withApplicationsTableLayout';
 import Vacancies from './Applications/Vacancies';
 import VacancyDetails from './Applications/VacancyDetails';
 import Projects from './Projects/Projects';
 import Categories from './Configs/Categories';
+import Subcategories from './Configs/Subcategories/Subcategories';
 
 
 const adminRoutes = [
@@ -61,7 +62,7 @@ const adminRoutes = [
     },
     {
         path: '/admin/companies/:companyId/contact-persons/edit/:contactPersonId',
-        component: withEntity(UpdateContactPerson,'company'),
+        component: withEntity(UpdateContactPerson, 'company'),
         name: 'Править контактное лицо компании',
     },
     {
@@ -183,6 +184,11 @@ const adminRoutes = [
         path: '/admin/configs/categories',
         component: Categories,
         name: 'Категории'
+    },
+    {
+        path: '/admin/configs/subcategories',
+        component: Subcategories,
+        name: 'Подкатегории'
     },
 ];
 

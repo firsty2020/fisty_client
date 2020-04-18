@@ -65,6 +65,12 @@ const adminNavigation =  {
                     url: '/admin/configs/categories',
                     matcher: '/categories',
                 },
+                {
+                    name: 'Подкатегории',
+                    icon: 'fa fa-tags',
+                    url: '/admin/configs/subcategories',
+                    matcher: '/subcategories',
+                },
             ]
         },
     ],

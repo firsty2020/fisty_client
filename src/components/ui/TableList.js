@@ -4,10 +4,19 @@ import { arrayOf, func, object, shape, string } from 'prop-types';
 import { EmptyListPlaceholder, } from './index';
 import { isLoadingSelector } from '../common/commonReducer';
 import { connect } from 'react-redux';
-import { Trash } from 'react-feather';
+import { Trash, Edit, UserMinus } from 'react-feather';
 
 
-const TableList = ({ layout, data, isLoading, onClickRow, onDeleteItem }) => {
+const TableList = ({
+                       layout,
+                       data,
+                       isLoading,
+                       onClickRow,
+                       onDeleteItem,
+                       onEditItem,
+                       onUnlink,
+                   }) => {
+    
 
     if ((data && !data.length) && !isLoading) {
         return <EmptyListPlaceholder/>;
@@ -36,18 +45,32 @@ const TableList = ({ layout, data, isLoading, onClickRow, onDeleteItem }) => {
                         {layout.createRow(item, index).map((value, i) =>
                             <td key={i}>{value}</td>
                         )}
-                        {onDeleteItem ? (
+                        {onEditItem || onUnlink || onDeleteItem ? (
                             <td width="5%">
-                                <div
-                                    className="text-center"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onDeleteItem(item)
-                                    }}
-                                >
-                                    <Trash
-                                        className="cursor-pointer"
-                                        color="red"/>
+                                <div className="d-flex justify-content-around cursor-pointer">
+                                    {onDeleteItem ? (
+                                        <Trash
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onDeleteItem(item)
+                                            }}
+                                            className="cursor-pointer"
+                                            color="red"/>
+                                    ) : null}
+                                    {onEditItem ? (
+                                        <Edit color="blue"
+                                              onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  onEditItem(item)
+                                              }}
+                                              title="Редактировать"
+                                        />
+                                    ) : null}
+                                    { onUnlink ? (
+                                            <UserMinus
+                                                onClick={() => onUnlink(item)}
+                                                title="Удалить из контакных лиц"/>)
+                                        : null }
                                 </div>
                             </td>
                         ) : null}

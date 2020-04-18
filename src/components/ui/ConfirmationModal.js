@@ -11,25 +11,23 @@ const ConfirmationModal = ({
                                onConfirm,
                                onCancel,
                            }) => (
-    <div className="text-center m-a-xl">
-        <Modal
-            show={show}
-            centered>
-            <Modal.Body>
-                <p className="text-center mt-1">{question}</p>
-            </Modal.Body>
-            <Modal.Footer className="justify-content-center">
-                <Button
-                    variant="secondary"
-                    onClick={onCancel}
-                >{decline}</Button>
-                <Button
-                    variant={buttonType}
-                    onClick={onConfirm}
-                >{confirm}</Button>
-            </Modal.Footer>
-        </Modal>
-    </div>
+    <Modal
+        show={show}
+        centered>
+        <Modal.Body>
+            <p className="text-center mt-1">{question}</p>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+            <Button
+                variant="secondary"
+                onClick={onCancel}
+            >{decline}</Button>
+            <Button
+                variant={buttonType}
+                onClick={onConfirm}
+            >{confirm}</Button>
+        </Modal.Footer>
+    </Modal>
 );
 
 export default ConfirmationModal;

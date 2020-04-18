@@ -37,6 +37,11 @@ import {
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_SUBCATEGORIES_GET,
+    ADMIN_CONFIGS_SUBCATEGORY_CREATE,
+    ADMIN_CONFIGS_SUBCATEGORY_DELETE,
+    ADMIN_CONFIGS_SUBCATEGORY_RESET_STATE,
+    ADMIN_CONFIGS_SUBCATEGORY_UPDATE,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_FAILED,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_PENDING,
     ADMIN_CONFIGS_UPDATE_CONTACT_PERSON_ROLE_RESOLVED,
@@ -198,7 +203,6 @@ export const getSpecificationOptionResolved = (specification) => ({
 /******************************************/
 
 
-
 /*** Actions for updating options for industry field ***/
 
 export const updateSpecificationOptionPending = () => ({
@@ -285,7 +289,6 @@ export const removeContactPersonRoleFailed = () => ({
 /******************************************/
 
 
-
 /*** Actions for updating roles for contact persons ***/
 
 export const updateContactPersonRolePending = () => ({
@@ -344,7 +347,6 @@ export const removeLocationResolved = () => ({
 /******************************************/
 
 
-
 /*** Actions for updating location  ***/
 
 export const updateLocationFailed = () => ({
@@ -360,7 +362,7 @@ export const updateLocationResolved = () => ({
 export const createCategory = (name) => createApiAction({
     url: 'categories/',
     method: POST,
-    data: { name },
+    data: {name},
     label: ADMIN_CONFIGS_CATEGORY_CREATE,
 });
 
@@ -376,13 +378,44 @@ export const removeCategory = (id) => createApiAction({
     label: ADMIN_CONFIGS_CATEGORY_DELETE,
 });
 
-export const updateCategory = ({ id, name }) => createApiAction({
+export const updateCategory = ({id, name}) => createApiAction({
     url: `categories/${id}/`,
     method: PATCH,
-    data: { name },
+    data: {name},
     label: ADMIN_CONFIGS_CATEGORY_DELETE,
 });
 
 export const resetCategoryState = () => ({
     type: ADMIN_CONFIGS_CATEGORY_RESET_STATE,
+});
+
+export const createSubcategory = (data) => createApiAction({
+    url: 'subcategories/',
+    method: POST,
+    data,
+    label: ADMIN_CONFIGS_SUBCATEGORY_CREATE,
+});
+
+export const getSubcategories = (data) => createApiAction({
+    url: 'subcategories/',
+    method: GET,
+    data,
+    label: ADMIN_CONFIGS_SUBCATEGORIES_GET,
+});
+
+export const deleteSubcategory = (id) => createApiAction({
+    url: `subcategories/${id}/`,
+    method: DELETE,
+    label: ADMIN_CONFIGS_SUBCATEGORY_DELETE,
+});
+
+export const updateSubcategory = (id, data) => createApiAction({
+    url: `subcategories/${id}/`,
+    method: PATCH,
+    data,
+    label: ADMIN_CONFIGS_SUBCATEGORY_UPDATE,
+});
+
+export const resetSubcategoryState = () => ({
+    type: ADMIN_CONFIGS_SUBCATEGORY_RESET_STATE,
 });

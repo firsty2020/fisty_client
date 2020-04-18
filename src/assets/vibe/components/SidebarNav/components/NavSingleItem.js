@@ -4,7 +4,8 @@ import * as Feather from 'react-feather';
 import NavBadge from './NavBadge';
 
 const NavSingleItem = ({item}) => {
-    const Icon = item.icon && Feather[item.icon] ? Feather[item.icon] : null;
+    const Icon = item.icon && Feather[item.icon] ? Feather[item.icon]
+        : () => <i className={`${item.icon} side-nav-icon`}/>;
     if (item.external) {
         const rel = item.target && item.target === '_blank' ? 'noopener noreferrer' : null;
 
@@ -26,11 +27,11 @@ const NavSingleItem = ({item}) => {
             <li className="nav-item">
                 <NavLink
                     isActive={(match, location) =>
-                            match || (location.pathname.includes(item.matcher) && location.pathname.indexOf(item.excludePath) === -1)}
+                        match || (location.pathname.includes(item.matcher) && location.pathname.indexOf(item.excludePath) === -1)}
                     to={url}
                     exact={true}
                     activeClassName="active">
-                    {item.icon && Icon && <Icon className="side-nav-icon"/>}
+                    <Icon className="side-nav-icon"/>
                     <span className="nav-item-label">{item.name}</span>
                     {item.badge && <NavBadge color={item.badge.variant}
                                              text={item.badge.text}/>}

@@ -55,6 +55,11 @@ import {
     ADMIN_CONFIGS_CATEGORY_DELETE,
     ADMIN_CONFIGS_CATEGORY_UPDATE,
     ADMIN_CONFIGS_CATEGORY_RESET_STATE,
+    ADMIN_CONFIGS_SUBCATEGORY_CREATE,
+    ADMIN_CONFIGS_SUBCATEGORY_RESET_STATE,
+    ADMIN_CONFIGS_SUBCATEGORIES_GET,
+    ADMIN_CONFIGS_SUBCATEGORY_DELETE,
+    ADMIN_CONFIGS_SUBCATEGORY_UPDATE,
 } from '../../../helpers/constants/actionTypes';
 
 
@@ -427,6 +432,33 @@ export const configs = (state = {}, action) => {
                 categoryUpdated: false
             };
 
+        case ADMIN_CONFIGS_SUBCATEGORY_CREATE:
+            return { ...state,  subcategoryCreated: true };
+
+        case ADMIN_CONFIGS_SUBCATEGORIES_GET:
+            return { ...state,  subcategories: action.payload.results };
+
+        case ADMIN_CONFIGS_SUBCATEGORY_DELETE:
+            return {
+                ...state,
+                subcategoryDeleted: true,
+            };
+
+        case ADMIN_CONFIGS_SUBCATEGORY_UPDATE:
+            return {
+                ...state,
+                subcategoryUpdated: true,
+            };
+        case ADMIN_CONFIGS_SUBCATEGORY_RESET_STATE:
+            return {
+                ...state,
+                subcategoryCreated: false,
+                subcategoryDeleted: false,
+                subcategoryUpdated: false,
+            };
+
+
+
         default:
             return state;
     }
@@ -477,3 +509,8 @@ export const categoryCreatedSelector = state => state.admin.configs.categoryCrea
 export const categoriesSelector = state => state.admin.configs.categories;
 export const categoryDeletedSelector = state => state.admin.configs.categoryDeleted;
 export const categoryUpdatedSelector = state => state.admin.configs.categoryUpdated;
+
+export const subcategoryCreatedSelector = state => state.admin.configs.subcategoryCreated;
+export const subcategoryDeletedSelector = state => state.admin.configs.subcategoryDeleted;
+export const subcategoryUpdatedSelector = state => state.admin.configs.subcategoryUpdated;
+export const subcategoriesSelector = state => state.admin.configs.subcategories;

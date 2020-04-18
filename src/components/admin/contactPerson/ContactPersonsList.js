@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { Container, Table } from 'react-bootstrap';
-import { Edit, Trash } from 'react-feather';
-import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { removeContactPerson } from './contactPersonActions';
-import { ConfirmationModal } from '../../ui';
-import { UserMinus } from 'react-feather';
+import { ConfirmationModal, TableList } from '../../ui';
+import { push } from 'connected-react-router';
+
+
+const contactPersonTableLayout = {
+    headings: [
+        'Имя', 'Фамилия', 'Эл. Почта', 'Телефон', 'Действия',
+    ],
+    createRow: ({first_name, last_name, email, phone_number}) => [
+        first_name, last_name, email, phone_number,
+    ],
+};
+
 
 const ContactPersonsList = ({
                                 match,
@@ -13,13 +22,21 @@ const ContactPersonsList = ({
                                 children,
                                 removeContactPerson,
                                 onUnlinkContactPerson,
+                                push,
                             }) => {
 
-    const [ contactPersonToRemove, setContactPersonToRemove ] = useState(null);
+    const [contactPersonToRemove, setContactPersonToRemove] = useState(null);
 
     const handleRemoveContactPerson = () => {
         removeContactPerson(contactPersonToRemove);
         setContactPersonToRemove(null);
+    };
+
+    const shouldShowUnlinkButton = () => {
+        if (onUnlinkContactPerson) {
+            return (contactPerson) => onUnlinkContactPerson(contactPerson);
+        }
+        return null;
     };
 
     return (
@@ -34,55 +51,13 @@ const ContactPersonsList = ({
                 <div>
                     {children}
                 </div>
-                <Table>
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Эл. Почта</th>
-                        <th>Телефон</th>
-                        <th width="5%">Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {((contactPersons && contactPersons.length) ? contactPersons : []).map((contactPerson) => {
-                        return (
-                            <tr key={contactPerson.id}>
-                                <td>{contactPerson.first_name}</td>
-                                <td>{contactPerson.last_name}</td>
-                                <td>{contactPerson.email}</td>
-                                <td>{contactPerson.phone_number}</td>
-                                <td>
-                                    <div className="d-flex justify-content-around align-items-end">
-                                        { onUnlinkContactPerson ? (<div
-                                            onClick={() => onUnlinkContactPerson(contactPerson)}
-                                            title="Удалить из контакных лиц"
-                                            className="cursor-pointer">
-                                            <UserMinus/>
-                                        </div>) : null }
-                                        <div
-                                            title="Удалить"
-                                            onClick={() => setContactPersonToRemove(contactPerson.id)}
-                                            className="cursor-pointer">
-                                            <Trash color="red"/>
-                                        </div>
-
-                                        <Link to={`${match.url}/edit/${contactPerson.id}`}>
-                                            <div
-                                                title="Редактировать"
-                                                className="cursor-pointer">
-                                                <Edit color="blue"
-                                                />
-                                            </div>
-
-                                        </Link>
-                                    </div>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </Table>
+                <TableList
+                    onDeleteItem={({id}) => setContactPersonToRemove(id)}
+                    onEditItem={({id}) => push(`${match.url}/edit/${id}`)}
+                    onUnlink={shouldShowUnlinkButton()}
+                    layout={contactPersonTableLayout}
+                    data={contactPersons}
+                />
             </Container>
         </div>
     );
@@ -91,6 +66,7 @@ const ContactPersonsList = ({
 
 const mapDispatchToProps = {
     removeContactPerson,
+    push,
 };
 
 
