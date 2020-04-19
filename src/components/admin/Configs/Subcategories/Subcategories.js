@@ -4,7 +4,7 @@ import {
     AlertNotice,
     ConfirmationModal,
     CreateButton,
-    TableList
+    TableList,
 } from '../../../ui';
 import CreateSubcategory from './CreateSubcategory';
 import { When } from 'react-if';

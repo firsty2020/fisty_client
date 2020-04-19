@@ -12,7 +12,6 @@ import {
     getApplication,
     getVacancies,
     removeVacancy,
-    resetVacancyCreated,
     resetVacancyRemoved,
 } from '../../common/commonActions';
 import {
@@ -22,31 +21,28 @@ import {
 import { push } from 'connected-react-router';
 import { autoToggleAlert, extractIdFromUrl } from '../../../helpers/utils';
 import { When } from 'react-if';
+import CreateVacancy from './CreateVacancy';
 
 
 const vacanciesTableLayout = {
     headings: [
-        '#', 'компания','дата создания', 'действия'
+        '#', 'наименование', 'компания','дата создания', 'действия'
     ],
-    createRow: (vacancy, index) => [
+    createRow: ({ name, company_details, created }, index) => [
         index + 1,
-        vacancy.company_details.name,
-        new Date(vacancy.created).toLocaleDateString(),
+        name,
+        company_details.name,
+        new Date(created).toLocaleDateString(),
     ],
 };
 
 
 const Vacancies = ({
                        vacancies,
-                       application,
                        match,
-                       created,
                        removed,
                        getVacancies,
-                       getApplication,
-                       createVacancy,
                        removeVacancy,
-                       resetVacancyCreated,
                        resetVacancyRemoved,
                        push,
                    }) => {
@@ -58,16 +54,8 @@ const Vacancies = ({
 
     useEffect(() => {
         getVacancies(applicationId);
-        getApplication(applicationId);
-    }, [ getVacancies, getApplication]);
+    }, [ getVacancies, applicationId ]);
 
-    useEffect(() => {
-        if (created) {
-            autoToggleAlert('Вы успешно создали вакансию', setSuccessAlert);
-            getVacancies(applicationId);
-            resetVacancyCreated();
-        }
-    }, [ created, getVacancies, resetVacancyCreated ]);
 
     useEffect(() => {
         if (removed) {
@@ -75,20 +63,18 @@ const Vacancies = ({
             getVacancies(applicationId);
             resetVacancyRemoved();
         }
-    }, [ removed, getVacancies, resetVacancyRemoved ]);
-
-    const handleCreateVacancy = () => {
-        if (!application) return;
-        const { url, company } = application;
-        createVacancy({ application: url, company });
-        setIsCreatingVacancy(false);
-    };
+    }, [ removed, getVacancies, resetVacancyRemoved, applicationId ]);
 
     const handleRemoveVacancy = () => {
         removeVacancy(vacancyIdToRemove);
         setVacancyIdToRemove(null);
-
         resetVacancyRemoved();
+    };
+
+    const handleModalClose = e => {
+        getVacancies(applicationId);
+        setIsCreatingVacancy(false);
+        autoToggleAlert('Вы успешно создали вакансию', setSuccessAlert);
     };
 
     const detectBackPath = () => {
@@ -101,19 +87,15 @@ const Vacancies = ({
     return (
         <div>
             <When condition={!!successAlert}>
-                <AlertNotice
-                    type="success"
-                    message={successAlert}
+                <AlertNotice type="success" message={successAlert}
                 />
             </When>
-            <ConfirmationModal
-                question='После нажатия "Создать" вакансия будет создана'
-                confirm="Создать"
-                decline="Отменить"
-                buttonType="warning"
-                onCancel={() => setIsCreatingVacancy(false)}
-                onConfirm={handleCreateVacancy}
-                show={isCreatingVacancy} />
+            <When condition={!!isCreatingVacancy}>
+                <CreateVacancy
+                    applicationId={applicationId}
+                    onClose={(e) => handleModalClose(e)}
+                />
+            </When>
             <ConfirmationModal
                 question="Вы уверены, что хотите удалить эту вакансию?"
                 onCancel={() => setVacancyIdToRemove(null)}
@@ -144,7 +126,6 @@ const mapDispatchToProps = {
     getApplication,
     createVacancy,
     removeVacancy,
-    resetVacancyCreated,
     resetVacancyRemoved,
     push,
 };
