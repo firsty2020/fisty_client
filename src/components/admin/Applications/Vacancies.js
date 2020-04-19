@@ -71,10 +71,12 @@ const Vacancies = ({
         resetVacancyRemoved();
     };
 
-    const handleModalClose = e => {
-        getVacancies(applicationId);
+    const handleModalClose = (action) => {
+        if (action) {
+            getVacancies(applicationId);
+            autoToggleAlert('Вы успешно создали вакансию', setSuccessAlert);
+        }
         setIsCreatingVacancy(false);
-        autoToggleAlert('Вы успешно создали вакансию', setSuccessAlert);
     };
 
     const detectBackPath = () => {
