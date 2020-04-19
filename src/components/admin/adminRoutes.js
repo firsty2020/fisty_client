@@ -22,8 +22,8 @@ import withEntity from './contactPerson/withEntity';
 import UpdateContactPerson from './contactPerson/UpdateContactPerson';
 import withApplicationsTableLayout
     from './Applications/withApplicationsTableLayout';
-import Vacancies from './Applications/Vacancies';
-import VacancyDetails from './Applications/VacancyDetails';
+import Vacancies from './Vacancy/Vacancies';
+import VacancyDetails from './Vacancy/VacancyDetails';
 import Projects from './Projects/Projects';
 import Categories from './Configs/Categories';
 import Subcategories from './Configs/Subcategories/Subcategories';

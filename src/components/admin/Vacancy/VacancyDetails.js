@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import {BackButton, DetailsTable, PrimaryButton} from '../../ui';
 import { getVacancy } from '../../common/commonActions';
 import { applicationSelector, vacancySelector } from '../../common/commonReducer';
-import { companySelector } from '../../admin/Companies/companiesReducer';
+import { companySelector } from '../Companies/companiesReducer';
 import {extractIdFromUrl} from '../../../helpers/utils';
 import {Link} from 'react-router-dom';
 
 
-const vacancyDetailsTableLayout = ({ url, company_details, created }) => [
+const vacancyDetailsTableLayout = ({ url, company_details, created, name }) => [
     { title: 'ID',              value: extractIdFromUrl(url) },
+    { title: 'Наименование',    value: name },
     { title: 'Компания',        value: company_details.name },
     { title: 'Дата создания',   value: new Date(created).toLocaleDateString() },
 ];

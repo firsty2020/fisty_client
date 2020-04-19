@@ -22,6 +22,7 @@ import { push } from 'connected-react-router';
 import { autoToggleAlert, extractIdFromUrl } from '../../../helpers/utils';
 import { When } from 'react-if';
 import CreateVacancy from './CreateVacancy';
+import UpdateVacancy from './UpdateVacancy';
 
 
 const vacanciesTableLayout = {
@@ -49,6 +50,7 @@ const Vacancies = ({
 
     const [ isCreatingVacancy, setIsCreatingVacancy ] = useState(false);
     const [ vacancyIdToRemove, setVacancyIdToRemove ] = useState(null);
+    const [ vacancyToUpdate, setVacancyToUpdate ] = useState(null);
     const [ successAlert, setSuccessAlert ] = useState('');
     const applicationId = match.params.applicationId;
 
@@ -73,9 +75,11 @@ const Vacancies = ({
 
     const handleModalClose = (action) => {
         if (action) {
+            const map = { created: 'создали', updated: 'обновили'};
             getVacancies(applicationId);
-            autoToggleAlert('Вы успешно создали вакансию', setSuccessAlert);
+            autoToggleAlert(`Вы успешно ${map[action]} вакансию`, setSuccessAlert);
         }
+        setVacancyToUpdate(null);
         setIsCreatingVacancy(false);
     };
 
@@ -98,6 +102,13 @@ const Vacancies = ({
                     onClose={(e) => handleModalClose(e)}
                 />
             </When>
+            <When condition={!!vacancyToUpdate}>
+                <UpdateVacancy
+                    vacancy={vacancyToUpdate}
+                    applicationId={applicationId}
+                    onClose={(e) => handleModalClose(e)}
+                />
+            </When>
             <ConfirmationModal
                 question="Вы уверены, что хотите удалить эту вакансию?"
                 onCancel={() => setVacancyIdToRemove(null)}
@@ -106,6 +117,7 @@ const Vacancies = ({
             <BackButton path={detectBackPath()} />
             <CreateButton onClick={() => setIsCreatingVacancy(true)}/>
             <TableList
+                onEditItem={(item) => setVacancyToUpdate(item)}
                 onDeleteItem={({ url }) => setVacancyIdToRemove(extractIdFromUrl(url))}
                 onClickRow={({url}) => push(`${match.url}/${extractIdFromUrl(url)}`)}
                 layout={vacanciesTableLayout}

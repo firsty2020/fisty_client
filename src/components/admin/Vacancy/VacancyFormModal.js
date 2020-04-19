@@ -34,6 +34,7 @@ const initialValues = {
 
 const VacancyFormModal = ({
                               isLoading,
+                              vacancy,
                               categories,
                               subcategories,
                               getCategories,
@@ -47,11 +48,34 @@ const VacancyFormModal = ({
         getSubcategories();
     }, [ getCategories, getSubcategories ]);
 
-    const [ filteredSubcategories, setFilteredSubcategories ] = useState([]);
+    useEffect(() => {
+        if (vacancy && subcategories) {
+            const categoryUrl = findCategoryUrl(vacancy.sub_category);
+            const filteredSubcategories = subcategories
+                .filter((subcategory) => subcategory.category === categoryUrl);
+            setFilteredSubcategories(filteredSubcategories);
+        }
+    },  [ vacancy, subcategories ]);
 
+    const [ filteredSubcategories, setFilteredSubcategories ] = useState(subcategories || []);
 
-    if (categories && subcategories) {
-      
+    const generateOptions = (list) => generateSelectOptions(list, 'url', 'name');
+
+    const createFormValues = () => {
+        const { name, sub_category } = vacancy;
+        const _sub_category = generateOptions(subcategories)
+            .find((item) => item.value === sub_category);
+        const _category = findCategoryUrl(_sub_category.value);
+        const category = generateOptions(categories)
+            .find((item) => item.value === _category);
+        return { sub_category: _sub_category, name, category }
+    };
+
+    const findCategoryUrl = (subcategoryUrl) =>
+        (subcategories.find((subcategory) => subcategory.url === subcategoryUrl) || {}).category;
+
+    if (categories && subcategories && vacancy) {
+        formValues = createFormValues();
     } else {
         formValues = initialValues;
     }
@@ -73,9 +97,6 @@ const VacancyFormModal = ({
     };
 
 
-    const generateOptions = (list) => generateSelectOptions(list, 'url', 'name');
-
-
     return (
         <Modal
             show
@@ -83,7 +104,7 @@ const VacancyFormModal = ({
             centered
         >
             <Modal.Body>
-                <p className="text-center mt-1">{false ? 'Редактировать' : 'Создать'} вакансию</p>
+                <p className="text-center mt-1">{vacancy ? 'Редактировать' : 'Создать'} вакансию</p>
                 <Formik
                     enableReinitialize
                     initialValues={formValues}
@@ -154,7 +175,7 @@ const VacancyFormModal = ({
                                 <Button
                                     disabled={isLoading}
                                     variant="warning"
-                                    type="submit">{false ? 'Сохранить' : 'Создать'}
+                                    type="submit">{vacancy ? 'Сохранить' : 'Создать'}
                                 </Button>
                             </div>
                         </Form>

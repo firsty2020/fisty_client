@@ -6,10 +6,13 @@ import {
     GET_APPLICATIONS,
     GET_VACANCIES,
     GET_VACANCY,
+    PATCH,
     POST,
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
+    SET_VACANCY_UPDATED,
+    UPDATE_VACANCY,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -69,4 +72,16 @@ export const removeVacancy = (id) => createApiAction({
     url: `vacancy/${id}/`,
     method: 'DELETE',
     label: REMOVE_VACANCY,
+});
+
+export const updateVacancy = (id, data) => createApiAction({
+    url: `vacancy/${id}/`,
+    method: PATCH,
+    data,
+    label: UPDATE_VACANCY,
+});
+
+export const resetVacancyUpdated = () => ({
+    type: SET_VACANCY_UPDATED,
+    payload: false,
 });

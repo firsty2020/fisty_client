@@ -10,6 +10,8 @@ import {
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
+    SET_VACANCY_UPDATED,
+    UPDATE_VACANCY,
 } from '../../helpers/constants/actionTypes';
 
 
@@ -44,11 +46,18 @@ export const common = (state = {}, action) => {
         case REMOVE_VACANCY:
             return { ...state, vacancyRemoved: true };
 
+        case UPDATE_VACANCY:
+            return { ...state, vacancyUpdated: true };
+
+
         case SET_VACANCY_CREATED:
             return { ...state, vacancyCreated: false };
 
         case SET_VACANCY_REMOVED:
             return { ...state, vacancyRemoved: false };
+
+        case SET_VACANCY_UPDATED:
+            return { ...state, vacancyUpdated: false };
 
         default:
             return state;
@@ -65,5 +74,6 @@ export const applicationSelector = state => state.common.application;
 
 export const vacanciesSelector = state => state.common.vacancies;
 export const vacancyCreatedSelector = state => state.common.vacancyCreated;
+export const vacancyUpdatedSelector = state => state.common.vacancyUpdated;
 export const vacancyRemovedSelector = state => state.common.vacancyRemoved;
 export const vacancySelector = state => state.common.vacancy;
