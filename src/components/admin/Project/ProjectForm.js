@@ -16,6 +16,7 @@ import { DropDown } from '../../ui';
 import CountriesDropdown from '../../auth/Registration/CountriesDropdown';
 import { Link } from 'react-router-dom';
 import { projectSchema } from '../../../helpers/schemas';
+import {isLoadingSelector} from '../../common/commonReducer';
 
 
 const ProjectForm = ({
@@ -23,6 +24,7 @@ const ProjectForm = ({
                          branches,
                          match,
                          backPath,
+                         isLoading,
                          getBranches,
                          getLocations,
                          onSubmit,
@@ -219,7 +221,7 @@ const ProjectForm = ({
                                 </Button>
                             </Link>
                             <Button
-                                disabled={false}
+                                disabled={isLoading}
                                 variant="warning"
                                 type="submit">{false ? 'Сохранить' : 'Создать'}
                             </Button>
@@ -235,6 +237,7 @@ const ProjectForm = ({
 const mapStateToProps = state => ({
     locations: locationsSelector(state),
     branches: branchesSelector(state),
+    isLoading: isLoadingSelector(state),
 });
 
 const mapDispatchToProps = { getLocations, getBranches };

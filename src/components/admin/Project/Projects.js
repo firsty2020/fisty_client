@@ -1,15 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { BackButton, CreateButton, TableList } from '../../ui';
-import { getProjects } from '../adminActions';
-import { projectsSelector } from '../adminReducer';
-import CreateProject from './CreateProject';
-import {Link} from 'react-router-dom';
+import {
+    AlertNotice,
+    BackButton,
+    ConfirmationModal,
+    CreateButton,
+    TableList
+} from '../../ui';
+import { deleteProject, getProjects, resetProjectState } from '../adminActions';
+import { projectDeletedSelector, projectsSelector } from '../adminReducer';
+import { Link } from 'react-router-dom';
+import { When } from 'react-if';
+import { autoToggleAlert } from '../../../helpers/utils';
 
 
 const projectsTableLayout = {
     headings: [
-        '#', 'название',
+        '#', 'название', 'действия',
     ],
     createRow: (project, index) => [
         index + 1,
@@ -17,12 +24,35 @@ const projectsTableLayout = {
     ],
 };
 
-const Projects = ({ projects, match, getProjects }) => {
+const Projects = ({
+                      projects,
+                      match,
+                      deleted,
+                      getProjects,
+                      deleteProject,
+                      resetProjectState,
+                  }) => {
+
+    const [ projectIdToDelete, setProjectIdToDelete ] = useState(null);
+    const [ successMessage, setSuccessMessage ] = useState(null);
 
     useEffect(() => {
         const { vacancyId } = match.params;
         getProjects({ vacancy: vacancyId });
     }, [ getProjects, match.params.vacancyId ]);
+
+    useEffect(() => {
+        if (deleted) {
+            autoToggleAlert('Вы успешно удалили проект', setSuccessMessage);
+            resetProjectState();
+            getProjects();
+        }
+    }, [ deleted, resetProjectState, getProjects ] );
+
+    const handleDeleteProject = () => {
+        deleteProject(projectIdToDelete);
+        setProjectIdToDelete(null);
+    };
 
     const generateBackPath = () => {
         let backPath;
@@ -40,11 +70,22 @@ const Projects = ({ projects, match, getProjects }) => {
 
     return (
         <div>
+            <When condition={!!successMessage}>
+                <AlertNotice type="success" message={successMessage}/>
+            </When>
+            <When condition={!!projectIdToDelete}>
+                <ConfirmationModal
+                    onConfirm={handleDeleteProject}
+                    show={!!projectIdToDelete}
+                    onCancel={() => setProjectIdToDelete(null)}
+                    question="Вы уверены, что хотите удалить этот проект?"/>
+            </When>
             <BackButton path={generateBackPath().backPath}/>
             <Link to={generateBackPath().forwardPath}>
                 <CreateButton />
             </Link>
             <TableList
+                onDeleteItem={({ id }) => setProjectIdToDelete(id)}
                 layout={projectsTableLayout}
                 data={projects}
             />
@@ -55,9 +96,10 @@ const Projects = ({ projects, match, getProjects }) => {
 
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
+    deleted: projectDeletedSelector(state),
 });
 
-const mapDispatchToProps = { getProjects };
+const mapDispatchToProps = { getProjects, deleteProject, resetProjectState };
 
 
 Projects.propTypes = {

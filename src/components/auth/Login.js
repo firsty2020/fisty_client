@@ -85,7 +85,7 @@ const Login = ({ authPending, tokens, getAuthToken, push }) => {
                             <div className="round-button-container">
                                 <button
                                     type="submit"
-                                    disabled={authPending}>Ввойти
+                                    disabled={authPending}>Войти
                                 </button>
                             </div>
                         </Form>

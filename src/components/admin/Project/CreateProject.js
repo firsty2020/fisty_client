@@ -34,13 +34,11 @@ const CreateProject = ({
         }
     }, [ created, push, resetProjectState ]);
 
-
     const handleCreateProject = (data) => {
         data.company = vacancy.company;
         data.vacancy = vacancy.url;
         createProject(data);
     };
-
     const generateBackPath = () => {
         const { companyId, applicationId, vacancyId } = match.params;
         if (companyId) {

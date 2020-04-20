@@ -12,8 +12,10 @@ import {
     ADMIN_SET_CONTACT_PERSON_REMOVED,
     ADMIN_SET_CONTACT_PERSON_UNLINKED,
     ADMIN_SET_CONTACT_PERSON_LINKED,
-    ADMIN_GET_PROJECTS, ADMIN_PROJECT_CREATE,
+    ADMIN_GET_PROJECTS,
+    ADMIN_PROJECT_CREATE,
     ADMIN_PROJECT_RESET,
+    ADMIN_PROJECT_DELETE,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -77,6 +79,9 @@ const common = (state = {}, action) => {
         case ADMIN_PROJECT_CREATE:
             return { ...state, projectCreated: true };
 
+        case ADMIN_PROJECT_DELETE:
+            return { ...state, projectDeleted: true };
+
         case ADMIN_PROJECT_RESET:
             return {
                 ...state,
@@ -128,3 +133,4 @@ export const unLinkContactPersonResolvedSelector = state => state.admin.common.c
 
 export const projectsSelector = state => state.admin.common.projects;
 export const projectCreatedSelector = state => state.admin.common.projectCreated;
+export const projectDeletedSelector = state => state.admin.common.projectDeleted;

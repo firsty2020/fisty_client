@@ -166,7 +166,7 @@ class Registration extends Component {
                         )}
                     </Formik>
                     <div className="login-link-text">
-                        <Link to="/login">Есть акаунт? Ввойти здесь</Link>
+                        <Link to="/login">Есть акаунт? Войти здесь</Link>
                     </div>
                 </AuthFormContainer>
             </div>
