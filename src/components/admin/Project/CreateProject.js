@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { Container } from 'react-bootstrap';
-import { createProject } from '../adminActions';
+import {createProject, resetProjectState } from '../adminActions';
 import { connect } from 'react-redux';
 import ProjectForm from './ProjectForm';
 import { getVacancy } from '../../common/commonActions';
@@ -18,6 +18,7 @@ const CreateProject = ({
                            createProject,
                            getVacancy,
                            push,
+                           resetProjectState,
                        }) => {
 
     useEffect(() => {
@@ -26,9 +27,12 @@ const CreateProject = ({
 
     useEffect(() => {
         if (created) {
-            setTimeout(() => push(generateBackPath()), 3000);
+            setTimeout(() => {
+                push(generateBackPath());
+                resetProjectState();
+            }, 3000);
         }
-    }, [ created, push ]);
+    }, [ created, push, resetProjectState ]);
 
 
     const handleCreateProject = (data) => {
@@ -64,7 +68,7 @@ const mapStateToProps = state => ({
     created: projectCreatedSelector(state),
 });
 
-const mapDispatchToProps = { createProject, getVacancy, push };
+const mapDispatchToProps = { createProject, getVacancy, push, resetProjectState };
 
 
 

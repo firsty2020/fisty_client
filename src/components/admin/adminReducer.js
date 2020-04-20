@@ -13,6 +13,7 @@ import {
     ADMIN_SET_CONTACT_PERSON_UNLINKED,
     ADMIN_SET_CONTACT_PERSON_LINKED,
     ADMIN_GET_PROJECTS, ADMIN_PROJECT_CREATE,
+    ADMIN_PROJECT_RESET,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -75,6 +76,15 @@ const common = (state = {}, action) => {
 
         case ADMIN_PROJECT_CREATE:
             return { ...state, projectCreated: true };
+
+        case ADMIN_PROJECT_RESET:
+            return {
+                ...state,
+                projectCreated: false,
+                projectDeleted: false,
+                projectUpdate: false,
+            };
+
 
         default:
             return state;
