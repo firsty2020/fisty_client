@@ -4,8 +4,8 @@ import { branchSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { getLocations } from '../Configs/configsActions';
-import { locationsSelector } from '../Configs/configsReducer';
+import { getLocations } from '../Config/configsActions';
+import { locationsSelector } from '../Config/configsReducer';
 import {
     generateSelectOptions,
     transformReactSelectFields

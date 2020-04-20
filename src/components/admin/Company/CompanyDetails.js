@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import {
     industryOptionSelector,
     specificationOptionSelector,
-} from '../Configs/configsReducer';
-import { getIndustryOption, getSpecificationOption } from '../Configs/configsApi';
+} from '../Config/configsReducer';
+import { getIndustryOption, getSpecificationOption } from '../Config/configsApi';
 import { extractIdFromUrl } from '../../../helpers/utils';
 import { BackButton, DetailsTable } from '../../ui';
 

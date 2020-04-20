@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { locationsSelector } from '../Configs/configsReducer';
+import { locationsSelector } from '../Config/configsReducer';
 import { contactPersonsSelector } from '../adminReducer';
 import BranchForm from './BranchForm';
 import { createBranch } from './branchApi';

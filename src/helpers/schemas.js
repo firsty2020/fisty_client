@@ -184,3 +184,32 @@ export const dynamicFieldSchema = Yup.object().shape({
             }
     })
 });
+
+export const projectSchema = Yup.object().shape({
+    name: Yup.string().required('Укажите название'),
+    citizenship: Yup.array().required(ERROR_MESSAGES.CITIZENSHIP_REQUIRED),
+    age: Yup.object().shape({
+        from: Yup.string()
+            .required(ERROR_MESSAGES.AGE_REQUIRED)
+            .matches(REGEX.NUMERIC, ERROR_MESSAGES.ONLY_NUMBERS),
+        to: Yup.string()
+            .required(ERROR_MESSAGES.AGE_REQUIRED)
+            .matches(REGEX.NUMERIC, ERROR_MESSAGES.ONLY_NUMBERS),
+    }),
+    responsibilities: Yup.string().required('Опишите требования'),
+    target_action_count: Yup.string().matches(REGEX.NUMERIC).required('Введите количество ЦД'),
+    target_action_amount: Yup.string().matches(REGEX.NUMERIC).required('Введите Стоимость ЦД'),
+    recruiter: Yup.array(),
+    location: Yup.string().test('location', 'Укажите бранч или местонахождение', function (value) {
+        if (this.parent.branch) {
+            return !value
+        }
+        return value;
+    }),
+    branch: Yup.string().test('branch', 'Укажите бранч или местонахождение', function (value) {
+        if (this.parent.location) {
+            return !value
+        }
+        return value;
+    }),
+});

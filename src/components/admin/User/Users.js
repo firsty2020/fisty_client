@@ -6,7 +6,6 @@ import { usersSelector } from '../adminReducer';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { push } from 'connected-react-router';
 import { DropDown, TableList } from '../../ui';
-import Select from 'react-select';
 
 
 const usersTableLayout = {

@@ -4,6 +4,7 @@ import { BackButton, CreateButton, TableList } from '../../ui';
 import { getProjects } from '../adminActions';
 import { projectsSelector } from '../adminReducer';
 import CreateProject from './CreateProject';
+import {Link} from 'react-router-dom';
 
 
 const projectsTableLayout = {
@@ -18,29 +19,31 @@ const projectsTableLayout = {
 
 const Projects = ({ projects, match, getProjects }) => {
 
-    const [ isCreatingProject, setIsCreatingProject ] = useState(true);
-
     useEffect(() => {
         const { vacancyId } = match.params;
         getProjects({ vacancy: vacancyId });
     }, [ getProjects, match.params.vacancyId ]);
 
     const generateBackPath = () => {
+        let backPath;
+        let forwardPath;
         const { companyId, applicationId, vacancyId } = match.params;
         if (companyId) {
-            return `/admin/companies/${companyId}/applications/${applicationId}/vacancies/${vacancyId}`
+            backPath = `/admin/companies/${companyId}/applications/${applicationId}/vacancies/${vacancyId}`;
+            forwardPath = `${backPath}/project/create`;
+        } else {
+            backPath = `/admin/applications/${applicationId}/vacancies/${vacancyId}`;
+            forwardPath = `${backPath}/project/create`
         }
-        return `/admin/applications/${applicationId}/vacancies/${vacancyId}`
+        return { backPath, forwardPath };
     };
 
     return (
         <div>
-            <BackButton path={generateBackPath()}/>
-            <CreateButton
-                onClick={() => setIsCreatingProject(true)}/>
-            {/*{isCreatingProject ? (
-                <CreateProject match={match} />
-                ) : null}*/}
+            <BackButton path={generateBackPath().backPath}/>
+            <Link to={generateBackPath().forwardPath}>
+                <CreateButton />
+            </Link>
             <TableList
                 layout={projectsTableLayout}
                 data={projects}

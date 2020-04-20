@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { BackButton, DetailsTable, PrimaryButton } from '../ui';
 import { getApplication } from './commonActions';
 import { applicationSelector } from './commonReducer';
-import { getCompany } from '../admin/Companies/companiesActions';
-import { companySelector } from '../admin/Companies/companiesReducer';
+import { getCompany } from '../admin/Company/companiesActions';
+import { companySelector } from '../admin/Company/companiesReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { getUserFromToken } from '../auth/auth';
@@ -58,9 +58,6 @@ const applicationDetailsTableLayout = ({
     { title: 'Куда приглашать кандитатов',                  value: address },
 ];
 
-const user = getUserFromToken();
-
-
 const ApplicationDetails = ({
                                 application,
                                 company,
@@ -79,6 +76,9 @@ const ApplicationDetails = ({
             getCompany(companyId);
         }
     }, [ getCompany, application ]);
+
+    const user = getUserFromToken();
+
 
     if (!application) {
         return null;

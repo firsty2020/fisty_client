@@ -1,12 +1,24 @@
 import { createApiAction } from '../../helpers/utils';
 import {
-    ADMIN_GET_PROJECTS
+    ADMIN_GET_PROJECTS,
+    ADMIN_PROJECT_CREATE,
+    GET,
+    POST,
 } from '../../helpers/constants/actionTypes';
 
 
 export const getProjects = (params) => createApiAction({
     url: 'projects/',
-    method: 'GET',
+    method: GET,
     data: params,
     label: ADMIN_GET_PROJECTS,
 });
+
+
+export const createProject = (data) => createApiAction({
+    url: 'projects/',
+    method: POST,
+    data,
+    label: ADMIN_PROJECT_CREATE,
+});
+

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { contactPersonCreatedSelector } from '../adminReducer';
-import { contactPersonRolesSelector } from '../Configs/configsReducer';
+import { contactPersonRolesSelector } from '../Config/configsReducer';
 import {
     createContactPerson,
     resetContactPersonCreated

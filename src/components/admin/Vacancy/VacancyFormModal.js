@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import {
     categoriesSelector,
     subcategoriesSelector
-} from '../Configs/configsReducer';
-import { getCategories, getSubcategories } from '../Configs/configsActions';
+} from '../Config/configsReducer';
+import { getCategories, getSubcategories } from '../Config/configsActions';
 import {
     copyObject,
     generateSelectOptions,

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import {BackButton, DetailsTable, PrimaryButton} from '../../ui';
 import { getVacancy } from '../../common/commonActions';
 import { applicationSelector, vacancySelector } from '../../common/commonReducer';
-import { companySelector } from '../Companies/companiesReducer';
-import {extractIdFromUrl} from '../../../helpers/utils';
-import {Link} from 'react-router-dom';
+import { companySelector } from '../Company/companiesReducer';
+import { extractIdFromUrl } from '../../../helpers/utils';
+import { Link } from 'react-router-dom';
 
 
 const vacancyDetailsTableLayout = ({ url, company_details, created, name }) => [

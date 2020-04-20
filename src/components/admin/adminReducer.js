@@ -12,12 +12,12 @@ import {
     ADMIN_SET_CONTACT_PERSON_REMOVED,
     ADMIN_SET_CONTACT_PERSON_UNLINKED,
     ADMIN_SET_CONTACT_PERSON_LINKED,
-    ADMIN_GET_PROJECTS,
+    ADMIN_GET_PROJECTS, ADMIN_PROJECT_CREATE,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
-import { configs } from './Configs/configsReducer';
-import { companies } from './Companies/companiesReducer';
-import { branches } from './Branches/branchReducer';
+import { configs } from './Config/configsReducer';
+import { companies } from './Company/companiesReducer';
+import { branches } from './Branch/branchReducer';
 import { createSelector } from 'reselect';
 
 
@@ -73,6 +73,9 @@ const common = (state = {}, action) => {
         case ADMIN_GET_PROJECTS:
             return { ...state, projects: action.payload.results };
 
+        case ADMIN_PROJECT_CREATE:
+            return { ...state, projectCreated: true };
+
         default:
             return state;
     }
@@ -114,3 +117,4 @@ export const linkContactPersonResolvedSelector = state => state.admin.common.con
 export const unLinkContactPersonResolvedSelector = state => state.admin.common.contactPersonUnLinked;
 
 export const projectsSelector = state => state.admin.common.projects;
+export const projectCreatedSelector = state => state.admin.common.projectCreated;

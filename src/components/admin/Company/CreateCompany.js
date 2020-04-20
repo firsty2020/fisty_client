@@ -9,12 +9,11 @@ import { createCompanyResolvedSelector } from './companiesReducer';
 import {
     industryOptionsSelector,
     specificationOptionsSelector
-} from '../Configs/configsReducer';
+} from '../Config/configsReducer';
 import { AlertNotice, DropDown } from '../../ui';
 import { When } from 'react-if';
 import messages from '../../../helpers/constants/messages';
-import { getIndustryOptions, getSpecificationOptions } from '../Configs/configsApi';
-import Select from 'react-select';
+import { getIndustryOptions, getSpecificationOptions } from '../Config/configsApi';
 import { generateSelectOptions } from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { isLoadingSelector } from '../../common/commonReducer';

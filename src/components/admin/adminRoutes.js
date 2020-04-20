@@ -1,32 +1,33 @@
-import UserList from './Users/Users';
-import Companies from './Companies/Companies';
-import CreateCompany from './Companies/CreateCompany';
-import Roles from './Configs/Roles/Roles';
-import CompanyDetails from './Companies/CompanyDetails';
-import ContactPersons from './Companies/ContactPersons';
-import BranchContactPersons from './Branches/ContactPersons';
-import Locations from './Configs/Locations';
-import Industries from './Configs/Industries';
-import Specifications from './Configs/Specifications';
-import CreateApplication from './Companies/CreateApplication';
-import Applications from './Applications/Applications';
-import CompanyApplications from './Companies/Applications';
-import CreateBranch from './Branches/CreateBranch';
-import Branches from './Branches/Branches';
-import UpdateBranch from './Branches/UpdateBranch';
-import BranchDetails from './Branches/BranchDetails';
+import UserList from './User/Users';
+import Companies from './Company/Companies';
+import CreateCompany from './Company/CreateCompany';
+import Roles from './Config/Roles/Roles';
+import CompanyDetails from './Company/CompanyDetails';
+import ContactPersons from './Company/ContactPersons';
+import BranchContactPersons from './Branch/ContactPersons';
+import Locations from './Config/Locations';
+import Industries from './Config/Industries';
+import Specifications from './Config/Specifications';
+import CreateApplication from './Company/CreateApplication';
+import Applications from './Application/Applications';
+import CompanyApplications from './Company/Applications';
+import CreateBranch from './Branch/CreateBranch';
+import Branches from './Branch/Branches';
+import UpdateBranch from './Branch/UpdateBranch';
+import BranchDetails from './Branch/BranchDetails';
 import CreateContactPerson from './contactPerson/CreateContactPerson';
-import DynamicFields from './Configs/DynamicFields/DynamicFields';
+import DynamicFields from './Config/DynamicFields/DynamicFields';
 import ApplicationDetails from '../common/ApplicationDetails';
 import withEntity from './contactPerson/withEntity';
 import UpdateContactPerson from './contactPerson/UpdateContactPerson';
 import withApplicationsTableLayout
-    from './Applications/withApplicationsTableLayout';
+    from './Application/withApplicationsTableLayout';
 import Vacancies from './Vacancy/Vacancies';
 import VacancyDetails from './Vacancy/VacancyDetails';
-import Projects from './Projects/Projects';
-import Categories from './Configs/Categories';
-import Subcategories from './Configs/Subcategories/Subcategories';
+import Projects from './Project/Projects';
+import Categories from './Config/Categories';
+import Subcategories from './Config/Subcategories/Subcategories';
+import CreateProject from './Project/CreateProject';
 
 
 const adminRoutes = [
@@ -69,6 +70,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects',
         component: Projects,
         name: 'Проекты'
+    },
+    {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/project/create',
+        component: CreateProject,
+        name: 'Создать проект'
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId',
@@ -134,6 +140,11 @@ const adminRoutes = [
         path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects',
         component: Projects,
         name: 'Проекты'
+    },
+    {
+        path: '/admin/applications/:applicationId/vacancies/:vacancyId/project/create',
+        component: CreateProject,
+        name: 'Создать проект'
     },
     {
         path: '/admin/applications/:applicationId/vacancies/:vacancyId',
