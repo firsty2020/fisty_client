@@ -43,7 +43,7 @@ export const auth = (state = initialState, action) => {
 
 export const userSelector = state => state.auth.user;
 
-export const setPasswordResolvedSelector = state => state.admin.setPasswordResolved;
+export const setPasswordResolvedSelector = state => state.auth.setPasswordResolved;
 
 export const userRegisteredSelector = state => state.auth.userRegistered;
 
