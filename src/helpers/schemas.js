@@ -200,16 +200,11 @@ export const projectSchema = Yup.object().shape({
     target_action_count: Yup.string().matches(REGEX.NUMERIC).required('Введите количество ЦД'),
     target_action_amount: Yup.string().matches(REGEX.NUMERIC).required('Введите Стоимость ЦД'),
     recruiter: Yup.array(),
-    location: Yup.string().test('location', 'Укажите бранч или местонахождение', function (value) {
-        if (this.parent.branch) {
-            return !value
-        }
-        return value;
+    location: Yup.string().test('location', 'Укажите местоположение', function (value) {
+        return !!(this.parent.branch || value);
     }),
-    branch: Yup.string().test('branch', 'Укажите бранч или местонахождение', function (value) {
-        if (this.parent.location) {
-            return !value
-        }
-        return value;
+    branch: Yup.string().test('branch', 'Укажите местоположение', function (value) {
+        return !!(this.parent.location || value);
     }),
+    location_type: Yup.string().required('Укажите местонахождение'),
 });

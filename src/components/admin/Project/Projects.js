@@ -16,11 +16,13 @@ import { autoToggleAlert } from '../../../helpers/utils';
 
 const projectsTableLayout = {
     headings: [
-        '#', 'название', 'действия',
+        '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия',
     ],
-    createRow: (project, index) => [
+    createRow: ({ name, target_action_count, target_action_amount}, index) => [
         index + 1,
-        project.name,
+        name,
+        target_action_count,
+        target_action_amount,
     ],
 };
 

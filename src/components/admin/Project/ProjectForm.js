@@ -12,11 +12,12 @@ import {
 } from '../../../helpers/utils';
 import { getBranches } from '../Branch/branchActions';
 import { branchesSelector } from '../Branch/branchReducer';
-import { DropDown } from '../../ui';
+import { DropDown, RadioButton } from '../../ui';
 import CountriesDropdown from '../../auth/Registration/CountriesDropdown';
 import { Link } from 'react-router-dom';
 import { projectSchema } from '../../../helpers/schemas';
-import {isLoadingSelector} from '../../common/commonReducer';
+import { isLoadingSelector } from '../../common/commonReducer';
+import { When } from 'react-if';
 
 
 const ProjectForm = ({
@@ -36,6 +37,15 @@ const ProjectForm = ({
         getBranches({ ...params,  company: match.params.companyId });
     }, [ getLocations, getBranches, match.params.companyId ]);
 
+    const handleLocationTypeChange = (setFieldValue, fieldValue) => {
+        setFieldValue('location_type', fieldValue);
+        if (fieldValue === 'location') {
+            setFieldValue('branch', []);
+        } else {
+            setFieldValue('location', '');
+        }
+    };
+
     return (
         <div>
             <Formik
@@ -50,12 +60,14 @@ const ProjectForm = ({
                     recruiter: '',
                     location: '',
                     branch: '',
+                    location_type: '',
                 }}
                 validationSchema={projectSchema}
                 onSubmit={(values) => {
                     const data = copyObject(clearEmptyFields(values));
                     const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
+                    delete transformedData.location_type;
                     onSubmit(transformedData);
                 }}
             >
@@ -171,34 +183,58 @@ const ProjectForm = ({
                         </Form.Group>
                         <Form.Group>
                             <p className="form-control-label">Местонахождение</p>
-                            <DropDown
-                                name="location"
-                                value={values.location}
-                                options={generateSelectOptions(locations, 'url', 'name')}
-                                placeholder="Выберите из списка"
-                                onBlur={(e) => setFieldTouched('location', e || '')}
-                                onChange={(e) => setFieldValue('location', e || '')}
-                                isClearable
+                            <RadioButton
+                                custom
+                                value={values.location_type}
+                                name="location_type"
+                                label="Бранч"
+                                onChange={() =>  handleLocationTypeChange(setFieldValue, 'branch')}
+                                onBlur={(e) => setFieldTouched('location_type', e)}
                             />
-                            {touched.location && errors.location ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.location}</span>
+                            <RadioButton
+                                custom
+                                value={values.location_type}
+                                name="location_type"
+                                label="Регион"
+                                onChange={() => handleLocationTypeChange(setFieldValue, 'location')}
+                                onBlur={(e) => setFieldTouched('location_type', e)}
+                            />
+                            {touched.location_type && errors.location_type ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.location_type}</span>
                             ) : null}
                         </Form.Group>
-                        <Form.Group>
-                            <p className="form-control-label">Бранч</p>
-                            <DropDown
-                                name="branch"
-                                value={values.branch}
-                                options={generateSelectOptions(branches, 'url', 'name')}
-                                placeholder="Выберите из списка"
-                                onBlur={(e) => setFieldTouched('branch', e || [])}
-                                onChange={(e) => setFieldValue('branch', e || [])}
-                                isMulti
-                            />
-                            {touched.branch && errors.branch ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.branch}</span>
-                            ) : null}
-                        </Form.Group>
+                        <When condition={values.location_type === 'location'}>
+                            <Form.Group>
+                                <DropDown
+                                    name="location"
+                                    value={values.location}
+                                    options={generateSelectOptions(locations, 'url', 'name')}
+                                    placeholder="Выберите из списка"
+                                    onBlur={(e) => setFieldTouched('location', e || '')}
+                                    onChange={(e) => setFieldValue('location', e || '')}
+                                    isClearable
+                                />
+                                {touched.location && errors.location ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.location}</span>
+                                ) : null}
+                            </Form.Group>
+                        </When>
+                        <When condition={values.location_type === 'branch'}>
+                            <Form.Group>
+                                <DropDown
+                                    name="branch"
+                                    value={values.branch}
+                                    options={generateSelectOptions(branches, 'url', 'name')}
+                                    placeholder="Выберите из списка"
+                                    onBlur={(e) => setFieldTouched('branch', e || [])}
+                                    onChange={(e) => setFieldValue('branch', e || [])}
+                                    isMulti
+                                />
+                                {touched.branch && errors.branch ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.branch}</span>
+                                ) : null}
+                            </Form.Group>
+                        </When>
                         <Form.Group>
                             <p className="form-control-label">Рекрутеры</p>
                             <DropDown
