@@ -1,24 +1,7 @@
 import React from 'react';
 import { string, func } from 'prop-types';
-import Select from 'react-select';
 import { DropDown } from '../../ui';
-
-
-let countriesOptions = [
-    { value: 'россия', label: 'Россия'},
-    { value: 'армения', label: 'Армения'},
-    { value: 'беларусь', label: 'Беларусь'},
-    { value: 'украина', label: 'Украина'},
-];
-
-const extendedOptions = [
-    { value: 'казахстан', label: 'Казахстан'},
-    { value: 'киргизия', label: 'Киргизия'},
-    { value: 'узбекистан', label: 'Узбекистан'},
-    { value: 'таджикистан', label: 'Таджикистан'},
-    { value: 'грузия', label: 'Грузия'},
-    { value: 'другое', label: 'другое'},
-];
+import { countriesOptions, extendedOptions} from '../../../helpers/utils';
 
 let options;
 const CountriesDropdown = ({

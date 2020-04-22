@@ -18,11 +18,29 @@ import { Link } from 'react-router-dom';
 import { projectSchema } from '../../../helpers/schemas';
 import { isLoadingSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
+import { countriesOptions, extendedOptions } from '../../../helpers/utils';
+
+
+let formValues = {};
+
+const initialValues = {
+    name: '',
+    citizenship: '',
+    age: { from: '', to: ''},
+    responsibilities: '',
+    target_action_count: '',
+    target_action_amount: '',
+    recruiter: '',
+    location: '',
+    branch: '',
+    location_type: '',
+};
 
 
 const ProjectForm = ({
                          locations,
                          branches,
+                         project,
                          match,
                          backPath,
                          isLoading,
@@ -38,36 +56,61 @@ const ProjectForm = ({
     }, [ getLocations, getBranches, match.params.companyId ]);
 
     const handleLocationTypeChange = (setFieldValue, fieldValue) => {
+        const otherOption = fieldValue === 'location' ? 'branch' : 'location';
         setFieldValue('location_type', fieldValue);
         if (fieldValue === 'location') {
             setFieldValue('branch', []);
         } else {
             setFieldValue('location', '');
         }
+        if (project) {
+            delete project[otherOption];
+        }
     };
+
+    const generateOptions = (list) => {
+        return generateSelectOptions(list, 'url', 'name')
+    };
+
+    const populateForm = () => {
+        const values = copyObject(project);
+        const options = [ ...countriesOptions, ...extendedOptions ];
+        const citizenships = values.citizenship
+            .map(c => options.find(option => option.value === c));
+        Object.keys(initialValues).map((key) => formValues[key] = values[key]);
+        formValues.citizenship = citizenships;
+        formValues.age = { from: values.age[0], to: values.age[1] };
+        formValues.location = generateOptions(locations).find((location) => location.value === values.location);
+        formValues.branch = (values.branch || [])
+            .map((branchUrl) => generateOptions(branches)
+                .find((branch) => branch.value === branchUrl));
+        if (values.location) {
+            formValues.location_type = 'location';
+        } else {
+            formValues.location_type = 'branch';
+        }
+    };
+
+    if (project && locations && branches) {
+        populateForm();
+    } else {
+        formValues = initialValues;
+    }
 
     return (
         <div>
             <Formik
                 enableReinitialize
-                initialValues={{
-                    name: '',
-                    citizenship: '',
-                    age: { from: '', to: ''},
-                    responsibilities: '',
-                    target_action_count: '',
-                    target_action_amount: '',
-                    recruiter: '',
-                    location: '',
-                    branch: '',
-                    location_type: '',
-                }}
+                initialValues={formValues}
                 validationSchema={projectSchema}
-                onSubmit={(values) => {
+                onSubmit={(values, resetForm) => {
                     const data = copyObject(clearEmptyFields(values));
                     const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
                     delete transformedData.location_type;
+                    if (project) {
+                        return onSubmit({ ...project, ...transformedData });
+                    }
                     onSubmit(transformedData);
                 }}
             >
@@ -186,6 +229,7 @@ const ProjectForm = ({
                             <RadioButton
                                 custom
                                 value={values.location_type}
+                                checked={values.location_type === 'branch'}
                                 name="location_type"
                                 label="Бранч"
                                 onChange={() =>  handleLocationTypeChange(setFieldValue, 'branch')}
@@ -193,6 +237,7 @@ const ProjectForm = ({
                             />
                             <RadioButton
                                 custom
+                                checked={values.location_type === 'location'}
                                 value={values.location_type}
                                 name="location_type"
                                 label="Регион"
@@ -208,7 +253,7 @@ const ProjectForm = ({
                                 <DropDown
                                     name="location"
                                     value={values.location}
-                                    options={generateSelectOptions(locations, 'url', 'name')}
+                                    options={generateOptions(locations)}
                                     placeholder="Выберите из списка"
                                     onBlur={(e) => setFieldTouched('location', e || '')}
                                     onChange={(e) => setFieldValue('location', e || '')}
@@ -224,7 +269,7 @@ const ProjectForm = ({
                                 <DropDown
                                     name="branch"
                                     value={values.branch}
-                                    options={generateSelectOptions(branches, 'url', 'name')}
+                                    options={generateOptions(branches)}
                                     placeholder="Выберите из списка"
                                     onBlur={(e) => setFieldTouched('branch', e || [])}
                                     onChange={(e) => setFieldValue('branch', e || [])}
@@ -259,7 +304,7 @@ const ProjectForm = ({
                             <Button
                                 disabled={isLoading}
                                 variant="warning"
-                                type="submit">{false ? 'Сохранить' : 'Создать'}
+                                type="submit">{project ? 'Сохранить' : 'Создать'}
                             </Button>
                         </div>
                     </Form>

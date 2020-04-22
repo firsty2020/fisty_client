@@ -16,6 +16,8 @@ import {
     ADMIN_PROJECT_CREATE,
     ADMIN_PROJECT_RESET,
     ADMIN_PROJECT_DELETE,
+    ADMIN_GET_PROJECT,
+    ADMIN_PROJECT_UPDATE,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -76,8 +78,14 @@ const common = (state = {}, action) => {
         case ADMIN_GET_PROJECTS:
             return { ...state, projects: action.payload.results };
 
+        case ADMIN_GET_PROJECT:
+            return { ...state, project: action.payload };
+
         case ADMIN_PROJECT_CREATE:
             return { ...state, projectCreated: true };
+
+        case ADMIN_PROJECT_UPDATE:
+            return { ...state, projectUpdated: true };
 
         case ADMIN_PROJECT_DELETE:
             return { ...state, projectDeleted: true };
@@ -87,7 +95,7 @@ const common = (state = {}, action) => {
                 ...state,
                 projectCreated: false,
                 projectDeleted: false,
-                projectUpdate: false,
+                projectUpdated: false,
             };
 
 
@@ -132,5 +140,7 @@ export const linkContactPersonResolvedSelector = state => state.admin.common.con
 export const unLinkContactPersonResolvedSelector = state => state.admin.common.contactPersonUnLinked;
 
 export const projectsSelector = state => state.admin.common.projects;
+export const projectSelector = state => state.admin.common.project;
 export const projectCreatedSelector = state => state.admin.common.projectCreated;
+export const projectUpdatedSelector = state => state.admin.common.projectUpdated;
 export const projectDeletedSelector = state => state.admin.common.projectDeleted;

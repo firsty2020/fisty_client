@@ -28,6 +28,7 @@ import Projects from './Project/Projects';
 import Categories from './Config/Categories';
 import Subcategories from './Config/Subcategories/Subcategories';
 import CreateProject from './Project/CreateProject';
+import UpdateProject from './Project/UpdateProject';
 
 
 const adminRoutes = [
@@ -75,6 +76,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/project/create',
         component: CreateProject,
         name: 'Создать проект'
+    },
+    {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects/edit/:projectId',
+        component: UpdateProject,
+        name: 'Редактировать проект'
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId',
@@ -140,6 +146,11 @@ const adminRoutes = [
         path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects',
         component: Projects,
         name: 'Проекты'
+    },
+    {
+        path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects/edit/:projectId',
+        component: UpdateProject,
+        name: 'Редактировать проект'
     },
     {
         path: '/admin/applications/:applicationId/vacancies/:vacancyId/project/create',

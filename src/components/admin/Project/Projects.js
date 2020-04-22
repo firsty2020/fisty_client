@@ -12,6 +12,7 @@ import { projectDeletedSelector, projectsSelector } from '../adminReducer';
 import { Link } from 'react-router-dom';
 import { When } from 'react-if';
 import { autoToggleAlert } from '../../../helpers/utils';
+import { push } from 'connected-react-router';
 
 
 const projectsTableLayout = {
@@ -33,6 +34,7 @@ const Projects = ({
                       getProjects,
                       deleteProject,
                       resetProjectState,
+                      push,
                   }) => {
 
     const [ projectIdToDelete, setProjectIdToDelete ] = useState(null);
@@ -56,7 +58,7 @@ const Projects = ({
         setProjectIdToDelete(null);
     };
 
-    const generateBackPath = () => {
+    const generatePath = () => {
         let backPath;
         let forwardPath;
         const { companyId, applicationId, vacancyId } = match.params;
@@ -82,11 +84,12 @@ const Projects = ({
                     onCancel={() => setProjectIdToDelete(null)}
                     question="Вы уверены, что хотите удалить этот проект?"/>
             </When>
-            <BackButton path={generateBackPath().backPath}/>
-            <Link to={generateBackPath().forwardPath}>
+            <BackButton path={generatePath().backPath}/>
+            <Link to={generatePath().forwardPath}>
                 <CreateButton />
             </Link>
             <TableList
+                onEditItem={({ id }) => push(`${match.url}/edit/${id}`)}
                 onDeleteItem={({ id }) => setProjectIdToDelete(id)}
                 layout={projectsTableLayout}
                 data={projects}
@@ -101,7 +104,7 @@ const mapStateToProps = state => ({
     deleted: projectDeletedSelector(state),
 });
 
-const mapDispatchToProps = { getProjects, deleteProject, resetProjectState };
+const mapDispatchToProps = { getProjects, deleteProject, resetProjectState, push };
 
 
 Projects.propTypes = {
