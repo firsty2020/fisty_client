@@ -41,17 +41,21 @@ const Projects = ({
     const [ successMessage, setSuccessMessage ] = useState(null);
 
     useEffect(() => {
-        const { vacancyId } = match.params;
-        getProjects({ vacancy: vacancyId });
+        getProjects(generateParams());
     }, [ getProjects, match.params.vacancyId ]);
 
     useEffect(() => {
         if (deleted) {
             autoToggleAlert('Вы успешно удалили проект', setSuccessMessage);
             resetProjectState();
-            getProjects();
+            getProjects(generateParams());
         }
     }, [ deleted, resetProjectState, getProjects ] );
+
+    const generateParams = () => {
+        const { vacancyId, companyId } = match.params;
+        return vacancyId ? { vacancy: vacancyId } : { company: companyId }
+    };
 
     const handleDeleteProject = () => {
         deleteProject(projectIdToDelete);

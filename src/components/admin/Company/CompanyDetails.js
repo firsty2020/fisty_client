@@ -96,7 +96,7 @@ const CompanyDetails = ({
                 <PrimaryButton text="Бранчи"/>
             </Link>
             <Link to={`${match.url}/projects`}>
-                <PrimaryButton text="Проекты"/>
+                <PrimaryButton text="Проекты (experimental)"/>
             </Link>
         </div>
     );

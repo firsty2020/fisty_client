@@ -49,6 +49,11 @@ const adminRoutes = [
         name: 'Создать компанию'
     },
     {
+        path: '/admin/companies/:companyId/projects',
+        component: Projects,
+        name: 'Проекты'
+    },
+    {
         path: '/admin/companies/:companyId',
         component: CompanyDetails,
         name: 'Детали компании',
