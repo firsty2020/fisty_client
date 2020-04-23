@@ -56,15 +56,17 @@ const ProjectForm = ({
     }, [ getLocations, getBranches, match.params.companyId ]);
 
     const handleLocationTypeChange = (setFieldValue, fieldValue) => {
-        const otherOption = fieldValue === 'location' ? 'branch' : 'location';
         setFieldValue('location_type', fieldValue);
         if (fieldValue === 'location') {
             setFieldValue('branch', []);
+            if (project) {
+                project.branch = [];
+            }
         } else {
             setFieldValue('location', '');
-        }
-        if (project) {
-            delete project[otherOption];
+            if (project) {
+                project.location = null;
+            }
         }
     };
 

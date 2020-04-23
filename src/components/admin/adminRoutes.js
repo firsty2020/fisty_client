@@ -29,6 +29,7 @@ import Categories from './Config/Categories';
 import Subcategories from './Config/Subcategories/Subcategories';
 import CreateProject from './Project/CreateProject';
 import UpdateProject from './Project/UpdateProject';
+import ProjectDetails from './Project/ProjectDetails';
 
 
 const adminRoutes = [
@@ -66,6 +67,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/contact-persons/edit/:contactPersonId',
         component: withEntity(UpdateContactPerson, 'company'),
         name: 'Править контактное лицо компании',
+    },
+    {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects/:projectId',
+        component: ProjectDetails,
+        name: 'Детали Проекта'
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects',
@@ -141,6 +147,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/branches',
         component: Branches,
         name: 'Бранчи'
+    },
+    {
+        path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects/:projectId',
+        component: ProjectDetails,
+        name: 'Детали Проекта'
     },
     {
         path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects',

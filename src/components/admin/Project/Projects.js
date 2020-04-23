@@ -89,6 +89,7 @@ const Projects = ({
                 <CreateButton />
             </Link>
             <TableList
+                onClickRow={({ id }) => push(`${match.url}/${id}`)}
                 onEditItem={({ id }) => push(`${match.url}/edit/${id}`)}
                 onDeleteItem={({ id }) => setProjectIdToDelete(id)}
                 layout={projectsTableLayout}
