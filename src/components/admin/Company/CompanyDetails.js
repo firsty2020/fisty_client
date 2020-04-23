@@ -10,7 +10,7 @@ import {
 } from '../Config/configsReducer';
 import { getIndustryOption, getSpecificationOption } from '../Config/configsApi';
 import { extractIdFromUrl } from '../../../helpers/utils';
-import { BackButton, DetailsTable } from '../../ui';
+import {BackButton, DetailsTable, PrimaryButton} from '../../ui';
 
 
 const companyDetailsTableLayout = ({
@@ -89,14 +89,14 @@ const CompanyDetails = ({
             </Link>
             <Link to={`${match.url}/applications`}
                   className="mr-2">
-                <Button
-                    variant="warning">Заявки
-                </Button>
+                <PrimaryButton text="Заявки"/>
             </Link>
-            <Link to={`${match.url}/branches`}>
-                <Button
-                    variant="warning">Бранчи
-                </Button>
+            <Link to={`${match.url}/branches`}
+                  className="mr-2">
+                <PrimaryButton text="Бранчи"/>
+            </Link>
+            <Link to={`${match.url}/projects`}>
+                <PrimaryButton text="Проекты"/>
             </Link>
         </div>
     );

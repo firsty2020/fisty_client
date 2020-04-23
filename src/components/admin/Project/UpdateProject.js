@@ -33,11 +33,6 @@ const UpdateProject = ({
         }
     }, [ updated, push, resetProjectState ]);
 
-    const handleCreateProject = (data) => {
-        console.log(data, 'data');
-        updateProject(data);
-    };
-
     const generateBackPath = () => {
         const { companyId, applicationId, vacancyId } = match.params;
         if (companyId) {
@@ -55,7 +50,7 @@ const UpdateProject = ({
             <ProjectForm
                 project={project}
                 backPath={generateBackPath()}
-                onSubmit={(data) => handleCreateProject(data)}
+                onSubmit={(data) => updateProject(data)}
                 match={match}/>
         </Container>
     )
