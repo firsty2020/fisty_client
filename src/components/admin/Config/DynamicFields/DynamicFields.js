@@ -64,6 +64,15 @@ const DynamicFields = ({
 
     const { companyId, applicationId, vacancyId, projectId } = match.params;
 
+    const generateBackPath = () => {
+        if (projectId) {
+            const url = match.url;
+            const i = url.lastIndexOf('/');
+            return (url.slice(0, i));
+        }
+        return null;
+    };
+
     return (
         <div>
             <ConfirmationModal
@@ -92,8 +101,10 @@ const DynamicFields = ({
                     onClose={(updated) => handleModalClose(updated)}
                 /> ): null}
             <Container>
-                <BackButton
-                    path={`/admin/companies/${companyId}/applications/${applicationId}/vacancies/${vacancyId}/projects/${projectId}`}/>
+                { generateBackPath() ? (
+                    <BackButton
+                        path={generateBackPath()}/>
+                ): null }
                 <div className="mb-3">
                     <Button
                         onClick={() => setIsAddingField(true)}

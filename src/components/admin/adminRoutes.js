@@ -161,6 +161,11 @@ const adminRoutes = [
         name: 'Бранчи'
     },
     {
+        path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects/:projectId/custom-fields',
+        component: EnhanceDynamicFields(DynamicFields),
+        name: 'Поля проекта'
+    },
+    {
         path: '/admin/applications/:applicationId/vacancies/:vacancyId/projects/:projectId',
         component: ProjectDetails,
         name: 'Детали Проекта'
