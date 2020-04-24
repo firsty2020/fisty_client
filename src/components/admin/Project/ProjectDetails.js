@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BackButton, DetailsTable, PrimaryButton } from '../../ui';
 import { connect } from 'react-redux';
 import { getProject } from '../adminActions';
-import {projectSelector} from '../adminReducer';
+import { projectSelector } from '../adminReducer';
+import { Link } from 'react-router-dom';
 
 
 const showBranchNames = (branchDetails) => {
@@ -64,9 +65,9 @@ const ProjectDetails  = ({ match, project, getProject }) => {
             <DetailsTable
                 data={projectDetailsTableLayout(project)}>
             </DetailsTable>
-            {/*<Link to={`${match.url}/projects`}>*/}
-            {/*    <PrimaryButton text="Проекты"/>*/}
-            {/*</Link>*/}
+            <Link to={`${match.url}/custom-fields`}>
+                <PrimaryButton text="Динамичные поля"/>
+            </Link>
         </div>
     );
 

@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Container } from 'reactstrap';
-import {
-    updateDynamicField,
-    resetDynamicFieldUpdated,
-} from './DynamicFieldsActions';
+import { resetDynamicFieldUpdated } from './DynamicFieldsActions';
 import { connect } from 'react-redux';
 import { dynamicFieldUpdatedSelector } from '../configsReducer';
 import DynamicFieldForm from './DynamicFieldForm';
 import { clearEmptyFields, copyObject, findConfigForFieldType } from '../../../../helpers/utils';
 import { isLoadingSelector } from '../../../common/commonReducer';
+import EnhanceDynamicFields from './EnhanceDynamicFields';
 
 
 const UpdateDynamicField = ({
@@ -69,13 +67,13 @@ const mapStateToProps = state => ({
     pending: isLoadingSelector(state),
 });
 
-const mapDispatchToProps = {
-    updateDynamicField,
-    resetDynamicFieldUpdated,
-};
+const mapDispatchToProps = (dispatch, props) => ({
+    updateDynamicField: (data) => dispatch(props.updateDynamicField(data)()),
+    resetDynamicFieldUpdated: () => dispatch(resetDynamicFieldUpdated()),
+});
 
 
 UpdateDynamicField.propTypes = {};
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateDynamicField);
+export default EnhanceDynamicFields(connect(mapStateToProps, mapDispatchToProps)(UpdateDynamicField));

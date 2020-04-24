@@ -30,6 +30,8 @@ import Subcategories from './Config/Subcategories/Subcategories';
 import CreateProject from './Project/CreateProject';
 import UpdateProject from './Project/UpdateProject';
 import ProjectDetails from './Project/ProjectDetails';
+import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
+
 
 
 const adminRoutes = [
@@ -72,6 +74,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/contact-persons/edit/:contactPersonId',
         component: withEntity(UpdateContactPerson, 'company'),
         name: 'Править контактное лицо компании',
+    },
+    {
+        path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects/:projectId/custom-fields',
+        component: EnhanceDynamicFields(DynamicFields),
+        name: 'Поля проекта'
     },
     {
         path: '/admin/companies/:companyId/applications/:applicationId/vacancies/:vacancyId/projects/:projectId',
@@ -215,7 +222,7 @@ const adminRoutes = [
     },
     {
         path: '/admin/configs/dynamic-fields',
-        component: DynamicFields,
+        component: EnhanceDynamicFields(DynamicFields),
         name: 'Динамичные поля'
     },
     {

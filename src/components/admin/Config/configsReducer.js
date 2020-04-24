@@ -384,15 +384,16 @@ export const configs = (state = {}, action) => {
             };
 
         case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_CREATED:
+
             return {
                 ...state,
-                dynamicFieldCreated: action.payload
+                dynamicFieldCreated: false
             };
 
         case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_REMOVED:
             return {
                 ...state,
-                dynamicFieldRemoved: action.payload
+                dynamicFieldRemoved: false
             };
 
         case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_UPDATED:

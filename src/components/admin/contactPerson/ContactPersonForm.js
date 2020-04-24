@@ -5,7 +5,6 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { getContactPersonRoles } from '../Config/Roles/rolesApi';
 import { contactPersonRolesSelector } from '../Config/configsReducer';
-import Select from 'react-select';
 import { generateSelectOptions } from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { DropDown } from '../../ui';

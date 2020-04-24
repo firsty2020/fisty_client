@@ -3,11 +3,9 @@ import { Container, Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import CreateDynamicField from './CreateDynamicField';
 import { connect } from 'react-redux';
-import { AlertNotice, ConfirmationModal } from '../../../ui';
+import {AlertNotice, BackButton, ConfirmationModal} from '../../../ui';
 import { When } from 'react-if';
 import {
-    getDynamicFields,
-    removeDynamicField,
     resetDynamicFieldRemoved
 } from './DynamicFieldsActions';
 import DynamicFieldsList from './DynamicFIeldsList';
@@ -21,34 +19,29 @@ import UpdateDynamicField from './UpdateDynamicField';
 const DynamicFields = ({
                            dynamicFields,
                            removed,
+                           match,
                            getDynamicFields,
                            removeDynamicField,
                            resetDynamicFieldRemoved,
                        }) => {
+
 
     const [ isAddingField, setIsAddingField ] =  useState(false);
     const [ fieldToUpdate, setFieldToUpdate ] =  useState(null);
     const [ showSuccessAlert, setShowSuccessAlert ] = useState('');
     const [ dynamicFieldToRemove, setDynamicFieldToRemove ] = useState(false);
 
-
-    const handleFieldRemovedSuccess = () => {
-        toggleSuccessAlert('Вы успешно удалили поле');
-        resetDynamicFieldRemoved();
-        getDynamicFields();
-    };
-
     useEffect(() => {
         getDynamicFields();
-    }, [ getDynamicFields ]);
+    }, [ ]);
 
     useEffect(() => {
         if (removed) {
-            toggleSuccessAlert('Вы успешно удалили поле');
             resetDynamicFieldRemoved();
+            toggleSuccessAlert('Вы успешно удалили поле');
             getDynamicFields();
         }
-    }, [ removed, handleFieldRemovedSuccess ]);
+    }, [ removed ]);
 
     const handleModalClose = (successMessage) => {
         if (successMessage) {
@@ -69,6 +62,8 @@ const DynamicFields = ({
         setDynamicFieldToRemove(null);
     };
 
+    const { companyId, applicationId, vacancyId, projectId } = match.params;
+
     return (
         <div>
             <ConfirmationModal
@@ -85,16 +80,20 @@ const DynamicFields = ({
             </When>
             {isAddingField ? (
                 <CreateDynamicField
+                    match={match}
                     show={isAddingField}
                     onClose={(created) => handleModalClose(created)}
                 /> ): null}
             {fieldToUpdate ? (
                 <UpdateDynamicField
+                    match={match}
                     dynamicField={fieldToUpdate}
                     show={!!fieldToUpdate}
                     onClose={(updated) => handleModalClose(updated)}
                 /> ): null}
             <Container>
+                <BackButton
+                    path={`/admin/companies/${companyId}/applications/${applicationId}/vacancies/${vacancyId}/projects/${projectId}`}/>
                 <div className="mb-3">
                     <Button
                         onClick={() => setIsAddingField(true)}
@@ -121,10 +120,12 @@ const mapStateToProps = state => ({
     removed: dynamicFieldRemovedSelector(state),
 });
 
-const mapDispatchToProps = {
-    getDynamicFields,
-    removeDynamicField,
-    resetDynamicFieldRemoved,
+const mapDispatchToProps = (dispatch, props) =>  {
+    return {
+        getDynamicFields: () => dispatch(props.getDynamicFields()),
+        removeDynamicField: (id) => dispatch(props.removeDynamicField(id)()),
+        resetDynamicFieldRemoved: () => dispatch(resetDynamicFieldRemoved()),
+    }
 };
 
 

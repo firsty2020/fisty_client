@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { branchSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
-import Select from 'react-select';
 import { connect } from 'react-redux';
 import { getLocations } from '../Config/configsActions';
 import { locationsSelector } from '../Config/configsReducer';

@@ -2,15 +2,19 @@ import React, { useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Container } from 'reactstrap';
 import {
-    createDynamicField,
     resetDynamicFieldCreated
 } from './DynamicFieldsActions';
 import { connect } from 'react-redux';
 import { dynamicFieldCreatedSelector } from '../configsReducer';
 import DynamicFieldForm from './DynamicFieldForm';
-import { clearEmptyFields, copyObject } from '../../../../helpers/utils';
+import {
+    clearEmptyFields,
+    copyObject,
+    transformReactSelectFields
+} from '../../../../helpers/utils';
 import { isLoadingSelector } from '../../../common/commonReducer';
 import { findConfigForFieldType } from '../../../../helpers/utils';
+import EnhanceDynamicFields from './EnhanceDynamicFields';
 
 
 const CreateDynamicField = ({
@@ -36,8 +40,8 @@ const CreateDynamicField = ({
 
     const cleanupData = (data) => {
         const fieldData = clearEmptyFields(copyObject(data));
-        fieldData.project = 'https://sheltered-meadow-55057.herokuapp.com/api/v0/projects/1/';
         fieldData.field_configuration = findConfigForFieldType(fieldData);
+        transformReactSelectFields([ Object.keys(fieldData.field_configuration) ], fieldData.field_configuration);
         return fieldData;
     };
 
@@ -72,13 +76,18 @@ const mapStateToProps = state => ({
     pending: isLoadingSelector(state),
 });
 
-const mapDispatchToProps = {
-    createDynamicField,
-    resetDynamicFieldCreated,
-};
+const mapDispatchToProps = (dispatch, props) => {
+    
+    console.log(props, 'props')
+    
+    return {
+        createDynamicField: (data) => dispatch(props.createDynamicField(data)()),
+        resetDynamicFieldCreated: () => dispatch(resetDynamicFieldCreated()),
+    }
+}
 
 
 CreateDynamicField.propTypes = {};
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateDynamicField);
+export default EnhanceDynamicFields(connect(mapStateToProps, mapDispatchToProps)(CreateDynamicField));
