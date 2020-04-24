@@ -55,10 +55,10 @@ const Projects = ({
         headings: [
             '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия',
         ],
-        createRow: ({ name, target_action_count, target_action_amount}, index) => [
+        createRow: ({ name, completed_targeted_actions_count, target_action_amount}, index) => [
             index + 1,
             name,
-            target_action_count,
+            completed_targeted_actions_count,
             target_action_amount,
         ],
     };
