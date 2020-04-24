@@ -51,6 +51,16 @@ const adminRoutes = [
         name: 'Создать компанию'
     },
     {
+        path: '/admin/companies/:companyId/projects/:projectId/custom-fields',
+        component: EnhanceDynamicFields(DynamicFields),
+        name: 'Поля проекта'
+    },
+    {
+        path: '/admin/companies/:companyId/projects/:projectId',
+        component: ProjectDetails,
+        name: 'Детали проекта'
+    },
+    {
         path: '/admin/companies/:companyId/projects',
         component: Projects,
         name: 'Проекты'

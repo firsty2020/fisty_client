@@ -14,19 +14,6 @@ import { When } from 'react-if';
 import { autoToggleAlert } from '../../../helpers/utils';
 import { push } from 'connected-react-router';
 
-
-const projectsTableLayout = {
-    headings: [
-        '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия',
-    ],
-    createRow: ({ name, target_action_count, target_action_amount}, index) => [
-        index + 1,
-        name,
-        target_action_count,
-        target_action_amount,
-    ],
-};
-
 const Projects = ({
                       projects,
                       match,
@@ -52,6 +39,8 @@ const Projects = ({
         }
     }, [ deleted, resetProjectState, getProjects ] );
 
+    const showActions = !!match.params.vacancyId;
+
     const generateParams = () => {
         const { vacancyId, companyId } = match.params;
         return vacancyId ? { vacancy: vacancyId } : { company: companyId }
@@ -62,10 +51,38 @@ const Projects = ({
         setProjectIdToDelete(null);
     };
 
+    const projectsTableLayout = {
+        headings: [
+            '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия',
+        ],
+        createRow: ({ name, target_action_count, target_action_amount}, index) => [
+            index + 1,
+            name,
+            target_action_count,
+            target_action_amount,
+        ],
+    };
+
+    const shouldActions = (isEditing) => {
+        if (!showActions) {
+            projectsTableLayout.headings = [
+                '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД'];
+            return null
+        }
+        if (isEditing) {
+            return ({ id }) => push(`${match.url}/edit/${id}`)
+        } else {
+            return ({ id }) => setProjectIdToDelete(id);
+        }
+    };
+
     const generatePath = () => {
         let backPath;
         let forwardPath;
         const { companyId, applicationId, vacancyId } = match.params;
+        if (!showActions) {
+            return { backPath: `/admin/companies/${companyId}`};
+        }
         if (companyId) {
             backPath = `/admin/companies/${companyId}/applications/${applicationId}/vacancies/${vacancyId}`;
             forwardPath = `${backPath}/project/create`;
@@ -89,13 +106,15 @@ const Projects = ({
                     question="Вы уверены, что хотите удалить этот проект?"/>
             </When>
             <BackButton path={generatePath().backPath}/>
-            <Link to={generatePath().forwardPath}>
-                <CreateButton />
-            </Link>
+            { showActions ? (
+                <Link to={generatePath().forwardPath}>
+                    <CreateButton />
+                </Link>
+            ) : null }
             <TableList
                 onClickRow={({ id }) => push(`${match.url}/${id}`)}
-                onEditItem={({ id }) => push(`${match.url}/edit/${id}`)}
-                onDeleteItem={({ id }) => setProjectIdToDelete(id)}
+                onEditItem={shouldActions(true)}
+                onDeleteItem={shouldActions()}
                 layout={projectsTableLayout}
                 data={projects}
             />
