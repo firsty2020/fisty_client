@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pagination as BootstrapPagination } from 'react-bootstrap';
+import { range } from '../helpers/utils';
 
 const Pagination = ({ data, action }) => {
 
@@ -9,27 +10,55 @@ const Pagination = ({ data, action }) => {
 
     const url = (data.next || data.previous);
     const pageCount = Math.ceil(data.count / itemsPerPage);
-
-
-    const generatePageItems = (pageCount) => {
-        const items = [];
-        for (let i = 1; i <= pageCount; i++) {
-            items.push(
-                <BootstrapPagination.Item
-                    active={currentPage() === i}
-                    onClick={() => changePage.call(null, i)}
-                    key={i}>{i}
-                </BootstrapPagination.Item>
-            );
-        }
-        return items;
-    };
-
-    const changePage = (pageNumber) => {
+    const handlePageChange = (pageNumber) => {
         if (!url || pageNumber == currentPage()) return;
         const params = getParams(url);
         const newParams = generateNewParams(params, pageNumber);
         action(newParams);
+    };
+
+    const generatePagination = (pageCount) => {
+        const pageItemsCount = 3;
+        let lastInLeft = pageItemsCount * Math.ceil(currentPage() / pageItemsCount);
+        let firstItem = lastInLeft - pageItemsCount + 1;
+        lastInLeft = lastInLeft > pageCount ? pageCount : lastInLeft;
+        firstItem = firstItem < 1 ? 1 : firstItem;
+        const leftRange = range(firstItem, lastInLeft);
+
+        return [
+            ...leftRange,
+            ...shouldShowDivider(pageItemsCount, lastInLeft),
+            ...shouldShowLastPage(lastInLeft) ]
+            .map((pageNumber) => (
+                <BootstrapPagination.Item
+                    disabled={isNaN(Number(pageNumber))}
+                    active={currentPage() === pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    key={pageNumber}>{pageNumber}
+                </BootstrapPagination.Item>
+            ));
+    };
+
+    const shouldShowLastPage = (lastInLeft) => {
+        if (pageCount !== lastInLeft ) {
+            return [ pageCount ];
+        }
+        return [];
+    };
+
+    const shouldShowDivider = (pageItemsCount, lastInLeft) => {
+        if ((pageCount > pageItemsCount)
+            && shouldShowLastPage(lastInLeft).length
+            && pageCount - lastInLeft !== 1)
+        {
+            return ['...'];
+        }
+        return [];
+    };
+
+    const shouldShowFirsLastKeys = () => {
+      const breakpoint = 5;
+      return pageCount > breakpoint;
     };
 
     const getParams = (url) => {
@@ -39,10 +68,10 @@ const Pagination = ({ data, action }) => {
 
     const currentPage = () => {
         if (data.next) {
-            return    Number(getParams(data.next).get('page')) - 1;
+            return Number(getParams(data.next).get('page')) - 1;
         } else if (!getParams(data.previous).has('page')) {
-            // if the previous page is one, page params is not prepended by backend
-            // so if next if null, previous is 1 you're on the 2nd page
+            // if the previous page is the first, page param is not appended by server.
+            // so if next not exists, previous is 1 you're obviously on the 2nd page.
             return  2;
         }
         return Number(getParams(data.previous).get('page')) + 1;
@@ -59,24 +88,29 @@ const Pagination = ({ data, action }) => {
 
 
     return (
-       <div className="pagination-container">
-           <BootstrapPagination >
-               <BootstrapPagination.First
-                   disabled={!data.previous}
-                   onClick={() => changePage(1)}
-               />
-               <BootstrapPagination.Prev
-                   onClick={() => changePage(currentPage() - 1)}
-                   disabled={!data.previous}/>
-               {generatePageItems(pageCount)}
-               <BootstrapPagination.Next
-                   onClick={() => changePage(currentPage() + 1)}
-                   disabled={!data.next}/>
-               <BootstrapPagination.Last
-                   disabled={!data.next}
-                   onClick={() => changePage(pageCount)}/>
-           </BootstrapPagination>
-       </div>
+        <div className="pagination-container">
+            <BootstrapPagination>
+                {shouldShowFirsLastKeys() ? (
+                    <BootstrapPagination.First
+                        disabled={!data.previous}
+                        onClick={() => handlePageChange(1)}
+                    />
+                ) : null}
+                <BootstrapPagination.Prev
+                    onClick={() => handlePageChange(currentPage() - 1)}
+                    disabled={!data.previous}/>
+                {generatePagination(pageCount)}
+                <BootstrapPagination.Next
+                    onClick={() => handlePageChange(currentPage() + 1)}
+                    disabled={!data.next}/>
+                {shouldShowFirsLastKeys() ? (
+                    <BootstrapPagination.Last
+                        disabled={!data.next}
+                        onClick={() => handlePageChange(pageCount)}/>
+                ) : null}
+
+            </BootstrapPagination>
+        </div>
     );
 };
 

@@ -97,3 +97,12 @@ export const extendedOptions = [
     { value: 'грузия', label: 'Грузия'},
     { value: 'другое', label: 'другое'},
 ];
+
+
+export const range = (start = 0, end = 0) => {
+    const range = [];
+    for (let i = start; i <= end; i++) {
+        range.push(i);
+    }
+    return range;
+};
