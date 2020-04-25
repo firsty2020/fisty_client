@@ -30,7 +30,7 @@ const common = (state = {}, action) => {
     switch (action.type) {
 
         case ADMIN_GET_USERS:
-            return { ...state, users: action.payload.results };
+            return { ...state, users: action.payload };
 
         case ADMIN_CREATE_CONTACT_PERSON:
             return { ...state, contactPersonCreated: true };
@@ -43,8 +43,8 @@ const common = (state = {}, action) => {
                 ...state,
                 contactPersons: action.id ?  {
                     ...state.contactPersons,
-                    [ action.id ]: action.payload.results ,
-                } : action.payload.results,
+                    [ action.id ]: action.payload ,
+                } : action.payload,
             };
 
 
@@ -76,7 +76,7 @@ const common = (state = {}, action) => {
             return { ...state, contactPersonUnLinked: true };
 
         case ADMIN_GET_PROJECTS:
-            return { ...state, projects: action.payload.results };
+            return { ...state, projects: action.payload };
 
         case ADMIN_GET_PROJECT:
             return { ...state, project: action.payload };

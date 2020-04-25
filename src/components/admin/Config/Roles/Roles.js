@@ -12,12 +12,13 @@ import { When } from 'react-if';
 import CreateRole from './CreateRole';
 import UpdateRole from './UpdateRole';
 import { Check } from 'react-feather';
+import Pagination from '../../../Pagination';
 
 
 const Roles = ({
                    contactPersonRoles,
                    contactPersonRoleRemoved,
-                   getContactPersonRolesRoles,
+                   getContactPersonRoles,
                    removeContactPersonRole,
                }) => {
 
@@ -26,25 +27,25 @@ const Roles = ({
     const [ roleToUpdate, setRoleToUpdate ] = useState(null);
 
     useEffect(() => {
-        getContactPersonRolesRoles();
-    }, [ getContactPersonRolesRoles ]);
+        getContactPersonRoles();
+    }, [ getContactPersonRoles ]);
 
     useEffect(() => {
         if (contactPersonRoleRemoved)
-            getContactPersonRolesRoles();
-    }, [ getContactPersonRolesRoles, contactPersonRoleRemoved ]);
+            getContactPersonRoles();
+    }, [ getContactPersonRoles, contactPersonRoleRemoved ]);
 
     const handleCreateRoleModalClose = (isRoleCreatedOrUpdated) => {
         setIsCreatingRole(false);
         if (isRoleCreatedOrUpdated) {
-            getContactPersonRolesRoles();
+            getContactPersonRoles();
         }
     };
 
     const handleUpdateRoleModalClose = (isRoleUpdated) => {
         setRoleToUpdate(null);
         if (isRoleUpdated) {
-            getContactPersonRolesRoles();
+            getContactPersonRoles();
         }
     };
 
@@ -93,7 +94,7 @@ const Roles = ({
                     </tr>
                     </thead>
                     <tbody>
-                    {(contactPersonRoles || []).map((role) => {
+                    {((contactPersonRoles || {}).results || []).map((role) => {
                         return (
                             <tr key={role.id}>
                                 <td>{role.name}</td>
@@ -118,6 +119,10 @@ const Roles = ({
                     })}
                     </tbody>
                 </Table>
+                <Pagination
+                    action={getContactPersonRoles}
+                    data={contactPersonRoles}
+                />
             </Container>
         </div>
     );
@@ -129,8 +134,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    getContactPersonRolesRoles: getContactPersonRoles,
-    removeContactPersonRole: removeContactPersonRole,
+    getContactPersonRoles,
+    removeContactPersonRole,
 };
 
 

@@ -18,8 +18,8 @@ const EnhanceDynamicFields = (WrappedComponent) => (props) => {
     const { projectId } = props.match.params;
     
     if (projectId) {
-        getDynamicFieldsAction = getDynamicFields
-            .bind(null, { project: projectId }, 'projects/custom-fields/');
+        getDynamicFieldsAction = (params) => getDynamicFields
+            .bind(null, { ...params, project: projectId }, 'projects/custom-fields/');
         removeDynamicFieldAction = (id) => removeDynamicField.bind(null, id, 'projects/custom-fields');
         createDynamicFieldAction = (data) => {
             data.project = `${baseURL}projects/${projectId}/`;
@@ -27,7 +27,7 @@ const EnhanceDynamicFields = (WrappedComponent) => (props) => {
         };
         updateDynamicFieldAction = (data) => updateDynamicField.bind(null, data, 'projects/custom-fields');
     } else {
-        getDynamicFieldsAction = getDynamicFields;
+        getDynamicFieldsAction = (params) => getDynamicFields.bind(null, params);
         removeDynamicFieldAction = (id) => removeDynamicField.bind(null, id);
         createDynamicFieldAction = (data) => createDynamicField.bind(null, data);
         updateDynamicFieldAction = (data) => updateDynamicField.bind(null, data);

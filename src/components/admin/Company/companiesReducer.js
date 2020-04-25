@@ -19,7 +19,7 @@ export const companies = (state = {}, action) => {
 
 
         case ADMIN_GET_COMPANIES:
-            return {...state, companies: action.payload.results };
+            return {...state, companies: action.payload };
 
         case ADMIN_GET_COMPANY:
             return { ...state, company: action.payload };

@@ -23,6 +23,7 @@ import { autoToggleAlert, extractIdFromUrl } from '../../../helpers/utils';
 import { When } from 'react-if';
 import CreateVacancy from './CreateVacancy';
 import UpdateVacancy from './UpdateVacancy';
+import Pagination from '../../Pagination';
 
 
 const vacanciesTableLayout = {
@@ -55,7 +56,7 @@ const Vacancies = ({
     const applicationId = match.params.applicationId;
 
     useEffect(() => {
-        getVacancies(applicationId);
+        getVacancies({ application: applicationId });
     }, [ getVacancies, applicationId ]);
 
 
@@ -121,6 +122,10 @@ const Vacancies = ({
                 onDeleteItem={({ url }) => setVacancyIdToRemove(extractIdFromUrl(url))}
                 onClickRow={({url}) => push(`${match.url}/${extractIdFromUrl(url)}`)}
                 layout={vacanciesTableLayout}
+                data={(vacancies || {}).results}
+            />
+            <Pagination
+                action={getVacancies}
                 data={vacancies}
             />
         </div>

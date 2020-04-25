@@ -38,10 +38,10 @@ export const getApplication = (id) => createApiAction({
     label: GET_APPLICATION,
 });
 
-export const getVacancies = (applicationId) => createApiAction({
+export const getVacancies = (params) => createApiAction({
     url: 'vacancy/',
     method: 'GET',
-    data: { application: applicationId },
+    data: params,
     label: GET_VACANCIES,
 });
 

@@ -12,11 +12,11 @@ import {
 } from './branchReducer';
 import { getBranches } from './branchActions';
 import { push } from 'connected-react-router';
+import Pagination from '../../Pagination';
 
 
 const Branches = ({
                       match,
-                      pending,
                       removed,
                       branches,
                       getBranches,
@@ -74,7 +74,7 @@ const Branches = ({
                     </tr>
                     </thead>
                     <tbody>
-                    {(branches || []).map((branch) => {
+                    {((branches || {}).results || []).map((branch) => {
                         return (
                             <tr key={branch.id}
                                 className="cursor-pointer"
@@ -107,6 +107,10 @@ const Branches = ({
                     })}
                     </tbody>
                 </Table>
+                <Pagination
+                    action={getBranches}
+                    data={branches}
+                />
             </Container>
         </div>
     );

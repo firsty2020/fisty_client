@@ -366,9 +366,10 @@ export const createCategory = (name) => createApiAction({
     label: ADMIN_CONFIGS_CATEGORY_CREATE,
 });
 
-export const getCategories = () => createApiAction({
+export const getCategories = (params) => createApiAction({
     url: 'categories/',
     method: GET,
+    data: params,
     label: ADMIN_CONFIGS_CATEGORIES_GET,
 });
 
@@ -396,10 +397,10 @@ export const createSubcategory = (data) => createApiAction({
     label: ADMIN_CONFIGS_SUBCATEGORY_CREATE,
 });
 
-export const getSubcategories = (data) => createApiAction({
+export const getSubcategories = (params) => createApiAction({
     url: 'subcategories/',
     method: GET,
-    data,
+    data: params,
     label: ADMIN_CONFIGS_SUBCATEGORIES_GET,
 });
 

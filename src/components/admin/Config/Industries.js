@@ -16,6 +16,7 @@ import {
 } from './configsReducer';
 import { scrollToRef } from '../../../helpers/utils';
 import ConfigFormList from './ConfigFormList';
+import Pagination from '../../Pagination';
 
 
 const industryValidationSchema = Yup.object().shape({
@@ -83,13 +84,17 @@ const Industries = ({
                 itemToDelete={industryOptionToDelete}
                 inputRef={industryInputRef}
                 pending={addIndustryPending}
-                itemList={industryOptions}
+                itemList={(industryOptions || {}).results}
                 handleEditItem={handleEdit}
                 handleItemDelete={handleDelete}
                 updateItem={updateIndustryOption}
                 addItem={addIndustryOption}
                 setItemToEdit={setIndustryOptionToEdit}
                 setItemToDelete={setIndustryOptionToDelete}
+            />
+            <Pagination
+                action={getIndustryOptions}
+                data={industryOptions}
             />
         </div>
     );

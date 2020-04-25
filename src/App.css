@@ -128,3 +128,13 @@ button:disabled {
 .warning-control-custom .custom-control-input:active ~ .custom-control-label::before {
     background-color: #f0ad4e;
 }
+
+.pagination-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+li.active span {
+    background-color: #F47421!important;
+}

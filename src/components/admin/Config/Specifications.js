@@ -15,6 +15,7 @@ import {
 } from './configsReducer';
 import { scrollToRef } from '../../../helpers/utils';
 import ConfigFormList from './ConfigFormList';
+import Pagination from '../../Pagination';
 
 
 const specificationValidationSchema = Yup.object().shape({
@@ -82,13 +83,17 @@ const Specifications = ({
                 itemToDelete={specificationOptionToDelete}
                 inputRef={specificationInputRef}
                 pending={false}
-                itemList={specificationOptions}
+                itemList={(specificationOptions || {}).results}
                 handleEditItem={handleEdit}
                 handleItemDelete={handleDelete}
                 updateItem={updateSpecificationOption}
                 addItem={addSpecificationOption}
                 setItemToEdit={setSpecificationOptionToEdit}
                 setItemToDelete={setSpecificationOptionToDelete}
+            />
+            <Pagination
+                action={getSpecificationOptions}
+                data={specificationOptions}
             />
         </div>
     );

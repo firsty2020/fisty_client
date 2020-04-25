@@ -23,6 +23,7 @@ import {
 import { When } from 'react-if';
 import { baseURL } from '../../../axios';
 import { generateUId } from '../../../helpers/utils';
+import Pagination from '../../Pagination';
 
 
 const uid = generateUId();
@@ -121,7 +122,7 @@ const ContactPersons = ({
                 />) : null}
             <ContactPersonsList
                 onUnlinkContactPerson={setContactPersonToUnlink}
-                contactPersons={contactPersons}
+                contactPersons={(contactPersons || {}).results}
                 match={match}
                 params={params}
             >
@@ -146,6 +147,10 @@ const ContactPersons = ({
                     </Button>
                 </div>
             </ContactPersonsList>
+            <Pagination
+                action={getContactPersons}
+                data={contactPersons}
+            />
         </div>
     );
 };

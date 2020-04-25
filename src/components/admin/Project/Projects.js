@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { When } from 'react-if';
 import { autoToggleAlert } from '../../../helpers/utils';
 import { push } from 'connected-react-router';
+import Pagination from '../../Pagination';
 
 const Projects = ({
                       projects,
@@ -116,6 +117,10 @@ const Projects = ({
                 onEditItem={shouldActions(true)}
                 onDeleteItem={shouldActions()}
                 layout={projectsTableLayout}
+                data={(projects || {}).results}
+            />
+            <Pagination
+                action={getProjects}
                 data={projects}
             />
         </div>

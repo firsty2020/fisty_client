@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { PrimaryButton } from '../../../ui';
 
 
 const roleSchema = Yup.object().shape({
@@ -89,10 +90,11 @@ const CreateOrUpdateRoleModal = ({ role, pending, onSubmit, onClose }) => {
                                         disabled={pending}
                                         variant="outline-danger">Закрыть
                                     </Button>
-                                    <Button
+                                    <PrimaryButton
                                         disabled={pending}
-                                        type="submit">{ role ? 'Сохранить' : 'Создать'}
-                                    </Button>
+                                        text={ role ? 'Сохранить' : 'Создать'}
+                                        type="submit">
+                                    </PrimaryButton>
                                 </div>
                             </Form>
                         )}

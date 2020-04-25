@@ -4,6 +4,7 @@ import { TableList } from '../../ui';
 import { getApplications } from '../../common/commonActions';
 import { applicationsSelector } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
+import Pagination from '../../Pagination';
 
 
 const Applications = ({ applications, layout, getApplications, push }) => {
@@ -17,6 +18,10 @@ const Applications = ({ applications, layout, getApplications, push }) => {
             <TableList
                 onClickRow={({id}) => push(`/admin/applications/${id}`)}
                 layout={layout}
+                data={(applications || {}).results}
+            />
+            <Pagination
+                action={getApplications}
                 data={applications}
             />
         </div>

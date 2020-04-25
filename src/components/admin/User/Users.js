@@ -6,6 +6,7 @@ import { usersSelector } from '../adminReducer';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { push } from 'connected-react-router';
 import { DropDown, TableList } from '../../ui';
+import Pagination from '../../Pagination';
 
 
 const usersTableLayout = {
@@ -36,9 +37,9 @@ const Users = ({ users, match, getUsers, push }) => {
     useEffect(() => {
         if (!status) {
             setStatus(match.params.status);
-            getUsers(match.params.status);
+            getUsers({ status: match.params.status });
         } else {
-            getUsers(status.value);
+            getUsers({ status: status.value });
         }
     }, [ getUsers, match.params.status ]);
 
@@ -65,9 +66,13 @@ const Users = ({ users, match, getUsers, push }) => {
             <div>
                 <TableList
                     layout={usersTableLayout}
-                    data={users}
+                    data={(users || {}).results}
                 />
             </div>
+            <Pagination
+                action={getUsers}
+                data={users}
+            />
         </div>
     );
 };
@@ -81,16 +86,20 @@ const mapDispatchToProps = { getUsers, push };
 
 
 Users.propTypes = {
-    users: arrayOf(shape({
-        first_name: string.isRequired,
-        last_name: string.isRequired,
-        email: string.isRequired,
-        role: string.isRequired,
-        phone_number: string.isRequired,
-        citizenship: string,
-        country: string,
-        city: string,
-    })),
+    users: shape({
+        results: arrayOf(shape(
+            {
+                first_name: string.isRequired,
+                last_name: string.isRequired,
+                email: string.isRequired,
+                role: string.isRequired,
+                phone_number: string.isRequired,
+                citizenship: string,
+                country: string,
+                city: string,
+            }
+        ))
+    }),
     match: shape({ status: string }).isRequired,
     getUsers: func.isRequired,
     getUsersError: string,

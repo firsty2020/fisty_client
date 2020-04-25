@@ -20,6 +20,7 @@ import {
 } from '../configsReducer';
 import { connect } from 'react-redux';
 import UpdateSubcategory from './UpdateSubcategory';
+import Pagination from '../../../Pagination';
 
 
 const subcategoriesTableLayout = {
@@ -97,7 +98,11 @@ const Subcategories = ({
                 onDeleteItem={({ url }) => setSubcategoryIdToDelete(extractIdFromUrl(url))}
                 onEditItem={(item) => setSubcategoryToUpdate(item)}
                 layout={subcategoriesTableLayout}
-                data={subcategories} />
+                data={(subcategories || {}).results} />
+                <Pagination
+                    data={subcategories}
+                    action={getSubcategories}
+                />
         </Container>
     );
 };

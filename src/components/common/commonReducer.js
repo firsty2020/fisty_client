@@ -29,13 +29,13 @@ export const common = (state = {}, action) => {
             return { ...state, applicationCreated: true };
 
         case GET_APPLICATIONS:
-            return { ...state, applications: action.payload.results };
+            return { ...state, applications: action.payload };
 
         case GET_APPLICATION:
             return { ...state, application: action.payload };
 
         case GET_VACANCIES:
-            return { ...state,  vacancies: action.payload.results };
+            return { ...state,  vacancies: action.payload };
 
         case GET_VACANCY:
             return { ...state,  vacancy: action.payload };

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getCompanies } from './companiesActions';
 import { companiesSelector } from './companiesReducer';
 import './Companies.css';
+import Pagination from '../../Pagination';
 
 
 const companiesTableLayout = {
@@ -39,9 +40,13 @@ const Companies = ({ companies, getCompanies, history }) => {
                 <TableList
                     onClickRow={(item) => handleClickOnRow(item)}
                     layout={companiesTableLayout}
-                    data={companies}
+                    data={(companies || {}).results}
                 />
             </div>
+            <Pagination
+                action={getCompanies}
+                data={companies}
+            />
         </div>
     );
 };

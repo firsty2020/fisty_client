@@ -337,7 +337,7 @@ export const configs = (state = {}, action) => {
         case ADMIN_CONFIGS_GET_LOCATIONS:
             return {
                 ...state,
-                locations: action.payload.results,
+                locations: action.payload,
                 createLocationResolved: false,
                 removeLocationResolved: false,
                 updateLocationResolved: false,
@@ -380,7 +380,7 @@ export const configs = (state = {}, action) => {
         case ADMIN_CONFIGS_GET_DYNAMIC_FIELDS:
             return {
                 ...state,
-                dynamicFields: action.payload.results
+                dynamicFields: action.payload
             };
 
         case ADMIN_CONFIGS_SET_DYNAMIC_FIELD_CREATED:
@@ -417,7 +417,7 @@ export const configs = (state = {}, action) => {
             return { ...state,  categoryCreated: true };
 
         case ADMIN_CONFIGS_CATEGORIES_GET:
-            return { ...state,  categories: action.payload.results };
+            return { ...state,  categories: action.payload };
 
         case ADMIN_CONFIGS_CATEGORY_DELETE:
             return { ...state, categoryDeleted: true };
@@ -437,7 +437,7 @@ export const configs = (state = {}, action) => {
             return { ...state,  subcategoryCreated: true };
 
         case ADMIN_CONFIGS_SUBCATEGORIES_GET:
-            return { ...state,  subcategories: action.payload.results };
+            return { ...state,  subcategories: action.payload };
 
         case ADMIN_CONFIGS_SUBCATEGORY_DELETE:
             return {

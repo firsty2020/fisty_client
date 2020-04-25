@@ -7,6 +7,7 @@ import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
 import { push } from 'connected-react-router';
+import Pagination from '../Pagination';
 
 
 const companiesTableLayout = {
@@ -42,9 +43,12 @@ const Applications = ({
         <div>
             <TableList
                 layout={companiesTableLayout}
-                data={applications}
+                data={(applications || {}).results}
                 onClickRow={({ id }) => push(`${match.url}/${id}`)}
             />
+            <Pagination
+                action={getApplications}
+                data={applications}/>
         </div>
     );
 };

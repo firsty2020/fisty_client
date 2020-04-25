@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import CreateDynamicField from './CreateDynamicField';
 import { connect } from 'react-redux';
-import {AlertNotice, BackButton, ConfirmationModal} from '../../../ui';
+import { AlertNotice, BackButton, ConfirmationModal } from '../../../ui';
 import { When } from 'react-if';
 import {
     resetDynamicFieldRemoved
@@ -14,6 +14,7 @@ import {
     dynamicFieldsSelector
 } from '../configsReducer';
 import UpdateDynamicField from './UpdateDynamicField';
+import Pagination from '../../../Pagination';
 
 
 const DynamicFields = ({
@@ -118,8 +119,11 @@ const DynamicFields = ({
                 <DynamicFieldsList
                     onDelete={(id) => setDynamicFieldToRemove(id)}
                     onEdit={(dynamicField) => setFieldToUpdate(dynamicField)}
-                    data={dynamicFields}
+                    data={(dynamicFields || {}).results}
                 />
+                <Pagination
+                    data={dynamicFields}
+                    action={getDynamicFields}/>
             </Container>
         </div>
     )
@@ -133,7 +137,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, props) =>  {
     return {
-        getDynamicFields: () => dispatch(props.getDynamicFields()),
+        getDynamicFields: (params) => dispatch(props.getDynamicFields(params)()),
         removeDynamicField: (id) => dispatch(props.removeDynamicField(id)()),
         resetDynamicFieldRemoved: () => dispatch(resetDynamicFieldRemoved()),
     }

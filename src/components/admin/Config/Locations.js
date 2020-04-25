@@ -16,6 +16,7 @@ import {
 import { connect } from 'react-redux';
 import ConfigFormList from './ConfigFormList';
 import { scrollToRef } from '../../../helpers/utils';
+import Pagination from '../../Pagination';
 
 
 const validationSchema = Yup.object().shape({
@@ -71,7 +72,7 @@ const Locations = ({
                 inputRef={inputRef}
                 validationSchema={validationSchema}
                 pending={createPending}
-                itemList={locations}
+                itemList={(locations || {}).results}
                 addItem={createLocation}
                 itemToDelete={locationToDelete}
                 setItemToDelete={setLocationToDelete}
@@ -80,6 +81,10 @@ const Locations = ({
                 setItemToEdit={setLocationToEdit}
                 handleEditItem={handleEdit}
                 updateItem={updateLocation}
+            />
+            <Pagination
+                action={getLocations}
+                data={locations}
             />
         </div>
     );

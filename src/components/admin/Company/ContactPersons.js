@@ -13,6 +13,7 @@ import {
     resetContactPersonRemoved
 } from '../contactPerson/contactPersonActions';
 import { connect } from 'react-redux';
+import Pagination from '../../Pagination';
 
 
 const ContactPersons = ({
@@ -39,7 +40,7 @@ const ContactPersons = ({
     return (
         <div>
             <ContactPersonsList
-                contactPersons={contactPersons}
+                contactPersons={(contactPersons || {}).results}
                 match={match}
                 params={params}
             >
@@ -56,6 +57,10 @@ const ContactPersons = ({
                     </Link>
                 </div>
             </ContactPersonsList>
+            <Pagination
+                action={getContactPersons}
+                data={contactPersons}
+            />
         </div>
     );
 };

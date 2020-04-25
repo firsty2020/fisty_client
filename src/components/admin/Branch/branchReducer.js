@@ -37,7 +37,7 @@ export const branches = (state = {}, action) => {
         case ADMIN_GET_BRANCHES:
             return {
                 ...state,
-                branches: action.payload.results,
+                branches: action.payload,
                 getBranchesPending: false,
             };
 

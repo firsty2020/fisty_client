@@ -16,9 +16,10 @@ export const createCompany = (data) => createApiAction({
 });
 
 
-export const getCompanies = () => createApiAction({
+export const getCompanies = (params) => createApiAction({
     url: 'companies/',
     method: 'GET',
+    data: params,
     label: ADMIN_GET_COMPANIES,
 });
 

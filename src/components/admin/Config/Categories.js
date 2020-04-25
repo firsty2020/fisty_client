@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import ConfigFormList from './ConfigFormList';
 import { extractIdFromUrl, scrollToRef } from '../../../helpers/utils';
 import { isLoadingSelector } from '../../common/commonReducer';
+import Pagination from '../../Pagination';
 
 
 const validationSchema = Yup.object().shape({
@@ -73,7 +74,7 @@ const Categories = ({
                 inputRef={inputRef}
                 validationSchema={validationSchema}
                 pending={isLoading}
-                itemList={categories}
+                itemList={(categories || {}).results}
                 addItem={createCategory}
                 itemToDelete={categoryToDelete}
                 setItemToDelete={setCategoryToDelete}
@@ -82,6 +83,10 @@ const Categories = ({
                 setItemToEdit={setCategoryToEdit}
                 handleEditItem={handleEdit}
                 updateItem={updateCategory}
+            />
+            <Pagination
+                action={getCategories}
+                data={categories}
             />
         </div>
     );

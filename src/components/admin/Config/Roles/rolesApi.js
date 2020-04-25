@@ -25,12 +25,12 @@ export const createContactPersonRole = (data) => {
 };
 
 
-export const getContactPersonRoles = () => {
+export const getContactPersonRoles = (params) => {
     return dispatch => {
         dispatch(getContactPersonRolesPending());
         api
-            .get('contact-person-roles/')
-            .then((res) => dispatch(getContactPersonRolesResolved(res.data.results)))
+            .get('contact-person-roles/',  { params })
+            .then((res) => dispatch(getContactPersonRolesResolved(res.data)))
             .catch((err) => dispatch(getContactPersonRolesFailed()))
     };
 };

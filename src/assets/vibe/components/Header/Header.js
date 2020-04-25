@@ -33,7 +33,7 @@ export default class Header extends Component {
             }
             return null;
         });
-        return name;
+        return name || 'Кабинет администратора';
     };
 
     render() {

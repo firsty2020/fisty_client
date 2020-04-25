@@ -55,12 +55,12 @@ export const addIndustryOption = (name) => {
     };
 };
 
-export const getIndustryOptions = () => {
+export const getIndustryOptions = (params) => {
     return dispatch => {
         dispatch(getIndustryOptionsPending());
         api
-            .get('industries/')
-            .then((res) => dispatch(getIndustryOptionsResolved(res.data.results)))
+            .get('industries/', { params })
+            .then((res) => dispatch(getIndustryOptionsResolved(res.data)))
             .catch((err) => dispatch(getIndustryOptionsFailed(err)))
     };
 };
@@ -109,12 +109,12 @@ export const addSpecificationOption = (name) => {
     };
 };
 
-export const getSpecificationOptions = () => {
+export const getSpecificationOptions = (params) => {
     return dispatch => {
         dispatch(getSpecificationOptionsPending());
         api
-            .get('specification/')
-            .then((res) => dispatch(getSpecificationOptionsResolved(res.data.results)))
+            .get('specification/', { params })
+            .then((res) => dispatch(getSpecificationOptionsResolved(res.data)))
             .catch((err) => dispatch(getSpecificationOptionsFailed(err)))
     };
 };

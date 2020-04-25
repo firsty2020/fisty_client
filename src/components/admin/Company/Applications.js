@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
+import Pagination from '../../Pagination';
 
 
 const Applications = ({ applications, layout, match, getApplications, push }) => {
@@ -32,6 +33,10 @@ const Applications = ({ applications, layout, match, getApplications, push }) =>
             <TableList
                 onClickRow={({id}) => push(`${match.url}/${id}`)}
                 layout={layout}
+                data={(applications || {}).results}
+            />
+            <Pagination
+                action={getApplications}
                 data={applications}
             />
         </div>
