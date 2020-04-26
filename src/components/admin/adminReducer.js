@@ -18,6 +18,9 @@ import {
     ADMIN_PROJECT_DELETE,
     ADMIN_GET_PROJECT,
     ADMIN_PROJECT_UPDATE,
+    ADMIN_DASHBOARD_STATISTICS_GET,
+    API_REQUEST,
+    API_REQUEST_END,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -27,7 +30,14 @@ import { createSelector } from 'reselect';
 
 
 const common = (state = {}, action) => {
+
     switch (action.type) {
+
+        case API_REQUEST:
+            return { ...state, isLoading: true };
+
+        case API_REQUEST_END:
+            return { ...state, isLoading: false };
 
         case ADMIN_GET_USERS:
             return { ...state, users: action.payload };
@@ -98,6 +108,9 @@ const common = (state = {}, action) => {
                 projectUpdated: false,
             };
 
+        case ADMIN_DASHBOARD_STATISTICS_GET: {
+            return { statistics: action.payload };
+        }
 
         default:
             return state;
@@ -144,3 +157,5 @@ export const projectSelector = state => state.admin.common.project;
 export const projectCreatedSelector = state => state.admin.common.projectCreated;
 export const projectUpdatedSelector = state => state.admin.common.projectUpdated;
 export const projectDeletedSelector = state => state.admin.common.projectDeleted;
+
+export const statisticsSelector = state => state.admin.common.statistics;

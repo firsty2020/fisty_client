@@ -31,10 +31,16 @@ import CreateProject from './Project/CreateProject';
 import UpdateProject from './Project/UpdateProject';
 import ProjectDetails from './Project/ProjectDetails';
 import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
+import Analytics from './Analytics/Analytics';
 
 
 
 const adminRoutes = [
+    {
+        path: '/admin',
+        component: Analytics,
+        name: 'Кабинет администратора'
+    },
     {
         path: '/admin/users/:status',
         component: UserList,

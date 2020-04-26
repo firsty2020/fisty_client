@@ -1,0 +1,15 @@
+.content-background-color {
+    background-color:  var(--content-bg-color);
+}
+
+.min-340 {
+    min-height: 340px!important;
+}
+
+.aux-data {
+    position: absolute;
+    top: 325px;
+}
+
+.long {
+}

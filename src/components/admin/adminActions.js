@@ -1,5 +1,6 @@
 import { createApiAction } from '../../helpers/utils';
 import {
+    ADMIN_DASHBOARD_STATISTICS_GET,
     ADMIN_GET_PROJECT,
     ADMIN_GET_PROJECTS,
     ADMIN_PROJECT_CREATE,
@@ -49,4 +50,10 @@ export const updateProject = (data) => createApiAction({
 
 export const resetProjectState = () => ({
    type: ADMIN_PROJECT_RESET,
+});
+
+export const getStatistics = () => createApiAction({
+    url: 'statistics/',
+    method: GET,
+    label: ADMIN_DASHBOARD_STATISTICS_GET,
 });

@@ -14,7 +14,7 @@ import { companyNavigation, companyRoutes } from './components/company/companyRo
 import { LoadSpinner } from './components/ui';
 
 
-const Admin = lazy(() => import('./components/common/Dashboard'));
+const Admin = lazy(() => import('./components/admin/AdminDashboard'));
 const Recruiter = lazy(() => import('./components/recruiter/Dashboard'));
 const Company = lazy(() => import('./components/common/Dashboard.js'));
 
