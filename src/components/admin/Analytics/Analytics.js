@@ -32,7 +32,7 @@ const Analytics = ({ statistics, getStatistics }) => {
         const { active_users, user } = statistics;
         const { users_role_recruiter, users_role_admin, users_role_company } = user;
         
-        const labels = ['Рекрутеры', 'Кандидаты', 'Партнеры', 'Клиенты', 'Админы', 'Компании' ];
+        const labels = ['Рекрутеры', 'Админы', 'Компании' ];
         const backgroundColor = labels.map(() => generateColor());
 
         return {
