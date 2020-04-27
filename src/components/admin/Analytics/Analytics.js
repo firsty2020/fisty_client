@@ -29,15 +29,8 @@ const Analytics = ({ statistics, getStatistics }) => {
 
     const usersData = () => {
 
-        const {
-            users_role_recruiters,
-            users_role_candidates,
-            users_role_partner,
-            users_role_client,
-            users_role_admin,
-            users_role_company,
-            active_users,
-        } = statistics;
+        const { active_users, user } = statistics;
+        const { users_role_recruiter, users_role_admin, users_role_company } = user;
         
         const labels = ['Рекрутеры', 'Кандидаты', 'Партнеры', 'Клиенты', 'Админы', 'Компании' ];
         const backgroundColor = labels.map(() => generateColor());
@@ -48,10 +41,7 @@ const Analytics = ({ statistics, getStatistics }) => {
                 datasets: [
                     {
                         data: [
-                            users_role_recruiters,
-                            users_role_candidates,
-                            users_role_partner,
-                            users_role_client,
+                            users_role_recruiter,
                             users_role_admin,
                             users_role_company,
                         ],
@@ -59,10 +49,7 @@ const Analytics = ({ statistics, getStatistics }) => {
                     }
                 ]
             },
-            total: users_role_recruiters
-                + users_role_candidates
-                + users_role_partner
-                + users_role_client
+            total: users_role_recruiter
                 + users_role_admin
                 + users_role_company,
             aux: { title: 'Активные', value: active_users }
