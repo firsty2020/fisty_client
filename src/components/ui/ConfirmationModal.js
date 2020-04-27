@@ -12,6 +12,7 @@ const ConfirmationModal = ({
                                onCancel,
                            }) => (
     <Modal
+        onHide={() => onCancel()}
         show={show}
         centered>
         <Modal.Body>

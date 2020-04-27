@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import Select from 'react-select';
 import {
     contactPersonsState,
     linkContactPersonResolvedSelector,
@@ -17,7 +16,7 @@ import { isLoadingSelector } from '../../common/commonReducer';
 import { DropDown } from '../../ui';
 
 
-const uid = generateUId;
+const uid = generateUId();
 
 
 const AddContactPerson = ({
@@ -38,8 +37,8 @@ const AddContactPerson = ({
 
 
     useEffect(() => {
-        if (contactPersons && contactPersons.length) {
-            const filtered = contactPersons.filter((item) => item.branch_url !== `${baseURL}companies/branch/${params.branch}/` );
+        if (contactPersons && contactPersons.results.length) {
+            const filtered = contactPersons.results.filter((item) => item.branch_url !== `${baseURL}companies/branch/${params.branch}/` );
             setFilteredContactPersons(filtered);
         }
     }, [ contactPersons, params.branch]);

@@ -60,7 +60,13 @@ import {
     ADMIN_CONFIGS_SUBCATEGORIES_GET,
     ADMIN_CONFIGS_SUBCATEGORY_DELETE,
     ADMIN_CONFIGS_SUBCATEGORY_UPDATE,
+    ADMIN_CONFIGS_STATUSES_CREATE,
+    ADMIN_CONFIGS_STATUSES_RESET,
+    ADMIN_CONFIGS_STATUSES_GET,
+    ADMIN_CONFIGS_STATUSES_DELETE,
 } from '../../../helpers/constants/actionTypes';
+import {createSelector} from 'reselect';
+
 
 
 export const configs = (state = {}, action) => {
@@ -458,7 +464,23 @@ export const configs = (state = {}, action) => {
                 subcategoryUpdated: false,
             };
 
+        case ADMIN_CONFIGS_STATUSES_CREATE:
+            return { ...state,  statusCreated: true };
 
+        case ADMIN_CONFIGS_STATUSES_GET:
+            return {
+                ...state,
+                statuses: action.id ?  {
+                    ...state.statuses,
+                    [ action.id ]: action.payload ,
+                } : action.payload,
+            };
+
+        case ADMIN_CONFIGS_STATUSES_DELETE:
+            return { ...state,  statusDeleted: true };
+
+        case ADMIN_CONFIGS_STATUSES_RESET:
+            return { ...state, statusCreated: false, statusDeleted: false };
 
         default:
             return state;
@@ -515,3 +537,20 @@ export const subcategoryCreatedSelector = state => state.admin.configs.subcatego
 export const subcategoryDeletedSelector = state => state.admin.configs.subcategoryDeleted;
 export const subcategoryUpdatedSelector = state => state.admin.configs.subcategoryUpdated;
 export const subcategoriesSelector = state => state.admin.configs.subcategories;
+
+export const statusCreatedSelector = state => state.admin.configs.statusCreated;
+export const statusDeletedSelector = state => state.admin.configs.statusDeleted;
+const statusesSelector = state => state.admin.configs.statuses;
+
+
+export const statusesState = (uid = null) => createSelector(
+    [ statusesSelector ],
+    (statuses) => {
+        if (!statuses) return null;
+        if (uid) {
+            return statuses[uid];
+        }
+        return statuses;
+    }
+);
+

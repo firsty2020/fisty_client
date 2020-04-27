@@ -17,6 +17,7 @@ const apiMiddleware = ({ dispatch }) => next => action => {
         label,
         id,
     } = action.payload;
+
     
     const dataOrParams = [ 'GET', 'DELETE' ].includes(method) ? 'params' : 'data';
 

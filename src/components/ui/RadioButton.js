@@ -5,6 +5,7 @@ import { generateUId } from '../../helpers/utils';
 
 const RadioButton = (props) => (
     <Form.Check
+        custom
         className="warning-control-custom"
         type="radio"
         id={generateUId()}

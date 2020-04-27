@@ -4,8 +4,7 @@ import './GraphCard.css';
 
 
 const GraphCard = ({ data, Graph, dataTitle, total, aux }) => {
-    console.log(aux, 'aux')
-    
+
     return (
         <Card>
             <CardHeader>{dataTitle}</CardHeader>

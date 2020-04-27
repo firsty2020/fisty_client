@@ -77,14 +77,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => {
-    
-    console.log(props, 'props')
-    
+
     return {
         createDynamicField: (data) => dispatch(props.createDynamicField(data)()),
         resetDynamicFieldCreated: () => dispatch(resetDynamicFieldCreated()),
-    }
-}
+    };
+};
 
 
 CreateDynamicField.propTypes = {};

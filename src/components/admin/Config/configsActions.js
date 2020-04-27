@@ -37,6 +37,10 @@ import {
     ADMIN_CONFIGS_REMOVE_LOCATION_RESOLVED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_FAILED,
     ADMIN_CONFIGS_REMOVE_SPECIFICATION_OPTION_RESOLVED,
+    ADMIN_CONFIGS_STATUSES_CREATE,
+    ADMIN_CONFIGS_STATUSES_DELETE,
+    ADMIN_CONFIGS_STATUSES_GET,
+    ADMIN_CONFIGS_STATUSES_RESET,
     ADMIN_CONFIGS_SUBCATEGORIES_GET,
     ADMIN_CONFIGS_SUBCATEGORY_CREATE,
     ADMIN_CONFIGS_SUBCATEGORY_DELETE,
@@ -419,4 +423,29 @@ export const updateSubcategory = (id, data) => createApiAction({
 
 export const resetSubcategoryState = () => ({
     type: ADMIN_CONFIGS_SUBCATEGORY_RESET_STATE,
+});
+
+export const createStatus = (data) => createApiAction({
+    url: 'status/',
+    method: POST,
+    data,
+    label: ADMIN_CONFIGS_STATUSES_CREATE,
+});
+
+export const getStatuses = (params, id) => createApiAction({
+    url: 'status/',
+    method: GET,
+    data: params,
+    label: ADMIN_CONFIGS_STATUSES_GET,
+    id,
+});
+
+export const deleteStatus = (id) => createApiAction({
+    url: `status/${id}`,
+    method: DELETE,
+    label: ADMIN_CONFIGS_STATUSES_DELETE,
+});
+
+export const resetStatusState = () => ({
+    type: ADMIN_CONFIGS_STATUSES_RESET,
 });

@@ -32,6 +32,7 @@ import UpdateProject from './Project/UpdateProject';
 import ProjectDetails from './Project/ProjectDetails';
 import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
+import Statuses from './Config/Statuses/Statuses';
 
 
 
@@ -255,6 +256,11 @@ const adminRoutes = [
         path: '/admin/configs/subcategories',
         component: Subcategories,
         name: 'Подкатегории'
+    },
+    {
+        path: '/admin/configs/statuses',
+        component: Statuses,
+        name: 'Статусы'
     },
 ];
 

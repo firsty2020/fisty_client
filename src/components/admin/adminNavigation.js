@@ -71,6 +71,12 @@ const adminNavigation =  {
                     url: '/admin/configs/subcategories',
                     matcher: '/subcategories',
                 },
+                {
+                    name: 'Статусы',
+                    icon: 'AlertOctagon',
+                    url: '/admin/configs/statuses',
+                    matcher: '/statuses',
+                },
             ]
         },
     ],
