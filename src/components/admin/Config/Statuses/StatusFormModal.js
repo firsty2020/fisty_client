@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { PrimaryButton, RadioButton } from '../../../ui';
+import { DropDown, PrimaryButton, RadioButton } from '../../../ui';
 import * as Yup from 'yup';
 import { isLoadingSelector } from '../../../common/commonReducer';
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ const initialValues = {
 const validationSchema =  Yup.object().shape({
     name: Yup.string()
         .required('Введите наименование статуса'),
-    status_type: Yup.string().required('Выберите тип статуса'),
+    status_type: Yup.string(),
 });
 
 const uid = generateUId();
@@ -29,6 +29,16 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
     useEffect(() => {
         getStatuses({ is_default: true }, uid)
     }, [ getStatuses ]);
+
+    let statusOptions = [
+        { value: 'is_default', label: 'По умолчанию'},
+        { value: 'closed', label: 'Закрыт'},
+        { value: 'approved', label: 'Одобрен'},
+    ];
+
+    if (defaultStatuses && defaultStatuses.count) {
+        statusOptions = statusOptions.filter((status) => status.value !== 'is_default');
+    }
 
     const inputRef = useRef(null);
 
@@ -49,7 +59,9 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         const data = copyObject(values);
-                        data[data.status_type] = true;
+                        if (data.status_type) {
+                            data[data.status_type.value] = true;
+                        }
                         delete data.status_type;
                         onSubmit(data);
                     }}
@@ -80,32 +92,14 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
                                 ) : null}
                             </Form.Group>
                             <Form.Group>
-                                <RadioButton
-                                    disabled={(defaultStatuses || {}).count}
-                                    name="status_type"
-                                    value={values.is_default}
-                                    label="По умолчанию"
-                                    onChange={() => setFieldValue('status_type', 'is_default')}
-                                    onBlur={(e) => setFieldTouched('status_type', e)}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <RadioButton
-                                    name="status_type"
-                                    value={values.closed}
-                                    label="Закрыт"
-                                    onChange={() => setFieldValue('status_type', 'closed')}
-                                    onBlur={(e) => setFieldTouched('status_type', e)}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <RadioButton
-                                    name="status_type"
-                                    checked={values.approved}
-                                    value={values.approved}
-                                    label="Одобрен"
-                                    onChange={() => setFieldValue('status_type', 'approved')}
-                                    onBlur={(e) => setFieldTouched('status_type', e)}
+                                <DropDown
+                                    placeholder="Выберите значение статуса"
+                                    options={statusOptions}
+                                    value={values.status_type}
+                                    isClearable
+                                    onBlur={(e) => setFieldTouched('status_type', e || '')}
+                                    onChange={(e) => setFieldValue('status_type', e || '')}
+
                                 />
                             </Form.Group>
                             {touched.status_type && errors.status_type ? (
@@ -131,21 +125,11 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
     );
 };
 
-/*
-const mapStateToProps = () => {
-    const contactPersonsSelector = contactPersonsState(uid);
-    return (state) => ({
-        contactPersons: contactPersonsSelector(state),
-        linked: linkContactPersonResolvedSelector(state),
-        pending: isLoadingSelector(state),
-    });
-};
-
-*/
 
 const mapDispatchToProps = {
     getStatuses,
 };
+
 
 const mapStateToProps = () => {
     const statusesSelector = statusesState(uid);
