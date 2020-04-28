@@ -18,7 +18,7 @@ const initialValues = {
 const validationSchema =  Yup.object().shape({
     name: Yup.string()
         .required('Введите наименование статуса'),
-    status_type: Yup.string(),
+    status_type: Yup.string().required('Выберите значение статуса'),
 });
 
 const uid = generateUId();
@@ -34,6 +34,7 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
         { value: 'is_default', label: 'По умолчанию'},
         { value: 'closed', label: 'Закрыт'},
         { value: 'approved', label: 'Одобрен'},
+        { value: '', label: 'Без значения'},
     ];
 
     if (defaultStatuses && defaultStatuses.count) {
@@ -59,7 +60,7 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         const data = copyObject(values);
-                        if (data.status_type) {
+                        if (data.status_type && data.status_type.value) {
                             data[data.status_type.value] = true;
                         }
                         delete data.status_type;
@@ -96,10 +97,8 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
                                     placeholder="Выберите значение статуса"
                                     options={statusOptions}
                                     value={values.status_type}
-                                    isClearable
                                     onBlur={(e) => setFieldTouched('status_type', e || '')}
                                     onChange={(e) => setFieldValue('status_type', e || '')}
-
                                 />
                             </Form.Group>
                             {touched.status_type && errors.status_type ? (
