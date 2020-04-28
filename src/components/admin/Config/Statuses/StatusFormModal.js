@@ -1,14 +1,17 @@
-import React, {useEffect, useRef} from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import React, { useEffect, useRef } from 'react';
+import { Button, Form, Modal, OverlayTrigger, Popover } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { DropDown, PrimaryButton, RadioButton } from '../../../ui';
+import { DropDown, PrimaryButton } from '../../../ui';
 import * as Yup from 'yup';
 import { isLoadingSelector } from '../../../common/commonReducer';
 import { connect } from 'react-redux';
-import {copyObject, generateUId} from '../../../../helpers/utils';
-import {getStatuses} from '../configsActions';
-import {statusesState} from '../configsReducer';
+import { copyObject, generateUId } from '../../../../helpers/utils';
+import { getStatuses } from '../configsActions';
+import { statusesState } from '../configsReducer';
+import { Info } from 'react-feather'
 
+
+let formValues = {};
 
 const initialValues = {
     name: '',
@@ -24,7 +27,14 @@ const validationSchema =  Yup.object().shape({
 const uid = generateUId();
 
 
-const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, onToggleModal }) => {
+const StatusFormModal = ({
+                             defaultStatuses,
+                             status,
+                             isLoading,
+                             getStatuses,
+                             onSubmit,
+                             onToggleModal,
+                         }) => {
 
     useEffect(() => {
         getStatuses({ is_default: true }, uid)
@@ -37,14 +47,37 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
         { value: '', label: 'Без значения'},
     ];
 
-    if (defaultStatuses && defaultStatuses.count) {
-        statusOptions = statusOptions.filter((status) => status.value !== 'is_default');
+    const inputRef = useRef(null);
+    let defaultExists = (defaultStatuses && defaultStatuses.count);
+
+    if (status && status.is_default) {
+        defaultExists = false;
     }
 
-    const inputRef = useRef(null);
+    if (defaultExists) {
+        statusOptions = statusOptions.filter(({ value }) => value !== 'is_default');
+    }
+
+    const detectStatusType = () => {
+        let statusType = '';
+        Object.keys(status).map((key) => {
+            if (status[key]) {
+                statusType = statusOptions.find(({ value }) => value === key);
+            }
+        });
+        return statusType;
+    };
+
+    if (status) {
+        formValues = {
+            name: status.name,
+            status_type: detectStatusType(),
+        };
+    } else {
+        formValues = initialValues;
+    }
 
     setTimeout(() => inputRef.current && inputRef.current.focus());
-
 
     return (
         <Modal
@@ -53,13 +86,40 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
             centered
         >
             <Modal.Body>
-                <p className="text-center mt-1">Создать статус</p>
+                <p className="text-center mt-1 mb-2">{status ? 'Редактировать' :'Создать'} статус
+                    { defaultExists ? (
+                        <OverlayTrigger
+                            trigger="hover"
+                            placement="right"
+                            overlay={
+                                <Popover>
+                                    <Popover.Content>
+                                        Можно создать только один статус со значением "По умолчанию".<br/>
+                                        Можете его изменить или <br/>
+                                        удалить и создать новый
+                                    </Popover.Content>
+                                </Popover>
+                            }
+                        >
+                            <Info
+                                className="ml-2"
+                                color="orange"/>
+                        </OverlayTrigger>
+                    ) : null}
+                </p>
                 <Formik
                     enableReinitialize
-                    initialValues={initialValues}
+                    initialValues={formValues}
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         const data = copyObject(values);
+                        if (status) {
+                            statusOptions.map(({ value }) => {
+                                if (value) {
+                                    data[value] = false;
+                                }
+                            })
+                        }
                         if (data.status_type && data.status_type.value) {
                             data[data.status_type.value] = true;
                         }
@@ -112,7 +172,7 @@ const StatusFormModal = ({ defaultStatuses, isLoading, getStatuses, onSubmit, on
                                 </Button>
                                 <PrimaryButton
                                     disabled={isLoading}
-                                    text={ false ? 'Сохранить' : 'Создать'}
+                                    text={ status ? 'Сохранить' : 'Создать'}
                                     type="submit">
                                 </PrimaryButton>
                             </div>

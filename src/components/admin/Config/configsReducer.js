@@ -64,6 +64,7 @@ import {
     ADMIN_CONFIGS_STATUSES_RESET,
     ADMIN_CONFIGS_STATUSES_GET,
     ADMIN_CONFIGS_STATUSES_DELETE,
+    ADMIN_CONFIGS_STATUSES_UPDATE,
 } from '../../../helpers/constants/actionTypes';
 import {createSelector} from 'reselect';
 
@@ -467,6 +468,9 @@ export const configs = (state = {}, action) => {
         case ADMIN_CONFIGS_STATUSES_CREATE:
             return { ...state,  statusCreated: true };
 
+        case ADMIN_CONFIGS_STATUSES_UPDATE:
+            return { ...state,  statusUpdated: true };
+
         case ADMIN_CONFIGS_STATUSES_GET:
             return {
                 ...state,
@@ -480,7 +484,12 @@ export const configs = (state = {}, action) => {
             return { ...state,  statusDeleted: true };
 
         case ADMIN_CONFIGS_STATUSES_RESET:
-            return { ...state, statusCreated: false, statusDeleted: false };
+            return {
+                ...state,
+                statusCreated: false,
+                statusDeleted: false,
+                statusUpdated: false,
+            };
 
         default:
             return state;
@@ -540,6 +549,7 @@ export const subcategoriesSelector = state => state.admin.configs.subcategories;
 
 export const statusCreatedSelector = state => state.admin.configs.statusCreated;
 export const statusDeletedSelector = state => state.admin.configs.statusDeleted;
+export const statusUpdatedSelector = state => state.admin.configs.statusUpdated;
 const statusesSelector = state => state.admin.configs.statuses;
 
 

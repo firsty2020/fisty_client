@@ -17,6 +17,7 @@ import {
     generateUId
 } from '../../../../helpers/utils';
 import { getStatuses, deleteStatus, resetStatusState } from '../configsActions';
+import UpdateStatus from './UpdateStatus';
 
 
 const statusesTableLayout = {
@@ -49,6 +50,7 @@ const Statuses = ({
     const [ isCreatingStatus, setIsCreatingStatus ] = useState(false);
     const [ successMessage, setSuccessMessage ] = useState('');
     const [ statusToDelete, setStatusToDelete ] = useState(null);
+    const [ statusToUpdate, setStatusToUpdate ] = useState(null);
 
     useEffect(() => {
         getStatuses(null, uid);
@@ -75,18 +77,20 @@ const Statuses = ({
                     question="Вы уверены что хотите удалить этот статус?"
                     onConfirm={() => handleDeleteStatus()}
                     onCancel={() => setStatusToDelete( null)}
-                    show={!!statusToDelete}/>
-            </When>
+                    show={!!statusToDelete}/></When>
             <When condition={!!successMessage}>
                 <AlertNotice
                     type="success"
-                    message={successMessage}/>
-            </When>
+                    message={successMessage}/></When>
             <When condition={!!isCreatingStatus}>
                 <CreateStatus
                     onToggleModal={setIsCreatingStatus}
-                />
-            </When>
+                /></When>
+            <When condition={!!statusToUpdate}>
+                <UpdateStatus
+                    status={statusToUpdate}
+                    onToggleModal={setStatusToUpdate}
+                /></When>
             <Container className="mt-10-auto">
                 <div className="mb-3">
                     <Button
@@ -99,6 +103,7 @@ const Statuses = ({
                     </Button>
                 </div>
                 <TableList
+                    onEditItem={(item) => setStatusToUpdate(item)}
                     onDeleteItem={({ url }) => setStatusToDelete(extractIdFromUrl(url))}
                     data={(statuses || {}).results}
                     layout={statusesTableLayout}

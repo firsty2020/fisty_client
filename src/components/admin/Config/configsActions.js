@@ -432,6 +432,13 @@ export const createStatus = (data) => createApiAction({
     label: ADMIN_CONFIGS_STATUSES_CREATE,
 });
 
+export const updateStatus = (id, data) => createApiAction({
+    url: `status/${id}/`,
+    method: PATCH,
+    data,
+    label: ADMIN_CONFIGS_STATUSES_CREATE,
+});
+
 export const getStatuses = (params, id) => createApiAction({
     url: 'status/',
     method: GET,
