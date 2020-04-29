@@ -21,6 +21,9 @@ import {
     ADMIN_DASHBOARD_STATISTICS_GET,
     API_REQUEST,
     API_REQUEST_END,
+    ADMIN_LEAD_CREATE,
+    ADMIN_LEAD_STATE_RESET,
+    ADMIN_LEADS_GET,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -112,6 +115,17 @@ const common = (state = {}, action) => {
             return { statistics: action.payload };
         }
 
+        case ADMIN_LEAD_CREATE:
+            return { ...state,  leadCreated: true };
+
+        case ADMIN_LEADS_GET:
+            return { ...state,  leads: action.payload };
+
+
+        case ADMIN_LEAD_STATE_RESET:
+            return { ...state, leadCreated: false };
+
+
         default:
             return state;
     }
@@ -159,3 +173,6 @@ export const projectUpdatedSelector = state => state.admin.common.projectUpdated
 export const projectDeletedSelector = state => state.admin.common.projectDeleted;
 
 export const statisticsSelector = state => state.admin.common.statistics;
+
+export const leadCreatedSelector = state => state.admin.common.leadCreated;
+export const leadsSelector = state => state.admin.common.leads;

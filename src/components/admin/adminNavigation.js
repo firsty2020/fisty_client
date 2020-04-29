@@ -26,6 +26,12 @@ const adminNavigation =  {
             excludePath: 'companies'
         },
         {
+            name: 'Лиды',
+            icon: 'UserCheck',
+            url: '/admin/leads',
+            matcher: '/leads',
+        },
+        {
             name: 'Настройки',
             icon: 'Settings',
             children: [

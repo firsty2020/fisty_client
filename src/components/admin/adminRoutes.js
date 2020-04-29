@@ -33,6 +33,7 @@ import ProjectDetails from './Project/ProjectDetails';
 import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
 import Statuses from './Config/Statuses/Statuses';
+import Leads from './Lead';
 
 
 
@@ -221,6 +222,11 @@ const adminRoutes = [
         path: '/admin/applications',
         component: withApplicationsTableLayout(Applications),
         name: 'Заявки'
+    },
+    {
+        path: '/admin/leads',
+        component: Leads,
+        name: 'Лиды'
     },
     {
         path: '/admin/configs/industries',
