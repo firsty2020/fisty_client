@@ -24,6 +24,7 @@ import {
     ADMIN_LEAD_CREATE,
     ADMIN_LEAD_STATE_RESET,
     ADMIN_LEADS_GET,
+    ADMIN_LEAD_DELETE,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -121,9 +122,12 @@ const common = (state = {}, action) => {
         case ADMIN_LEADS_GET:
             return { ...state,  leads: action.payload };
 
+        case ADMIN_LEAD_DELETE:
+            return { ...state,  leadDeleted: true };
+
 
         case ADMIN_LEAD_STATE_RESET:
-            return { ...state, leadCreated: false };
+            return { ...state, leadCreated: false, leadDeleted: false };
 
 
         default:
@@ -175,4 +179,5 @@ export const projectDeletedSelector = state => state.admin.common.projectDeleted
 export const statisticsSelector = state => state.admin.common.statistics;
 
 export const leadCreatedSelector = state => state.admin.common.leadCreated;
+export const leadDeletedSelector = state => state.admin.common.leadDeleted;
 export const leadsSelector = state => state.admin.common.leads;

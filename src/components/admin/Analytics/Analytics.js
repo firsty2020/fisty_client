@@ -31,7 +31,6 @@ const Analytics = ({ statistics, getStatistics }) => {
 
         const { active_users, user } = statistics;
         const { users_role_recruiter, users_role_admin, users_role_company } = user;
-        
         const labels = ['Рекрутеры', 'Админы', 'Компании' ];
         const backgroundColor = labels.map(() => generateColor());
 
@@ -101,7 +100,7 @@ const Analytics = ({ statistics, getStatistics }) => {
     return (
         <div className="mt-5">
             <Row>
-                <Col>
+                <Col sm={1} md={4}>
                     <GraphCard
                         dataTitle="Пользователи"
                         Graph={Doughnut}
@@ -111,7 +110,7 @@ const Analytics = ({ statistics, getStatistics }) => {
                     >
                     </GraphCard>
                 </Col>
-                <Col>
+                <Col sm={1} md={4}>
                     <GraphCard
                         dataTitle="Заявки"
                         Graph={Pie}
@@ -123,15 +122,16 @@ const Analytics = ({ statistics, getStatistics }) => {
                         <p>Активные: 4</p>
                     </GraphCard>
                 </Col>
-                {leadsData().total ? (<Col>
-                    <GraphCard
-                        dataTitle="Лиды"
-                        Graph={Pie}
-                        data={leadsData().graph}
-                        total={leadsData().total}
-                    >
-                    </GraphCard>
-                </Col>) : null}
+                {leadsData().total ? (
+                    <Col sm={1} md={4}>
+                        <GraphCard
+                            dataTitle="Лиды"
+                            Graph={Pie}
+                            data={leadsData().graph}
+                            total={leadsData().total}
+                        >
+                        </GraphCard>
+                    </Col>) : null}
             </Row>
             <Card>
                 <CardHeader>

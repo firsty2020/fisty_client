@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { AlertNotice, CreateButton, TableList } from '../ui';
+import {AlertNotice, ConfirmationModal, CreateButton, TableList} from '../ui';
 import { When } from 'react-if';
 import CreateLead from './CreateLead';
-import { leadCreatedSelector, leadsSelector } from './adminReducer';
-import { createLead, getLeads, resetLeadState } from './adminActions';
+import {
+    leadCreatedSelector,
+    leadDeletedSelector,
+    leadsSelector
+} from './adminReducer';
+import {createLead, deleteLead, getLeads, resetLeadState} from './adminActions';
 import { connect } from 'react-redux';
 import { autoToggleAlert, extractIdFromUrl } from '../../helpers/utils';
 import { Check } from 'react-feather';
@@ -13,7 +17,7 @@ import Pagination from '../Pagination';
 
 const leadsTableLayout = {
     headings: [
-        'ID', 'Имя', 'Фамилия', 'Телефон', 'Канал', 'Активен'
+        'ID', 'Имя', 'Фамилия', 'Телефон', 'Канал', 'Активен', 'Действия',
     ],
     createRow: ({ url, first_name, last_name, phone_number, channel, is_active }) => [
         extractIdFromUrl(url), first_name, last_name, phone_number, channel,
@@ -21,9 +25,17 @@ const leadsTableLayout = {
     ],
 };
 
-const Leads = ({ leads, created, getLeads, resetLeadState }) => {
+const Leads = ({
+                   leads,
+                   created,
+                   deleted,
+                   getLeads,
+                   deleteLead,
+                   resetLeadState,
+               }) => {
 
     const [ isCreating, setIsCreating ] = useState(false);
+    const [ leadIdToDelete, setLeadIdToDelete ] = useState(null);
     const [ successMessage, setSuccessMessage ] = useState('');
 
 
@@ -32,16 +44,29 @@ const Leads = ({ leads, created, getLeads, resetLeadState }) => {
     }, [ getLeads ]);
 
     useEffect(() => {
-        if (created) {
+        if (created || deleted) {
             getLeads();
             resetLeadState();
             setIsCreating(false);
-            autoToggleAlert('Вы успешно создали лида', setSuccessMessage);
+            setLeadIdToDelete(null);
+            const action = created ? 'создали' : 'удалили';
+            autoToggleAlert(`Вы успешно ${action} лида`, setSuccessMessage);
         }
-    }, [ setIsCreating, created, resetLeadState ]);
+    }, [ setIsCreating, created, deleted, resetLeadState ]);
 
+    const handleDeleteLead = () => {
+        deleteLead(leadIdToDelete);
+        setLeadIdToDelete(null);
+    };
+    
     return (
         <div>
+            <When condition={!!leadIdToDelete}>
+                <ConfirmationModal
+                    onConfirm={handleDeleteLead}
+                    show={!!leadIdToDelete}
+                    question="Вы уверены, что хотите удалить этого лида?"
+                    onCancel={() => setLeadIdToDelete(null)}/></When>
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/></When>
             <When condition={!!isCreating}>
@@ -56,13 +81,12 @@ const Leads = ({ leads, created, getLeads, resetLeadState }) => {
                     </div>
                 </div>
                 <TableList
+                    onDeleteItem={({ url }) => setLeadIdToDelete(extractIdFromUrl(url))}
                     data={(leads || {}).results}
-                    layout={leadsTableLayout}
-                />
+                    layout={leadsTableLayout} />
                 <Pagination
                     action={getLeads}
-                    data={leads}
-                />
+                    data={leads} />
             </Container>
         </div>
     );
@@ -73,12 +97,14 @@ const Leads = ({ leads, created, getLeads, resetLeadState }) => {
 const mapStateToProps = (state) => ({
     created: leadCreatedSelector(state),
     leads: leadsSelector(state),
+    deleted: leadDeletedSelector(state),
 });
 
 
 const mapDispatchToProps = {
     createLead,
     getLeads,
+    deleteLead,
     resetLeadState,
 };
 

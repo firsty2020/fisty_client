@@ -23,8 +23,7 @@ const initialValues = {
     first_name: '',
     last_name: '',
     phone_number: '',
-    channel: '',
-    is_active: false,
+    channel: 'dashboard',
 };
 
 const validationSchema =  Yup.object().shape({
@@ -35,7 +34,6 @@ const validationSchema =  Yup.object().shape({
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)
         .required(ERROR_MESSAGES.PHONE_REQUIRED),
     channel: Yup.string(),
-    is_active: Yup.bool(),
 });
 
 
@@ -131,17 +129,6 @@ const LeadFormModal = ({
                                     value={values.channel}
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <CheckBox
-                                    name="is_active"
-                                    checked={values.is_active}
-                                    value={values.is_active}
-                                    custom
-                                    onChange={handleChange}
-                                    type="switch"
-                                    label="Активен"
                                 />
                             </Form.Group>
                             <div className="text-center">

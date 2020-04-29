@@ -3,7 +3,10 @@ import {
     ADMIN_DASHBOARD_STATISTICS_GET,
     ADMIN_GET_PROJECT,
     ADMIN_GET_PROJECTS,
-    ADMIN_LEAD_CREATE, ADMIN_LEAD_STATE_RESET,
+    ADMIN_LEAD_CREATE,
+    ADMIN_LEAD_DELETE,
+    ADMIN_LEAD_STATE_RESET,
+    ADMIN_LEADS_DELETE,
     ADMIN_LEADS_GET,
     ADMIN_PROJECT_CREATE,
     ADMIN_PROJECT_DELETE,
@@ -72,6 +75,12 @@ export const getLeads = (params) => createApiAction({
     method: GET,
     data: params,
     label: ADMIN_LEADS_GET,
+});
+
+export const deleteLead = (id) => createApiAction({
+    url: `leads/${id}/`,
+    method: DELETE,
+    label: ADMIN_LEAD_DELETE,
 });
 
 export const resetLeadState = () => ({
