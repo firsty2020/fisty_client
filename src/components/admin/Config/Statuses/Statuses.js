@@ -39,11 +39,11 @@ const shouldShowChecked = (value) => value ? <Check/> : null;
 const uid = generateUId();
 
 const filterOptions = [
-    { label: 'все', value: 'all' },
     { label: 'по умолчанию', value: 'is_default' },
     { label: 'закрыт', value: 'closed' },
     { label: 'одобрен', value: 'approved' },
     { label: 'без значения', value: null },
+    { label: 'все', value: 'all' },
 ];
 
 
