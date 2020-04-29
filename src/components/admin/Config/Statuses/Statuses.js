@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { Check, PlusCircle } from 'react-feather';
 import Pagination from '../../../Pagination';
-import { AlertNotice, ConfirmationModal, TableList } from '../../../ui';
+import { AlertNotice, ConfirmationModal, DropDown, TableList } from '../../../ui';
 import { When } from 'react-if';
 import CreateStatus from './CreateStatus';
 import { connect } from 'react-redux';
@@ -38,6 +38,15 @@ const shouldShowChecked = (value) => value ? <Check/> : null;
 
 const uid = generateUId();
 
+const filterOptions = [
+    { label: 'все', value: 'all' },
+    { label: 'по умолчанию', value: 'is_default' },
+    { label: 'закрыт', value: 'closed' },
+    { label: 'одобрен', value: 'approved' },
+    { label: 'без значения', value: null },
+];
+
+
 const Statuses = ({
                       statuses,
                       created,
@@ -51,6 +60,7 @@ const Statuses = ({
     const [ successMessage, setSuccessMessage ] = useState('');
     const [ statusToDelete, setStatusToDelete ] = useState(null);
     const [ statusToUpdate, setStatusToUpdate ] = useState(null);
+    const [ params, setParams ] = useState(null);
 
     useEffect(() => {
         getStatuses(null, uid);
@@ -60,14 +70,32 @@ const Statuses = ({
         if (created || deleted) {
             const action = created ? 'создали' : 'удалили';
             resetStatusState();
-            getStatuses(null, uid);
+            getStatuses(params, uid);
             autoToggleAlert(`Вы успешно ${action} статус`, setSuccessMessage);
         }
     }, [ created, deleted, getStatuses, resetStatusState ]);
 
+    useEffect(() => {
+        getStatuses(params, uid);
+    },[ params, getStatuses]);
+
     const handleDeleteStatus = () => {
         deleteStatus(statusToDelete);
         setStatusToDelete(null);
+    };
+    
+    const filterStatuses = (value) => {
+        if (value === 'all') {
+            setParams(null);
+        } else if (!value) {
+            setParams({
+                is_default: false,
+                closed: false,
+                approved: false,
+            });
+        } else {
+            setParams({ [value]: true });
+        }
     };
 
     return (
@@ -93,14 +121,25 @@ const Statuses = ({
                 /></When>
             <Container className="mt-10-auto">
                 <div className="mb-3">
-                    <Button
-                        onClick={setIsCreatingStatus}
-                        variant="warning">
-                        <PlusCircle
-                            size={20}
-                            className="align-sub"
-                        /> Создать
-                    </Button>
+                    <div className="row">
+                        <div className="col">
+                            <Button
+                                onClick={setIsCreatingStatus}
+                                variant="warning">
+                                <PlusCircle
+                                    size={20}
+                                    className="align-sub"
+                                /> Создать
+                            </Button>
+                        </div>
+                        <div className="col-md-3">
+                            <DropDown
+                                placeholder="Фильтровать"
+                                onChange={({ value }) => filterStatuses(value)}
+                                options={filterOptions}
+                            />
+                        </div>
+                    </div>
                 </div>
                 <TableList
                     onEditItem={(item) => setStatusToUpdate(item)}
