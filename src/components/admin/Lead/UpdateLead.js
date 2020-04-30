@@ -7,7 +7,14 @@ import { extractIdFromUrl } from '../../../helpers/utils';
 
 const UpdateLead = ({ lead, updateLead, onToggleModal }) => {
 
-    const handleUpdateLead = (data) => updateLead(extractIdFromUrl(lead.url), data);
+    const handleUpdateLead = (data) => {
+        for (let key in data) {
+            if (data.hasOwnProperty(key) && data[key] === '') {
+                data[key] = null;
+            }
+        }
+        updateLead(extractIdFromUrl(lead.url), data)
+    };
 
     return (
         <LeadFormModal

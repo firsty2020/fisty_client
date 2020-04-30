@@ -6,7 +6,14 @@ import { createLead } from '../adminActions';
 
 const CreateLead = ({ createLead, onToggleModal }) => {
 
-    const handleCreateLead = (data) => createLead(data);
+    const handleCreateLead = (data) => {
+        for (let key in data) {
+            if (data.hasOwnProperty(key) && data[key] === '') {
+                delete data[key];
+            }
+        }
+        createLead(data);
+    };
 
     return (
         <LeadFormModal
