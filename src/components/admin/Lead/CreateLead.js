@@ -1,7 +1,7 @@
 import React  from 'react';
 import LeadFormModal from './LeadFormModal';
 import { connect } from 'react-redux';
-import { createLead } from './adminActions';
+import { createLead } from '../adminActions';
 
 
 const CreateLead = ({ createLead, onToggleModal }) => {

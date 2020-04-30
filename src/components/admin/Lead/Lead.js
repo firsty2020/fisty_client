@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import {AlertNotice, ConfirmationModal, CreateButton, TableList} from '../ui';
+import {AlertNotice, ConfirmationModal, CreateButton, TableList} from '../../ui';
 import { When } from 'react-if';
 import CreateLead from './CreateLead';
 import {
     leadCreatedSelector,
     leadDeletedSelector,
-    leadsSelector
-} from './adminReducer';
-import {createLead, deleteLead, getLeads, resetLeadState} from './adminActions';
+    leadsSelector, leadUpdatedSelector
+} from '../adminReducer';
+import {createLead, deleteLead, getLeads, resetLeadState} from '../adminActions';
 import { connect } from 'react-redux';
-import { autoToggleAlert, extractIdFromUrl } from '../../helpers/utils';
+import { autoToggleAlert, extractIdFromUrl } from '../../../helpers/utils';
 import { Check } from 'react-feather';
-import Pagination from '../Pagination';
+import Pagination from '../../Pagination';
+import UpdateLead from './UpdateLead';
 
 
 const leadsTableLayout = {
     headings: [
-        'ID', 'Имя', 'Фамилия', 'Телефон', 'Канал', 'Активен', 'Действия',
+        'ID', 'Имя', 'Фамилия', 'Телефон', 'Канал', 'Статус', 'Активен', 'Действия',
     ],
-    createRow: ({ url, first_name, last_name, phone_number, channel, is_active }) => [
-        extractIdFromUrl(url), first_name, last_name, phone_number, channel,
+    createRow: ({ url, first_name, last_name, phone_number, channel, status_name, is_active }) => [
+        extractIdFromUrl(url), first_name, last_name, phone_number, channel, status_name,
         is_active ? <Check/> : null,
     ],
 };
@@ -29,6 +30,7 @@ const Leads = ({
                    leads,
                    created,
                    deleted,
+                   updated,
                    getLeads,
                    deleteLead,
                    resetLeadState,
@@ -36,6 +38,7 @@ const Leads = ({
 
     const [ isCreating, setIsCreating ] = useState(false);
     const [ leadIdToDelete, setLeadIdToDelete ] = useState(null);
+    const [ leadToUpdate, setLeadToUpdate ] = useState(null);
     const [ successMessage, setSuccessMessage ] = useState('');
 
 
@@ -44,15 +47,16 @@ const Leads = ({
     }, [ getLeads ]);
 
     useEffect(() => {
-        if (created || deleted) {
+        if (created || deleted || updated) {
             getLeads();
             resetLeadState();
             setIsCreating(false);
             setLeadIdToDelete(null);
-            const action = created ? 'создали' : 'удалили';
+            setLeadToUpdate(null);
+            const action = created ? 'создали' : updated ? 'обновили' : 'удалили';
             autoToggleAlert(`Вы успешно ${action} лида`, setSuccessMessage);
         }
-    }, [ setIsCreating, created, deleted, resetLeadState ]);
+    }, [ setIsCreating, created, deleted, updated, resetLeadState ]);
 
     const handleDeleteLead = () => {
         deleteLead(leadIdToDelete);
@@ -72,6 +76,10 @@ const Leads = ({
             <When condition={!!isCreating}>
                 <CreateLead
                     onToggleModal={setIsCreating}/></When>
+            <When condition={!!leadToUpdate}>
+                <UpdateLead
+                    lead={leadToUpdate}
+                    onToggleModal={setLeadToUpdate}/></When>
             <Container className="mt-10-auto">
                 <div className="mb-3">
                     <div className="row">
@@ -81,6 +89,7 @@ const Leads = ({
                     </div>
                 </div>
                 <TableList
+                    onEditItem={(item) => setLeadToUpdate(item)}
                     onDeleteItem={({ url }) => setLeadIdToDelete(extractIdFromUrl(url))}
                     data={(leads || {}).results}
                     layout={leadsTableLayout} />
@@ -98,6 +107,7 @@ const mapStateToProps = (state) => ({
     created: leadCreatedSelector(state),
     leads: leadsSelector(state),
     deleted: leadDeletedSelector(state),
+    updated: leadUpdatedSelector(state),
 });
 
 

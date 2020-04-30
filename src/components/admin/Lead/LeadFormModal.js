@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
-import {PrimaryButton, DropDown, CheckBox} from '../ui';
-import { getStatuses } from './Config/configsActions';
+import { PrimaryButton, DropDown } from '../../ui';
+import { getStatuses } from '../Config/configsActions';
 import { connect } from 'react-redux';
-import { isLoadingSelector } from '../common/commonReducer';
+import { isLoadingSelector } from '../../common/commonReducer';
 import {
     copyObject,
     generateSelectOptions,
     transformReactSelectFields
-} from '../../helpers/utils';
-import { statusesState } from './Config/configsReducer';
+} from '../../../helpers/utils';
+import { statusesState } from '../Config/configsReducer';
 import * as Yup from 'yup';
-import { REGEX } from '../../helpers/regex-rules';
-import ERROR_MESSAGES from '../../helpers/constants/messages';
+import { REGEX } from '../../../helpers/regex-rules';
+import ERROR_MESSAGES from '../../../helpers/constants/messages';
 
 
-let formValues = {};
+let formValues;
 
 const initialValues = {
     status: '',
@@ -40,6 +40,7 @@ const validationSchema =  Yup.object().shape({
 const LeadFormModal = ({
                            isLoading,
                            statuses,
+                           lead,
                            getStatuses,
                            onSubmit,
                            onToggleModal,
@@ -50,7 +51,20 @@ const LeadFormModal = ({
     }, [ getStatuses ]);
 
 
-    formValues = initialValues;
+    if (lead && statuses) {
+        formValues = {};
+        Object.keys(lead).map(key => {
+            if (lead[key]) {
+                formValues[key] = lead[key];
+            }
+            if (lead.status) {
+                formValues.status = generateSelectOptions(statuses.results, 'url', 'name')
+                    .find(({ value }) => value === lead.status);
+            }
+        });
+    } else {
+        formValues = initialValues;
+    }
 
     return (
         <Modal
@@ -59,7 +73,7 @@ const LeadFormModal = ({
             centered
         >
             <Modal.Body>
-                <p className="text-center mt-1 mb-2">{false ? 'Редактировать' :'Создать'} лида</p>
+                <p className="text-center mt-1 mb-2">{lead ? 'Редактировать' :'Создать'} лида</p>
                 <Formik
                     enableReinitialize
                     initialValues={formValues}
@@ -82,6 +96,7 @@ const LeadFormModal = ({
                       }) => (
                         <Form onSubmit={handleSubmit}>
                             <Form.Group>
+                                <p className="form-control-label">Статус</p>
                                 <DropDown
                                     isClearable
                                     placeholder="Выберите статус"
@@ -93,6 +108,7 @@ const LeadFormModal = ({
                                 />
                             </Form.Group>
                             <Form.Group>
+                                <p className="form-control-label">Имя</p>
                                 <Form.Control
                                     placeholder="Имя"
                                     name="first_name"
@@ -102,6 +118,7 @@ const LeadFormModal = ({
                                 />
                             </Form.Group>
                             <Form.Group>
+                                <p className="form-control-label">Фамилия</p>
                                 <Form.Control
                                     placeholder="Фамилия"
                                     name="last_name"
@@ -111,8 +128,9 @@ const LeadFormModal = ({
                                 />
                             </Form.Group>
                             <Form.Group>
+                                <p className="form-control-label">Телефон *</p>
                                 <Form.Control
-                                    placeholder="Телефон *"
+                                    placeholder="Телефон"
                                     name="phone_number"
                                     value={values.phone_number}
                                     onBlur={handleBlur}
@@ -123,6 +141,7 @@ const LeadFormModal = ({
                                 ) : null}
                             </Form.Group>
                             <Form.Group>
+                                <p className="form-control-label">Канал</p>
                                 <Form.Control
                                     placeholder="Канал"
                                     name="channel"
@@ -139,7 +158,7 @@ const LeadFormModal = ({
                                 </Button>
                                 <PrimaryButton
                                     disabled={isLoading}
-                                    text={false ? 'Сохранить' : 'Создать'}
+                                    text={lead ? 'Сохранить' : 'Создать'}
                                     type="submit">
                                 </PrimaryButton>
                             </div>

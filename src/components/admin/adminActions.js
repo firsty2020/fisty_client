@@ -6,6 +6,7 @@ import {
     ADMIN_LEAD_CREATE,
     ADMIN_LEAD_DELETE,
     ADMIN_LEAD_STATE_RESET,
+    ADMIN_LEAD_UPDATE,
     ADMIN_LEADS_DELETE,
     ADMIN_LEADS_GET,
     ADMIN_PROJECT_CREATE,
@@ -69,6 +70,14 @@ export const createLead = (data) => createApiAction({
     data,
     label: ADMIN_LEAD_CREATE,
 });
+
+export const updateLead = (id, data) => createApiAction({
+    url: `leads/${id}/`,
+    method: PATCH,
+    data,
+    label: ADMIN_LEAD_UPDATE,
+});
+
 
 export const getLeads = (params) => createApiAction({
     url: 'leads/',
