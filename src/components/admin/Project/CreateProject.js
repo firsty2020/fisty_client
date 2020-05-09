@@ -1,42 +1,64 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import {createProject, resetProjectState } from '../adminActions';
+import {
+    createProject,
+    resetProjectState,
+    setProjectRecruiters
+} from '../adminActions';
 import { connect } from 'react-redux';
 import ProjectForm from './ProjectForm';
 import { getVacancy } from '../../common/commonActions';
 import { vacancySelector } from '../../common/commonReducer';
 import { When } from 'react-if';
-import { projectCreatedSelector } from '../adminReducer';
+import {projectCreatedSelector, recruitersSet} from '../adminReducer';
 import { AlertNotice } from '../../ui';
 import { push } from 'connected-react-router';
+import {copyObject, extractIdFromUrl} from '../../../helpers/utils';
 
 
 const CreateProject = ({
                            match,
                            vacancy,
                            created,
+                           recruitersSet,
                            createProject,
                            getVacancy,
+                           setProjectRecruiters,
                            push,
                            resetProjectState,
                        }) => {
+
+    const [ projectData, setProjectData ] = useState(null);
 
     useEffect(() => {
         getVacancy(match.params.vacancyId);
     }, [ getVacancy, match.params.vacancyId ]);
 
     useEffect(() => {
-        if (created) {
+        if (created && !recruitersSet) {
+            setRecruiters();
+        }
+        if (created && recruitersSet) {
             setTimeout(() => {
                 push(generateBackPath());
                 resetProjectState();
             }, 3000);
         }
-    }, [ created, push, resetProjectState ]);
+    }, [ created, push, resetProjectState, recruitersSet ]);
+
+    const setRecruiters = () => {
+        const recruitersData = {
+            recruiters: (projectData.recruiter || []).map((r) => extractIdFromUrl(r)),
+            project: created.url,
+        };
+        setProjectRecruiters(recruitersData)
+    };
 
     const handleCreateProject = (data) => {
+        setProjectData(copyObject(data));
         data.company = vacancy.company;
         data.vacancy = vacancy.url;
+        delete data.recruiter;
         createProject(data);
     };
     const generateBackPath = () => {
@@ -64,9 +86,16 @@ const CreateProject = ({
 const mapStateToProps = state => ({
     vacancy: vacancySelector(state),
     created: projectCreatedSelector(state),
+    recruitersSet: recruitersSet(state),
 });
 
-const mapDispatchToProps = { createProject, getVacancy, push, resetProjectState };
+const mapDispatchToProps = {
+    createProject,
+    getVacancy,
+    push,
+    setProjectRecruiters,
+    resetProjectState,
+};
 
 
 

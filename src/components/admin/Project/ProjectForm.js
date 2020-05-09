@@ -19,6 +19,8 @@ import { projectSchema } from '../../../helpers/schemas';
 import { isLoadingSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
 import { countriesOptions, extendedOptions } from '../../../helpers/utils';
+import { getUsers } from '../User/usersApi';
+import { usersSelector } from '../adminReducer';
 
 
 let formValues = {};
@@ -30,7 +32,7 @@ const initialValues = {
     responsibilities: '',
     target_action_count: '',
     target_action_amount: '',
-    recruiter: '',
+    recruiter: [],
     location: '',
     branch: '',
     location_type: '',
@@ -40,12 +42,14 @@ const initialValues = {
 const ProjectForm = ({
                          locations,
                          branches,
+                         recruiters,
                          project,
                          match,
                          backPath,
                          isLoading,
                          getBranches,
                          getLocations,
+                         getUsers,
                          onSubmit,
                      }) => {
 
@@ -53,6 +57,7 @@ const ProjectForm = ({
         const params = { show_all: true };
         getLocations(params);
         getBranches({ ...params,  company: match.params.companyId });
+        getUsers({...params, role: 'recruiter' });
     }, [ getLocations, getBranches, match.params.companyId ]);
 
     const handleLocationTypeChange = (setFieldValue, fieldValue) => {
@@ -71,7 +76,8 @@ const ProjectForm = ({
     };
 
     const generateOptions = (list) => {
-        return generateSelectOptions(list, 'url', 'name')
+        if (!list) return [];
+        return generateSelectOptions(list.results, 'url', 'name')
     };
 
     const populateForm = () => {
@@ -83,9 +89,11 @@ const ProjectForm = ({
         formValues.citizenship = citizenships;
         formValues.age = { from: values.age[0], to: values.age[1] };
         formValues.location = generateOptions(locations).find((location) => location.value === values.location);
+        formValues.recruiter = setSelectedRecruiters();
         formValues.branch = (values.branch || [])
             .map((branchUrl) => generateOptions(branches)
                 .find((branch) => branch.value === branchUrl));
+
         if (values.location) {
             formValues.location_type = 'location';
         } else {
@@ -93,10 +101,26 @@ const ProjectForm = ({
         }
     };
 
-    if (project && locations && branches) {
+    const setSelectedRecruiters = () => {
+        const selectedRecruiters = [];
+        project.recruiters.map((recruiterUrl) => recruiters.results.map((recruiter) => {
+            if (recruiterUrl === recruiter.url) {
+                selectedRecruiters.push(recruiter);
+            }
+        }));
+        return generateRecruitersOptions(selectedRecruiters);
+    };
+
+    const generateRecruitersOptions = (list) =>
+        generateSelectOptions(list,
+            'url',
+            ({ first_name, last_name }) => `${first_name} ${last_name}`);
+    
+
+    if (project && locations && branches && recruiters) {
         populateForm();
     } else {
-        formValues = initialValues;
+        Object.keys(initialValues).map(key => formValues[key] = initialValues[key])
     }
 
     return (
@@ -107,11 +131,11 @@ const ProjectForm = ({
                 validationSchema={projectSchema}
                 onSubmit={(values, resetForm) => {
                     const data = copyObject(clearEmptyFields(values));
-                    const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch'], data);
+                    const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch', 'recruiter'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
                     delete transformedData.location_type;
                     if (project) {
-                        return onSubmit({ ...project, ...transformedData });
+                        return onSubmit(transformedData);
                     }
                     onSubmit(transformedData);
                 }}
@@ -227,6 +251,21 @@ const ProjectForm = ({
                             ) : null}
                         </Form.Group>
                         <Form.Group>
+                            <p className="form-control-label">Рекрутеры</p>
+                            <DropDown
+                                isMulti
+                                name="recruiter"
+                                placeholder="Выберите из списка"
+                                value={values.recruiter}
+                                options={generateRecruitersOptions((recruiters || []).results)}
+                                onBlur={(e) => setFieldTouched('recruiter', e || [])}
+                                onChange={(e) => setFieldValue('recruiter', e || [])}
+                            />
+                            {touched.recruiter && errors.recruiter ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.recruiter}</span>
+                            ) : null}
+                        </Form.Group>
+                        <Form.Group>
                             <p className="form-control-label">Местонахождение</p>
                             <RadioButton
                                 custom
@@ -282,20 +321,6 @@ const ProjectForm = ({
                                 ) : null}
                             </Form.Group>
                         </When>
-                        <Form.Group>
-                            <p className="form-control-label">Рекрутеры</p>
-                            <DropDown
-                                name="recruiter"
-                                placeholder="Выберите из списка"
-                                value={values.recruiter}
-                                options={[]}
-                                onBlur={(e) => setFieldTouched('recruiter', e)}
-                                onChange={(e) => setFieldValue('recruiter', e)}
-                            />
-                            {touched.recruiter && errors.recruiter ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.recruiter}</span>
-                            ) : null}
-                        </Form.Group>
                         <div className="text-center">
                             <Link to={backPath}>
                                 <Button
@@ -321,9 +346,10 @@ const mapStateToProps = state => ({
     locations: locationsSelector(state),
     branches: branchesSelector(state),
     isLoading: isLoadingSelector(state),
+    recruiters: usersSelector(state),
 });
 
-const mapDispatchToProps = { getLocations, getBranches };
+const mapDispatchToProps = { getLocations, getBranches, getUsers };
 
 
 ProjectForm.propTypes = {

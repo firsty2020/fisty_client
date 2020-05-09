@@ -1,20 +1,32 @@
 import React, {useEffect} from 'react';
 import { Container } from 'react-bootstrap';
-import { getProject, resetProjectState, updateProject } from '../adminActions';
+import {
+    getProject,
+    resetProjectState,
+    setProjectRecruiters,
+    updateProject
+} from '../adminActions';
 import { connect } from 'react-redux';
 import ProjectForm from './ProjectForm';
 import { When } from 'react-if';
-import { projectSelector, projectUpdatedSelector } from '../adminReducer';
+import {
+    projectSelector,
+    projectUpdatedSelector,
+    recruitersSet
+} from '../adminReducer';
 import { AlertNotice } from '../../ui';
 import { push } from 'connected-react-router';
+import { extractIdFromUrl } from '../../../helpers/utils';
 
 
 const UpdateProject = ({
                            match,
                            updated,
                            project,
+                           recruitersSet,
                            getProject,
                            updateProject,
+                           setProjectRecruiters,
                            resetProjectState,
                            push,
                        }) => {
@@ -25,13 +37,24 @@ const UpdateProject = ({
     }, [ getProject, match.params.projectId ]);
 
     useEffect(() => {
-        if (updated) {
+        if (updated && recruitersSet) {
             setTimeout(() => {
                 push(generateBackPath());
                 resetProjectState();
             }, 3000);
         }
-    }, [ updated, push, resetProjectState ]);
+    }, [ updated, push, recruitersSet, resetProjectState ]);
+
+    const handleUpdateProject = (data) => {
+        const recruiters = (data.recruiter || []).map((item) => Number(extractIdFromUrl(item)));
+        delete data.recruiter;
+        const recruitersData = {
+            recruiters,
+            project: project.url,
+        };
+        setProjectRecruiters(recruitersData);
+        updateProject(project.id, data);
+    };
 
     const generateBackPath = () => {
         const { companyId, applicationId, vacancyId } = match.params;
@@ -50,7 +73,7 @@ const UpdateProject = ({
             <ProjectForm
                 project={project}
                 backPath={generateBackPath()}
-                onSubmit={(data) => updateProject(data)}
+                onSubmit={(data) => handleUpdateProject(data)}
                 match={match}/>
         </Container>
     )
@@ -60,10 +83,16 @@ const UpdateProject = ({
 const mapStateToProps = state => ({
     updated: projectUpdatedSelector(state),
     project: projectSelector(state),
+    recruitersSet: recruitersSet(state),
 });
 
-const mapDispatchToProps = { push, resetProjectState, getProject, updateProject };
-
+const mapDispatchToProps = {
+    push,
+    resetProjectState,
+    getProject,
+    updateProject,
+    setProjectRecruiters,
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProject);

@@ -7,12 +7,12 @@ import {
     ADMIN_LEAD_DELETE,
     ADMIN_LEAD_STATE_RESET,
     ADMIN_LEAD_UPDATE,
-    ADMIN_LEADS_DELETE,
     ADMIN_LEADS_GET,
     ADMIN_PROJECT_CREATE,
     ADMIN_PROJECT_DELETE,
     ADMIN_PROJECT_RESET,
     ADMIN_PROJECT_UPDATE,
+    ADMIN_PROJECT_RECRUITERS_SET,
     DELETE,
     GET,
     PATCH,
@@ -47,8 +47,8 @@ export const deleteProject = (id) => createApiAction({
     label: ADMIN_PROJECT_DELETE,
 });
 
-export const updateProject = (data) => createApiAction({
-    url: `projects/${data.id}/`,
+export const updateProject = (id, data) => createApiAction({
+    url: `projects/${id}/`,
     method: PATCH,
     data,
     label: ADMIN_PROJECT_UPDATE,
@@ -94,4 +94,11 @@ export const deleteLead = (id) => createApiAction({
 
 export const resetLeadState = () => ({
     type: ADMIN_LEAD_STATE_RESET,
+});
+
+export const setProjectRecruiters = (data) => createApiAction({
+    url: '/companies/projects/recruiters/',
+    method: POST,
+    data,
+    label: ADMIN_PROJECT_RECRUITERS_SET,
 });

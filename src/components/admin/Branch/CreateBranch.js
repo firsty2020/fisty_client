@@ -10,7 +10,7 @@ import {
     createBranchResolvedSelector
 } from './branchReducer';
 import { push } from 'connected-react-router';
-import {AlertNotice} from '../../ui';
+import { AlertNotice } from '../../ui';
 import { When } from "react-if";
 
 

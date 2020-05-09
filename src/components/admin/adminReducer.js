@@ -26,6 +26,7 @@ import {
     ADMIN_LEADS_GET,
     ADMIN_LEAD_DELETE,
     ADMIN_LEAD_UPDATE,
+    ADMIN_PROJECT_RECRUITERS_SET,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -97,7 +98,7 @@ const common = (state = {}, action) => {
             return { ...state, project: action.payload };
 
         case ADMIN_PROJECT_CREATE:
-            return { ...state, projectCreated: true };
+            return { ...state, projectCreated: action.payload };
 
         case ADMIN_PROJECT_UPDATE:
             return { ...state, projectUpdated: true };
@@ -111,6 +112,7 @@ const common = (state = {}, action) => {
                 projectCreated: false,
                 projectDeleted: false,
                 projectUpdated: false,
+                recruitersSet: false,
             };
 
         case ADMIN_DASHBOARD_STATISTICS_GET: {
@@ -128,6 +130,9 @@ const common = (state = {}, action) => {
 
         case ADMIN_LEAD_DELETE:
             return { ...state,  leadDeleted: true };
+
+        case ADMIN_PROJECT_RECRUITERS_SET:
+            return { ...state, recruitersSet: true };
 
 
         case ADMIN_LEAD_STATE_RESET:
@@ -191,3 +196,5 @@ export const leadCreatedSelector = state => state.admin.common.leadCreated;
 export const leadDeletedSelector = state => state.admin.common.leadDeleted;
 export const leadUpdatedSelector = state => state.admin.common.leadUpdated;
 export const leadsSelector = state => state.admin.common.leads;
+
+export const recruitersSet = state => state.admin.common.recruitersSet;
