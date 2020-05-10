@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { DropDown } from '../../ui';
@@ -43,6 +43,8 @@ const VacancyFormModal = ({
                               onClose,
                           }) => {
 
+    const [ filteredSubcategories, setFilteredSubcategories ] = useState((subcategories || {}).results || []);
+
     useEffect(() => {
         getCategories();
         getSubcategories();
@@ -51,28 +53,27 @@ const VacancyFormModal = ({
     useEffect(() => {
         if (vacancy && subcategories) {
             const categoryUrl = findCategoryUrl(vacancy.sub_category);
-            const filteredSubcategories = subcategories
+            const filteredSubcategories = (subcategories || {}).results
                 .filter((subcategory) => subcategory.category === categoryUrl);
             setFilteredSubcategories(filteredSubcategories);
         }
     },  [ vacancy, subcategories ]);
 
-    const [ filteredSubcategories, setFilteredSubcategories ] = useState(subcategories || []);
 
     const generateOptions = (list) => generateSelectOptions(list, 'url', 'name');
 
     const createFormValues = () => {
         const { name, sub_category } = vacancy;
-        const _sub_category = generateOptions(subcategories)
+        const _sub_category = generateOptions((subcategories || {}).results)
             .find((item) => item.value === sub_category);
         const _category = findCategoryUrl(_sub_category.value);
-        const category = generateOptions(categories)
+        const category = generateOptions((categories|| {}).results)
             .find((item) => item.value === _category);
         return { sub_category: _sub_category, name, category }
     };
 
     const findCategoryUrl = (subcategoryUrl) =>
-        (subcategories.find((subcategory) => subcategory.url === subcategoryUrl) || {}).category;
+        ((subcategories || {}).results.find((subcategory) => subcategory.url === subcategoryUrl) || {}).category;
 
     if (categories && subcategories && vacancy) {
         formValues = createFormValues();
@@ -91,7 +92,7 @@ const VacancyFormModal = ({
     };
 
     const updateSubcategoryOptions = (categoryUrl) => {
-        const _filteredSubcategories = subcategories
+        const _filteredSubcategories = (subcategories || {}).results
             .filter((subcategory) => subcategory.category === categoryUrl);
         setFilteredSubcategories(_filteredSubcategories);
     };
@@ -128,12 +129,12 @@ const VacancyFormModal = ({
                         <Form onSubmit={handleSubmit}>
                             <Form.Group>
                                 <DropDown
-                                    isDisabled={!categories || !categories.length}
+                                    isDisabled={!categories || !categories.results.length}
                                     name="category"
                                     value={values.category}
                                     onBlur={(e) => setFieldTouched('category', e)}
                                     onChange={(e) => handleCategoryChange(e, setFieldValue, values.sub_category)}
-                                    options={generateOptions(categories)}
+                                    options={generateOptions((categories|| {}).results)}
                                     placeholder="Выберите категорию"
                                 />
                                 {touched.category && errors.category ? (

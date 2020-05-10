@@ -63,7 +63,7 @@ const Vacancies = ({
     useEffect(() => {
         if (removed) {
             autoToggleAlert('Вы успешно удалили вакансию', setSuccessAlert);
-            getVacancies(applicationId);
+            getVacancies({ application: applicationId });
             resetVacancyRemoved();
         }
     }, [ removed, getVacancies, resetVacancyRemoved, applicationId ]);
@@ -77,7 +77,7 @@ const Vacancies = ({
     const handleModalClose = (action) => {
         if (action) {
             const map = { created: 'создали', updated: 'обновили'};
-            getVacancies(applicationId);
+            getVacancies({ application: applicationId });
             autoToggleAlert(`Вы успешно ${map[action]} вакансию`, setSuccessAlert);
         }
         setVacancyToUpdate(null);
