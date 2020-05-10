@@ -11,11 +11,12 @@ import {
 import adminRoutes from './components/admin/adminRoutes';
 import adminNavigation from './components/admin/adminNavigation';
 import { companyNavigation, companyRoutes } from './components/company/companyRoutes';
+import recruiterNavigation from './components/recruiter/recruiterNavigation';
 import { LoadSpinner } from './components/ui';
 
 
-const Admin = lazy(() => import('./components/admin/AdminDashboard'));
-const Recruiter = lazy(() => import('./components/recruiter/Dashboard'));
+const Admin = lazy(() => import('./components/common/Dashboard.js'));
+const Recruiter = lazy(() => import('./components/common/Dashboard.js'));
 const Company = lazy(() => import('./components/common/Dashboard.js'));
 
 
@@ -35,8 +36,14 @@ const Routes = () => (
                 path="/login"
                 component={Login}/>
             <ProtectedRoute
+                render={(props) =>
+                    <Recruiter
+                        {...props}
+                        routes={adminRoutes}
+                        navigation={recruiterNavigation}
+                    />
+                }
                 path="/recruiter"
-                component={Recruiter}
                 role='recruiter'
             />
             <ProtectedRoute
