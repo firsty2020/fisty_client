@@ -12,6 +12,7 @@ import adminRoutes from './components/admin/adminRoutes';
 import adminNavigation from './components/admin/adminNavigation';
 import { companyNavigation, companyRoutes } from './components/company/companyRoutes';
 import recruiterNavigation from './components/recruiter/recruiterNavigation';
+import recruiterRoutes from './components/recruiter/recruiterRoutes';
 import { LoadSpinner } from './components/ui';
 
 
@@ -39,8 +40,9 @@ const Routes = () => (
                 render={(props) =>
                     <Recruiter
                         {...props}
-                        routes={adminRoutes}
+                        routes={recruiterRoutes}
                         navigation={recruiterNavigation}
+                        name="Кабинет рекрутера"
                     />
                 }
                 path="/recruiter"

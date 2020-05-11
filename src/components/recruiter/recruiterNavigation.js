@@ -2,15 +2,15 @@ const recruiterNavigation =  {
     top: [
         {
             name: 'Кабинет',
-            url: '/admin',
+            url: '/recruiter',
             icon: 'Home',
         },
         { divider: true },
         {
             name: 'Проекты',
-            icon: 'Users',
+            icon: 'Briefcase',
             url: '/recruiter/projects',
-            matcher: '/users'
+            matcher: '/projects'
         },
 
     ],

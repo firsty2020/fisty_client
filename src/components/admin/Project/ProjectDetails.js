@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getProject } from '../adminActions';
 import { projectSelector } from '../adminReducer';
 import { Link } from 'react-router-dom';
+import { getUserFromToken } from '../../auth/auth';
 
 
 const showBranchNames = (branchDetails) => {
@@ -52,6 +53,8 @@ const ProjectDetails  = ({ match, project, getProject }) => {
     if (!project) {
         return null;
     }
+    
+    const isAdmin = (getUserFromToken() || {}).role === 'admin';
 
     const generateBackPath = () => {
         const url = match.url;
@@ -62,12 +65,12 @@ const ProjectDetails  = ({ match, project, getProject }) => {
     return (
         <div>
             <BackButton path={generateBackPath()}/>
-            <DetailsTable
-                data={projectDetailsTableLayout(project)}>
-            </DetailsTable>
-            <Link to={`${match.url}/custom-fields`}>
-                <PrimaryButton text="Динамичные поля"/>
-            </Link>
+            <DetailsTable data={projectDetailsTableLayout(project)}/>
+            {isAdmin ? (
+                <Link to={`${match.url}/custom-fields`}>
+                    <PrimaryButton text="Динамичные поля"/>
+                </Link>
+            ) : null}
         </div>
     );
 

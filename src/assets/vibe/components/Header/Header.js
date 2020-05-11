@@ -31,6 +31,8 @@ export default class Header extends Component {
             ) {
                 name = prop.name;
             }
+
+            name = name ? name : this.props.name;
             return null;
         });
         return name;
