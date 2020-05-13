@@ -1,0 +1,34 @@
+.notification .dropdown-toggle {
+    background-color: transparent!important;
+    border: none!important;
+    color: #F47421;
+    cursor: pointer;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.badge.counter {
+    position: absolute;
+    right: 35px;
+}
+
+.unread {
+    background-color: #f8f9fa;
+}
+
+
+.notification .dropdown-divider {
+    margin: 0;
+}
+
+
+.notification-item {
+    padding: 15px 20px!important;
+    cursor: pointer;
+}
+
+.notification-item:active {
+    background-color: inherit;
+}

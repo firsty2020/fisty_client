@@ -7,6 +7,7 @@ import {
     GET_APPLICATIONS,
     GET_VACANCIES,
     GET_VACANCY,
+    NOTIFICATION_PATCH, NOTIFICATIONS_GET,
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
@@ -59,6 +60,12 @@ export const common = (state = {}, action) => {
         case SET_VACANCY_UPDATED:
             return { ...state, vacancyUpdated: false };
 
+        case NOTIFICATIONS_GET:
+            return { ...state, notifications: action.payload };
+
+        case NOTIFICATION_PATCH:
+            return { ...state, notificationUpdated: true };
+
         default:
             return state;
     }
@@ -77,3 +84,5 @@ export const vacancyCreatedSelector = state => state.common.vacancyCreated;
 export const vacancyUpdatedSelector = state => state.common.vacancyUpdated;
 export const vacancyRemovedSelector = state => state.common.vacancyRemoved;
 export const vacancySelector = state => state.common.vacancy;
+export const notificationsSelector = state => state.common.notifications;
+export const notificationUpdatedSelector = state => state.common.notificationUpdated;

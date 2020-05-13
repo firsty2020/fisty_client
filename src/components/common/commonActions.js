@@ -1,4 +1,5 @@
 import {
+    NOTIFICATIONS_GET,
     CREATE_APPLICATION,
     CREATE_VACANCY,
     GET,
@@ -84,4 +85,19 @@ export const updateVacancy = (id, data) => createApiAction({
 export const resetVacancyUpdated = () => ({
     type: SET_VACANCY_UPDATED,
     payload: false,
+});
+
+
+export const getNotifications = (params) => createApiAction({
+    url: 'messages/',
+    method: GET,
+    data: params,
+    label: NOTIFICATIONS_GET,
+});
+
+export const patchNotification = (id, data) => createApiAction({
+    url: `messages/${id}/`,
+    method: PATCH,
+    data: data,
+    label: NOTIFICATIONS_GET,
 });

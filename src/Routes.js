@@ -17,7 +17,7 @@ import { LoadSpinner } from './components/ui';
 
 
 const Admin = lazy(() => import('./components/common/Dashboard.js'));
-const Recruiter = lazy(() => import('./components/common/Dashboard.js'));
+const Recruiter = lazy(() => import('./components/recruiter/Dashboard.js'));
 const Company = lazy(() => import('./components/common/Dashboard.js'));
 
 
