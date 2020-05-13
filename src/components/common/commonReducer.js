@@ -61,7 +61,7 @@ export const common = (state = {}, action) => {
             return { ...state, vacancyUpdated: false };
 
         case NOTIFICATIONS_GET:
-            return { ...state, notifications: action.payload };
+            return { ...state, notificationUpdated: false, notifications: action.payload };
 
         case NOTIFICATION_PATCH:
             return { ...state, notificationUpdated: true };

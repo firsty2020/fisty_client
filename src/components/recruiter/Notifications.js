@@ -23,12 +23,13 @@ const Notifications = ({
 
     useEffect(() => {
         getNotifications();
+        setInterval(() => setTimeout(getNotifications()), 30000);
     }, [ getNotifications ]);
 
     useEffect(() => {
         if (updated) {
-            getNotifications();
             push(clickedNotification.url_mapping[0].url);
+            getNotifications();
         }
     }, [ updated, getNotifications ]);
 
@@ -59,7 +60,7 @@ const Notifications = ({
         const message = notification.message.replace(re, '');
 
         return (
-            <React.Fragment key={message}>
+            <React.Fragment key={notification.id}>
                 <Dropdown.Item
                     onClick={() => handleNotificationClick(notification)}
                     className={!notification.is_read ? 'unread notification-item' : 'notification-item'}
