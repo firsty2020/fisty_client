@@ -18,11 +18,9 @@
     background-color: #e6e6e6;
 }
 
-
 .notification .dropdown-divider {
     margin: 0;
 }
-
 
 .notification-item {
     padding: 15px 20px!important;
@@ -31,4 +29,18 @@
 
 .notification-item:active {
     background-color: inherit;
+}
+
+.rm-active-bg:active {
+    background-color: inherit;
+}
+
+.link {
+    cursor: pointer;
+    color: #007bff;
+    font-size: 15px;
+}
+
+.link:hover {
+    text-decoration: underline;
 }

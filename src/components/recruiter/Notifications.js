@@ -3,11 +3,15 @@ import { Dropdown, Badge } from 'react-bootstrap';
 import { Bell } from 'react-feather';
 import { connect } from 'react-redux';
 import { getNotifications, patchNotification } from '../common/commonActions';
-import {
-    notificationsSelector,
+import { notificationsState,
     notificationUpdatedSelector
 } from '../common/commonReducer';
 import { push } from 'connected-react-router';
+import { generateUId } from '../../helpers/utils';
+import { Link } from 'react-router-dom';
+
+
+const uid = generateUId();
 
 
 const Notifications = ({
@@ -22,14 +26,16 @@ const Notifications = ({
     const [ clickedNotification, setClickedNotification ] = useState(null);
 
     useEffect(() => {
-        getNotifications();
-        setInterval(() => setTimeout(getNotifications()), 30000);
+        getNotifications(null, uid);
+        setInterval(() => setTimeout(getNotifications(null, uid)), 30000);
     }, [ getNotifications ]);
 
     useEffect(() => {
         if (updated) {
-            push(clickedNotification.url_mapping[0].url);
-            getNotifications();
+            if (clickedNotification) {
+                push(clickedNotification.url_mapping[0].url);
+            }
+            getNotifications(null, uid);
         }
     }, [ updated, getNotifications ]);
 
@@ -46,8 +52,8 @@ const Notifications = ({
     };
 
     const handleNotificationClick = (notification) => {
-        setClickedNotification(notification);
         setTimeout(() => setShowDropdownItems(false));
+        setClickedNotification(notification);
         if (!notification.is_read) {
             patchNotification(notification.id, { is_read: true });
         } else {
@@ -62,7 +68,7 @@ const Notifications = ({
             return null;
         }
         const re = /\{([^}]+)\}/;
-        const message = notification.message.replace(re, '');
+        const message = notification.message.replace(re, notification.url_mapping[0].key);
 
         return (
             <React.Fragment key={notification.id}>
@@ -70,15 +76,19 @@ const Notifications = ({
                     onClick={() => handleNotificationClick(notification)}
                     className={!notification.is_read ? 'unread notification-item' : 'notification-item'}
                     as="div">
-                    <span className="small font-weight-bold">
+                    <span className="small font-weight-bold blue">
                         {notification.subject}
                     </span><br/>
                     <span>{message}</span><br/>
-                    <span className="small btn-link text-decoration-none">click notification to see {notification.url_mapping[0].key}</span>
                 </Dropdown.Item>
                 <Dropdown.Divider/>
             </React.Fragment>
         );
+    };
+
+    const handleShowAllClick = () => {
+        setTimeout(() => setShowDropdownItems(false));
+        push('/recruiter/notifications');
     };
 
     return (
@@ -106,9 +116,10 @@ const Notifications = ({
                         <Dropdown.Item
                             as="div"
                             href="#/action-3"
-                            className="text-center"
+                            className="text-center rm-active-bg"
+                            onClick={handleShowAllClick}
                         >
-                            <a href="">Show all</a>
+                            <span className="link">Show All</span>
                         </Dropdown.Item>
                     ) : null }
                 </Dropdown.Menu>
@@ -118,10 +129,14 @@ const Notifications = ({
 };
 
 
-const mapStateToProps = (state) => ({
-    notifications: notificationsSelector(state),
-    updated: notificationUpdatedSelector(state),
-});
+const mapStateToProps = (state) => {
+    const notificationsSelector = notificationsState(uid);
+
+    return {
+        notifications: notificationsSelector(state),
+        updated: notificationUpdatedSelector(state),
+    }
+};
 
 
 const mapDispatchToProps = {

@@ -14,7 +14,7 @@ import {
     SET_VACANCY_REMOVED,
     SET_VACANCY_UPDATED,
     UPDATE_VACANCY,
-    NOTIFICATION_PATCH,
+    NOTIFICATION_PATCH, ADMIN_GET_CONTACT_PERSONS,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -89,11 +89,12 @@ export const resetVacancyUpdated = () => ({
 });
 
 
-export const getNotifications = (params) => createApiAction({
+export const getNotifications = (params, id) => createApiAction({
     url: 'messages/',
     method: GET,
     data: params,
     label: NOTIFICATIONS_GET,
+    id,
 });
 
 export const patchNotification = (id, data) => createApiAction({

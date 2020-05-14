@@ -14,6 +14,8 @@ import {
     SET_VACANCY_UPDATED,
     UPDATE_VACANCY,
 } from '../../helpers/constants/actionTypes';
+import {createSelector} from 'reselect';
+import {contactPersonsSelector} from '../admin/adminReducer';
 
 
 export const common = (state = {}, action) => {
@@ -61,7 +63,14 @@ export const common = (state = {}, action) => {
             return { ...state, vacancyUpdated: false };
 
         case NOTIFICATIONS_GET:
-            return { ...state, notificationUpdated: false, notifications: action.payload };
+            return {
+                ...state,
+                notificationUpdated: false,
+                notifications: action.id ?  {
+                    ...state.notifications,
+                    [ action.id ]: action.payload ,
+                } : action.payload,
+            };
 
         case NOTIFICATION_PATCH:
             return { ...state, notificationUpdated: true };
@@ -85,4 +94,15 @@ export const vacancyUpdatedSelector = state => state.common.vacancyUpdated;
 export const vacancyRemovedSelector = state => state.common.vacancyRemoved;
 export const vacancySelector = state => state.common.vacancy;
 export const notificationsSelector = state => state.common.notifications;
+
+export const notificationsState = (uid = null) => createSelector(
+    [ notificationsSelector ],
+    (notifications) => {
+        if (!notifications) return [];
+        if (uid) {
+            return notifications[uid];
+        }
+        return notifications;
+    }
+);
 export const notificationUpdatedSelector = state => state.common.notificationUpdated;

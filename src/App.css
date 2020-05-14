@@ -138,3 +138,7 @@ button:disabled {
 li.active span {
     background-color: #F47421!important;
 }
+
+.blue {
+    color: #127cd8;
+}

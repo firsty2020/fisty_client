@@ -2,7 +2,7 @@ import React from 'react';
 import { Pagination as BootstrapPagination } from 'react-bootstrap';
 import { range } from '../helpers/utils';
 
-const Pagination = ({ data, action }) => {
+const Pagination = ({ data, uid, action }) => {
 
     const itemsPerPage = 10;
 
@@ -14,7 +14,7 @@ const Pagination = ({ data, action }) => {
         if (!url || pageNumber == currentPage()) return;
         const params = getParams(url);
         const newParams = generateNewParams(params, pageNumber);
-        action(newParams);
+        action(newParams, uid);
     };
 
     const generatePagination = (pageCount) => {
