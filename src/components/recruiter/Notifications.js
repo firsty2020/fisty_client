@@ -55,7 +55,12 @@ const Notifications = ({
         }
     };
 
-    const generateNotification = (notification) => {
+    const generateNotification = (notification, index) => {
+        const limitTo = 4;
+
+        if (index > limitTo) {
+            return null;
+        }
         const re = /\{([^}]+)\}/;
         const message = notification.message.replace(re, '');
 
@@ -96,9 +101,15 @@ const Notifications = ({
                     <Bell/>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="p-0">
-                    {(notifications.results || []).map(notification => generateNotification(notification))}
-                    {notifications.results && notifications.results.length > 10 ? (
-                        <Dropdown.Item href="#/action-3">Show all</Dropdown.Item>
+                    {(notifications.results || []).map((notification, index) => generateNotification(notification, index))}
+                    {notifications && notifications.count > 3 ? (
+                        <Dropdown.Item
+                            as="div"
+                            href="#/action-3"
+                            className="text-center"
+                        >
+                            <a href="">Show all</a>
+                        </Dropdown.Item>
                     ) : null }
                 </Dropdown.Menu>
             </Dropdown>
