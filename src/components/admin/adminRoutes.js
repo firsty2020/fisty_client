@@ -5,7 +5,7 @@ import Roles from './Config/Roles/Roles';
 import CompanyDetails from './Company/CompanyDetails';
 import ContactPersons from './Company/ContactPersons';
 import BranchContactPersons from './Branch/ContactPersons';
-import Locations from './Config/Locations';
+import Locations from './Config/Locations/Locations';
 import Industries from './Config/Industries';
 import Specifications from './Config/Specifications';
 import CreateApplication from './Company/CreateApplication';
@@ -246,7 +246,7 @@ const adminRoutes = [
     {
         path: '/admin/configs/locations',
         component: Locations,
-        name: 'Местонахождения'
+        name: 'Локации'
     },
     {
         path: '/admin/configs/dynamic-fields',

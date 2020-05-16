@@ -48,7 +48,7 @@ const adminNavigation =  {
                     matcher: '/specifications',
                 },
                 {
-                    name: 'Местонахождения',
+                    name: 'Локации',
                     icon: 'MapPin',
                     url: '/admin/configs/locations',
                     matcher: '/locations',

@@ -69,7 +69,7 @@ const NotificationsList = ({ notifications, updated, getNotifications, patchNoti
             >
                 <span className="small font-weight-bold">{subject}</span>
                 <br/>
-                <span dangerouslySetInnerHTML={{ __html: messageString}}/>
+                <span dangerouslySetInnerHTML={{ __html: messageString }}/>
                 <br/>
             </ListGroup.Item>
         );

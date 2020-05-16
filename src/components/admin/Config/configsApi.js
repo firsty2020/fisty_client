@@ -147,11 +147,11 @@ export const removeSpecificationOption = (id) => {
     };
 };
 
-export const createLocation = (name) => {
+export const createLocation = (data) => {
     return dispatch => {
         dispatch(createLocationPending());
         api
-            .post('locations/', { name })
+            .post('locations/', data )
             .then(() => dispatch(createLocationResolved()))
             .catch((err) => dispatch(createLocationFailed()))
     };
@@ -166,10 +166,10 @@ export const removeLocation = (id) => {
     };
 };
 
-export const updateLocation = ({ id, name }) => {
+export const updateLocation = (id, data) => {
     return dispatch => {
         api
-            .patch(`locations/${id}/`, { name })
+            .patch(`locations/${id}/`, data)
             .then(() => dispatch(updateLocationResolved()))
             .catch(() => dispatch(updateLocationFailed()))
     };

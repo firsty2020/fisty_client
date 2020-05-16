@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { PrimaryButton, DropDown } from '../../ui';
+import {PrimaryButton, DropDown, CheckBox} from '../../ui';
 import { getStatuses } from '../Config/configsActions';
 import { connect } from 'react-redux';
 import { isLoadingSelector } from '../../common/commonReducer';
@@ -22,18 +22,31 @@ const initialValues = {
     status: '',
     first_name: '',
     last_name: '',
+    middle_name: '',
     phone_number: '',
     channel: 'dashboard',
+    send_to_company: false,
 };
 
 const validationSchema =  Yup.object().shape({
     status: Yup.string(),
-    first_name: Yup.string(),
-    last_name: Yup.string(),
+    first_name: Yup.string().when('send_to_company', {
+        is: true,
+        then: Yup.string().required(ERROR_MESSAGES.REQUIRED_FOR_COMPANY)
+    }),
+    last_name: Yup.string().when('send_to_company', {
+        is: true,
+        then: Yup.string().required(ERROR_MESSAGES.REQUIRED_FOR_COMPANY)
+    }),
+    middle_name: Yup.string().when('send_to_company', {
+        is: true,
+        then: Yup.string().required(ERROR_MESSAGES.REQUIRED_FOR_COMPANY)
+    }),
     phone_number: Yup.string()
-        .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)
+        .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID)
         .required(ERROR_MESSAGES.PHONE_REQUIRED),
     channel: Yup.string(),
+    send_to_company: Yup.bool(),
 });
 
 
@@ -116,6 +129,9 @@ const LeadFormModal = ({
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                 />
+                                {touched.first_name && errors.first_name ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.first_name}</span>
+                                ) : null}
                             </Form.Group>
                             <Form.Group>
                                 <p className="form-control-label">Фамилия</p>
@@ -126,6 +142,22 @@ const LeadFormModal = ({
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                 />
+                                {touched.last_name && errors.last_name ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.last_name}</span>
+                                ) : null}
+                            </Form.Group>
+                            <Form.Group>
+                                <p className="form-control-label">Отчество</p>
+                                <Form.Control
+                                    placeholder="Отчество"
+                                    name="middle_name"
+                                    value={values.middle_name}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                                {touched.middle_name && errors.middle_name ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.middle_name}</span>
+                                ) : null}
                             </Form.Group>
                             <Form.Group>
                                 <p className="form-control-label">Телефон *</p>
@@ -148,6 +180,17 @@ const LeadFormModal = ({
                                     value={values.channel}
                                     onBlur={handleBlur}
                                     onChange={handleChange}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <CheckBox
+                                    inline
+                                    custom
+                                    name="send_to_company"
+                                    value={values.send_to_company}
+                                    label="Отправить компании"
+                                    onChange={handleChange}
+                                    onBlur={(e) => setFieldTouched('send_to_company', e)}
                                 />
                             </Form.Group>
                             <div className="text-center">

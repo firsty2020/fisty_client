@@ -56,6 +56,6 @@ export default {
     FILE_FORMAT_INVALID: 'Неверный формат файла',
     DATE_FORMAT_REQUIRED: 'Выберите формат даты',
     CHOICES_REQUIRED: 'Выберите варианты выбора',
-
+    REQUIRED_FOR_COMPANY: 'Это поле обязательно дла компании'
 };
 
