@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
 import {PrimaryButton, DropDown, CheckBox} from '../../ui';
-import { getStatuses } from '../Config/configsActions';
+import { getLocations, getStatuses } from '../Config/configsActions';
 import { connect } from 'react-redux';
 import { isLoadingSelector } from '../../common/commonReducer';
 import {
@@ -10,7 +10,7 @@ import {
     generateSelectOptions,
     transformReactSelectFields
 } from '../../../helpers/utils';
-import { statusesState } from '../Config/configsReducer';
+import { locationsSelector, statusesState } from '../Config/configsReducer';
 import * as Yup from 'yup';
 import { REGEX } from '../../../helpers/regex-rules';
 import ERROR_MESSAGES from '../../../helpers/constants/messages';
@@ -26,6 +26,7 @@ const initialValues = {
     phone_number: '',
     channel: 'dashboard',
     send_to_company: false,
+    location: '',
 };
 
 const validationSchema =  Yup.object().shape({
@@ -42,6 +43,10 @@ const validationSchema =  Yup.object().shape({
         is: true,
         then: Yup.string().required(ERROR_MESSAGES.REQUIRED_FOR_COMPANY)
     }),
+    location: Yup.string().when('send_to_company', {
+        is: true,
+        then: Yup.string().required(ERROR_MESSAGES.REQUIRED_FOR_COMPANY)
+    }),
     phone_number: Yup.string()
         .matches(REGEX.PHONE_NUMBER, ERROR_MESSAGES.PHONE_INVALID)
         .required(ERROR_MESSAGES.PHONE_REQUIRED),
@@ -53,14 +58,18 @@ const validationSchema =  Yup.object().shape({
 const LeadFormModal = ({
                            isLoading,
                            statuses,
+                           locations,
                            lead,
                            getStatuses,
+                           getLocations,
                            onSubmit,
                            onToggleModal,
                        }) => {
 
     useEffect(() => {
-        getStatuses({ show_all: true });
+        const params = { show_all: true };
+        getStatuses(params);
+        getLocations(params);
     }, [ getStatuses ]);
 
 
@@ -93,7 +102,7 @@ const LeadFormModal = ({
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         let data = copyObject(values);
-                        data = transformReactSelectFields([ 'status' ], data);
+                        data = transformReactSelectFields([ 'status', 'location' ], data);
                         onSubmit(data);
                     }}
                 >
@@ -160,6 +169,20 @@ const LeadFormModal = ({
                                 ) : null}
                             </Form.Group>
                             <Form.Group>
+                                <p className="form-control-label">Локация</p>
+                                <DropDown
+                                    placeholder="Выберите из списка"
+                                    name="location"
+                                    value={values.location}
+                                    onBlur={(e) => setFieldTouched('location', e || '')}
+                                    onChange={(e) => setFieldValue('location', e || '')}
+                                    options={generateSelectOptions((locations || {}).results, 'url', 'name')}
+                                />
+                                {touched.location && errors.location ? (
+                                    <span className="mt-1 invalid-feedback-visible">{errors.location}</span>
+                                ) : null}
+                            </Form.Group>
+                            <Form.Group>
                                 <p className="form-control-label">Телефон *</p>
                                 <Form.Control
                                     placeholder="Телефон"
@@ -182,17 +205,19 @@ const LeadFormModal = ({
                                     onChange={handleChange}
                                 />
                             </Form.Group>
-                            <Form.Group>
-                                <CheckBox
-                                    inline
-                                    custom
-                                    name="send_to_company"
-                                    value={values.send_to_company}
-                                    label="Отправить компании"
-                                    onChange={handleChange}
-                                    onBlur={(e) => setFieldTouched('send_to_company', e)}
-                                />
-                            </Form.Group>
+                            {!lead ? (
+                                <Form.Group>
+                                    <CheckBox
+                                        inline
+                                        custom
+                                        name="send_to_company"
+                                        value={values.send_to_company}
+                                        label="Отправить компании"
+                                        onChange={handleChange}
+                                        onBlur={(e) => setFieldTouched('send_to_company', e)}
+                                    />
+                                </Form.Group>
+                            ) : null}
                             <div className="text-center">
                                 <Button
                                     onClick={() => onToggleModal(false)}
@@ -215,11 +240,13 @@ const LeadFormModal = ({
 
 const mapDispatchToProps = {
     getStatuses,
+    getLocations,
 };
 
 const mapStateToProps = (state) =>({
     isLoading: isLoadingSelector(state),
     statuses: statusesState()(state),
+    locations: locationsSelector(state)
 });
 
 

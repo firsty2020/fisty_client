@@ -1,6 +1,7 @@
 import Projects from './Projects';
 import ProjectDetails from '../admin/Project/ProjectDetails';
 import NotificationsList from './NotificationsList';
+import Leads from '../admin/Lead/Lead';
 
 
 const recruiterRoutes = [
@@ -18,6 +19,11 @@ const recruiterRoutes = [
         path: '/recruiter/notifications',
         component: NotificationsList,
         name: 'Уведомления'
+    },
+    {
+        path: '/recruiter/leads',
+        component: Leads,
+        name: 'Лиды'
     },
 
 ];

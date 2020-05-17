@@ -12,6 +12,12 @@ const recruiterNavigation =  {
             url: '/recruiter/projects',
             matcher: '/projects'
         },
+        {
+            name: 'Лиды',
+            icon: 'UserCheck',
+            url: '/recruiter/leads',
+            matcher: '/leads',
+        },
 
     ],
     bottom: [
