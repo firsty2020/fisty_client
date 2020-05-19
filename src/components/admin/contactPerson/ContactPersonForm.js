@@ -35,7 +35,7 @@ const fillForm = (initialValues, contactPerson, roles) => {
         values[key] = contactPerson[key];
     }
     values.gender = genderOptions.find(option => option.value === contactPerson.gender);
-    values.role = generateSelectOptions(roles, 'url', 'name').find(role => role.value === contactPerson.role);
+    values.role = generateSelectOptions((roles || {}).results, 'url', 'name').find(role => role.value === contactPerson.role);
     return values;
 };
 
@@ -135,7 +135,7 @@ const ContactPersonForm = ({
                             <DropDown
                                 type="text"
                                 name="role"
-                                options={generateSelectOptions(roles, 'url', 'name')}
+                                options={generateSelectOptions((roles || {}).results, 'url', 'name')}
                                 placeholder="Выберите роль"
                                 value={values.role}
                                 onBlur={(e) => setFieldTouched('role', e)}

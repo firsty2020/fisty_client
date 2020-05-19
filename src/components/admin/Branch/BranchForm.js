@@ -63,15 +63,15 @@ const BranchForm = ({
     }, [ getLocations, getContactPersons, match.params.companyId ]);
 
     useEffect(() => {
-        if (locations && locations.length) {
-            setLocationsOptions(generateSelectOptions(locations, 'url', 'name'));
+        if (locations && locations.results) {
+            setLocationsOptions(generateSelectOptions((locations || {}).results, 'url', 'name'));
         }
     }, [ locations ]);
 
     useEffect(() => {
-        if (contactPersons && contactPersons.length) {
+        if (contactPersons && contactPersons.results) {
             setContactPersonOptions(generateSelectOptions(
-                contactPersons,
+                (contactPersons || {}).results,
                 'url',
                 (item) => item.first_name + ' ' + item.last_name)
             );
@@ -143,11 +143,11 @@ const BranchForm = ({
                                 <span className="mt-1 invalid-feedback-visible">{errors.address}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">Местонахождение *</p>
+                        <p className="form-control-label">Локация *</p>
                         <Form.Group>
                             <DropDown
                                 name="location"
-                                placeholder="Введите местонахождение"
+                                placeholder="Введите Локацию"
                                 value={values.location}
                                 options={locationsOptions}
                                 onBlur={(e) => setFieldTouched('location', e)}

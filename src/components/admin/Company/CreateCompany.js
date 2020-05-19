@@ -148,13 +148,13 @@ const CreateCompany = ({
                                 <span className="mt-1 invalid-feedback-visible">{errors.source}</span>
                             ) : null}
                         </Form.Group>
-                        <p className="form-control-label">Отрасль </p>
+                        <p className="form-control-label">Отрасль *</p>
                         <Form.Group>
                             <DropDown
                                 name="industry"
                                 value={values.industry}
                                 placeholder="Выберите из списка"
-                                options={generateSelectOptions(industryOptions, 'url', 'name')}
+                                options={generateSelectOptions((industryOptions || {}).results, 'url', 'name')}
                                 onBlur={(e) => setFieldTouched('industry', e)}
                                 onChange={(e) => setFieldValue('industry', e)}
                             />
@@ -168,7 +168,7 @@ const CreateCompany = ({
                                 name="specification"
                                 value={values.specification}
                                 placeholder="Выберите из списка"
-                                options={generateSelectOptions(specificationOptions, 'url', 'name')}
+                                options={generateSelectOptions((specificationOptions || {}).results, 'url', 'name')}
                                 onBlur={(e) => setFieldTouched('specification', e)}
                                 onChange={(e) => setFieldValue('specification', e)}
                             />
