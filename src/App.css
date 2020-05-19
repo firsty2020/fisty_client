@@ -142,3 +142,7 @@ li.active span {
 .blue {
     color: #127cd8;
 }
+
+.select-status input {
+    height: 30px;
+}
