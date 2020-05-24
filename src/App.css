@@ -1,5 +1,7 @@
 @import "index.css";
 @import "../node_modules/react-tagsinput/react-tagsinput.css";
+@import "../node_modules/react-datepicker/dist/react-datepicker.css";
+
 
 @font-face {
     font-family: "icomoon";

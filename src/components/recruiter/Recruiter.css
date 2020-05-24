@@ -44,3 +44,11 @@
 .link:hover {
     text-decoration: underline;
 }
+
+label[data-browse] {
+    z-index: 0!important;
+}
+
+.datepicker-container .react-datepicker-wrapper {
+    width: 100%;
+}

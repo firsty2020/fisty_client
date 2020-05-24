@@ -7,12 +7,12 @@ import { Formik } from 'formik';
 
 
 const dateFormatOptions = [
-    { value: '%Y-%m-%d', label: 'YYYY-MM-DD', },
-    { value: '%Y/%m/%d', label: 'YYYY/MM/DD', },
-    { value: '%d-%m-%Y', label: 'DD-MM-YYYY', },
-    { value: '%d/%m/%Y', label: 'DD/MM/YYYY', },
-    { value: '%d-%m-%y', label: 'DD-MM-YY', },
-    { value: '%d/%m/%y', label: 'DD/MM/YY', },
+    { value: '%Y-%m-%d', label: 'yyyy-MM-dd', },
+    { value: '%Y/%m/%d', label: 'yyyy/MM/dd', },
+    { value: '%d-%m-%Y', label: 'dd-MM-yyyy', },
+    { value: '%d/%m/%Y', label: 'dd/MM/yyyy', },
+    { value: '%d-%m-%y', label: 'dd-MM-yy', },
+    { value: '%d/%m/%y', label: 'dd/MM/YY', },
 ];
 
 
