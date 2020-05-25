@@ -12,7 +12,7 @@ const CreateButton = (props) => (
             <PlusCircle
                 size={20}
                 className="align-sub"
-            /> Создать
+            /> {props.text || 'Создать' }
         </Button>
     </div>
 );

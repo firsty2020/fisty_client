@@ -3,6 +3,7 @@ import ProjectDetails from '../admin/Project/ProjectDetails';
 import NotificationsList from './NotificationsList';
 import Leads from '../admin/Lead/Lead';
 import CreateCandidate from './CreateCandidate';
+import Candidates from './Candidates';
 
 
 const recruiterRoutes = [
@@ -30,6 +31,11 @@ const recruiterRoutes = [
         path: '/recruiter/leads',
         component: Leads,
         name: 'Лиды'
+    },
+    {
+        path: '/recruiter/candidates',
+        component: Candidates,
+        name: 'Кандидаты'
     },
 
 ];

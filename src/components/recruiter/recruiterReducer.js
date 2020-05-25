@@ -7,7 +7,8 @@ import {
     RECRUITER_ANSWERS_SUBMIT_RESOLVED,
     RECRUITER_CANDIDATE_CREATE,
     API_REQUEST,
-    API_REQUEST_END, RECRUITER_CANDIDATE_STATE_RESET
+    API_REQUEST_END, RECRUITER_CANDIDATE_STATE_RESET,
+    RECRUITER_CANDIDATE_GET
 } from '../../helpers/constants/actionTypes';
 
 
@@ -49,6 +50,9 @@ export const dashboard = (state = { questions: []}, action) => {
         case RECRUITER_CANDIDATE_CREATE:
             return { ...state, candidateCreated: true };
 
+        case RECRUITER_CANDIDATE_GET:
+            return { ...state, candidates: action.payload };
+
         case RECRUITER_CANDIDATE_STATE_RESET:
             return { ...state, candidateCreated: false };
 
@@ -62,3 +66,4 @@ export const submitAnswerPendingSelector = state => state.dashboard.answerSubmit
 export const thresholdPassedSelector = state => state.dashboard.thresholdPassed;
 
 export const candidateCreatedSelector = state => state.dashboard.candidateCreated;
+export const candidatesSelector = state => state.dashboard.candidates;

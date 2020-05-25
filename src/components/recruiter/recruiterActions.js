@@ -6,7 +6,10 @@ import {
     RECRUITER_ANSWERS_SUBMIT_RESOLVED,
     RECRUITER_ANSWERS_SUBMIT_FAILED,
     POST,
-    RECRUITER_CANDIDATE_CREATE, RECRUITER_CANDIDATE_STATE_RESET,
+    GET,
+    RECRUITER_CANDIDATE_CREATE,
+    RECRUITER_CANDIDATE_GET,
+    RECRUITER_CANDIDATE_STATE_RESET,
 } from '../../helpers/constants/actionTypes';
 import {createApiAction} from '../../helpers/utils';
 
@@ -44,6 +47,13 @@ export const createCandidate = (data) => createApiAction({
     method: POST,
     data,
     label: RECRUITER_CANDIDATE_CREATE,
+});
+
+export const getCandidates = (params) => createApiAction({
+    url: 'projects/candidates/',
+    method: GET,
+    data: params,
+    label: RECRUITER_CANDIDATE_GET,
 });
 
 export const resetCandidateState = () => ({

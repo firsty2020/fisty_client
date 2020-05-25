@@ -18,6 +18,12 @@ const recruiterNavigation =  {
             url: '/recruiter/leads',
             matcher: '/leads',
         },
+        {
+            name: 'Кандидаты',
+            icon: 'UserPlus',
+            url: '/recruiter/candidates',
+            matcher: '/candidates',
+        },
 
     ],
     bottom: [

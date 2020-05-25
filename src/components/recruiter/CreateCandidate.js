@@ -3,17 +3,16 @@ import { Container } from 'reactstrap';
 import { getDynamicFields } from '../admin/Config/DynamicFields/DynamicFieldsActions';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import {
-    dynamicFieldsSelector,
-    statusesState
-} from '../admin/Config/configsReducer';
+import { dynamicFieldsSelector } from '../admin/Config/configsReducer';
 import { Button, Form } from 'react-bootstrap';
-import {AlertNotice, DropDown, EmptyListPlaceholder} from '../ui';
+import { AlertNotice, CheckBox, DropDown, EmptyListPlaceholder } from '../ui';
 import {
     autoToggleAlert,
-    copyObject, generateSelectOptions,
+    clearEmptyFields,
+    copyObject,
+    generateSelectOptions,
     toBase64,
-    transformReactSelectFields
+    transformReactSelectFields,
 } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -22,10 +21,9 @@ import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import { leadsSelector } from '../admin/adminReducer';
 import { getLeads } from '../admin/adminActions';
-import { getStatuses } from '../admin/Config/configsActions';
 import { baseURL } from '../../axios';
 import { isLoadingSelector } from '../common/commonReducer';
-import {createCandidate, resetCandidateState} from './recruiterActions';
+import { createCandidate, resetCandidateState } from './recruiterActions';
 import { When } from 'react-if';
 import { candidateCreatedSelector } from './recruiterReducer';
 import Messages from '../../helpers/constants/messages'
@@ -70,10 +68,8 @@ const CreateCandidate = ({
                              dynamicFields,
                              leads,
                              created,
-                             statuses,
                              getDynamicFields,
                              getLeads,
-                             getStatuses,
                              createCandidate,
                              push,
                              resetCandidateState,
@@ -86,8 +82,7 @@ const CreateCandidate = ({
     useEffect(() => {
         getDynamicFields({ project: match.params.projectId, show_all: true }, 'projects/custom-fields');
         getLeads({ show_all: true });
-        getStatuses({ show_all: true });
-    }, [ getDynamicFields, match.params.projectId, getLeads, getStatuses ]);
+    }, [ getDynamicFields, match.params.projectId, getLeads ]);
 
     useEffect(() => {
         if (created) {
@@ -107,18 +102,20 @@ const CreateCandidate = ({
     const orderedDynamicFields = dynamicFields.results.sort((a, b) => a.position - b.position);
 
     const initialValues = dynamicFields.results.reduce((acc, curr) => {
-        acc = { ...acc, [curr.name]: '' };
-        return acc;
-    }, { lead: '', status: '' });
+            acc = { ...acc, [curr.name]: '' };
+            return acc;
+        },
+        { lead: '', });
 
     const validationSchemaShape =  dynamicFields.results.reduce((acc, curr) => {
-        acc = { ...acc,
-            [curr.name]: Yup.string()
-                .when('test',
-                    (_, schema) =>  curr.is_required ? schema.required(Messages.FIELD_REQUIRED) : schema),
-        }
-        return acc;
-    }, { lead: Yup.string().required(Messages.FIELD_REQUIRED), status: Yup.string().required(Messages.FIELD_REQUIRED) });
+            acc = { ...acc,
+                [curr.name]: Yup.string()
+                    .when('test',
+                        (_, schema) =>  curr.is_required ? schema.required(Messages.FIELD_REQUIRED) : schema),
+            }
+            return acc;
+        },
+        { lead: Yup.string() });
 
 
     const handleFileInput = async (e, { field_configuration, name }, { setFieldValue, setFieldError }) => {
@@ -139,6 +136,17 @@ const CreateCandidate = ({
         return allowedExtensions.includes(fileExt);
     };
 
+    const handleLeadChange = (e, setFieldValue) => {
+        setFieldValue('lead', e);
+        // const lead = leads.results.find(({ url }) => url === e.value);
+        // TODO: match dynamic form fields
+    };
+
+    const toggleShowLeads = (setFieldValue, value = false) => {
+        setFieldValue('show_leads', !value);
+        setFieldValue('lead', '');
+    }
+
     return (
         <div>
             <When condition={!!successMessage}>
@@ -156,7 +164,7 @@ const CreateCandidate = ({
                         let data = copyObject(values);
                         const choiceFields = orderedDynamicFields
                             .filter((field) => field.field_type === 'choice')
-                            .map(field => field.name).concat([ 'lead', 'status' ]);
+                            .map(field => field.name).concat([ 'lead' ]);
 
                         const dateFields = orderedDynamicFields
                             .filter((field) => field.field_type === 'date')
@@ -171,11 +179,12 @@ const CreateCandidate = ({
                         });
 
                         data = transformReactSelectFields(choiceFields, data);
+                        data = clearEmptyFields(data);
                         data.project = `${baseURL}projects/${match.params.projectId}/`;
 
-                        const { lead, status, project, ...form_data } = data;
+                        const { lead, show_leads, project, ...form_data } = data;
 
-                        createCandidate({ lead, status, project, form_data })
+                        createCandidate({ lead, project, form_data })
                     }}
                 >
                     {({
@@ -190,34 +199,36 @@ const CreateCandidate = ({
                           setFieldError,
                       }) => (
                         <Form onSubmit={handleSubmit}>
-                            <p className="form-control-label">Лид</p>
                             <Form.Group>
-                                <DropDown
-                                    name="lead"
-                                    placeholder="Выберите из списка"
-                                    value={values.lead}
-                                    onBlur={(e) => setFieldTouched('lead', e)}
-                                    onChange={(e) => setFieldValue('lead', e)}
-                                    options={generateSelectOptions((leads || {}).results, 'url', ({ first_name, last_name }) => `${first_name} ${last_name}`)}
+                                <CheckBox
+                                    label="Выбрать из списка лидов"
+                                    custom
+                                    name="show_leads"
+                                    value={values.show_leads}
+                                    onBlur={(e) => setFieldTouched('show_leads', e)}
+                                    onChange={(e) => toggleShowLeads(setFieldValue, values.show_leads)}
                                 />
                                 {touched.lead && errors.lead ? (
                                     <span className="mt-1 invalid-feedback-visible">{errors.lead}</span>
                                 ) : null}
                             </Form.Group>
-                            <p className="form-control-label">Статус</p>
-                            <Form.Group>
-                                <DropDown
-                                    name="status"
-                                    placeholder="Выберите из списка"
-                                    value={values.status}
-                                    onBlur={(e) => setFieldTouched('status', e)}
-                                    onChange={(e) => setFieldValue('status', e)}
-                                    options={generateSelectOptions((statuses || {}).results, 'url', 'name')}
-                                />
-                                {touched.status && errors.status ? (
-                                    <span className="mt-1 invalid-feedback-visible">{errors.status}</span>
-                                ) : null}
-                            </Form.Group>
+                            {values.show_leads ? (
+                                <Form.Group>
+                                    <p className="form-control-label">Лид</p>
+                                    <DropDown
+                                        isClearable
+                                        name="lead"
+                                        placeholder="Выберите из списка"
+                                        value={values.lead}
+                                        onBlur={(e) => setFieldTouched('lead', e)}
+                                        onChange={(e) => handleLeadChange(e, setFieldValue)}
+                                        options={generateSelectOptions((leads || {}).results, 'url', ({ first_name, last_name }) => `${first_name} ${last_name}`)}
+                                    />
+                                    {touched.lead && errors.lead ? (
+                                        <span className="mt-1 invalid-feedback-visible">{errors.lead}</span>
+                                    ) : null}
+                                </Form.Group>
+                            ) : null}
                             {orderedDynamicFields
                                 .map(({ url, field_type, display_name, placeholder, name, field_configuration }) => {
                                     return (
@@ -317,7 +328,6 @@ const CreateCandidate = ({
 const mapStateToProps = state => ({
     dynamicFields: dynamicFieldsSelector(state),
     leads: leadsSelector(state),
-    statuses: statusesState()(state),
     isLoading: isLoadingSelector(state),
     created: candidateCreatedSelector(state),
 });
@@ -325,7 +335,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getDynamicFields,
     getLeads,
-    getStatuses,
     createCandidate,
     push,
     resetCandidateState,
