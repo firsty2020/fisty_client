@@ -304,7 +304,7 @@ const CreateCandidate = ({
                                 })
                             }
                             <div className="text-center">
-                                <Link to={'/admin/companies'}>
+                                <Link to={`/recruiter/projects`}>
                                     <Button
                                         className="mr-2"
                                         variant="secondary">Отменить
