@@ -4,7 +4,7 @@ import { range } from '../helpers/utils';
 
 const Pagination = ({ data, uid, action }) => {
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 15;
 
     if (!data || !data.count || data.count <= itemsPerPage) return null;
 

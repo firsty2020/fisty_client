@@ -27,6 +27,7 @@ import { createCandidate, resetCandidateState } from './recruiterActions';
 import { When } from 'react-if';
 import { candidateCreatedSelector } from './recruiterReducer';
 import Messages from '../../helpers/constants/messages'
+import { getUserFromToken } from '../auth/auth';
 
 registerLocale('ru', ru)
 setDefaultLocale('ru');
@@ -76,7 +77,6 @@ const CreateCandidate = ({
                          }) => {
 
     const [ fileTitles, setFileTitles ] = useState({});
-
     const [ successMessage, setSuccessMessage ] = useState('');
 
     useEffect(() => {
@@ -88,9 +88,9 @@ const CreateCandidate = ({
         if (created) {
             resetCandidateState();
             autoToggleAlert('Кандидат успешно добавлен', setSuccessMessage);
-            setTimeout(() => push('/recruiter/candidates'), 2000);
+            setTimeout(() => push(`/${role}/candidates`), 2000);
         }
-    }, [ created, push ]);
+    }, [ created, push, resetCandidateState ]);
 
 
     if (!dynamicFields) {
@@ -145,7 +145,9 @@ const CreateCandidate = ({
     const toggleShowLeads = (setFieldValue, value = false) => {
         setFieldValue('show_leads', !value);
         setFieldValue('lead', '');
-    }
+    };
+
+    const role = (getUserFromToken() || {}).role;
 
     return (
         <div>
@@ -304,7 +306,7 @@ const CreateCandidate = ({
                                 })
                             }
                             <div className="text-center">
-                                <Link to={`/recruiter/projects`}>
+                                <Link to={role === 'admin' ? `/${role}/candidates` : `/${role}/projects` }>
                                     <Button
                                         className="mr-2"
                                         variant="secondary">Отменить

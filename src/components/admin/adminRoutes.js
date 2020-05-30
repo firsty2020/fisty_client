@@ -34,6 +34,8 @@ import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
 import Statuses from './Config/Statuses/Statuses';
 import Leads from './Lead/Lead';
+import Candidates from '../recruiter/Candidates';
+import CreateCandidate from '../recruiter/CreateCandidate';
 
 
 
@@ -267,6 +269,16 @@ const adminRoutes = [
         path: '/admin/configs/statuses',
         component: Statuses,
         name: 'Статусы'
+    },
+    {
+        path: '/admin/projects/:projectId/create-candidate',
+        component: CreateCandidate,
+        name: 'Кандидат'
+    },
+    {
+        path: '/admin/candidates',
+        component: Candidates,
+        name: 'Кандидаты'
     },
 ];
 

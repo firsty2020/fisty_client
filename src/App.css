@@ -148,3 +148,7 @@ li.active span {
 .select-status input {
     height: 30px;
 }
+
+.filter-dropdown {
+    min-width: 250px;
+}

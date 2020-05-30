@@ -52,7 +52,3 @@ label[data-browse] {
 .datepicker-container .react-datepicker-wrapper {
     width: 100%;
 }
-
-.filter-dropdown {
-    min-width: 250px;
-}

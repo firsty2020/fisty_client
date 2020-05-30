@@ -3,11 +3,15 @@ import { DropDown } from '../ui';
 import {extractIdFromUrl, generateSelectOptions} from '../../helpers/utils';
 import { Button, Modal } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import { getUserFromToken } from '../auth/auth';
 
 
 const SelectProjectModal = ({ projects, toggleModal }) => {
 
     const [ project, setProject ] = useState(null);
+
+    const role = (getUserFromToken() || {}).role;
+
 
     return (
         <Modal
@@ -32,7 +36,7 @@ const SelectProjectModal = ({ projects, toggleModal }) => {
                 onClick={() => toggleModal(false)}
                 variant="secondary" >Отменить
             </Button>
-            <Link to={`/recruiter/projects/${extractIdFromUrl((project || {}).value)}/create-candidate`}>
+            <Link to={`/${role}/projects/${extractIdFromUrl((project || {}).value)}/create-candidate`}>
                 <Button
                     disabled={!project}
                     variant="warning"
