@@ -34,8 +34,8 @@ import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
 import Statuses from './Config/Statuses/Statuses';
 import Leads from './Lead/Lead';
-import Candidates from '../recruiter/Candidates';
-import CreateCandidate from '../recruiter/CreateCandidate';
+import Candidates from '../common/candidates/Candidates';
+import CreateCandidate from '../common/candidates/CreateCandidate';
 
 
 

@@ -5,13 +5,7 @@ import {
     RECRUITER_ANSWERS_SUBMIT_PENDING,
     RECRUITER_ANSWERS_SUBMIT_RESOLVED,
     RECRUITER_ANSWERS_SUBMIT_FAILED,
-    POST,
-    GET,
-    RECRUITER_CANDIDATE_CREATE,
-    RECRUITER_CANDIDATE_GET,
-    RECRUITER_CANDIDATE_STATE_RESET,
 } from '../../helpers/constants/actionTypes';
-import {createApiAction} from '../../helpers/utils';
 
 
 export const loadQuestionsPending = () => ({
@@ -40,22 +34,4 @@ export const submitAnswersResolved = (questions) => ({
 export const submitAnswersFailed = (error) => ({
     type: RECRUITER_ANSWERS_SUBMIT_FAILED,
     payload: error,
-});
-
-export const createCandidate = (data) => createApiAction({
-    url: 'projects/candidates/',
-    method: POST,
-    data,
-    label: RECRUITER_CANDIDATE_CREATE,
-});
-
-export const getCandidates = (params) => createApiAction({
-    url: 'projects/candidates/',
-    method: GET,
-    data: params,
-    label: RECRUITER_CANDIDATE_GET,
-});
-
-export const resetCandidateState = () => ({
-    type: RECRUITER_CANDIDATE_STATE_RESET,
 });

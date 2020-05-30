@@ -7,15 +7,17 @@ import {
     GET_APPLICATIONS,
     GET_VACANCIES,
     GET_VACANCY,
-    NOTIFICATION_PATCH, NOTIFICATIONS_GET,
+    NOTIFICATION_PATCH,
+    NOTIFICATIONS_GET,
+    COMMON_CANDIDATE_CREATE,
+    COMMON_CANDIDATE_GET, COMMON_CANDIDATE_STATE_RESET,
     REMOVE_VACANCY,
     SET_VACANCY_CREATED,
     SET_VACANCY_REMOVED,
     SET_VACANCY_UPDATED,
     UPDATE_VACANCY,
 } from '../../helpers/constants/actionTypes';
-import {createSelector} from 'reselect';
-import {contactPersonsSelector} from '../admin/adminReducer';
+import { createSelector } from 'reselect';
 
 
 export const common = (state = {}, action) => {
@@ -75,6 +77,15 @@ export const common = (state = {}, action) => {
         case NOTIFICATION_PATCH:
             return { ...state, notificationUpdated: true };
 
+        case COMMON_CANDIDATE_CREATE:
+            return { ...state, candidateCreated: true };
+
+        case COMMON_CANDIDATE_GET:
+            return { ...state, candidates: action.payload };
+
+        case COMMON_CANDIDATE_STATE_RESET:
+            return { ...state, candidateCreated: false };
+
         default:
             return state;
     }
@@ -105,4 +116,7 @@ export const notificationsState = (uid = null) => createSelector(
         return notifications;
     }
 );
+
 export const notificationUpdatedSelector = state => state.common.notificationUpdated;
+export const candidateCreatedSelector = state => state.common.candidateCreated;
+export const candidatesSelector = state => state.common.candidates;

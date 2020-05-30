@@ -2,8 +2,8 @@ import Projects from './Projects';
 import ProjectDetails from '../admin/Project/ProjectDetails';
 import NotificationsList from './NotificationsList';
 import Leads from '../admin/Lead/Lead';
-import CreateCandidate from './CreateCandidate';
-import Candidates from './Candidates';
+import CreateCandidate from '../common/candidates/CreateCandidate';
+import Candidates from '../common/candidates/Candidates';
 
 
 const recruiterRoutes = [

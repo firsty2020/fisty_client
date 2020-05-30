@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { Container } from 'reactstrap';
-import { getDynamicFields } from '../admin/Config/DynamicFields/DynamicFieldsActions';
+import { getDynamicFields } from '../../admin/Config/DynamicFields/DynamicFieldsActions';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { dynamicFieldsSelector } from '../admin/Config/configsReducer';
+import { dynamicFieldsSelector } from '../../admin/Config/configsReducer';
 import { Button, Form } from 'react-bootstrap';
-import { AlertNotice, CheckBox, DropDown, EmptyListPlaceholder } from '../ui';
+import { AlertNotice, CheckBox, DropDown, EmptyListPlaceholder } from '../../ui';
 import {
     autoToggleAlert,
     clearEmptyFields,
@@ -13,21 +13,21 @@ import {
     generateSelectOptions,
     toBase64,
     transformReactSelectFields,
-} from '../../helpers/utils';
+} from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-import { leadsSelector } from '../admin/adminReducer';
-import { getLeads } from '../admin/adminActions';
-import { baseURL } from '../../axios';
-import { isLoadingSelector } from '../common/commonReducer';
-import { createCandidate, resetCandidateState } from './recruiterActions';
+import { leadsSelector } from '../../admin/adminReducer';
+import { getLeads } from '../../admin/adminActions';
+import { baseURL } from '../../../axios';
+import { isLoadingSelector } from '../commonReducer';
+import { createCandidate, resetCandidateState } from '../commonActions';
 import { When } from 'react-if';
-import { candidateCreatedSelector } from './recruiterReducer';
-import Messages from '../../helpers/constants/messages'
-import { getUserFromToken } from '../auth/auth';
+import { candidateCreatedSelector } from '../commonReducer';
+import Messages from '../../../helpers/constants/messages'
+import { getUserFromToken } from '../../auth/auth';
 
 registerLocale('ru', ru)
 setDefaultLocale('ru');

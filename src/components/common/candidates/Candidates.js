@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getCandidates } from './recruiterActions';
-import { CreateButton, DropDown, TableList } from '../ui';
-import { candidatesSelector } from './recruiterReducer';
-import { extractIdFromUrl, generateSelectOptions } from '../../helpers/utils';
-import { getProjects } from '../admin/adminActions';
-import { projectsSelector } from '../admin/adminReducer';
-import SelectProjectModal from './SelectProjectModal';
-import Pagination from '../Pagination';
+import { getCandidates } from '../commonActions';
+import { CreateButton, DropDown, TableList } from '../../ui';
+import { candidatesSelector } from '../commonReducer';
+import { extractIdFromUrl, generateSelectOptions } from '../../../helpers/utils';
+import { getProjects } from '../../admin/adminActions';
+import { projectsSelector } from '../../admin/adminReducer';
+import SelectProjectModal from '../../recruiter/SelectProjectModal';
+import Pagination from '../../Pagination';
 
 
 const candidatesTableLayout = {
