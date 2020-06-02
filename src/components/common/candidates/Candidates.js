@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getCandidates } from '../commonActions';
@@ -9,6 +9,7 @@ import { getProjects } from '../../admin/adminActions';
 import { projectsSelector } from '../../admin/adminReducer';
 import SelectProjectModal from '../../recruiter/SelectProjectModal';
 import Pagination from '../../Pagination';
+import { push } from 'connected-react-router';
 
 
 const candidatesTableLayout = {
@@ -25,7 +26,14 @@ const candidatesTableLayout = {
 };
 
 
-const Candidates = ({ candidates, projects, getCandidates, getProjects }) => {
+const Candidates = ({
+                        candidates,
+                        projects,
+                        match,
+                        getCandidates,
+                        getProjects,
+                        push,
+                    }) => {
 
     const [ isCreating, setIsCreating ] = useState(false);
     const [ projectFilter, setProjectFilter ] = useState(null);
@@ -65,8 +73,8 @@ const Candidates = ({ candidates, projects, getCandidates, getProjects }) => {
                         options={generateSelectOptions((projects || {}).results, 'url', 'name')}
                     />
                 </div>
-
                 <TableList
+                    onClickRow={({ url }) => push(`${match.url}/${extractIdFromUrl(url)}`)}
                     layout={candidatesTableLayout}
                     data={(candidates || {}).results}/>
                 <Pagination
@@ -88,6 +96,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     getCandidates,
     getProjects,
+    push,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Candidates);

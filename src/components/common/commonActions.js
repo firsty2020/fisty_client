@@ -15,9 +15,10 @@ import {
     SET_VACANCY_UPDATED,
     UPDATE_VACANCY,
     NOTIFICATION_PATCH,
-    ADMIN_GET_CONTACT_PERSONS,
     COMMON_CANDIDATE_CREATE,
-    COMMON_CANDIDATE_GET, COMMON_CANDIDATE_STATE_RESET,
+    COMMON_CANDIDATES_GET,
+    COMMON_CANDIDATE_STATE_RESET,
+    COMMON_CANDIDATE_GET,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -117,6 +118,13 @@ export const createCandidate = (data) => createApiAction({
 
 export const getCandidates = (params) => createApiAction({
     url: 'projects/candidates/',
+    method: GET,
+    data: params,
+    label: COMMON_CANDIDATES_GET,
+});
+
+export const getCandidate = (id,params) => createApiAction({
+    url: `projects/candidates/${id}/`,
     method: GET,
     data: params,
     label: COMMON_CANDIDATE_GET,

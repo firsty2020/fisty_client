@@ -4,6 +4,7 @@ import NotificationsList from './NotificationsList';
 import Leads from '../admin/Lead/Lead';
 import CreateCandidate from '../common/candidates/CreateCandidate';
 import Candidates from '../common/candidates/Candidates';
+import CandidateDetails from '../common/candidates/CandidateDetails';
 
 
 const recruiterRoutes = [
@@ -31,6 +32,11 @@ const recruiterRoutes = [
         path: '/recruiter/leads',
         component: Leads,
         name: 'Лиды'
+    },
+    {
+        path: '/recruiter/candidates/:candidateId',
+        component: CandidateDetails,
+        name: 'Детали кандидата'
     },
     {
         path: '/recruiter/candidates',

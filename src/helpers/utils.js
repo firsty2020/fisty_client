@@ -113,3 +113,8 @@ export const toBase64 = file => new Promise((resolve, reject) => {
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
 });
+
+export const sliceFromLastSlash = (url) => {
+    const i = url.lastIndexOf('/');
+    return (url.slice(0, i));
+}

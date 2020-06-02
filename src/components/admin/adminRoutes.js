@@ -36,6 +36,7 @@ import Statuses from './Config/Statuses/Statuses';
 import Leads from './Lead/Lead';
 import Candidates from '../common/candidates/Candidates';
 import CreateCandidate from '../common/candidates/CreateCandidate';
+import CandidateDetails from '../common/candidates/CandidateDetails';
 
 
 
@@ -274,6 +275,11 @@ const adminRoutes = [
         path: '/admin/projects/:projectId/create-candidate',
         component: CreateCandidate,
         name: 'Кандидат'
+    },
+    {
+        path: '/admin/candidates/:candidateId',
+        component: CandidateDetails,
+        name: 'Детали кандидата'
     },
     {
         path: '/admin/candidates',

@@ -16,7 +16,7 @@ const branchDetailsTableLayout = ({ id, name, address, location_name }) => [
 ];
 
 
-const BranchDetails = ({ match, branch, getBranch, getContactPersons }) => {
+const BranchDetails = ({ match, branch, getBranch }) => {
 
     
     useEffect(() => {
