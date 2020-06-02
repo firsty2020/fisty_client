@@ -29,7 +29,7 @@ const TableList = ({
             <Table
                 hover
                 striped
-                responsive
+                responsive="lg"
             >
                 <thead>
                 <tr>
