@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { getCandidates } from '../commonActions';
-import { CreateButton, DropDown, TableList } from '../../ui';
-import { candidatesSelector } from '../commonReducer';
-import { extractIdFromUrl, generateSelectOptions } from '../../../helpers/utils';
+import {
+    deleteCandidate,
+    getCandidates,
+    resetCandidateState
+} from '../commonActions';
+import {
+    AlertNotice,
+    ConfirmationModal,
+    CreateButton,
+    DropDown,
+    TableList
+} from '../../ui';
+import {candidateDeletedSelector, candidatesSelector} from '../commonReducer';
+import {
+    autoToggleAlert,
+    extractIdFromUrl,
+    generateSelectOptions
+} from '../../../helpers/utils';
 import { getProjects } from '../../admin/adminActions';
 import { projectsSelector } from '../../admin/adminReducer';
 import SelectProjectModal from '../../recruiter/SelectProjectModal';
 import Pagination from '../../Pagination';
 import { push } from 'connected-react-router';
+import { When } from 'react-if';
 
 
 const candidatesTableLayout = {
     headings: [
-        '#', 'Лид', 'Проект',
+        '#', 'Лид', 'Проект', 'Действия'
     ],
     createRow: ({ url, lead_details, project_details }) => [
         extractIdFromUrl(url),
@@ -30,18 +45,38 @@ const Candidates = ({
                         candidates,
                         projects,
                         match,
+                        deleted,
                         getCandidates,
+                        deleteCandidate,
+                        resetCandidateState,
                         getProjects,
                         push,
                     }) => {
 
     const [ isCreating, setIsCreating ] = useState(false);
     const [ projectFilter, setProjectFilter ] = useState(null);
+    const [ candidateToDelete, setCandidateToDelete ] = useState(null);
+    const [ successMessage, setSuccessMessage ] = useState('');
 
     useEffect(() => {
         getCandidates();
         getProjects({ show_all: true });
     }, [ getCandidates, getProjects ]);
+
+    useEffect(() => {
+        if (deleted) {
+            getCandidates({ project: extractIdFromUrl(projectFilter.value)});
+            resetCandidateState();
+            autoToggleAlert('Кандидат успешно удален', setSuccessMessage);
+        }
+    },[
+            deleted,
+            projectFilter,
+            getCandidates,
+            getProjects,
+            resetCandidateState,
+        ]
+    );
     
     const handleProjectFilter = e => {
         let filterParams;
@@ -52,13 +87,29 @@ const Candidates = ({
         setProjectFilter(e);
     }
 
+    const handleDeleteCandidate = () => {
+        deleteCandidate(candidateToDelete);
+        setCandidateToDelete(null);
+    }
+
     return (
         <div>
-            {isCreating ? (
+            <When condition={!!successMessage}>
+                <AlertNotice type="success" message={successMessage}/>
+            </When>
+            <When condition={!!isCreating}>
                 <SelectProjectModal
                     toggleModal={setIsCreating}
                     projects={(projects || {}).results}/>
-            ) : null}
+            </When>
+            <When condition={!!candidateToDelete}>
+                <ConfirmationModal
+                    show={!!candidateToDelete}
+                    question={'Вы уверены, что хотите удалить этого кандидата?'}
+                    onConfirm={() => handleDeleteCandidate()}
+                    onCancel={() => setCandidateToDelete(null)}
+                />
+            </When>
             <Container>
                 <div className="d-flex justify-content-between">
                     <CreateButton
@@ -74,6 +125,7 @@ const Candidates = ({
                     />
                 </div>
                 <TableList
+                    onDeleteItem={({ url }) => setCandidateToDelete(extractIdFromUrl(url))}
                     onClickRow={({ url }) => push(`${match.url}/${extractIdFromUrl(url)}`)}
                     layout={candidatesTableLayout}
                     data={(candidates || {}).results}/>
@@ -91,11 +143,14 @@ const Candidates = ({
 const mapStateToProps = (state) => ({
     candidates: candidatesSelector(state),
     projects: projectsSelector(state),
+    deleted: candidateDeletedSelector(state),
 });
 
 const mapDispatchToProps = {
     getCandidates,
+    deleteCandidate,
     getProjects,
+    resetCandidateState,
     push,
 };
 

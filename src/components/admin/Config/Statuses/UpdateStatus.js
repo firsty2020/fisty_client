@@ -2,7 +2,7 @@ import React from 'react';
 import StatusFormModal from './StatusFormModal';
 import { connect } from 'react-redux';
 import { updateStatus } from '../configsActions';
-import {copyObject, extractIdFromUrl} from '../../../../helpers/utils';
+import { extractIdFromUrl } from '../../../../helpers/utils';
 
 const UpdateStatus = ({ updateStatus, status, onToggleModal }) => {
 

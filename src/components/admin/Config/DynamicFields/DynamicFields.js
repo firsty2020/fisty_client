@@ -42,7 +42,7 @@ const DynamicFields = ({
             toggleSuccessAlert('Вы успешно удалили поле');
             getDynamicFields();
         }
-    }, [ removed ]);
+    }, [ removed, resetDynamicFieldRemoved, getDynamicFields ]);
 
     const handleModalClose = (successMessage) => {
         if (successMessage) {
@@ -63,7 +63,7 @@ const DynamicFields = ({
         setDynamicFieldToRemove(null);
     };
 
-    const { companyId, applicationId, vacancyId, projectId } = match.params;
+    const { projectId } = match.params;
 
     const generateBackPath = () => {
         if (projectId) {

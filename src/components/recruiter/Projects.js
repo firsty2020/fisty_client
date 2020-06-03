@@ -5,8 +5,6 @@ import { projectsSelector } from '../admin/adminReducer';
 import { getProjects } from '../admin/adminActions';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Link }from 'react-router-dom';
-
 
 
 const Projects = ({ match, projects, getProjects, push }) => {
@@ -19,7 +17,7 @@ const Projects = ({ match, projects, getProjects, push }) => {
         headings: [
             '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'деиствия'
         ],
-        createRow: ({ id, name, completed_targeted_actions_count, target_action_amount }, index) => [
+        createRow: ({ id, name, completed_targeted_actions_count, target_action_amount }) => [
             id,
             name,
             completed_targeted_actions_count,

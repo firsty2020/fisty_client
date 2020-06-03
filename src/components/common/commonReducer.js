@@ -18,6 +18,7 @@ import {
     SET_VACANCY_UPDATED,
     UPDATE_VACANCY,
     COMMON_CANDIDATE_GET,
+    COMMON_CANDIDATE_DELETE,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -88,8 +89,11 @@ export const common = (state = {}, action) => {
         case COMMON_CANDIDATE_GET:
             return { ...state, candidate: action.payload };
 
+        case COMMON_CANDIDATE_DELETE:
+            return { ...state, candidateDeleted: true };
+
         case COMMON_CANDIDATE_STATE_RESET:
-            return { ...state, candidateCreated: false };
+            return { ...state, candidateCreated: false, candidateDeleted: false };
 
         default:
             return state;
@@ -124,5 +128,6 @@ export const notificationsState = (uid = null) => createSelector(
 
 export const notificationUpdatedSelector = state => state.common.notificationUpdated;
 export const candidateCreatedSelector = state => state.common.candidateCreated;
+export const candidateDeletedSelector = state => state.common.candidateDeleted;
 export const candidatesSelector = state => state.common.candidates;
 export const candidateSelector = state => state.common.candidate;
