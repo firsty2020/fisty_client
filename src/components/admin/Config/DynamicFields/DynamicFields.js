@@ -39,7 +39,7 @@ const DynamicFields = ({
     useEffect(() => {
         if (removed) {
             resetDynamicFieldRemoved();
-            toggleSuccessAlert('Вы успешно удалили поле');
+            toggleSuccessAlert('Вы успешно удалили поле', setShowSuccessAlert);
             getDynamicFields();
         }
     }, [ removed, resetDynamicFieldRemoved, getDynamicFields ]);
