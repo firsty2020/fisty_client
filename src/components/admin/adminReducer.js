@@ -27,6 +27,8 @@ import {
     ADMIN_LEAD_DELETE,
     ADMIN_LEAD_UPDATE,
     ADMIN_PROJECT_RECRUITERS_SET,
+    ADMIN_USER_DELETE,
+    ADMIN_USERS_STATE_RESET,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -47,6 +49,12 @@ const common = (state = {}, action) => {
 
         case ADMIN_GET_USERS:
             return { ...state, users: action.payload };
+
+        case ADMIN_USER_DELETE:
+            return { ...state, userDeleted: true };
+
+        case ADMIN_USERS_STATE_RESET:
+            return { ...state, userDeleted: false };
 
         case ADMIN_CREATE_CONTACT_PERSON:
             return { ...state, contactPersonCreated: true };
@@ -158,6 +166,7 @@ export const admin =  combineReducers({
 });
 
 export const usersSelector = (state) => state.admin.common.users;
+export const userDeletedSelector = (state) => state.admin.common.userDeleted;
 
 export const contactPersonCreatedSelector = state => state.admin.common.contactPersonCreated;
 

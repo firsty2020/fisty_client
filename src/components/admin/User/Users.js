@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { getUsers } from './usersActions';
 import { connect } from 'react-redux';
-import { usersSelector } from '../adminReducer';
-import { arrayOf, bool, func, shape, string } from 'prop-types';
+import { userDeletedSelector, usersSelector } from '../adminReducer';
 import { push } from 'connected-react-router';
-import { DropDown, TableList } from '../../ui';
+import { AlertNotice, ConfirmationModal, DropDown, TableList } from '../../ui';
 import Pagination from '../../Pagination';
-import { extractIdFromUrl } from '../../../helpers/utils';
+import { autoToggleAlert, extractIdFromUrl}  from '../../../helpers/utils';
+import { When } from 'react-if';
+import { deleteUser, resetUsersState } from './usersActions';
 
 
 const usersTableLayout = {
     headings: [
-        '#', 'Имя', 'Фамилия', 'Эл. Почта', 'Роль',
+        '#', 'Имя', 'Фамилия', 'Эл. Почта', 'Роль', 'Действия'
     ],
     createRow: (user, index) => [
         index + 1, user.first_name,  user.last_name, user.email, user.role,
@@ -29,9 +30,11 @@ const statusOptions = [
 ];
 
 
-const Users = ({ users, match, getUsers, push }) => {
+const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, push }) => {
 
     const [ status, setStatus ] = useState(statusOptions[statusOptions.length - 1]);
+    const [ userToDelete, setUserToDelete ] = useState(null);
+    const [ successMessage, setSuccessMessage ] = useState('');
 
     useEffect(() => {
         if (!status) {
@@ -47,8 +50,30 @@ const Users = ({ users, match, getUsers, push }) => {
         push(`/admin/users/${status.value}`);
     }, [ getUsers, push, status ]);
 
+    useEffect(() => {
+        if (!deleted) return;
+        resetUsersState();
+        getUsers({ status: match.params.status });
+        autoToggleAlert('Пользователь успешно удален', setSuccessMessage);
+    })
+
+    const handleDeleteUser = () => {
+        deleteUser(userToDelete);
+        setUserToDelete(null);
+    }
+
     return (
         <div>
+            <When condition={!!successMessage}>
+                <AlertNotice type="success" message={successMessage}/>
+            </When>
+            <When condition={!!userToDelete}>
+                <ConfirmationModal
+                    onConfirm={handleDeleteUser}
+                    question={"Вы уверены, что хотите удалить этого пользователя? Восстановить его будет невозможно."}
+                    onCancel={() => setUserToDelete(null)}
+                    show={!!userToDelete}/>
+            </When>
             <div className="mt-10-auto">
                 <Row>
                     <Col lg={4} md={4} sm={4}>
@@ -64,6 +89,7 @@ const Users = ({ users, match, getUsers, push }) => {
             </div>
             <div>
                 <TableList
+                    onDeleteItem={({ url }) => setUserToDelete(extractIdFromUrl(url))}
                     onClickRow={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}`)}
                     layout={usersTableLayout}
                     data={(users || {}).results}
@@ -80,30 +106,14 @@ const Users = ({ users, match, getUsers, push }) => {
 
 const mapStateToProps = state => ({
     users: usersSelector(state),
+    deleted: userDeletedSelector(state),
 });
 
-const mapDispatchToProps = { getUsers, push };
-
-
-Users.propTypes = {
-    users: shape({
-        results: arrayOf(shape(
-            {
-                first_name: string.isRequired,
-                last_name: string.isRequired,
-                email: string.isRequired,
-                role: string.isRequired,
-                phone_number: string.isRequired,
-                citizenship: string,
-                country: string,
-                city: string,
-            }
-        ))
-    }),
-    match: shape({ status: string }).isRequired,
-    getUsers: func.isRequired,
-    getUsersError: string,
-    getUsersPending: bool,
+const mapDispatchToProps = {
+    deleteUser,
+    getUsers,
+    resetUsersState,
+    push,
 };
 
 
