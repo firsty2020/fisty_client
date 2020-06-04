@@ -19,7 +19,7 @@ import { projectSchema } from '../../../helpers/schemas';
 import { isLoadingSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
 import { countriesOptions, extendedOptions } from '../../../helpers/utils';
-import { getUsers } from '../User/usersApi';
+import { getUsers } from '../User/usersActions';
 import { usersSelector } from '../adminReducer';
 
 

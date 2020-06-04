@@ -1,4 +1,4 @@
-import { ADMIN_GET_USERS } from '../../../helpers/constants/actionTypes';
+import { ADMIN_GET_USERS, GET } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
 
 
@@ -8,7 +8,7 @@ export const getUsers = (params) => {
     }
     return createApiAction({
         url: 'users/',
-        method: 'GET',
+        method: GET,
         data: params ,
         label: ADMIN_GET_USERS,
     });

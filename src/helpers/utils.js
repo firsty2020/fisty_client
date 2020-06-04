@@ -118,3 +118,6 @@ export const sliceFromLastSlash = (url) => {
     const i = url.lastIndexOf('/');
     return (url.slice(0, i));
 }
+
+export const capitalizeFirstLetter = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+

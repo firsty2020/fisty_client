@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { getUsers } from './usersApi';
+import { getUsers } from './usersActions';
 import { connect } from 'react-redux';
 import { usersSelector } from '../adminReducer';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { push } from 'connected-react-router';
 import { DropDown, TableList } from '../../ui';
 import Pagination from '../../Pagination';
+import { extractIdFromUrl } from '../../../helpers/utils';
 
 
 const usersTableLayout = {
     headings: [
         '#', 'Имя', 'Фамилия', 'Эл. Почта', 'Роль',
-        'Телефон', 'Гражданство', 'Страна', 'Город',
     ],
     createRow: (user, index) => [
         index + 1, user.first_name,  user.last_name, user.email, user.role,
-        user.phone_number, user.citizenship, user.country, user.city,
     ],
 };
 
@@ -65,6 +64,7 @@ const Users = ({ users, match, getUsers, push }) => {
             </div>
             <div>
                 <TableList
+                    onClickRow={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}`)}
                     layout={usersTableLayout}
                     data={(users || {}).results}
                 />

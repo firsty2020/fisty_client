@@ -1,4 +1,4 @@
-import UserList from './User/Users';
+import Users from './User/Users';
 import Companies from './Company/Companies';
 import CreateCompany from './Company/CreateCompany';
 import Roles from './Config/Roles/Roles';
@@ -37,6 +37,7 @@ import Leads from './Lead/Leads';
 import Candidates from '../common/candidates/Candidates';
 import CreateCandidate from '../common/candidates/CreateCandidate';
 import CandidateDetails from '../common/candidates/CandidateDetails';
+import UserDetails from './User/UserDetails';
 
 
 
@@ -48,8 +49,13 @@ const adminRoutes = [
     },
     {
         path: '/admin/users/:status',
-        component: UserList,
+        component: Users,
         name: 'Пользователи'
+    },
+    {
+        path: '/admin/user/:userId',
+        component: UserDetails,
+        name: 'Детали пользователя'
     },
     {
         path: '/admin/companies',
