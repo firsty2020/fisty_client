@@ -33,7 +33,7 @@ import ProjectDetails from './Project/ProjectDetails';
 import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
 import Statuses from './Config/Statuses/Statuses';
-import Leads from './Lead/Lead';
+import Leads from './Lead/Leads';
 import Candidates from '../common/candidates/Candidates';
 import CreateCandidate from '../common/candidates/CreateCandidate';
 import CandidateDetails from '../common/candidates/CandidateDetails';

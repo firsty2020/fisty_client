@@ -96,7 +96,7 @@ const Leads = ({
                 <ConfirmationModal
                     onConfirm={handleDeleteLead}
                     show={!!leadIdToDelete}
-                    question="Вы уверены, что хотите удалить этого лида?"
+                    question="Вы точно хотите удалить лид из системы? Восстановить его будет невозможно."
                     onCancel={() => setLeadIdToDelete(null)}/></When>
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/></When>
@@ -158,7 +158,7 @@ const Leads = ({
                                         <Trash
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                // setBranchIdToRemove(branch.id)
+                                                setLeadIdToDelete(extractIdFromUrl(lead.url))
                                             }}
                                             className="cursor-pointer"
                                             color="red"/>
