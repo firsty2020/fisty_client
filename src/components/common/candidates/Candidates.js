@@ -65,7 +65,9 @@ const Candidates = ({
 
     useEffect(() => {
         if (deleted) {
-            getCandidates({ project: extractIdFromUrl(projectFilter.value)});
+            const params = projectFilter ?
+                { project: extractIdFromUrl(projectFilter.value)} : '';
+            getCandidates(params);
             resetCandidateState();
             autoToggleAlert('Кандидат успешно удален', setSuccessMessage);
         }
