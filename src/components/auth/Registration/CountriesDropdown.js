@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, func } from 'prop-types';
 import { DropDown } from '../../ui';
-import { countriesOptions, extendedOptions} from '../../../helpers/utils';
+import { countriesOptions, extendedOptions } from '../../../helpers/utils';
 
 let options;
 const CountriesDropdown = ({

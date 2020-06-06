@@ -23,28 +23,12 @@ import {
 } from '../../../helpers/dates';
 import { isLoadingSelector } from '../../common/commonReducer';
 import { DropDown } from '../../ui';
+import { educationOptions, languageOptions, genderOptions } from '../../../helpers/utils';
 
 
 const monthsOptions = generateMonths();
 const yearsOptions = transFormDatesArray(generateYears());
 const daysOptions = transFormDatesArray(generateDays());
-
-const languageOptions = [
-    { value: 'Английский', label: 'Английский' },
-    { value: 'Русский', label: 'Русский' },
-];
-
-const genderOptions = [
-    { value: 'мужской', label: 'Мужской' },
-    { value: 'женский', label: 'Женский' },
-];
-
-const educationOptions = [
-    { value: 'начальное', label: 'Начальное' },
-    { value: 'среднее', label: 'Среднее' },
-    { value: 'высшее', label: 'Высшее' },
-];
-
 
 const CompleteRegistration = ({
                                   match,

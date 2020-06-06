@@ -1,6 +1,7 @@
 import {
     ADMIN_GET_USERS,
-    ADMIN_USER_DELETE, ADMIN_USERS_STATE_RESET,
+    ADMIN_USER_DELETE,
+    ADMIN_USERS_STATE_RESET,
     DELETE,
     GET,
 } from '../../../helpers/constants/actionTypes';

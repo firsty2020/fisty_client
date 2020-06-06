@@ -10,7 +10,7 @@ const adminNavigation =  {
             name: 'Пользователи',
             icon: 'Users',
             url: '/admin/users/all',
-            matcher: '/users'
+            matcher: '/user'
         },
         {
             name: 'Компании',

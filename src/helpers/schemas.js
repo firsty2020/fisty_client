@@ -40,7 +40,7 @@ export const completeRegistrationSchema = Yup.object().shape({
     education: Yup.string().required(ERROR_MESSAGES.EDUCATION_REQUIRED),
     languages: Yup.array(),
     gender: Yup.string().required(ERROR_MESSAGES.GENDER_REQUIRED),
-    accept: Yup.bool().oneOf([true], 'Вы должны принять условия'),
+    accept: Yup.bool().oneOf([ true ], 'Вы должны принять условия'),
 });
 
 

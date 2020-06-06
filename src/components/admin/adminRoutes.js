@@ -38,6 +38,7 @@ import Candidates from '../common/candidates/Candidates';
 import CreateCandidate from '../common/candidates/CreateCandidate';
 import CandidateDetails from '../common/candidates/CandidateDetails';
 import UserDetails from './User/UserDetails';
+import UpdateUser from './User/UpdateUser';
 
 
 
@@ -51,6 +52,11 @@ const adminRoutes = [
         path: '/admin/users/:status',
         component: Users,
         name: 'Пользователи'
+    },
+    {
+        path: '/admin/user/:userId/edit',
+        component: UpdateUser,
+        name: 'Детали пользователя'
     },
     {
         path: '/admin/user/:userId',

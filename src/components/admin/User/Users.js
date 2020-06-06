@@ -55,7 +55,7 @@ const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, p
         resetUsersState();
         getUsers({ status: match.params.status });
         autoToggleAlert('Пользователь успешно удален', setSuccessMessage);
-    })
+    }, [ deleted, match.params.status, resetUsersState, getUsers, setSuccessMessage ])
 
     const handleDeleteUser = () => {
         deleteUser(userToDelete);
@@ -89,6 +89,7 @@ const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, p
             </div>
             <div>
                 <TableList
+                    onEditItem={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}/edit`)}
                     onDeleteItem={({ url }) => setUserToDelete(extractIdFromUrl(url))}
                     onClickRow={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}`)}
                     layout={usersTableLayout}

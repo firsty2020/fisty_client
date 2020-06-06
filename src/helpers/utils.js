@@ -3,7 +3,6 @@ import { API_REQUEST } from './constants/actionTypes';
 
 export const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
-
 /**
  * @param url string like https://sheltered-meadow-55057.herokuapp.com/api/v0/industries/94/
  * @return string representation of id ('94')
@@ -98,6 +97,21 @@ export const extendedOptions = [
     { value: 'другое', label: 'другое'},
 ];
 
+export const educationOptions = [
+    { value: 'начальное', label: 'Начальное' },
+    { value: 'среднее', label: 'Среднее' },
+    { value: 'высшее', label: 'Высшее' },
+];
+
+export const languageOptions = [
+    { value: 'Английский', label: 'Английский' },
+    { value: 'Русский', label: 'Русский' },
+];
+
+export const genderOptions = [
+    { value: 'мужской', label: 'Мужской' },
+    { value: 'женский', label: 'Женский' },
+];
 
 export const range = (start = 0, end = 0) => {
     const range = [];
