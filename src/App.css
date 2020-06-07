@@ -103,6 +103,7 @@ button:disabled {
 }
 
 .right-fixed-alert {
+    top: 20px;
     right: 0;
     margin-right: 10px;
     z-index: 9999;

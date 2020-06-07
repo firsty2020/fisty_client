@@ -4,6 +4,9 @@ import {
     AUTH_LOGIN,
     AUTH_GET_USER,
     AUTH_SET_PASSWORD,
+    API_REQUEST,
+    API_REQUEST_END,
+    AUTH_PASSWORD_RESET,
 } from '../../helpers/constants/actionTypes';
 
 
@@ -15,12 +18,20 @@ const initialState = {
 
 export const auth = (state = initialState, action) => {
     switch (action.type) {
+
         case '@@router/LOCATION_CHANGE':
             return { ...state,
                 userRegistered: false,
                 registrationCompleted: false,
-                tokens: null
+                tokens: null,
+                passwordReset: false,
             };
+
+        case API_REQUEST:
+            return { ...state, isLoading: true };
+
+        case API_REQUEST_END:
+            return { ...state, isLoading: false };
 
         case AUTH_USER_REGISTER:
             return { ...state, userRegistered: true };
@@ -36,6 +47,10 @@ export const auth = (state = initialState, action) => {
 
         case AUTH_SET_PASSWORD:
             return { ...state, setPasswordResolved: true };
+
+        case AUTH_PASSWORD_RESET:
+            return { ...state, passwordReset: true };
+
         default:
             return state;
     }
@@ -50,6 +65,8 @@ export const userRegisteredSelector = state => state.auth.userRegistered;
 export const registrationCompletedSelector = state => state.auth.registrationCompleted;
 
 export const tokensSelector = state => state.auth.tokens;
+
+export const passwordResetSelector = state => state.auth.passwordReset;
 
 
 

@@ -14,6 +14,7 @@ import { companyNavigation, companyRoutes } from './components/company/companyRo
 import recruiterNavigation from './components/recruiter/recruiterNavigation';
 import recruiterRoutes from './components/recruiter/recruiterRoutes';
 import { LoadSpinner } from './components/ui';
+import ForgotPassword from './components/auth/ForgotPassword';
 
 
 const Admin = lazy(() => import('./components/common/Dashboard.js'));
@@ -36,6 +37,9 @@ const Routes = () => (
             <Route
                 path="/login"
                 component={Login}/>
+            <Route
+                path="/forgot-password"
+                component={ForgotPassword}/>
             <ProtectedRoute
                 render={(props) =>
                     <Recruiter

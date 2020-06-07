@@ -27,7 +27,7 @@ const AuthFormContainer = ({ children, title, subtitle, size }) => {
 
 
 AuthFormContainer.propTypes = {
-    title: string.isRequired,
+    title: string,
     subtitle: string,
     size: string,
 };

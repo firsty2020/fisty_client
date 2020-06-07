@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { Formik } from 'formik';
-import {AuthFormContainer, SuccessNotice} from '../../ui';
+import { AlertNotice, AuthFormContainer, SuccessNotice } from '../../ui';
 import { REGEX } from '../../../helpers/regex-rules';
 import classNames from 'classnames';
 import * as Yup from 'yup';
@@ -35,12 +35,11 @@ const SetPassword = ({ match, setPasswordResolved, pending, setPassword, push })
 
     return (
         <div>
-            <AuthFormContainer title="Создать Пароль">
+            <AuthFormContainer>
                 <When condition={!!setPasswordResolved}>
-                    <SuccessNotice
-                        title="Регистрация удалась"
-                        body="Можете войти в свой аккаунт"
-                    />
+                    <AlertNotice
+                        type="success"
+                        message="Пароль установлен. Можете войти в свой аккаунт."/>
                 </When>
                 <Formik
                     initialValues={{

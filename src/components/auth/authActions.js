@@ -5,7 +5,7 @@ import {
     AUTH_GET_USER,
     AUTH_SET_PASSWORD,
     POST,
-    GET,
+    GET, AUTH_PASSWORD_RESET,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -44,3 +44,9 @@ export const setPassword = (passwords, token) => createApiAction({
     label: AUTH_SET_PASSWORD,
 });
 
+export const resetPassword = (data) => createApiAction({
+    url: `/auth-users/reset-password/`,
+    method: POST,
+    data,
+    label: AUTH_PASSWORD_RESET,
+});

@@ -92,7 +92,7 @@ const Login = ({ authPending, tokens, getAuthToken, push }) => {
                     )}
                 </Formik>
                 <div className="login-link-text">
-                    <Link to="/register">Забыли пароль?</Link>
+                    <Link to="/forgot-password">Забыли пароль?</Link>
                     <hr/>
                     <Link to="/register">Зарегистрироваться</Link>
                 </div>
