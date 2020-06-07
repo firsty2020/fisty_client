@@ -82,18 +82,18 @@ export const autoToggleAlert = (message, stateModifier) => {
 };
 
 export const countriesOptions = [
-    { value: 'россия', label: 'Россия'},
-    { value: 'армения', label: 'Армения'},
-    { value: 'беларусь', label: 'Беларусь'},
-    { value: 'украина', label: 'Украина'},
+    { value: 'Россия', label: 'Россия'},
+    { value: 'Армения', label: 'Армения'},
+    { value: 'Беларусь', label: 'Беларусь'},
+    { value: 'Украина', label: 'Украина'},
 ];
 
 export const extendedOptions = [
-    { value: 'казахстан', label: 'Казахстан'},
-    { value: 'киргизия', label: 'Киргизия'},
-    { value: 'узбекистан', label: 'Узбекистан'},
-    { value: 'таджикистан', label: 'Таджикистан'},
-    { value: 'грузия', label: 'Грузия'},
+    { value: 'Казахстан', label: 'Казахстан'},
+    { value: 'Киргизия', label: 'Киргизия'},
+    { value: 'Узбекистан', label: 'Узбекистан'},
+    { value: 'Таджикистан', label: 'Таджикистан'},
+    { value: 'Грузия', label: 'Грузия'},
     { value: 'другое', label: 'другое'},
 ];
 
