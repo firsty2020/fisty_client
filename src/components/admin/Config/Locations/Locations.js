@@ -1,5 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
-import * as Yup from 'yup';
+import React, { useEffect, useState } from 'react';
 import {
     createLocation,
     removeLocation,
@@ -14,7 +13,7 @@ import {
     updateLocationResolvedSelector,
 } from '../configsReducer';
 import { connect } from 'react-redux';
-import {autoToggleAlert, scrollToRef} from '../../../../helpers/utils';
+import { autoToggleAlert } from '../../../../helpers/utils';
 import Pagination from '../../../Pagination';
 import {
     AlertNotice,
@@ -27,11 +26,6 @@ import { When } from 'react-if';
 import CreateLocation from './CreateLocation';
 import UpdateLocation from './UpdateLocation';
 
-
-const validationSchema = Yup.object().shape({
-    location: Yup.string()
-        .required('Введите местонахождение'),
-});
 
 const locationsTableLayout = {
     headings: [
@@ -129,11 +123,6 @@ const mapDispatchToProps = {
     getLocations,
     removeLocation,
     updateLocation,
-};
-
-
-Locations.propTypes = {
-
 };
 
 

@@ -7,6 +7,7 @@ import {
     API_REQUEST,
     API_REQUEST_END,
     AUTH_PASSWORD_RESET,
+    AUTH_STATE_RESET,
 } from '../../helpers/constants/actionTypes';
 
 
@@ -50,6 +51,9 @@ export const auth = (state = initialState, action) => {
 
         case AUTH_PASSWORD_RESET:
             return { ...state, passwordReset: true };
+
+        case AUTH_STATE_RESET:
+            return { ...state, passwordReset: false };
 
         default:
             return state;
