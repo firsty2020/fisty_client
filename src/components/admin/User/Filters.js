@@ -27,7 +27,7 @@ const subRoleOptions = [
     { value: 'free_lance', label: 'Фрилансер'},
     { value: 'agency', label: 'Агенство'},
     { value: 'contact_person', label: 'Контактное лицо'},
-    { value: 'executor', label: 'Испалняющий'},
+    { value: 'executor', label: 'Исполняющий'},
 ];
 
 
