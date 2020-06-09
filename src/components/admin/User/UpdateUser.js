@@ -100,7 +100,7 @@ const UpdateUser = ({
         if (updated) {
             autoToggleAlert('Пользователь успешно обновлен', setSuccessMessage);
             resetUsersState();
-            setTimeout(() => push('/admin/users/all'), 2000);
+            setTimeout(() => push('/admin/users'), 2000);
         }
     }, [ updated, resetUsersState, push ]);
 
@@ -361,7 +361,7 @@ const UpdateUser = ({
                                 ) : null}
                             </Form.Group>
                             <div className="text-center">
-                                <Link to={'/admin/users/all'}>
+                                <Link to={'/admin/users'}>
                                     <Button
                                         className="mr-2"
                                         variant="secondary">Отменить

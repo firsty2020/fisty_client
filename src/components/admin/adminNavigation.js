@@ -9,7 +9,7 @@ const adminNavigation =  {
         {
             name: 'Пользователи',
             icon: 'Users',
-            url: '/admin/users/all',
+            url: '/admin/users',
             matcher: '/user'
         },
         {

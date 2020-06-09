@@ -45,7 +45,7 @@ const UserDetails = ({ match, user, getUser }) => {
 
     return (
         <Container>
-            <BackButton path={`/admin/users/all`} />
+            <BackButton path={`/admin/users`} />
             <DetailsTable
                 data={userDetailsTableLayout(user)}
             />

@@ -10,17 +10,12 @@ import {
 import { createApiAction } from '../../../helpers/utils';
 
 
-export const getUsers = (params) => {
-    if (params.status === 'all') {
-        delete params.status;
-    }
-    return createApiAction({
+export const getUsers = (params) => createApiAction({
         url: 'users/',
         method: GET,
         data: params ,
         label: ADMIN_GET_USERS,
-    });
-};
+});
 
 export const deleteUser = (id) => createApiAction({
     url: `users/${id}/`,

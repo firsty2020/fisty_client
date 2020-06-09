@@ -49,7 +49,7 @@ const adminRoutes = [
         name: 'Кабинет администратора'
     },
     {
-        path: '/admin/users/:status',
+        path: '/admin/users',
         component: Users,
         name: 'Пользователи'
     },

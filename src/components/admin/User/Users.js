@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { getUsers } from './usersActions';
 import { connect } from 'react-redux';
 import { userDeletedSelector, usersSelector } from '../adminReducer';
 import { push } from 'connected-react-router';
-import { AlertNotice, ConfirmationModal, DropDown, TableList } from '../../ui';
+import { AlertNotice, ConfirmationModal, TableList } from '../../ui';
 import Pagination from '../../Pagination';
 import { autoToggleAlert, extractIdFromUrl}  from '../../../helpers/utils';
 import { When } from 'react-if';
 import { deleteUser, resetUsersState } from './usersActions';
 import { resetAuthState, resetPassword } from "../../auth/authActions";
 import { passwordResetSelector } from "../../auth/authReducer";
+import Filters from './Filters';
 
 
 const usersTableLayout = {
@@ -21,16 +21,6 @@ const usersTableLayout = {
         index + 1, user.first_name,  user.last_name, user.email, user.role,
     ],
 };
-
-const statusOptions = [
-    { value: 'active', label: 'Активные' },
-    { value: 'inactive', label: 'Неактивные' },
-    { value: 'clarification', label: 'Кларификация' },
-    { value: 'freeze', label: 'Замороженные' },
-    { value: 'black_list', label: 'Заблокированные' },
-    { value: 'all', label: 'Все' },
-];
-
 
 const Users = ({
                    users,
@@ -45,29 +35,19 @@ const Users = ({
                    resetAuthState,
                }) => {
 
-    const [ status, setStatus ] = useState(statusOptions[statusOptions.length - 1]);
     const [ userToDelete, setUserToDelete ] = useState(null);
     const [ successMessage, setSuccessMessage ] = useState('');
     const [ userToResetPassword, setUserToResetPassword ] = useState(null);
+    const [ filterParams, setFilterParams ] = useState({});
 
-    useEffect(() => {
-        if (!status) {
-            setStatus(match.params.status);
-            getUsers({ status: match.params.status });
-        } else {
-            getUsers({ status: status.value });
-        }
-    }, [ getUsers, match.params.status ]);
-
-    useEffect(() => {
-        if (!status) return;
-        push(`/admin/users/${status.value}`);
-    }, [ getUsers, push, status ]);
+    useEffect( () => {
+      getUsers(filterParams);
+    }, [ getUsers ]);
 
     useEffect(() => {
         if (!deleted) return;
         resetUsersState();
-        getUsers({ status: match.params.status });
+        getUsers(filterParams);
         autoToggleAlert('Пользователь успешно удален', setSuccessMessage);
     }, [ deleted, match.params.status, resetUsersState, getUsers, setSuccessMessage ]);
 
@@ -86,6 +66,11 @@ const Users = ({
     const handleResetPasswordRequest = () => {
         resetPassword({ email: userToResetPassword.email });
         setUserToResetPassword(null);
+    };
+
+    const handleFilter = (filter) => {
+        setFilterParams(filter);
+        getUsers(filter);
     };
 
     return (
@@ -108,17 +93,7 @@ const Users = ({
                     show={!!userToDelete}/>
             </When>
             <div className="mt-10-auto">
-                <Row>
-                    <Col lg={4} md={4} sm={4}>
-                        <DropDown
-                            name="filter"
-                            value={status}
-                            placeholder="Фильтровать по статусу"
-                            onChange={setStatus}
-                            options={statusOptions}
-                        />
-                    </Col>
-                </Row>
+                <Filters onFilter={handleFilter} />
             </div>
             <div>
                 <TableList
