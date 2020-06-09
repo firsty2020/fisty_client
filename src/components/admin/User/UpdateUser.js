@@ -15,10 +15,10 @@ import {
     autoToggleAlert,
 } from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
-import { AlertNotice, ConfirmationModal, DropDown } from '../../ui';
-import { getUser, resetAuthState, resetPassword } from '../../auth/authActions';
+import { AlertNotice, DropDown } from '../../ui';
+import { getUser } from '../../auth/authActions';
 import { resetUsersState, updateUser } from './usersActions';
-import { passwordResetSelector, userSelector } from '../../auth/authReducer';
+import { userSelector } from '../../auth/authReducer';
 import {
     generateDays,
     generateMonths,
@@ -84,17 +84,13 @@ const UpdateUser = ({
                         match,
                         user,
                         updated,
-                        resetPasswordRequested,
                         getUser,
                         updateUser,
                         resetUsersState,
-                        resetPassword,
-                        resetAuthState,
                         push,
                     }) => {
 
     const [ successMessage, setSuccessMessage ] = useState('');
-    const [ isRequestingPasswordReset, setIsRequestingPasswordReset ] = useState(false);
 
     useEffect(() => {
         getUser(match.params.userId);
@@ -107,13 +103,6 @@ const UpdateUser = ({
             setTimeout(() => push('/admin/users/all'), 2000);
         }
     }, [ updated, resetUsersState, push ]);
-
-    useEffect(() => {
-        if (resetPasswordRequested) {
-            resetAuthState();
-            autoToggleAlert('Сообщение отправлено пользователю', setSuccessMessage);
-        }
-    }, [ resetPasswordRequested, resetUsersState ])
 
     if (user) {
         formValues = fillForm(initialValues, user);
@@ -135,20 +124,8 @@ const UpdateUser = ({
         updateUser(id, data);
     };
 
-    const handleResetPasswordRequest = () => {
-        resetPassword({ email: user.email });
-        setIsRequestingPasswordReset(false);
-    };
-
     return (
         <div>
-            <ConfirmationModal
-                onConfirm={handleResetPasswordRequest}
-                onCancel={() => setIsRequestingPasswordReset(false)}
-                confirm="Отправить"
-                decline="Отменить"
-                show={!!isRequestingPasswordReset}
-                question="На эл. почту пользователя будет отправлено сообщение со ссылкой на восстановление пароля."/>
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/>
             </When>
@@ -383,12 +360,6 @@ const UpdateUser = ({
                                     <span className="mt-1 invalid-feedback-visible">{errors.gender}</span>
                                 ) : null}
                             </Form.Group>
-                            <When condition={!!(user && user.email)}>
-                                <Button
-                                    onClick={() => setIsRequestingPasswordReset(true)}
-                                    variant="danger">Изменить пароль
-                                </Button>
-                            </When>
                             <div className="text-center">
                                 <Link to={'/admin/users/all'}>
                                     <Button
@@ -414,7 +385,6 @@ const UpdateUser = ({
 const mapStateToProps = state => ({
     user: userSelector(state),
     updated: userUpdateSelector(state),
-    resetPasswordRequested: passwordResetSelector(state),
 });
 
 const mapDispatchToProps = {
@@ -422,8 +392,6 @@ const mapDispatchToProps = {
     updateUser,
     resetUsersState,
     push,
-    resetPassword,
-    resetAuthState,
 };
 
 

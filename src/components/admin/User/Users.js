@@ -9,6 +9,8 @@ import Pagination from '../../Pagination';
 import { autoToggleAlert, extractIdFromUrl}  from '../../../helpers/utils';
 import { When } from 'react-if';
 import { deleteUser, resetUsersState } from './usersActions';
+import { resetAuthState, resetPassword } from "../../auth/authActions";
+import { passwordResetSelector } from "../../auth/authReducer";
 
 
 const usersTableLayout = {
@@ -30,11 +32,23 @@ const statusOptions = [
 ];
 
 
-const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, push }) => {
+const Users = ({
+                   users,
+                   match,
+                   deleted,
+                   resetPasswordRequested,
+                   getUsers,
+                   deleteUser,
+                   resetPassword,
+                   push,
+                   resetUsersState,
+                   resetAuthState,
+               }) => {
 
     const [ status, setStatus ] = useState(statusOptions[statusOptions.length - 1]);
     const [ userToDelete, setUserToDelete ] = useState(null);
     const [ successMessage, setSuccessMessage ] = useState('');
+    const [ userToResetPassword, setUserToResetPassword ] = useState(null);
 
     useEffect(() => {
         if (!status) {
@@ -55,15 +69,34 @@ const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, p
         resetUsersState();
         getUsers({ status: match.params.status });
         autoToggleAlert('Пользователь успешно удален', setSuccessMessage);
-    }, [ deleted, match.params.status, resetUsersState, getUsers, setSuccessMessage ])
+    }, [ deleted, match.params.status, resetUsersState, getUsers, setSuccessMessage ]);
+
+    useEffect(() => {
+        if (resetPasswordRequested) {
+            resetAuthState();
+            autoToggleAlert('Сообщение отправлено пользователю', setSuccessMessage);
+        }
+    }, [ resetPasswordRequested, resetUsersState ])
 
     const handleDeleteUser = () => {
         deleteUser(userToDelete);
         setUserToDelete(null);
-    }
+    };
+
+    const handleResetPasswordRequest = () => {
+        resetPassword({ email: userToResetPassword.email });
+        setUserToResetPassword(null);
+    };
 
     return (
         <div>
+            <ConfirmationModal
+                onConfirm={handleResetPasswordRequest}
+                onCancel={() => setUserToResetPassword(null)}
+                confirm="Отправить"
+                decline="Отменить"
+                show={!!userToResetPassword}
+                question="На эл. почту пользователя будет отправлено сообщение со ссылкой на восстановление пароля."/>
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/>
             </When>
@@ -89,6 +122,7 @@ const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, p
             </div>
             <div>
                 <TableList
+                    onResetPassword={(user) => setUserToResetPassword(user)}
                     onEditItem={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}/edit`)}
                     onDeleteItem={({ url }) => setUserToDelete(extractIdFromUrl(url))}
                     onClickRow={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}`)}
@@ -108,12 +142,15 @@ const Users = ({ users, match, deleted, getUsers, deleteUser, resetUsersState, p
 const mapStateToProps = state => ({
     users: usersSelector(state),
     deleted: userDeletedSelector(state),
+    resetPasswordRequested: passwordResetSelector(state),
 });
 
 const mapDispatchToProps = {
     deleteUser,
     getUsers,
+    resetPassword,
     resetUsersState,
+    resetAuthState,
     push,
 };
 

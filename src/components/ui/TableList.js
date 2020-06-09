@@ -4,7 +4,7 @@ import { arrayOf, func, object, shape, string } from 'prop-types';
 import { EmptyListPlaceholder, } from './index';
 import { isLoadingSelector } from '../common/commonReducer';
 import { connect } from 'react-redux';
-import { Trash, Edit, UserMinus } from 'react-feather';
+import { Trash, Edit, UserMinus, Key } from 'react-feather';
 
 
 const TableList = ({
@@ -15,6 +15,7 @@ const TableList = ({
                        onDeleteItem,
                        onEditItem,
                        onUnlink,
+                       onResetPassword,
                    }) => {
     
 
@@ -49,28 +50,40 @@ const TableList = ({
                             <td width="5%">
                                 <div className="d-flex justify-content-around cursor-pointer">
                                     {onDeleteItem ? (
-                                        <Trash
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                onDeleteItem(item)
-                                            }}
-                                            className="cursor-pointer"
-                                            color="red"/>
+                                        <span title="Удалить">
+                                            <Trash
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onDeleteItem(item);
+                                                }}
+                                                className="cursor-pointer"
+                                                color="red"
+                                            />
+                                        </span>
+
                                     ) : null}
                                     {onEditItem ? (
-                                        <Edit color="blue"
-                                              onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  onEditItem(item)
-                                              }}
-                                              title="Редактировать"
-                                        />
-                                    ) : null}
+                                        <span title="Редактировать">
+                                            <Edit color="blue"
+                                                  onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      onEditItem(item);
+                                                  }}
+                                             />
+                                        </span>) : null}
                                     { onUnlink ? (
-                                            <UserMinus
-                                                onClick={() => onUnlink(item)}
-                                                title="Удалить из контакных лиц"/>)
-                                        : null }
+                                        <UserMinus
+                                            onClick={() => onUnlink(item)}
+                                            title="Удалить из контакных лиц"/>) : null
+                                    }
+                                    { onResetPassword && item && item.email ? (
+                                        <span title="Сбросить пароль">
+                                            <Key onClick={(e) => {
+                                                e.stopPropagation();
+                                                onResetPassword(item);
+                                            }}/>
+                                        </span>) : null
+                                    }
                                 </div>
                             </td>
                         ) : null}
