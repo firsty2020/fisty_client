@@ -2,14 +2,19 @@ import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { applicationSchema } from '../../helpers/schemas';
 import { Formik } from 'formik';
-import CountriesDropdown from '../auth/Registration/CountriesDropdown';
 import {
-    clearEmptyFields,
+    clearEmptyFields, countriesOptions, extendedOptions,
     transformReactSelectFields
 } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { CheckBox, DropDown, RadioButton } from '../ui';
 
+const russianOptions = [
+    { value: 'Базовый', label: 'Базовый'},
+    { value: 'Средний', label: 'Средний'},
+    { value: 'Продвинутый', label: 'Продвинутый'},
+    { value: 'Носитель языка', label: 'Носитель языка'},
+];
 
 const scheduleOptions = [
     { value: '2/2', label: '2/2' },
@@ -52,8 +57,6 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                         initialValues={{
                             position: '',
                             employees_count: '',
-                            job_description: '',
-                            bonus_enabled: '',
                             salary: '',
                             formalization_type: '',
                             responsibilities: '',
@@ -81,7 +84,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                         onSubmit={(values) => {
                             const clearedData = clearEmptyFields(JSON.parse(JSON.stringify(values)));
                             const transformedData = transformReactSelectFields(
-                                ['citizenship', 'schedule', 'other_languages', 'driver_license'],
+                                ['citizenship', 'schedule', 'russian_level', 'other_languages', 'driver_license'],
                                 clearedData
                             );
                             transformedData.age = [ transformedData.age.from, transformedData.age.to ];
@@ -127,42 +130,6 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     {touched.employees_count && errors.employees_count ? (
                                         <span className="mt-1 invalid-feedback-visible">{errors.employees_count}</span>
                                     ) : null}
-                                </Form.Group>
-                                <Form.Group>
-                                    <p>Условия работы </p>
-                                    <Form.Control
-                                        as="textarea"
-                                        name="job_description"
-                                        placeholder="Опишите условия работы"
-                                        value={values.job_description}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                    />
-                                    {touched.job_description && errors.job_description ? (
-                                        <span className="mt-1 invalid-feedback-visible">{errors.job_description}</span>
-                                    ) : null}
-                                </Form.Group>
-                                <Form.Group>
-                                    <p>Бонусы </p>
-                                    <RadioButton
-                                        inline
-                                        custom
-                                        name="bonus_enabled"
-                                        value={values.bonus_enabled}
-                                        label="Есть"
-                                        onChange={() => setFieldValue('bonus_enabled', true)}
-                                        onBlur={(e) => setFieldTouched('bonus_enabled', e)}
-                                    />
-                                    <RadioButton
-                                        inline
-                                        custom
-                                        value={values.bonus_enabled}
-                                        name="bonus_enabled"
-                                        label="Нет"
-                                        onChange={() => setFieldValue('bonus_enabled', false)}
-                                        onBlur={(e) => setFieldTouched('bonus_enabled', e)}
-                                    />
-                                    <br/>
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Примерный совокупный заработок в месяц * - net</p>
@@ -232,7 +199,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Функционал *</p>
+                                    <p>Обязанности *</p>
                                     <Form.Control
                                         as="textarea"
                                         name="responsibilities"
@@ -260,7 +227,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Другое</p>
+                                    <p>Дополнительно</p>
                                     <Form.Control
                                         as="textarea"
                                         name="responsibilities_comments"
@@ -273,14 +240,15 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <h4 className="text-center mt-4">Требования к Должности</h4>
                                 <Form.Group>
                                     <p className="form-control-label">Гражданство *</p>
-                                    <CountriesDropdown
-                                        extended
+                                    <DropDown
+                                        options={[ ...countriesOptions, ...extendedOptions, { value: 'Не Важно', label: 'Не Важно'} ]}
                                         value={values.citizenship}
                                         name="citizenship"
-                                        placeHolder="Выберите из списка"
+                                        placeholder="Выберите из списка"
                                         onBlur={(e) => setFieldTouched('citizenship', e || [])}
                                         onChange={(e) => setFieldValue('citizenship', e || [])}
                                         className={touched.citizenship && errors.citizenship ? 'is-invalid' : ''}
+                                        isMulti
                                     />
                                     {touched.citizenship && errors.citizenship ? (
                                         <p className="mt-1 invalid-feedback-visible">{errors.citizenship}</p>
@@ -386,25 +354,15 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 </Form.Group>
                                 <Form.Group>
                                     <p>Уровень владения русским языком *</p>
-                                    <RadioButton
-                                        inline
-                                        custom
-                                        name="russian_level"
+                                    <DropDown
+                                        options={russianOptions}
                                         value={values.russian_level}
-                                        label="Родной"
-                                        onChange={() => setFieldValue('russian_level', 'родной')}
-                                        onBlur={(e) => setFieldTouched('russian_level', e)}
-                                    />
-                                    <RadioButton
-                                        inline
-                                        custom
                                         name="russian_level"
-                                        value={values.russian_level}
-                                        label="С акцентом"
-                                        onChange={() => setFieldValue('russian_level', 'с акцентом')}
+                                        placeholder="Выберите из списка"
                                         onBlur={(e) => setFieldTouched('russian_level', e)}
+                                        onChange={(e) => setFieldValue('russian_level', e)}
+                                        className={touched.russian_level && errors.russian_level ? 'is-invalid' : ''}
                                     />
-                                    <br/>
                                     {touched.russian_level && errors.russian_level ? (
                                         <p className="mt-1 invalid-feedback-visible">{errors.russian_level}</p>
                                     ) : null}
@@ -442,7 +400,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         name="_has_driver_license"
                                         value={values._has_driver_license}
                                         label="Нет"
-                                        onChange={(e) => {
+                                        onChange={() => {
                                             setFieldValue('driver_license', []);
                                             setFieldValue('_has_driver_license', false)
                                         }}
@@ -488,11 +446,11 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     />
                                 </Form.Group>
                                 <Form.Group>
-                                    <p>Комментарий</p>
+                                    <p>Дополнительные требования</p>
                                     <Form.Control
                                         as="textarea"
                                         name="comments"
-                                        placeholder="Напишите дополнительные пожелания"
+                                        placeholder="Напишите дополнительные требования"
                                         value={values.comments}
                                         onChange={handleChange}
                                         onBlur={handleBlur}

@@ -14,7 +14,7 @@ const CountriesDropdown = ({
                            }) => {
 
     if (extended) {
-        options = [ ...countriesOptions, ...extendedOptions];
+        options = [ ...countriesOptions, ...extendedOptions ];
     } else {
         options = countriesOptions;
     }

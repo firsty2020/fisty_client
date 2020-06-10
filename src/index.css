@@ -1,6 +1,6 @@
 :root {
     --disabled-button-color: #858585;
-    --invalid-input-feedback-color: #FFF;
+    --invalid-input-feedback-color: red;
     --content-bg-color: #FFE7D3;
     --admin-dashboard-color: #162c50;
 }

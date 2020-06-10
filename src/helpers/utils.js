@@ -94,7 +94,7 @@ export const extendedOptions = [
     { value: 'Узбекистан', label: 'Узбекистан'},
     { value: 'Таджикистан', label: 'Таджикистан'},
     { value: 'Грузия', label: 'Грузия'},
-    { value: 'другое', label: 'другое'},
+    { value: 'другое', label: 'Другое'},
 ];
 
 export const educationOptions = [
