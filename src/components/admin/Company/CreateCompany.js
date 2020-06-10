@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { companySchema } from '../../../helpers/schemas';
-import { createCompany, resetCompanyCreated } from './companiesActions';
+import { createCompany, resetCompanyState } from './companiesActions';
 import { createCompanyResolvedSelector } from './companiesReducer';
 import {
     industryOptionsSelector,
@@ -40,7 +40,7 @@ const CreateCompany = ({
                            push,
                            getIndustryOptions,
                            getSpecificationOptions,
-                           resetCompanyCreated,
+                           resetCompanyState,
                        }) => {
 
     const handleCreateCompany = (companyData) => {
@@ -61,10 +61,10 @@ const CreateCompany = ({
         if (created) {
             setTimeout(() => {
                 push('/admin/companies');
-                resetCompanyCreated();
+                resetCompanyState();
             }, 2000);
         }
-    }, [ created, push, resetCompanyCreated ]);
+    }, [ created, push, resetCompanyState ]);
 
 
     useEffect(() => {
@@ -265,7 +265,7 @@ const mapDispatchToProps = {
     push,
     getIndustryOptions,
     getSpecificationOptions,
-    resetCompanyCreated,
+    resetCompanyState,
 };
 
 
