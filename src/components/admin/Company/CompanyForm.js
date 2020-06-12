@@ -253,7 +253,7 @@ const CompanyForm = ({
                         <Button
                             variant="warning"
                             disabled={pending}
-                            type="submit">Создать
+                            type="submit">{company ? 'Изменить': 'Создать'}
                         </Button>
                     </div>
                 </Form>
