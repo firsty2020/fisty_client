@@ -4,8 +4,10 @@ import {
     ADMIN_GET_COMPANIES,
     ADMIN_GET_COMPANY,
     ADMIN_RESET_COMPANY_STATE,
+    ADMIN_UPDATE_COMPANY,
     DELETE,
     GET,
+    PATCH,
     POST,
 } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
@@ -16,6 +18,13 @@ export const createCompany = (data) => createApiAction({
     method: POST,
     data,
     label: ADMIN_CREATE_COMPANY,
+});
+
+export const updateCompany = (id, data) => createApiAction({
+    url: `companies/${id}/`,
+    method: PATCH,
+    data,
+    label: ADMIN_UPDATE_COMPANY,
 });
 
 export const getCompanies = (params) => createApiAction({

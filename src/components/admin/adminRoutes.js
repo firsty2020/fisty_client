@@ -39,6 +39,7 @@ import CreateCandidate from '../common/candidates/CreateCandidate';
 import CandidateDetails from '../common/candidates/CandidateDetails';
 import UserDetails from './User/UserDetails';
 import UpdateUser from './User/UpdateUser';
+import UpdateCompany from './Company/UpdateCompany';
 
 
 
@@ -74,6 +75,16 @@ const adminRoutes = [
         name: 'Создать компанию'
     },
     {
+        path: '/admin/companies/:companyId/edit',
+        component: UpdateCompany,
+        name: 'Редактировать компанию',
+    },
+    {
+        path: '/admin/companies/:companyId',
+        component: CompanyDetails,
+        name: 'Детали компании',
+    },
+    {
         path: '/admin/companies/:companyId/projects/:projectId/custom-fields',
         component: EnhanceDynamicFields(DynamicFields),
         name: 'Поля проекта'
@@ -87,11 +98,6 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/projects',
         component: Projects,
         name: 'Проекты'
-    },
-    {
-        path: '/admin/companies/:companyId',
-        component: CompanyDetails,
-        name: 'Детали компании',
     },
     {
         path: '/admin/companies/:companyId/contact-persons',

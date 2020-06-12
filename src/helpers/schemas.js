@@ -90,9 +90,9 @@ export const companySchema = Yup.object().shape({
     source: Yup.string()
         .required(ERROR_MESSAGES.SOURCE_REQUIRED),
     industry: Yup.string()
-        .required(),
+        .required(ERROR_MESSAGES.INDUSTRY_REQUIRED),
     specification: Yup.string()
-        .required(),
+        .required(ERROR_MESSAGES.SPECIFICATION_REQUIRED),
     website: Yup.string()
         .url(ERROR_MESSAGES.URL_INVALID),
     social_link: Yup.string()

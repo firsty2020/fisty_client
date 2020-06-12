@@ -17,6 +17,8 @@ import './Companies.css';
 import Pagination from '../../Pagination';
 import { autoToggleAlert } from '../../../helpers/utils';
 import { When } from 'react-if';
+import { push } from 'connected-react-router';
+
 
 const companiesTableLayout = {
     headings: [
@@ -35,6 +37,7 @@ const Companies = ({
                        getCompanies,
                        deleteCompany,
                        resetCompanyState,
+                       push,
                    }) => {
 
     const [ companyIdToDelete, setCompanyIdToDelete ] = useState(null);
@@ -82,6 +85,7 @@ const Companies = ({
             </div>
             <div>
                 <TableList
+                    onEditItem={({ id }) => push(`/admin/companies/${id}/edit`)}
                     onDeleteItem={({ id }) => setCompanyIdToDelete(id)}
                     onClickRow={(item) => handleClickOnRow(item)}
                     layout={companiesTableLayout}
@@ -102,7 +106,7 @@ const mapStateToProps = state => ({
     deleted: companyDeletedSelector(state),
 });
 
-const mapDispatchToProps = { getCompanies, deleteCompany, resetCompanyState };
+const mapDispatchToProps = { getCompanies, deleteCompany, resetCompanyState, push };
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Companies);
