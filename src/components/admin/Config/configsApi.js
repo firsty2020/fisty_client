@@ -65,7 +65,7 @@ export const getIndustryOptions = (params) => {
 export const getIndustryOption = (id) => {
     return dispatch => {
         api
-            .get(`industries/${id}`)
+            .get(`industries/${id}/`)
             .then((res) => dispatch(getIndustryOptionResolved(res.data)))
             .catch(() => dispatch(getIndustryOptionFailed()))
     };
@@ -119,7 +119,7 @@ export const getSpecificationOptions = (params) => {
 export const getSpecificationOption = (id) => {
     return dispatch => {
         api
-            .get(`specification/${id}`)
+            .get(`specification/${id}/`)
             .then((res) => dispatch(getSpecificationOptionResolved(res.data)))
             .catch(() => dispatch(getSpecificationOptionFailed()))
     };

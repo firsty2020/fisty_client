@@ -17,6 +17,10 @@ import {
     GET,
     PATCH,
     POST,
+    ADMIN_NOTES_CREATE,
+    ADMIN_NOTES_GET,
+    ADMIN_NOTES_STATE_RESET,
+    ADMIN_NOTE_DELETE,
 } from '../../helpers/constants/actionTypes';
 
 
@@ -101,4 +105,28 @@ export const setProjectRecruiters = (data) => createApiAction({
     method: POST,
     data,
     label: ADMIN_PROJECT_RECRUITERS_SET,
+});
+
+export const createNote = (data) => createApiAction({
+    url: '/projects/notes/',
+    method: POST,
+    data,
+    label: ADMIN_NOTES_CREATE,
+});
+
+export const getNotes = (params) => createApiAction({
+    url: '/projects/notes/',
+    method: GET,
+    data: params,
+    label: ADMIN_NOTES_GET,
+});
+
+export const deleteNote = (id) => createApiAction({
+    url: `/projects/notes/${id}`,
+    method: DELETE,
+    label: ADMIN_NOTE_DELETE,
+});
+
+export const resetNotesState = () => ({
+    type: ADMIN_NOTES_STATE_RESET,
 });

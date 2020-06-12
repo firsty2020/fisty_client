@@ -153,3 +153,7 @@ li.active span {
 .filter-dropdown {
     min-width: 250px;
 }
+
+.p5-15 {
+    padding: 5px 15px;
+}

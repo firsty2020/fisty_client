@@ -14,6 +14,7 @@ import { When } from 'react-if';
 import { autoToggleAlert } from '../../../helpers/utils';
 import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
+import NotesModal from './NotesModal';
 
 const Projects = ({
                       projects,
@@ -27,6 +28,7 @@ const Projects = ({
 
     const [ projectIdToDelete, setProjectIdToDelete ] = useState(null);
     const [ successMessage, setSuccessMessage ] = useState(null);
+    const [ notesProject, setNotesProject ] = useState(null)
 
     useEffect(() => {
         getProjects(generateParams());
@@ -54,10 +56,15 @@ const Projects = ({
 
     const projectsTableLayout = {
         headings: [
-            '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия',
+            '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия', 'заметки',
         ],
-        createRow: ({ name, completed_targeted_actions_count, target_action_amount}, index) => [
-            index + 1,
+        createRow: ({
+                        id,
+                        name,
+                        completed_targeted_actions_count,
+                        target_action_amount,
+                    }) => [
+            id,
             name,
             completed_targeted_actions_count,
             target_action_amount,
@@ -67,7 +74,7 @@ const Projects = ({
     const shouldActions = (isEditing) => {
         if (!showActions) {
             projectsTableLayout.headings = [
-                '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД'];
+                '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'заметки'];
             return null
         }
         if (isEditing) {
@@ -96,6 +103,11 @@ const Projects = ({
 
     return (
         <div>
+            <When condition={!!notesProject}>
+                <NotesModal
+                    onClose={() => setNotesProject(null)}
+                    project={notesProject}/>
+            </When>
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/>
             </When>
@@ -113,6 +125,7 @@ const Projects = ({
                 </Link>
             ) : null }
             <TableList
+                onViewNotes={(project)=> setNotesProject(project)}
                 onClickRow={({ id }) => push(`${match.url}/${id}`)}
                 onEditItem={shouldActions(true)}
                 onDeleteItem={shouldActions()}

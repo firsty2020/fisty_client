@@ -30,6 +30,9 @@ import {
     ADMIN_USER_DELETE,
     ADMIN_USERS_STATE_RESET,
     ADMIN_USER_UPDATE,
+    ADMIN_NOTES_CREATE,
+    ADMIN_NOTES_GET,
+    ADMIN_NOTES_STATE_RESET, ADMIN_NOTE_DELETE,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -155,6 +158,18 @@ const common = (state = {}, action) => {
         case ADMIN_USER_UPDATE:
             return { ...state, userUpdated: true };
 
+        case ADMIN_NOTES_CREATE:
+            return { ...state, noteCreated: true };
+
+        case ADMIN_NOTES_GET:
+            return { ...state, notes: action.payload.results };
+
+        case ADMIN_NOTE_DELETE:
+            return { ...state, noteDeleted: true };
+
+        case ADMIN_NOTES_STATE_RESET:
+            return { ...state, noteCreated: false, noteDeleted: false };
+
         default:
             return state;
     }
@@ -212,3 +227,7 @@ export const leadsSelector = state => state.admin.common.leads;
 export const recruitersSet = state => state.admin.common.recruitersSet;
 
 export const userUpdateSelector = state => state.admin.common.userUpdated;
+
+export const notesSelector = state => state.admin.common.notes;
+export const noteCreatedSelector = state => state.admin.common.noteCreated;
+export const noteDeletedSelector = state => state.admin.common.noteDeleted;

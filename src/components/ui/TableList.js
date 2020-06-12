@@ -4,7 +4,7 @@ import { arrayOf, func, object, shape, string } from 'prop-types';
 import { EmptyListPlaceholder, } from './index';
 import { isLoadingSelector } from '../common/commonReducer';
 import { connect } from 'react-redux';
-import { Trash, Edit, UserMinus, Key } from 'react-feather';
+import { Trash, Edit, UserMinus, Key, Edit3 } from 'react-feather';
 
 
 const TableList = ({
@@ -16,8 +16,9 @@ const TableList = ({
                        onEditItem,
                        onUnlink,
                        onResetPassword,
+                       onViewNotes,
                    }) => {
-    
+
 
     if ((data && !data.length) && !isLoading) {
         return <EmptyListPlaceholder/>;
@@ -69,7 +70,7 @@ const TableList = ({
                                                       e.stopPropagation();
                                                       onEditItem(item);
                                                   }}
-                                             />
+                                            />
                                         </span>) : null}
                                     { onUnlink ? (
                                         <UserMinus
@@ -87,6 +88,16 @@ const TableList = ({
                                 </div>
                             </td>
                         ) : null}
+                        { onViewNotes ? (
+                            <td width="1" className="text-center">
+                                <span title="Сбросить пароль">
+                                    <Edit3 onClick={(e) => {
+                                        e.stopPropagation();
+                                        onViewNotes(item);
+                                    }}/>
+                                </span>
+                            </td>): null
+                        }
                     </tr>
                 ))}
                 </tbody>
