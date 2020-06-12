@@ -35,7 +35,7 @@ export const getContactPersons = (params, id) => createApiAction({
 
 
 export const getContactPerson = (id) => createApiAction({
-    url: `contact-person/${id}`,
+    url: `contact-person/${id}/`,
     method: 'GET',
     label: ADMIN_GET_CONTACT_PERSON,
 });

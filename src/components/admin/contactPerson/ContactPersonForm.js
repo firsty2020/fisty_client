@@ -35,7 +35,7 @@ const fillForm = (initialValues, contactPerson, roles) => {
         values[key] = contactPerson[key];
     }
     values.gender = genderOptions.find(option => option.value === contactPerson.gender);
-    values.role = generateSelectOptions((roles || {}).results, 'url', 'name').find(role => role.value === contactPerson.role);
+    values.role = (generateSelectOptions((roles || {}).results, 'url', 'name') || []).find(role => role.value === contactPerson.role);
     return values;
 };
 
