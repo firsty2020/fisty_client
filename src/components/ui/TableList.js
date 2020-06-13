@@ -78,7 +78,7 @@ const TableList = ({
                                             title="Удалить из контакных лиц"/>) : null
                                     }
                                     { onResetPassword && item && item.email ? (
-                                        <span title="Сбросить пароль">
+                                        <span title="Просмотреть заметки">
                                             <Key onClick={(e) => {
                                                 e.stopPropagation();
                                                 onResetPassword(item);

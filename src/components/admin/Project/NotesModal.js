@@ -80,14 +80,17 @@ const NotesModal = ({
           >
               <h4 className="text-center">Заметки</h4>
               <Modal.Body>
-                  {(notes || []).map(({ url, creator_details, note_description, }) => {
+                  <Accordion
+                      defaultActiveKey="0"
+                      title="Нажмите, чтобы просмотретъ заметку"
+                  >
+                  {(notes || []).map(({ url, creator_details, note_description, }, index) => {
                       return (
-                          <Accordion key={url} title="Нажмите, чтобы просмотретъ замтку">
-                              <Card>
+                              <Card key={url}>
                                   <Card.Header className="p-0">
                                       <Accordion.Toggle
                                           as="div"
-                                          eventKey="0">
+                                          eventKey={index.toString()}>
                                           <div className="d-flex justify-content-between p5-15 cursor-pointer">
                                               <span>{creator_details.first_name} {creator_details.last_name}</span>
                                               <span title="Удалитъ"
@@ -98,15 +101,15 @@ const NotesModal = ({
                                           </div>
                                       </Accordion.Toggle>
                                   </Card.Header>
-                                  <Accordion.Collapse eventKey="0">
+                                  <Accordion.Collapse eventKey={index.toString()}>
                                       <Card.Body>
                                           <div>{note_description}</div>
                                       </Card.Body>
                                   </Accordion.Collapse>
                               </Card>
-                          </Accordion>
                       );
                   })}
+                  </Accordion>
                   <Formik
                       enableReinitialize
                       initialValues={{ note: ''}}
