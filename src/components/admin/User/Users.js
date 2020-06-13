@@ -72,6 +72,14 @@ const Users = ({
         setFilterParams(filter);
         getUsers(filter);
     };
+    
+    const handleRedirection = ({ url, role_id }) => {
+        if (role_id) {
+            push(`/admin/user/contact-person/${role_id}/edit`);
+        } else {
+            push(`/admin/user/${extractIdFromUrl(url)}/edit`);
+        }
+    };
 
     return (
         <div>
@@ -98,7 +106,7 @@ const Users = ({
             <div>
                 <TableList
                     onResetPassword={(user) => setUserToResetPassword(user)}
-                    onEditItem={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}/edit`)}
+                    onEditItem={(user) => handleRedirection(user)}
                     onDeleteItem={({ url }) => setUserToDelete(extractIdFromUrl(url))}
                     onClickRow={({ url }) => push(`/admin/user/${extractIdFromUrl(url)}`)}
                     layout={usersTableLayout}

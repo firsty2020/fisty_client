@@ -2,6 +2,7 @@ import React from 'react';
 import { baseURL } from '../../../axios';
 import { string } from 'prop-types';
 
+
 const withEntity = (WrappedComponent, entityName) => (props) => {
 
     const { branchId, companyId } = props.match.params;
@@ -14,6 +15,9 @@ const withEntity = (WrappedComponent, entityName) => (props) => {
         company: {
             url: `${baseURL}companies/${companyId}/`,
             successPath: `/admin/companies/${companyId}/contact-persons`
+        },
+        base: {
+            successPath: `/admin/users`
         }
     };
 

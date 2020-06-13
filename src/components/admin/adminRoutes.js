@@ -57,7 +57,12 @@ const adminRoutes = [
     {
         path: '/admin/user/:userId/edit',
         component: UpdateUser,
-        name: 'Детали пользователя'
+        name: 'Редактировать пользователя'
+    },
+    {
+        path: '/admin/user/contact-person/:contactPersonId/edit',
+        component: withEntity(UpdateContactPerson, 'base'),
+        name: 'Редактировать контактное лицо'
     },
     {
         path: '/admin/user/:userId',

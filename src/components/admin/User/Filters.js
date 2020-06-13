@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DropDown } from '../../ui';
-import { Accordion, Button, Col, Row, Form } from 'react-bootstrap';
+import { Accordion, Button, Col, Row } from 'react-bootstrap';
 import { Filter } from 'react-feather';
 import { countriesOptions } from '../../../helpers/utils';
 import { Input} from 'reactstrap';
@@ -61,7 +61,19 @@ const Filters = ({ onFilter }) => {
 
     return (
         <div>
-            <Accordion>
+            <Row>
+                <Col>
+                    <Input
+                        onChange={(e) => handleSearch(e, 'city__icontains')}
+                        placeholder="Найти по городу"/>
+                </Col>
+                <Col>
+                    <Input
+                        onChange={(e) => handleSearch(e, 'search')}
+                        placeholder="Найти по телефону, эл.почте"/>
+                </Col>
+            </Row>
+            <Accordion className="mt-2">
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
                     <span title="Фильтровать"><Filter/></span>
                 </Accordion.Toggle>
@@ -103,18 +115,6 @@ const Filters = ({ onFilter }) => {
                                     onChange={(e) => handleFilterChange(e, 'citizenship')}
                                     options={countriesOptions}
                                 />
-                            </Col>
-                        </Row>
-                        <Row className="mt-1">
-                            <Col>
-                                <Input
-                                    onChange={(e) => handleSearch(e, 'city__icontains')}
-                                    placeholder="Город"/>
-                            </Col>
-                            <Col>
-                                <Input
-                                    onChange={(e) => handleSearch(e, 'search')}
-                                    placeholder="Телефон, эл.почта"/>
                             </Col>
                         </Row>
                     </div>
