@@ -7,22 +7,11 @@ import { isLoadingSelector } from '../common/commonReducer';
 import Header from './Header';
 
 
-const MOBILE_SIZE = 992;
-
 class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            sidebarCollapsed: false,
-            isMobile: window.innerWidth <= MOBILE_SIZE,
-        };
-    }
-
-    componentDidUpdate(prev) {
-        if (this.state.isMobile && prev.location.pathname !== this.props.location.pathname) {
-            this.toggleSideCollapse();
-        }
+        this.state = { sidebarCollapsed: false };
     }
 
     toggleSideCollapse = () => {
@@ -33,7 +22,7 @@ class Dashboard extends Component {
     render() {
 
         const { sidebarCollapsed } = this.state;
-        const { navigation, routes, isLoading } = this.props;
+        const { navigation, routes } = this.props;
 
         const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
         return (

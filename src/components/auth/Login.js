@@ -16,7 +16,7 @@ import { isLoadingSelector } from '../common/commonReducer';
 const redirectToDashboard = (push) => {
     const token = localStorage.getItem('auth_token');
     const user = getUserFromToken(token);
-    push(`/${user.role}`);
+    push(`/${user.role.replace('_', '-')}`);
 };
 
 const Login = ({ authPending, tokens, getAuthToken, push }) => {

@@ -10,16 +10,19 @@ import {
 } from './components';
 import adminRoutes from './components/admin/adminRoutes';
 import adminNavigation from './components/admin/adminNavigation';
-import { companyNavigation, companyRoutes } from './components/company/companyRoutes';
+import { companyRoutes } from './components/company/companyRoutes';
 import recruiterNavigation from './components/recruiter/recruiterNavigation';
 import recruiterRoutes from './components/recruiter/recruiterRoutes';
 import { LoadSpinner } from './components/ui';
 import ForgotPassword from './components/auth/ForgotPassword';
+import projectManagerNavigation
+    from './components/project-manager/projectManagerNavigation';
 
 
 const Admin = lazy(() => import('./components/common/Dashboard.js'));
 const Recruiter = lazy(() => import('./components/recruiter/Dashboard.js'));
 const Company = lazy(() => import('./components/common/Dashboard.js'));
+const ProjectManager = lazy(() => import('./components/common/Dashboard.js'));
 
 
 const Routes = () => (
@@ -67,10 +70,21 @@ const Routes = () => (
                 path="/company"
                 role='company'
                 render={(props) =>
+                    <ProjectManager
+                        {...props}
+                        routes={companyRoutes}
+                        navigation={projectManagerNavigation}
+                    />
+                }
+            />
+            <ProtectedRoute
+                path="/project-manager"
+                role='project_manager'
+                render={(props) =>
                     <Company
                         {...props}
                         routes={companyRoutes}
-                        navigation={companyNavigation}
+                        navigation={projectManagerNavigation}
                     />
                 }
             />

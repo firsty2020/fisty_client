@@ -3,26 +3,15 @@ import { Switch, Route } from 'react-router-dom';
 import { SidebarNav, PageContent, Page, Header } from '../../assets/vibe';
 import Logo from '../../assets/images/logotype-Firsty-fixed.png';
 import { connect } from 'react-redux';
-import { isLoadingSelector } from '../common/commonReducer';
+import { isLoadingSelector } from './commonReducer';
 import { LoadSpinner } from '../ui';
 
-
-const MOBILE_SIZE = 992;
 
 class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            sidebarCollapsed: false,
-            isMobile: window.innerWidth <= MOBILE_SIZE,
-        };
-    }
-
-    componentDidUpdate(prev) {
-        if (this.state.isMobile && prev.location.pathname !== this.props.location.pathname) {
-            this.toggleSideCollapse();
-        }
+        this.state = { sidebarCollapsed: false };
     }
 
     toggleSideCollapse = () => {
