@@ -46,14 +46,14 @@ const Filters = ({ onFilter }) => {
         onFilter(_filter);
     };
 
-    const handleSearch = (e, query) => {
+    const handleSearch = (e) => {
         e.persist();
         const value = e.target.value;
         let _filter = { ...filter };
         if (value) {
-            _filter = { [query]: value };
+            _filter = { search: value };
         } else {
-            delete _filter[query];
+            delete _filter.search;
         }
         setFilter(_filter);
         onFilter(_filter);
@@ -62,15 +62,10 @@ const Filters = ({ onFilter }) => {
     return (
         <div>
             <Row>
-                <Col>
+                <Col md="5" lg="5" sm="8">
                     <Input
-                        onChange={(e) => handleSearch(e, 'city__icontains')}
-                        placeholder="Найти по городу"/>
-                </Col>
-                <Col>
-                    <Input
-                        onChange={(e) => handleSearch(e, 'search')}
-                        placeholder="Найти по телефону, эл.почте"/>
+                        onChange={(e) => handleSearch(e)}
+                        placeholder="Найти по телефону, эл.почте, городу"/>
                 </Col>
             </Row>
             <Accordion className="mt-2">
