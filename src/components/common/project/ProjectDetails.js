@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { BackButton, DetailsTable, PrimaryButton } from '../../ui';
 import { connect } from 'react-redux';
-import { getProject } from '../adminActions';
-import { projectSelector } from '../adminReducer';
+import { getProject } from '../../admin/adminActions';
+import { projectSelector } from '../../admin/adminReducer';
 import { Link } from 'react-router-dom';
 import { extractUserDataFromToken } from '../../auth/auth';
 

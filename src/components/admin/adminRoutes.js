@@ -29,7 +29,7 @@ import Categories from './Config/Categories';
 import Subcategories from './Config/Subcategories/Subcategories';
 import CreateProject from './project/CreateProject';
 import UpdateProject from './project/UpdateProject';
-import ProjectDetails from './project/ProjectDetails';
+import ProjectDetails from '../common/project/ProjectDetails';
 import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
 import Statuses from './Config/Statuses/Statuses';

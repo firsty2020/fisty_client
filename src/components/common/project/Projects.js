@@ -20,9 +20,8 @@ const Projects = ({
                       projects,
                       match,
                       params,
-                      back,
-                      forward,
                       deleted,
+                      hideBackButton,
                       getProjects,
                       deleteProject,
                       resetProjectState,
@@ -89,7 +88,6 @@ const Projects = ({
     };
 
     const generatePath = () => {
-        if (back) return { backPath: back, forwardPath: forward };
         let backPath;
         const { companyId, applicationId, vacancyId } = match.params;
         if (!showActions) {
@@ -120,7 +118,9 @@ const Projects = ({
                     onCancel={() => setProjectIdToDelete(null)}
                     question="Вы уверены, что хотите удалить этот проект?"/>
             </When>
-            <BackButton path={generatePath().backPath}/>
+            { hideBackButton ? null : (
+                <BackButton path={generatePath().backPath}/>
+            )}
             { showActions ? (
                 <Link to={generatePath().forwardPath}>
                     <CreateButton />

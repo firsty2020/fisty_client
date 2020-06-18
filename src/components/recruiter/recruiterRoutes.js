@@ -1,5 +1,5 @@
 import Projects from './Projects';
-import ProjectDetails from '../admin/project/ProjectDetails';
+import ProjectDetails from '../common/project/ProjectDetails';
 import NotificationsList from './NotificationsList';
 import Leads from '../admin/Lead/Leads';
 import CreateCandidate from '../common/candidates/CreateCandidate';
@@ -11,7 +11,7 @@ const recruiterRoutes = [
     {
         path: '/recruiter/projects/:projectId/create-candidate',
         component: CreateCandidate,
-        name: 'Кандидат'
+        name: 'Кандидат',
     },
     {
         path: '/recruiter/projects/:projectId',
