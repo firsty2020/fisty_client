@@ -6,7 +6,7 @@ import { push } from 'connected-react-router';
 import { Formik } from 'formik';
 import { bool, func, object } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getUserFromToken, storeTokens } from './auth';
+import { extractUserDataFromToken, storeTokens } from './auth';
 import { getAuthToken } from './authActions';
 import { AuthFormContainer } from '../ui';
 import { logInSchema } from '../../helpers/schemas';
@@ -15,7 +15,7 @@ import { isLoadingSelector } from '../common/commonReducer';
 
 const redirectToDashboard = (push) => {
     const token = localStorage.getItem('auth_token');
-    const user = getUserFromToken(token);
+    const user = extractUserDataFromToken(token);
     push(`/${user.role.replace('_', '-')}`);
 };
 

@@ -27,7 +27,7 @@ import { createCandidate, resetCandidateState } from '../commonActions';
 import { When } from 'react-if';
 import { candidateCreatedSelector } from '../commonReducer';
 import Messages from '../../../helpers/constants/messages'
-import { getUserFromToken } from '../../auth/auth';
+import { extractUserDataFromToken } from '../../auth/auth';
 
 registerLocale('ru', ru)
 setDefaultLocale('ru');
@@ -147,7 +147,7 @@ const CreateCandidate = ({
         setFieldValue('lead', '');
     };
 
-    const role = (getUserFromToken() || {}).role;
+    const role = (extractUserDataFromToken() || {}).role;
 
     return (
         <div>
@@ -208,7 +208,7 @@ const CreateCandidate = ({
                                     name="show_leads"
                                     value={values.show_leads}
                                     onBlur={(e) => setFieldTouched('show_leads', e)}
-                                    onChange={(e) => toggleShowLeads(setFieldValue, values.show_leads)}
+                                    onChange={() => toggleShowLeads(setFieldValue, values.show_leads)}
                                 />
                                 {touched.lead && errors.lead ? (
                                     <span className="mt-1 invalid-feedback-visible">{errors.lead}</span>

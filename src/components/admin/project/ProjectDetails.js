@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getProject } from '../adminActions';
 import { projectSelector } from '../adminReducer';
 import { Link } from 'react-router-dom';
-import { getUserFromToken } from '../../auth/auth';
+import { extractUserDataFromToken } from '../../auth/auth';
 
 
 const showBranchNames = (branchDetails) => {
@@ -54,7 +54,7 @@ const ProjectDetails  = ({ match, project, getProject }) => {
         return null;
     }
     
-    const isAdmin = (getUserFromToken() || {}).role === 'admin';
+    const isAdmin = (extractUserDataFromToken() || {}).role === 'admin';
 
     const generateBackPath = () => {
         const url = match.url;

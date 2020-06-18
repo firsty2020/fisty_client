@@ -24,12 +24,12 @@ import withApplicationsTableLayout
     from './Application/withApplicationsTableLayout';
 import Vacancies from './Vacancy/Vacancies';
 import VacancyDetails from './Vacancy/VacancyDetails';
-import Projects from './Project/Projects';
+import Projects from '../common/project/Projects';
 import Categories from './Config/Categories';
 import Subcategories from './Config/Subcategories/Subcategories';
-import CreateProject from './Project/CreateProject';
-import UpdateProject from './Project/UpdateProject';
-import ProjectDetails from './Project/ProjectDetails';
+import CreateProject from './project/CreateProject';
+import UpdateProject from './project/UpdateProject';
+import ProjectDetails from './project/ProjectDetails';
 import EnhanceDynamicFields from './Config/DynamicFields/EnhanceDynamicFields';
 import Analytics from './Analytics/Analytics';
 import Statuses from './Config/Statuses/Statuses';

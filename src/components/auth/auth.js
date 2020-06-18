@@ -14,13 +14,13 @@ export const refreshExpiredToken = (refreshToken) => {
 };
 
 export const getAuthUser = () => {
-    const userId = (getUserFromToken() || {}).user_id;
+    const userId = (extractUserDataFromToken() || {}).user_id;
     if (!userId)
         return;
     return getUser(userId);
 };
 
-export const getUserFromToken = () => {
+export const extractUserDataFromToken = () => {
     const token = localStorage.getItem('auth_token');
     let decoded = null;
     try {

@@ -7,18 +7,21 @@ import {
     CreateButton,
     TableList
 } from '../../ui';
-import { deleteProject, getProjects, resetProjectState } from '../adminActions';
-import { projectDeletedSelector, projectsSelector } from '../adminReducer';
+import { deleteProject, getProjects, resetProjectState } from '../../admin/adminActions';
+import { projectDeletedSelector, projectsSelector } from '../../admin/adminReducer';
 import { Link } from 'react-router-dom';
 import { When } from 'react-if';
 import { autoToggleAlert } from '../../../helpers/utils';
 import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
-import NotesModal from './NotesModal';
+import NotesModal from '../../admin/project/NotesModal';
 
 const Projects = ({
                       projects,
                       match,
+                      params,
+                      back,
+                      forward,
                       deleted,
                       getProjects,
                       deleteProject,
@@ -45,6 +48,7 @@ const Projects = ({
     const showActions = !!match.params.vacancyId;
 
     const generateParams = () => {
+        if (params) return params;
         const { vacancyId, companyId } = match.params;
         return vacancyId ? { vacancy: vacancyId } : { company: companyId }
     };
@@ -85,20 +89,18 @@ const Projects = ({
     };
 
     const generatePath = () => {
+        if (back) return { backPath: back, forwardPath: forward };
         let backPath;
-        let forwardPath;
         const { companyId, applicationId, vacancyId } = match.params;
         if (!showActions) {
             return { backPath: `/admin/companies/${companyId}`};
         }
         if (companyId) {
             backPath = `/admin/companies/${companyId}/applications/${applicationId}/vacancies/${vacancyId}`;
-            forwardPath = `${backPath}/project/create`;
         } else {
             backPath = `/admin/applications/${applicationId}/vacancies/${vacancyId}`;
-            forwardPath = `${backPath}/project/create`
         }
-        return { backPath, forwardPath };
+        return { backPath, forwardPath: `${backPath}/project/create` };
     };
 
     return (

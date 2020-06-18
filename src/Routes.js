@@ -17,6 +17,8 @@ import { LoadSpinner } from './components/ui';
 import ForgotPassword from './components/auth/ForgotPassword';
 import projectManagerNavigation
     from './components/project-manager/projectManagerNavigation';
+import projectManagerRoutes
+    from './components/project-manager/projectManagerRoutes';
 
 
 const Admin = lazy(() => import('./components/common/Dashboard.js'));
@@ -83,7 +85,7 @@ const Routes = () => (
                 render={(props) =>
                     <Company
                         {...props}
-                        routes={companyRoutes}
+                        routes={projectManagerRoutes}
                         navigation={projectManagerNavigation}
                     />
                 }

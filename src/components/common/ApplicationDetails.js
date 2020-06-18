@@ -7,7 +7,7 @@ import { getCompany } from '../admin/Company/companiesActions';
 import { companySelector } from '../admin/Company/companiesReducer';
 import { extractIdFromUrl } from '../../helpers/utils';
 import { Link } from 'react-router-dom';
-import { getUserFromToken } from '../auth/auth';
+import { extractUserDataFromToken } from '../auth/auth';
 
 
 const applicationDetailsTableLayout = ({
@@ -77,7 +77,7 @@ const ApplicationDetails = ({
         }
     }, [ getCompany, application ]);
 
-    const user = getUserFromToken();
+    const user = extractUserDataFromToken();
 
 
     if (!application) {

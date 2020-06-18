@@ -3,14 +3,14 @@ import { DropDown } from '../ui';
 import {extractIdFromUrl, generateSelectOptions} from '../../helpers/utils';
 import { Button, Modal } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import { getUserFromToken } from '../auth/auth';
+import { extractUserDataFromToken } from '../auth/auth';
 
 
 const SelectProjectModal = ({ projects, toggleModal }) => {
 
     const [ project, setProject ] = useState(null);
 
-    const role = (getUserFromToken() || {}).role;
+    const role = (extractUserDataFromToken() || {}).role;
 
 
     return (

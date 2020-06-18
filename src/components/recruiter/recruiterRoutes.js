@@ -1,5 +1,5 @@
 import Projects from './Projects';
-import ProjectDetails from '../admin/Project/ProjectDetails';
+import ProjectDetails from '../admin/project/ProjectDetails';
 import NotificationsList from './NotificationsList';
 import Leads from '../admin/Lead/Leads';
 import CreateCandidate from '../common/candidates/CreateCandidate';

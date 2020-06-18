@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { getUserFromToken } from './auth';
+import { extractUserDataFromToken } from './auth';
 
 
 const ProtectedRoute = ({ render, role, ...rest }) => {
 
-    const authUser = getUserFromToken();
+    const authUser = extractUserDataFromToken();
 
     return (
         <Route {...rest} render={(props) => (
