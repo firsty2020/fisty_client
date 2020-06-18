@@ -129,7 +129,7 @@ const ProjectForm = ({
                 enableReinitialize
                 initialValues={formValues}
                 validationSchema={projectSchema}
-                onSubmit={(values, resetForm) => {
+                onSubmit={(values) => {
                     const data = copyObject(clearEmptyFields(values));
                     const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch', 'recruiter'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
