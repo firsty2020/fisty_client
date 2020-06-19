@@ -1,6 +1,5 @@
 import {
     ADMIN_CREATE_CONTACT_PERSON,
-    ADMIN_GET_USERS,
     ADMIN_GET_CONTACT_PERSONS,
     ADMIN_REMOVE_CONTACT_PERSON,
     ADMIN_GET_CONTACT_PERSON,
@@ -50,9 +49,6 @@ const common = (state = {}, action) => {
 
         case API_REQUEST_END:
             return { ...state, isLoading: false };
-
-        case ADMIN_GET_USERS:
-            return { ...state, users: action.payload };
 
         case ADMIN_USER_DELETE:
             return { ...state, userDeleted: true };
@@ -180,7 +176,6 @@ export const admin =  combineReducers({
     branches,
 });
 
-export const usersSelector = (state) => state.admin.common.users;
 export const userDeletedSelector = (state) => state.admin.common.userDeleted;
 
 export const contactPersonCreatedSelector = state => state.admin.common.contactPersonCreated;

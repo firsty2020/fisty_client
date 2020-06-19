@@ -22,6 +22,7 @@ import {
     DELETE,
     COMMON_CANDIDATE_DELETE,
     PROJECT_GET,
+    USERS_GET,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -147,4 +148,11 @@ export const getProject = (id) => createApiAction({
     url: `projects/${id}/`,
     method: GET,
     label: PROJECT_GET,
+});
+
+export const getUsers = (params) => createApiAction({
+    url: 'users/',
+    method: GET,
+    data: params ,
+    label: USERS_GET,
 });

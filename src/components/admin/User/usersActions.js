@@ -1,5 +1,4 @@
 import {
-    ADMIN_GET_USERS,
     ADMIN_USER_DELETE,
     ADMIN_USER_UPDATE,
     ADMIN_USERS_STATE_RESET,
@@ -9,13 +8,6 @@ import {
 } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
 
-
-export const getUsers = (params) => createApiAction({
-        url: 'users/',
-        method: GET,
-        data: params ,
-        label: ADMIN_GET_USERS,
-});
 
 export const deleteUser = (id) => createApiAction({
     url: `users/${id}/`,

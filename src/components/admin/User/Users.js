@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers } from './usersActions';
+import { getUsers } from '../../common/commonActions';
 import { connect } from 'react-redux';
-import { userDeletedSelector, usersSelector } from '../adminReducer';
+import { userDeletedSelector } from '../adminReducer';
 import { push } from 'connected-react-router';
 import { AlertNotice, ConfirmationModal, TableList } from '../../ui';
 import Pagination from '../../Pagination';
@@ -11,6 +11,7 @@ import { deleteUser, resetUsersState } from './usersActions';
 import { resetAuthState, resetPassword } from "../../auth/authActions";
 import { passwordResetSelector } from "../../auth/authReducer";
 import Filters from './Filters';
+import { usersSelector } from '../../common/commonReducer';
 
 
 const usersTableLayout = {

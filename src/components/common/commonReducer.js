@@ -20,6 +20,7 @@ import {
     COMMON_CANDIDATE_GET,
     COMMON_CANDIDATE_DELETE,
     PROJECT_GET,
+    USERS_GET,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -99,6 +100,9 @@ export const common = (state = {}, action) => {
         case PROJECT_GET:
             return { ...state, project: action.payload };
 
+        case USERS_GET:
+            return { ...state, users: action.payload };
+
         default:
             return state;
     }
@@ -136,4 +140,6 @@ export const candidateDeletedSelector = state => state.common.candidateDeleted;
 export const candidatesSelector = state => state.common.candidates;
 export const candidateSelector = state => state.common.candidate;
 export const projectSelector = state => state.common.project;
+export const usersSelector = (state) => state.common.users;
+
 

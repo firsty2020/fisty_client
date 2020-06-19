@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { getUsers } from '../admin/User/usersActions';
+import { getUsers } from '../common/commonActions';
 import { connect } from 'react-redux';
-import { usersSelector } from '../admin/adminReducer';
+import { usersSelector } from '../common/commonReducer';
 import Container from 'react-bootstrap/Container';
 import { BackButton, CreateButton, TableList } from '../ui';
 import { extractIdFromUrl } from '../../helpers/utils';
