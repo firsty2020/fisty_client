@@ -1,7 +1,6 @@
 import { createApiAction } from '../../helpers/utils';
 import {
     ADMIN_DASHBOARD_STATISTICS_GET,
-    ADMIN_GET_PROJECT,
     ADMIN_GET_PROJECTS,
     ADMIN_LEAD_CREATE,
     ADMIN_LEAD_DELETE,
@@ -31,12 +30,6 @@ export const getProjects = (params) => createApiAction({
     label: ADMIN_GET_PROJECTS,
 });
 
-
-export const getProject = (id) => createApiAction({
-    url: `projects/${id}/`,
-    method: GET,
-    label: ADMIN_GET_PROJECT,
-});
 
 export const createProject = (data) => createApiAction({
     url: 'projects/',

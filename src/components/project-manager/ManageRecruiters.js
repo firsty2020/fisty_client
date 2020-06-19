@@ -17,7 +17,7 @@ const usersTableLayout = {
 
 const ManageRecruiters = ({ match, users, getUsers, }) => {
 
-    const params = { role: 'recruiter' };
+    const params = { role: 'recruiter', project: match.params.projectId };
 
     useEffect(() => {
         getUsers(params);

@@ -18,7 +18,10 @@ import {
     COMMON_CANDIDATE_CREATE,
     COMMON_CANDIDATES_GET,
     COMMON_CANDIDATE_STATE_RESET,
-    COMMON_CANDIDATE_GET, DELETE, COMMON_CANDIDATE_DELETE,
+    COMMON_CANDIDATE_GET,
+    DELETE,
+    COMMON_CANDIDATE_DELETE,
+    PROJECT_GET,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -138,4 +141,10 @@ export const deleteCandidate = (id) => createApiAction({
 
 export const resetCandidateState = () => ({
     type: COMMON_CANDIDATE_STATE_RESET,
+});
+
+export const getProject = (id) => createApiAction({
+    url: `projects/${id}/`,
+    method: GET,
+    label: PROJECT_GET,
 });

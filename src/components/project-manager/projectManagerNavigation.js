@@ -10,7 +10,7 @@ export default {
             name: 'Проекты',
             url: '/project-manager/projects',
             icon: 'Briefcase',
-            matcher: 'project'
+            matcher: 'projects'
         },
     ],
     bottom: [
