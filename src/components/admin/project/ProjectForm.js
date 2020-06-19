@@ -134,9 +134,6 @@ const ProjectForm = ({
                     const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch', 'recruiter'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
                     delete transformedData.location_type;
-                    if (project) {
-                        return onSubmit(transformedData);
-                    }
                     onSubmit(transformedData);
                 }}
             >

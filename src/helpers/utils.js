@@ -29,7 +29,7 @@ export const generateSelectOptions = (list, value, label) => {
 export const transformReactSelectFields = (fields, source) => {
     fields.map((field) => {
         if (Array.isArray(source[field]) && source[field].length) {
-            source[field] = source[field].map(item => item.value);
+            source[field] = source[field].map(item => item ? item.value : null);
         } else if (typeof source[field] === 'object') {
             source[field] = source[field].value;
         }

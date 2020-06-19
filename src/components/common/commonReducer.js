@@ -59,7 +59,6 @@ export const common = (state = {}, action) => {
         case UPDATE_VACANCY:
             return { ...state, vacancyUpdated: true };
 
-
         case SET_VACANCY_CREATED:
             return { ...state, vacancyCreated: false };
 
@@ -101,7 +100,13 @@ export const common = (state = {}, action) => {
             return { ...state, project: action.payload };
 
         case USERS_GET:
-            return { ...state, users: action.payload };
+            return {
+                ...state,
+                users: action.id ?  {
+                    ...state.users,
+                    [ action.id ]: action.payload,
+                } : action.payload,
+            };
 
         default:
             return state;
@@ -122,6 +127,7 @@ export const vacancyUpdatedSelector = state => state.common.vacancyUpdated;
 export const vacancyRemovedSelector = state => state.common.vacancyRemoved;
 export const vacancySelector = state => state.common.vacancy;
 export const notificationsSelector = state => state.common.notifications;
+export const usersSelector = state => state.common.users;
 
 export const notificationsState = (uid = null) => createSelector(
     [ notificationsSelector ],
@@ -134,12 +140,22 @@ export const notificationsState = (uid = null) => createSelector(
     }
 );
 
+export const usersState = (uid = null) => createSelector(
+    [ usersSelector ],
+    (users) => {
+        if (!users) return [];
+        if (uid) {
+            return users[uid];
+        }
+        return users;
+    }
+);
+
 export const notificationUpdatedSelector = state => state.common.notificationUpdated;
 export const candidateCreatedSelector = state => state.common.candidateCreated;
 export const candidateDeletedSelector = state => state.common.candidateDeleted;
 export const candidatesSelector = state => state.common.candidates;
 export const candidateSelector = state => state.common.candidate;
 export const projectSelector = state => state.common.project;
-export const usersSelector = (state) => state.common.users;
 
 

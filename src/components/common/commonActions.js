@@ -150,9 +150,10 @@ export const getProject = (id) => createApiAction({
     label: PROJECT_GET,
 });
 
-export const getUsers = (params) => createApiAction({
+export const getUsers = (params, uid) => createApiAction({
     url: 'users/',
     method: GET,
     data: params ,
     label: USERS_GET,
+    id: uid,
 });

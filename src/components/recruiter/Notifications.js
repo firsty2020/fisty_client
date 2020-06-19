@@ -8,7 +8,6 @@ import { notificationsState,
 } from '../common/commonReducer';
 import { push } from 'connected-react-router';
 import { generateUId } from '../../helpers/utils';
-import { Link } from 'react-router-dom';
 
 
 const uid = generateUId();
