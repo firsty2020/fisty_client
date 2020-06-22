@@ -21,6 +21,10 @@ import {
     COMMON_CANDIDATE_DELETE,
     PROJECT_GET,
     USERS_GET,
+    PROJECT_UPDATE,
+    PROJECT_STATE_RESET,
+    PROJECT_CREATE,
+    PROJECT_DELETE,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -99,6 +103,24 @@ export const common = (state = {}, action) => {
         case PROJECT_GET:
             return { ...state, project: action.payload };
 
+        case PROJECT_UPDATE:
+            return { ...state, projectUpdated: true };
+
+        case PROJECT_CREATE:
+            return { ...state, projectCreated: action.payload };
+
+        case PROJECT_DELETE:
+            return { ...state, projectDeleted: true };
+
+        case PROJECT_STATE_RESET:
+            return {
+                ...state,
+                projectCreated: false,
+                projectDeleted: false,
+                projectUpdated: false,
+                recruitersSet: false,
+            };
+
         case USERS_GET:
             return {
                 ...state,
@@ -157,5 +179,9 @@ export const candidateDeletedSelector = state => state.common.candidateDeleted;
 export const candidatesSelector = state => state.common.candidates;
 export const candidateSelector = state => state.common.candidate;
 export const projectSelector = state => state.common.project;
+export const projectCreatedSelector = state => state.common.projectCreated;
+export const projectDeletedSelector = state => state.common.projectDeleted;
+export const projectUpdatedSelector = state => state.common.projectUpdated;
+
 
 

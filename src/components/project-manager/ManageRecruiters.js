@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getProject, getUsers } from '../common/commonActions';
 import { connect } from 'react-redux';
-import { projectSelector, usersSelector } from '../common/commonReducer';
+import {
+    getProject,
+    updateProject,
+    getUsers,
+    resetProjectState,
+} from '../common/commonActions';
+import {
+    projectSelector,
+    usersSelector,
+    projectUpdatedSelector,
+} from '../common/commonReducer';
 import Container from 'react-bootstrap/Container';
 import {
     AlertNotice,
@@ -15,10 +24,8 @@ import {
     copyObject,
     extractIdFromUrl
 } from '../../helpers/utils';
-import { resetProjectState, updateProject } from '../admin/adminActions';
 import { When } from 'react-if';
 import LinkRecruiter from './LinkRecruiter';
-import { projectUpdatedSelector } from '../admin/adminReducer';
 import Pagination from '../Pagination';
 
 const usersTableLayout = {

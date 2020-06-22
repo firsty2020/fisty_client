@@ -7,10 +7,6 @@ import {
     ADMIN_LEAD_STATE_RESET,
     ADMIN_LEAD_UPDATE,
     ADMIN_LEADS_GET,
-    ADMIN_PROJECT_CREATE,
-    ADMIN_PROJECT_DELETE,
-    ADMIN_PROJECT_RESET,
-    ADMIN_PROJECT_UPDATE,
     ADMIN_PROJECT_RECRUITERS_SET,
     DELETE,
     GET,
@@ -28,31 +24,6 @@ export const getProjects = (params) => createApiAction({
     method: GET,
     data: params,
     label: ADMIN_GET_PROJECTS,
-});
-
-
-export const createProject = (data) => createApiAction({
-    url: 'projects/',
-    method: POST,
-    data,
-    label: ADMIN_PROJECT_CREATE,
-});
-
-export const deleteProject = (id) => createApiAction({
-    url: `projects/${id}`,
-    method: DELETE,
-    label: ADMIN_PROJECT_DELETE,
-});
-
-export const updateProject = (id, data) => createApiAction({
-    url: `projects/${id}/`,
-    method: PATCH,
-    data,
-    label: ADMIN_PROJECT_UPDATE,
-});
-
-export const resetProjectState = () => ({
-   type: ADMIN_PROJECT_RESET,
 });
 
 export const getStatistics = () => createApiAction({

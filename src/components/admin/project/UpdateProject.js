@@ -1,22 +1,17 @@
 import React, {useEffect} from 'react';
 import { Container } from 'react-bootstrap';
-import {
-    resetProjectState,
-    setProjectRecruiters,
-    updateProject
-} from '../adminActions';
+import { setProjectRecruiters } from '../adminActions';
 import { connect } from 'react-redux';
 import ProjectForm from './ProjectForm';
 import { When } from 'react-if';
 import {
-    projectUpdatedSelector,
     recruitersSet
 } from '../adminReducer';
 import { AlertNotice } from '../../ui';
 import { push } from 'connected-react-router';
 import { extractIdFromUrl } from '../../../helpers/utils';
-import { getProject } from '../../common/commonActions';
-import { projectSelector } from '../../common/commonReducer';
+import { getProject, updateProject, resetProjectState } from '../../common/commonActions';
+import { projectSelector, projectUpdatedSelector } from '../../common/commonReducer';
 
 
 const UpdateProject = ({

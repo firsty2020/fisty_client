@@ -7,14 +7,16 @@ import {
     CreateButton,
     TableList
 } from '../../ui';
-import { deleteProject, getProjects, resetProjectState } from '../../admin/adminActions';
-import { projectDeletedSelector, projectsSelector } from '../../admin/adminReducer';
+import { getProjects } from '../../admin/adminActions';
+import { projectsSelector } from '../../admin/adminReducer';
 import { Link } from 'react-router-dom';
 import { When } from 'react-if';
 import { autoToggleAlert } from '../../../helpers/utils';
 import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
 import NotesModal from '../../admin/project/NotesModal';
+import { deleteProject, resetProjectState } from '../commonActions';
+import { projectDeletedSelector } from '../commonReducer';
 
 const Projects = ({
                       projects,
@@ -149,11 +151,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = { getProjects, deleteProject, resetProjectState, push };
-
-
-Projects.propTypes = {
-
-};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);

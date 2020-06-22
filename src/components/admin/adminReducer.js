@@ -12,10 +12,6 @@ import {
     ADMIN_SET_CONTACT_PERSON_UNLINKED,
     ADMIN_SET_CONTACT_PERSON_LINKED,
     ADMIN_GET_PROJECTS,
-    ADMIN_PROJECT_CREATE,
-    ADMIN_PROJECT_RESET,
-    ADMIN_PROJECT_DELETE,
-    ADMIN_PROJECT_UPDATE,
     ADMIN_DASHBOARD_STATISTICS_GET,
     API_REQUEST,
     API_REQUEST_END,
@@ -102,24 +98,6 @@ const common = (state = {}, action) => {
         case ADMIN_GET_PROJECTS:
             return { ...state, projects: action.payload };
 
-        case ADMIN_PROJECT_CREATE:
-            return { ...state, projectCreated: action.payload };
-
-        case ADMIN_PROJECT_UPDATE:
-            return { ...state, projectUpdated: true };
-
-        case ADMIN_PROJECT_DELETE:
-            return { ...state, projectDeleted: true };
-
-        case ADMIN_PROJECT_RESET:
-            return {
-                ...state,
-                projectCreated: false,
-                projectDeleted: false,
-                projectUpdated: false,
-                recruitersSet: false,
-            };
-
         case ADMIN_DASHBOARD_STATISTICS_GET: {
             return { statistics: action.payload };
         }
@@ -204,9 +182,6 @@ export const linkContactPersonResolvedSelector = state => state.admin.common.con
 export const unLinkContactPersonResolvedSelector = state => state.admin.common.contactPersonUnLinked;
 
 export const projectsSelector = state => state.admin.common.projects;
-export const projectCreatedSelector = state => state.admin.common.projectCreated;
-export const projectUpdatedSelector = state => state.admin.common.projectUpdated;
-export const projectDeletedSelector = state => state.admin.common.projectDeleted;
 
 export const statisticsSelector = state => state.admin.common.statistics;
 

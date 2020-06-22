@@ -1,18 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { AlertNotice, DropDown } from '../ui';
-import {
-    autoToggleAlert,
-    copyObject,
-    generateSelectOptions,
-    generateUId
-} from '../../helpers/utils';
+import { DropDown } from '../ui';
+import { copyObject, generateSelectOptions, generateUId } from '../../helpers/utils';
 import { connect } from 'react-redux';
-import { getUsers } from '../common/commonActions';
-import {isLoadingSelector, usersState} from '../common/commonReducer';
-import { projectUpdatedSelector } from '../admin/adminReducer';
-import { updateProject, resetProjectState } from '../admin/adminActions';
-import { When } from 'react-if';
+import { getUsers, updateProject, resetProjectState } from '../common/commonActions';
+import { isLoadingSelector, usersState, projectUpdatedSelector } from '../common/commonReducer';
 
 const uid = generateUId();
 
@@ -21,16 +13,12 @@ const LinkRecruiter = ({
                            show,
                            project,
                            users,
-                           updated,
                            pending,
                            getUsers,
-                           updateProject,
-                           resetProjectState,
                            onHide,
                        }) => {
 
     const [ selectedRecruiter, setSelectedRecruiter ] = useState(null);
-    const [ successMessage, setSuccessMessage ] = useState('');
 
     const params = { role: 'recruiter', 'project!': project.id, show_all: true };
 

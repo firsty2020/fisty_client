@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import {
-    createProject,
-    resetProjectState,
-    setProjectRecruiters
-} from '../adminActions';
+import { setProjectRecruiters } from '../adminActions';
 import { connect } from 'react-redux';
 import ProjectForm from './ProjectForm';
-import { getVacancy } from '../../common/commonActions';
-import { vacancySelector } from '../../common/commonReducer';
+import { getVacancy, createProject, resetProjectState } from '../../common/commonActions';
+import { vacancySelector, projectCreatedSelector } from '../../common/commonReducer';
 import { When } from 'react-if';
-import {projectCreatedSelector, recruitersSet} from '../adminReducer';
+import { recruitersSet} from '../adminReducer';
 import { AlertNotice } from '../../ui';
 import { push } from 'connected-react-router';
-import {copyObject, extractIdFromUrl} from '../../../helpers/utils';
+import { copyObject, extractIdFromUrl } from '../../../helpers/utils';
 
 
 const CreateProject = ({
