@@ -14,6 +14,12 @@ const ProjectDetails = ({ match }) => {
                     text="Рекрутеры"
                 />
             </Link>
+           <Link to={`/project-manager/projects/${match.params.projectId}/candidates`}>
+               <PrimaryButton
+                   className="ml-2"
+                   text="Кандидаты"
+               />
+           </Link>
        </div>
 
    );
