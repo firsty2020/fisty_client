@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DropDown } from '../../ui';
 import { Accordion, Button, Col, Row } from 'react-bootstrap';
-import { Filter } from 'react-feather';
+import { Sliders } from 'react-feather';
 import { countriesOptions } from '../../../helpers/utils';
 import { Input} from 'reactstrap';
 
@@ -69,8 +69,16 @@ const Filters = ({ onFilter }) => {
                 </Col>
             </Row>
             <Accordion className="mt-2">
-                <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    <span title="Фильтровать"><Filter/></span>
+                <Accordion.Toggle
+                    as={Button}
+                    variant="link"
+                    eventKey="0"
+                    className="no-decoration p-0 mb-2"
+                >
+                    <span title="Фильтровать">
+                        <Sliders className="filter-icon"/>
+                        <span className="ml-2">Фильтровать</span>
+                    </span>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                     <div>

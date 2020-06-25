@@ -157,3 +157,15 @@ li.active span {
 .p5-15 {
     padding: 5px 15px;
 }
+
+.no-decoration {
+    text-decoration: none !important;
+}
+
+.no-decoration:hover {
+    text-decoration: none !important;
+}
+
+.filter-icon {
+    transform: rotate(90deg);
+}
