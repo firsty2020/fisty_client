@@ -17,7 +17,7 @@ export const userRegistrationSchema = Yup.object().shape({
 });
 
 
-export const completeRegistrationSchema = Yup.object().shape({
+export const recruiterSchema = Yup.object().shape({
     first_name: Yup.string()
         .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
     last_name: Yup.string()

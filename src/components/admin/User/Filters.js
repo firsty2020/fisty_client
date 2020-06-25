@@ -62,7 +62,7 @@ const Filters = ({ onFilter }) => {
     return (
         <div>
             <Row>
-                <Col md="5" lg="5" sm="8">
+                <Col md="6" lg="6" sm="8">
                     <Input
                         onChange={(e) => handleSearch(e)}
                         placeholder="Найти по телефону, эл.почте, городу"/>

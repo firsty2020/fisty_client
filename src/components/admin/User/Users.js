@@ -3,7 +3,12 @@ import { getUsers } from '../../common/commonActions';
 import { connect } from 'react-redux';
 import { userDeletedSelector } from '../adminReducer';
 import { push } from 'connected-react-router';
-import { AlertNotice, ConfirmationModal, TableList } from '../../ui';
+import {
+    AlertNotice,
+    ConfirmationModal,
+    CreateButton,
+    TableList,
+} from '../../ui';
 import Pagination from '../../Pagination';
 import { autoToggleAlert, extractIdFromUrl}  from '../../../helpers/utils';
 import { When } from 'react-if';
@@ -101,6 +106,7 @@ const Users = ({
                     onCancel={() => setUserToDelete(null)}
                     show={!!userToDelete}/>
             </When>
+            <CreateButton />
             <div className="mt-10-auto">
                 <Filters onFilter={handleFilter} />
             </div>

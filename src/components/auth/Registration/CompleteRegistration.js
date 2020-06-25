@@ -4,7 +4,7 @@ import { Col, Dropdown, Form, InputGroup } from 'react-bootstrap';
 import { registrationCompletedSelector } from '../authReducer';
 import { completeRegistration } from '../authActions';
 import { push } from 'connected-react-router'
-import { completeRegistrationSchema } from '../../../helpers/schemas';
+import { recruiterSchema } from '../../../helpers/schemas';
 import { Formik } from 'formik';
 import { bool, func, shape, string } from 'prop-types';
 import { When } from 'react-if';
@@ -90,7 +90,7 @@ const CompleteRegistration = ({
                         accept: false,
                         languages: [],
                     }}
-                    validationSchema={completeRegistrationSchema}
+                    validationSchema={recruiterSchema}
                     onSubmit={(values) => {
                         const userDetails = transformUserData(values);
                         completeRegistration(userDetails, match.params.passwordToken);

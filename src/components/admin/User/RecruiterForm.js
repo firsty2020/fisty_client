@@ -17,10 +17,10 @@ import {
 } from '../../../helpers/dates';
 import { connect } from 'react-redux';
 import { isLoadingSelector } from '../../common/commonReducer';
-import { completeRegistrationSchema } from '../../../helpers/schemas';
+import { recruiterSchema } from '../../../helpers/schemas';
 import * as Yup from 'yup';
 
-const schema = completeRegistrationSchema.concat(Yup.object().shape({
+const schema = recruiterSchema.concat(Yup.object().shape({
     sub_role: Yup.string()
         .required('Выберите тип')
 }));

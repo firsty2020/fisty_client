@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlusCircle } from 'react-feather';
-import {Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 
 const CreateButton = (props) => (
@@ -12,7 +12,7 @@ const CreateButton = (props) => (
             <PlusCircle
                 size={20}
                 className="align-sub"
-            /> {props.text || 'Создать' }
+            /> {props.text || 'Создать'}
         </Button>
     </div>
 );
