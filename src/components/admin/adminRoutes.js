@@ -40,7 +40,7 @@ import CandidateDetails from '../common/candidates/CandidateDetails';
 import UserDetails from './User/UserDetails';
 import UpdateUser from './User/UpdateUser';
 import UpdateCompany from './Company/UpdateCompany';
-
+import CreateRecruiter from './User/CreateRecruiter';
 
 
 const adminRoutes = [
@@ -52,6 +52,11 @@ const adminRoutes = [
     {
         path: '/admin/users',
         component: Users,
+        name: 'Пользователи'
+    },
+    {
+        path: '/admin/users/create/recruiter',
+        component: CreateRecruiter,
         name: 'Пользователи'
     },
     {

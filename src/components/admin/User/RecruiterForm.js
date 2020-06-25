@@ -2,10 +2,14 @@ import React from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { DropDown } from '../../ui';
 import {
-    capitalizeFirstLetter, clearEmptyFields, copyObject,
+    capitalizeFirstLetter,
+    clearEmptyFields,
+    copyObject,
     countriesOptions,
-    educationOptions, genderOptions,
-    languageOptions, transformReactSelectFields
+    educationOptions,
+    genderOptions,
+    languageOptions,
+    transformReactSelectFields,
 } from '../../../helpers/utils';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -13,7 +17,7 @@ import {
     generateDays,
     generateMonths,
     generateYears,
-    transFormDatesArray
+    transFormDatesArray,
 } from '../../../helpers/dates';
 import { connect } from 'react-redux';
 import { isLoadingSelector } from '../../common/commonReducer';
@@ -103,7 +107,8 @@ const RecruiterForm = ({ pending, recruiter, onSubmit }) => {
                 let data = copyObject(values);
                 data = transformReactSelectFields([
                     'citizenship', 'country', 'gender', 'education',
-                    'languages', 'sub_role'], data);
+                    'languages', 'sub_role'
+                ], data);
                 if (values.date_of_birth.year.value) {
                     data.date_of_birth =
                         `${values.date_of_birth.year.value}-${values.date_of_birth.month.value}-${values.date_of_birth.day.value}`;
@@ -176,7 +181,7 @@ const RecruiterForm = ({ pending, recruiter, onSubmit }) => {
                             <Col>
                                 <p className="form-control-label">Эл. почта</p>
                                 <Form.Control
-                                    readOnly
+                                    readOnly={!!recruiter}
                                     type="text"
                                     name="email"
                                     placeholder="you@example.com"

@@ -17,6 +17,7 @@ import { resetAuthState, resetPassword } from "../../auth/authActions";
 import { passwordResetSelector } from "../../auth/authReducer";
 import Filters from './Filters';
 import { usersSelector } from '../../common/commonReducer';
+import SelectRoleModal from './SelectRoleModal';
 
 
 const usersTableLayout = {
@@ -45,6 +46,7 @@ const Users = ({
     const [ successMessage, setSuccessMessage ] = useState('');
     const [ userToResetPassword, setUserToResetPassword ] = useState(null);
     const [ filterParams, setFilterParams ] = useState({});
+    const [ isCreatingUser, setIsCreatingUser ] = useState(false);
 
     useEffect( () => {
       getUsers(filterParams);
@@ -89,6 +91,11 @@ const Users = ({
 
     return (
         <div>
+            <When condition={!!isCreatingUser}>
+                <SelectRoleModal
+                    onClose={() => setIsCreatingUser(false)}
+                />
+            </When>
             <ConfirmationModal
                 onConfirm={handleResetPasswordRequest}
                 onCancel={() => setUserToResetPassword(null)}
@@ -106,7 +113,9 @@ const Users = ({
                     onCancel={() => setUserToDelete(null)}
                     show={!!userToDelete}/>
             </When>
-            <CreateButton />
+            <CreateButton
+                onClick={() => setIsCreatingUser(true)}
+            />
             <div className="mt-10-auto">
                 <Filters onFilter={handleFilter} />
             </div>

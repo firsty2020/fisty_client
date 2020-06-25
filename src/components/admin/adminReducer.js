@@ -27,7 +27,7 @@ import {
     ADMIN_NOTES_CREATE,
     ADMIN_NOTES_GET,
     ADMIN_NOTES_STATE_RESET,
-    ADMIN_NOTE_DELETE,
+    ADMIN_NOTE_DELETE, ADMIN_USER_CREATE,
 } from '../../helpers/constants/actionTypes';
 import { combineReducers } from 'redux';
 import { configs } from './Config/configsReducer';
@@ -45,12 +45,6 @@ const common = (state = {}, action) => {
 
         case API_REQUEST_END:
             return { ...state, isLoading: false };
-
-        case ADMIN_USER_DELETE:
-            return { ...state, userDeleted: true };
-
-        case ADMIN_USERS_STATE_RESET:
-            return { ...state, userDeleted: false, userUpdated: false };
 
         case ADMIN_CREATE_CONTACT_PERSON:
             return { ...state, contactPersonCreated: true };
@@ -129,6 +123,19 @@ const common = (state = {}, action) => {
         case ADMIN_USER_UPDATE:
             return { ...state, userUpdated: true };
 
+        case ADMIN_USER_CREATE:
+            return { ...state, userCreated: true };
+
+        case ADMIN_USER_DELETE:
+            return { ...state, userDeleted: true };
+
+        case ADMIN_USERS_STATE_RESET:
+            return { ...state,
+                userDeleted: false,
+                userUpdated: false,
+                userCreated: false,
+            };
+
         case ADMIN_NOTES_CREATE:
             return { ...state, noteCreated: true };
 
@@ -193,6 +200,7 @@ export const leadsSelector = state => state.admin.common.leads;
 export const recruitersSet = state => state.admin.common.recruitersSet;
 
 export const userUpdateSelector = state => state.admin.common.userUpdated;
+export const userCreatedSelector = state => state.admin.common.userCreated;
 
 export const notesSelector = state => state.admin.common.notes;
 export const noteCreatedSelector = state => state.admin.common.noteCreated;

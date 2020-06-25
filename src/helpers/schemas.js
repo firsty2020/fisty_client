@@ -22,6 +22,8 @@ export const recruiterSchema = Yup.object().shape({
         .required(ERROR_MESSAGES.FIRST_NAME_REQUIRED),
     last_name: Yup.string()
         .required(ERROR_MESSAGES.LAST_NAME_REQUIRED),
+    email: Yup.string()
+        .required(ERROR_MESSAGES.EMAIL_REQUIRED),
     middle_name: Yup.string(),
     phone_number: Yup.string()
         .matches(REGEX.NUMERIC, ERROR_MESSAGES.PHONE_INVALID)

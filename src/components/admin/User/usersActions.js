@@ -1,10 +1,11 @@
 import {
+    ADMIN_USER_CREATE,
     ADMIN_USER_DELETE,
     ADMIN_USER_UPDATE,
     ADMIN_USERS_STATE_RESET,
     DELETE,
-    GET,
     PATCH,
+    POST,
 } from '../../../helpers/constants/actionTypes';
 import { createApiAction } from '../../../helpers/utils';
 
@@ -24,4 +25,11 @@ export const updateUser = (userId, data) => createApiAction({
     method: PATCH,
     data,
     label: ADMIN_USER_UPDATE,
+});
+
+export const createUser = (data) => createApiAction({
+    url: '/auth-users/create-user/',
+    method: POST,
+    data,
+    label: ADMIN_USER_CREATE,
 });
