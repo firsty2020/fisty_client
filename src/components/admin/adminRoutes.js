@@ -41,6 +41,7 @@ import UserDetails from './User/UserDetails';
 import UpdateUser from './User/UpdateUser';
 import UpdateCompany from './Company/UpdateCompany';
 import CreateRecruiter from './User/CreateRecruiter';
+import CreateProjectManager from './User/CreateProjectManager';
 
 
 const adminRoutes = [
@@ -57,7 +58,12 @@ const adminRoutes = [
     {
         path: '/admin/users/create/recruiter',
         component: CreateRecruiter,
-        name: 'Пользователи'
+        name: 'Создать рекрутера'
+    },
+    {
+        path: '/admin/users/create/project-manager',
+        component: CreateProjectManager,
+        name: 'Создать менеджера проекта'
     },
     {
         path: '/admin/user/:userId/edit',

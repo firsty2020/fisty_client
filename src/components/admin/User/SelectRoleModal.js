@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const roleOptions = [
     { value: 'recruiter', label: 'Рекрутер'},
-    // { value: 'project-manager', label: 'Менеджер проекта'},
+    { value: 'project-manager', label: 'Менеджер проекта'},
 ];
 
 const SelectRoleModal = ({ onClose }) => {
@@ -24,7 +24,7 @@ const SelectRoleModal = ({ onClose }) => {
                     <DropDown
                         name="location"
                         placeholder="Выберите из списка"
-                        onChange={e => console.log(e, 'e') || setRole(e)}
+                        onChange={e => setRole(e)}
                         value={role}
                         options={roleOptions}
                     />

@@ -68,12 +68,12 @@ const Filters = ({ onFilter }) => {
                         placeholder="Найти по телефону, эл.почте, городу"/>
                 </Col>
             </Row>
-            <Accordion className="mt-2">
+            <Accordion>
                 <Accordion.Toggle
                     as={Button}
                     variant="link"
                     eventKey="0"
-                    className="no-decoration p-0 mb-2"
+                    className="no-decoration p-0 mb-2 mt-2"
                 >
                     <span title="Фильтровать">
                         <Sliders className="filter-icon"/>
