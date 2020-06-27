@@ -16,11 +16,11 @@ import { DropDown, RadioButton } from '../../ui';
 import CountriesDropdown from '../../auth/Registration/CountriesDropdown';
 import { Link } from 'react-router-dom';
 import { projectSchema } from '../../../helpers/schemas';
-import { isLoadingSelector } from '../../common/commonReducer';
+import { isLoadingSelector, usersState } from '../../common/commonReducer';
 import { When } from 'react-if';
 import { countriesOptions, extendedOptions } from '../../../helpers/utils';
 import { getUsers } from '../../common/commonActions';
-import { usersSelector } from '../../common/commonReducer';
+import { generateUId } from '../../../helpers/utils';
 
 
 let formValues = {};
@@ -36,13 +36,17 @@ const initialValues = {
     location: '',
     branch: '',
     location_type: '',
+    manager: '',
 };
 
+const recruitersUid = generateUId();
+const projectManagersUid = generateUId();
 
 const ProjectForm = ({
                          locations,
                          branches,
                          recruiters,
+                         managers,
                          project,
                          match,
                          backPath,
@@ -57,7 +61,8 @@ const ProjectForm = ({
         const params = { show_all: true };
         getLocations(params);
         getBranches({ ...params,  company: match.params.companyId });
-        getUsers({...params, role: 'recruiter' });
+        getUsers({...params, role: 'recruiter'}, recruitersUid);
+        getUsers({ ...params, role: 'project_manager' }, projectManagersUid);
     }, [ getLocations, getBranches, match.params.companyId ]);
 
     const handleLocationTypeChange = (setFieldValue, fieldValue) => {
@@ -81,46 +86,49 @@ const ProjectForm = ({
     };
 
     const populateForm = () => {
-        const values = copyObject(project);
+        const values = {};
         const options = [ ...countriesOptions, ...extendedOptions ];
-        const citizenships = values.citizenship
+        const citizenships = project.citizenship
             .map(c => options.find(option => option.value === c));
-        Object.keys(initialValues).map((key) => formValues[key] = values[key]);
-        formValues.citizenship = citizenships;
-        formValues.age = { from: values.age[0], to: values.age[1] };
-        formValues.location = generateOptions(locations).find((location) => location.value === values.location);
-        formValues.recruiter = setSelectedRecruiters();
-        formValues.branch = (values.branch || [])
+        Object.keys(initialValues).map((key) => values[key] = project[key]);
+        values.citizenship = citizenships;
+        values.age = { from: project.age[0], to: project.age[1] };
+        values.location = generateOptions(locations)
+            .find((location) => location.value === project.location);
+        values.recruiter = setSelectedRecruiters();
+        values.manager = generateListOptions(managers.results || []).find(({ value }) => value === project.manager) || '';
+        values.branch = (project.branch || [])
             .map((branchUrl) => generateOptions(branches)
                 .find((branch) => branch.value === branchUrl));
 
-        if (values.location) {
-            formValues.location_type = 'location';
+        if (project.location) {
+            values.location_type = 'location';
         } else {
-            formValues.location_type = 'branch';
+            values.location_type = 'branch';
         }
+        return values;
     };
 
     const setSelectedRecruiters = () => {
         const selectedRecruiters = [];
-        project.recruiters.map((recruiterUrl) => recruiters.results.map((recruiter) => {
+        project.recruiters.map((recruiterUrl) => (recruiters.results || []).map((recruiter) => {
             if (recruiterUrl === recruiter.url) {
                 selectedRecruiters.push(recruiter);
             }
         }));
-        return generateRecruitersOptions(selectedRecruiters);
+        return generateListOptions(selectedRecruiters);
     };
 
-    const generateRecruitersOptions = (list) =>
+    const generateListOptions = (list) =>
         generateSelectOptions(list,
             'url',
             ({ first_name, last_name }) => `${first_name} ${last_name}`);
-    
 
-    if (project && locations && branches && recruiters) {
-        populateForm();
+
+    if (project && locations && branches && recruiters && managers) {
+        formValues = populateForm();
     } else {
-        Object.keys(initialValues).map(key => formValues[key] = initialValues[key])
+        formValues = initialValues;
     }
 
     return (
@@ -131,7 +139,8 @@ const ProjectForm = ({
                 validationSchema={projectSchema}
                 onSubmit={(values) => {
                     const data = copyObject(clearEmptyFields(values));
-                    const transformedData = transformReactSelectFields(['citizenship', 'location', 'branch', 'recruiter'], data);
+                    const transformedData = transformReactSelectFields(
+                        ['citizenship', 'location', 'branch', 'recruiter', 'manager'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
                     delete transformedData.location_type;
                     onSubmit(transformedData);
@@ -254,9 +263,24 @@ const ProjectForm = ({
                                 name="recruiter"
                                 placeholder="Выберите из списка"
                                 value={values.recruiter}
-                                options={generateRecruitersOptions((recruiters || []).results)}
+                                options={generateListOptions((recruiters || []).results)}
                                 onBlur={(e) => setFieldTouched('recruiter', e || [])}
                                 onChange={(e) => setFieldValue('recruiter', e || [])}
+                            />
+                            {touched.recruiter && errors.recruiter ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.recruiter}</span>
+                            ) : null}
+                        </Form.Group>
+                        <Form.Group>
+                            <p className="form-control-label">Менеджер проекта</p>
+                            <DropDown
+                                isClearable
+                                name="manager"
+                                placeholder="Выберите из списка"
+                                value={values.manager}
+                                options={generateListOptions((managers || []).results)}
+                                onBlur={(e) => setFieldTouched('manager', e || '')}
+                                onChange={(e) => setFieldValue('manager', e || null)}
                             />
                             {touched.recruiter && errors.recruiter ? (
                                 <span className="mt-1 invalid-feedback-visible">{errors.recruiter}</span>
@@ -343,15 +367,11 @@ const mapStateToProps = state => ({
     locations: locationsSelector(state),
     branches: branchesSelector(state),
     isLoading: isLoadingSelector(state),
-    recruiters: usersSelector(state),
+    recruiters: usersState(recruitersUid)(state),
+    managers: usersState(projectManagersUid)(state),
 });
 
 const mapDispatchToProps = { getLocations, getBranches, getUsers };
-
-
-ProjectForm.propTypes = {
-
-};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectForm);

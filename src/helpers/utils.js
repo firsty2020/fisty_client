@@ -30,7 +30,7 @@ export const transformReactSelectFields = (fields, source) => {
     fields.map((field) => {
         if (Array.isArray(source[field]) && source[field].length) {
             source[field] = source[field].map(item => item ? item.value : null);
-        } else if (typeof source[field] === 'object') {
+        } else if (typeof source[field] === 'object' && source[field]) {
             source[field] = source[field].value;
         }
         return null;
@@ -45,7 +45,7 @@ export const clearEmptyFields = (data) => {
             delete data[key]
         } else if(Array.isArray(data[key]) && !data[key].length) {
             delete data[key];
-        } else if (typeof data[key] === 'object' && data[key].length === undefined) {
+        } else if (typeof data[key] === 'object' && data[key] && data[key].length === undefined) {
             clearEmptyFields(data[key]);
         }
     }

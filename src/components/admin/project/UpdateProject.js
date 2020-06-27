@@ -28,7 +28,7 @@ const UpdateProject = ({
 
 
     useEffect(() => {
-        getProject(match.params.projectId)
+        getProject(match.params.projectId);
     }, [ getProject, match.params.projectId ]);
 
     useEffect(() => {
@@ -58,7 +58,6 @@ const UpdateProject = ({
         }
         return `/admin/applications/${applicationId}/vacancies/${vacancyId}/projects`;
     };
-
 
     return (
         <Container className="mt-10-auto">
