@@ -308,7 +308,7 @@ const adminRoutes = [
     {
         path: '/admin/projects/:projectId/create-candidate',
         component: CreateCandidate,
-        name: 'Кандидат'
+        name: 'Добавить кандидата'
     },
     {
         path: '/admin/candidates/:candidateId',

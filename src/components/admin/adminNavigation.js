@@ -35,7 +35,7 @@ const adminNavigation =  {
             name: 'Кандидаты',
             icon: 'UserPlus',
             url: '/admin/candidates',
-            matcher: '/candidates',
+            matcher: 'candidate',
         },
         {
             name: 'Настройки',

@@ -21,6 +21,7 @@ const SelectProjectModal = ({ projects, toggleModal }) => {
             <Modal.Body>
                 <p className="form-control-label text-center">Выберите проект</p>
                 <DropDown
+                    isDisabled={!projects}
                     name="location"
                     placeholder="Введите проект"
                     value={project}

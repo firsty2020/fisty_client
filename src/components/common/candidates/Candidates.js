@@ -33,9 +33,9 @@ const candidatesTableLayout = {
     ],
     createRow: ({ url, lead_details, project_details }) => [
         extractIdFromUrl(url),
-        lead_details.first_name || lead_details.last_name ?
+        lead_details ? lead_details.first_name || lead_details.last_name ?
             (`${lead_details.first_name || ''} ${lead_details.last_name || ''}`) :
-        lead_details.phone_number,
+        lead_details.phone_number : '-',
         project_details.name,
     ],
 };
