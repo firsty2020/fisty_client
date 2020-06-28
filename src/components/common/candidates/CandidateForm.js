@@ -240,6 +240,7 @@ const CandidateForm = ({
                                             {field_type === 'file' ? (
                                                 <Form.Group>
                                                     <Form.File
+                                                        className="file-field"
                                                         custom
                                                         name={name}
                                                         label={fileTitles[name] ? fileTitles[name] : placeholder}

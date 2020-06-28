@@ -77,7 +77,7 @@ const Candidates = ({
                 <BackButton path={`/project-manager/projects/${match.params.projectId}`}/>
                 <TableList
                     onDeleteItem={({ url }) => setCandidateToDelete(extractIdFromUrl(url))}
-                    // onClickRow={({ url }) => push(`${match.url}/${extractIdFromUrl(url)}`)}
+                    onEditItem={(i) => console.log(i, 'i')}
                     layout={candidatesTableLayout}
                     data={(candidates || {}).results}/>
             </Container>

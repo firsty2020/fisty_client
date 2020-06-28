@@ -259,6 +259,7 @@ const ProjectForm = ({
                         <Form.Group>
                             <p className="form-control-label">Рекрутеры</p>
                             <DropDown
+                                isDisabled={!recruiters || !recruiters.results}
                                 isMulti
                                 name="recruiter"
                                 placeholder="Выберите из списка"
@@ -274,6 +275,7 @@ const ProjectForm = ({
                         <Form.Group>
                             <p className="form-control-label">Менеджер проекта</p>
                             <DropDown
+                                isDisabled={!managers || !managers.results}
                                 isClearable
                                 name="manager"
                                 placeholder="Выберите из списка"
@@ -282,8 +284,8 @@ const ProjectForm = ({
                                 onBlur={(e) => setFieldTouched('manager', e || '')}
                                 onChange={(e) => setFieldValue('manager', e || null)}
                             />
-                            {touched.recruiter && errors.recruiter ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.recruiter}</span>
+                            {touched.manager && errors.manager ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.manager}</span>
                             ) : null}
                         </Form.Group>
                         <Form.Group>
@@ -313,6 +315,7 @@ const ProjectForm = ({
                         <When condition={values.location_type === 'location'}>
                             <Form.Group>
                                 <DropDown
+                                    isDisabled={!locations}
                                     name="location"
                                     value={values.location}
                                     options={generateOptions(locations)}
@@ -329,6 +332,7 @@ const ProjectForm = ({
                         <When condition={values.location_type === 'branch'}>
                             <Form.Group>
                                 <DropDown
+                                    isDisabled={!branches}
                                     name="branch"
                                     value={values.branch}
                                     options={generateOptions(branches)}

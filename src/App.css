@@ -169,3 +169,11 @@ li.active span {
 .filter-icon {
     transform: rotate(90deg);
 }
+
+.file-field label, label:after {
+    z-index: 0 !important;
+}
+
+.file-field input {
+    z-index: 1 !important;
+}

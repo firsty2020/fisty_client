@@ -41,7 +41,7 @@ const CreateDynamicField = ({
     const cleanupData = (data) => {
         const fieldData = clearEmptyFields(copyObject(data));
         fieldData.field_configuration = findConfigForFieldType(fieldData);
-        transformReactSelectFields([ Object.keys(fieldData.field_configuration) ], fieldData.field_configuration);
+        transformReactSelectFields(['date_format'], fieldData.field_configuration);
         return fieldData;
     };
 
