@@ -27,6 +27,7 @@ import {
     PROJECT_STATE_RESET,
     PROJECT_CREATE,
     PROJECT_DELETE,
+    COMMON_CANDIDATE_UPDATE,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -142,6 +143,13 @@ export const deleteCandidate = (id) => createApiAction({
     url: `projects/candidates/${id}/`,
     method: DELETE,
     label: COMMON_CANDIDATE_DELETE,
+});
+
+export const updateCandidate = (id, data) => createApiAction({
+    url: `projects/candidates/${id}/`,
+    data,
+    method: PATCH,
+    label: COMMON_CANDIDATE_UPDATE,
 });
 
 export const resetCandidateState = () => ({

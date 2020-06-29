@@ -25,6 +25,7 @@ import {
     PROJECT_STATE_RESET,
     PROJECT_CREATE,
     PROJECT_DELETE,
+    COMMON_CANDIDATE_UPDATE,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -97,8 +98,16 @@ export const common = (state = {}, action) => {
         case COMMON_CANDIDATE_DELETE:
             return { ...state, candidateDeleted: true };
 
+        case COMMON_CANDIDATE_UPDATE:
+            return { ...state, candidateUpdated: true };
+
         case COMMON_CANDIDATE_STATE_RESET:
-            return { ...state, candidateCreated: false, candidateDeleted: false };
+            return {
+                ...state,
+                candidateCreated: false,
+                candidateDeleted: false,
+                candidateUpdated: false,
+            };
 
         case PROJECT_GET:
             return { ...state, project: action.payload };
@@ -176,6 +185,7 @@ export const usersState = (uid = null) => createSelector(
 export const notificationUpdatedSelector = state => state.common.notificationUpdated;
 export const candidateCreatedSelector = state => state.common.candidateCreated;
 export const candidateDeletedSelector = state => state.common.candidateDeleted;
+export const candidateUpdatedSelector = state => state.common.candidateUpdated;
 export const candidatesSelector = state => state.common.candidates;
 export const candidateSelector = state => state.common.candidate;
 export const projectSelector = state => state.common.project;

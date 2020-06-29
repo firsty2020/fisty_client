@@ -2,6 +2,7 @@ import Projects from './Projects';
 import ProjectDetails from './ProjectDetails';
 import ManageRecruiters from './ManageRecruiters';
 import Candidates from './Candidates';
+import UpdateCandidate from '../common/candidates/UpdateCandidate';
 
 export default [
     {
@@ -26,5 +27,10 @@ export default [
         path: '/project-manager/projects/:projectId/candidates',
         component: Candidates,
         name: 'Кандидаты'
+    },
+    {
+        path: '/project-manager/projects/:projectId/edit/:candidateId',
+        component: UpdateCandidate,
+        name: 'Редактировать кандидата'
     },
 ]

@@ -13,7 +13,7 @@ import {
 } from '../common/commonActions';
 import { push } from "connected-react-router";
 import { connect } from 'react-redux';
-import {When} from "react-if";
+import { When } from 'react-if';
 
 
 const candidatesTableLayout = {
@@ -37,6 +37,7 @@ const Candidates = ({
                         getCandidates,
                         deleteCandidate,
                         resetCandidateState,
+                        push,
                     }) => {
 
     const [ candidateToDelete, setCandidateToDelete ] = useState(null);
@@ -77,7 +78,7 @@ const Candidates = ({
                 <BackButton path={`/project-manager/projects/${match.params.projectId}`}/>
                 <TableList
                     onDeleteItem={({ url }) => setCandidateToDelete(extractIdFromUrl(url))}
-                    onEditItem={(i) => console.log(i, 'i')}
+                    onEditItem={({ url }) => push(`/project-manager/projects/${match.params.projectId}/edit/${extractIdFromUrl(url)}`)}
                     layout={candidatesTableLayout}
                     data={(candidates || {}).results}/>
             </Container>

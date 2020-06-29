@@ -113,6 +113,43 @@ export const genderOptions = [
     { value: 'женский', label: 'Женский' },
 ];
 
+export const dateFormatOptions = [
+    { value: '%Y-%m-%d', label: 'yyyy-MM-dd', },
+    { value: '%Y/%m/%d', label: 'yyyy/MM/dd', },
+    { value: '%d-%m-%Y', label: 'dd-MM-yyyy', },
+    { value: '%d/%m/%Y', label: 'dd/MM/yyyy', },
+    { value: '%d-%m-%y', label: 'dd-MM-yy', },
+    { value: '%d/%m/%y', label: 'dd/MM/yy', },
+];
+
+export
+const formatDateOutput = (dateString, formatting) => {
+
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const shortYear = date.getYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    const outputs = [
+        { label: '%Y-%m-%d', output: `${year}-${month}-${day}`},
+        { label: '%Y/%m/%d', output: `${year}/${month}/${day}`},
+        { label: '%d-%m-%Y', output: `${day}-${month}-${year}`},
+        { label: '%d/%m/%Y', output: `${day}/${month}/${year}`},
+        { label: '%d-%m-%y', output: `${day}-${month}-${shortYear}`},
+        { label: '%d/%m/%y', output: `${day}/${month}/${shortYear}`},
+    ];
+
+    return (outputs.find(( { label }) => label === formatting.date_format) || {}).output;
+
+};
+
+export const validateFileFormat = (file, allowedExtensions) => {
+    const fileExt = file ? file.name.split('.').pop() : '';
+    return allowedExtensions.includes(fileExt);
+};
+
+
 export const range = (start = 0, end = 0) => {
     const range = [];
     for (let i = start; i <= end; i++) {

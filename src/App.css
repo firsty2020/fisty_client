@@ -170,10 +170,6 @@ li.active span {
     transform: rotate(90deg);
 }
 
-.file-field label, label:after {
+.file-field {
     z-index: 0 !important;
-}
-
-.file-field input {
-    z-index: 1 !important;
 }
