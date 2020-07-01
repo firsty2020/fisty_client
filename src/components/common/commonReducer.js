@@ -104,6 +104,7 @@ export const common = (state = {}, action) => {
         case COMMON_CANDIDATE_STATE_RESET:
             return {
                 ...state,
+                candidate: null,
                 candidateCreated: false,
                 candidateDeleted: false,
                 candidateUpdated: false,

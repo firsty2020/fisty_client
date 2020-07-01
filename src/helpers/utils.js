@@ -123,7 +123,7 @@ export const dateFormatOptions = [
 ];
 
 export
-const formatDateOutput = (dateString, formatting) => {
+const formatDateOutput = (dateString, formatting, shouldNotFormat = false) => {
 
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -139,6 +139,10 @@ const formatDateOutput = (dateString, formatting) => {
         { label: '%d-%m-%y', output: `${day}-${month}-${shortYear}`},
         { label: '%d/%m/%y', output: `${day}/${month}/${shortYear}`},
     ];
+
+    if (shouldNotFormat) {
+        return `${year}-${month}-${day}`;
+    }
 
     return (outputs.find(( { label }) => label === formatting.date_format) || {}).output;
 

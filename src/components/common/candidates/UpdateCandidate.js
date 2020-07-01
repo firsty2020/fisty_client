@@ -17,7 +17,6 @@ import {
     copyObject, extractIdFromUrl, generateSelectOptions, toBase64,
     transformReactSelectFields
 } from '../../../helpers/utils';
-import { baseURL } from '../../../axios';
 import { Button, Form } from 'react-bootstrap';
 import {AlertNotice, CheckBox, DropDown} from '../../ui';
 import DatePicker from 'react-datepicker';
@@ -31,8 +30,6 @@ import { dynamicFieldsSelector } from '../../admin/Config/configsReducer';
 import { dateFormatOptions, formatDateOutput, validateFileFormat } from '../../../helpers/utils';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
-
-let initialValues;
 
 const UpdateCandidate = ({
                              match,
@@ -51,6 +48,7 @@ const UpdateCandidate = ({
 
     const [ fileTitles, setFileTitles ] = useState({});
     const [ successMessage, setSuccessMessage ] = useState('');
+    const [ formValues, setFormValues ] = useState(null);
 
     useEffect(() => {
         getCandidate(match.params.candidateId);
@@ -66,9 +64,11 @@ const UpdateCandidate = ({
 
     useEffect(() => {
         if (updated) {
-            resetCandidateState();
             autoToggleAlert('Кандидат успешно обновлен', setSuccessMessage);
-            setTimeout(() => push(`/project-manager/projects/${match.params.projectId}`), 2000);
+            setTimeout(() => {
+                resetCandidateState();
+                push(`/project-manager/projects/${match.params.projectId}/candidates`)
+            }, 2000);
         }
     }, [updated, resetCandidateState,]);
 
@@ -79,19 +79,21 @@ const UpdateCandidate = ({
 
     const orderedDynamicFields = dynamicFields.results.sort((a, b) => a.position - b.position);
 
-    if (!initialValues) {
+    if (!formValues) {
         let init = {};
         if (candidate.lead) {
             init.show_leads = true;
             init.lead = { value: candidate.lead, label: `${candidate.lead_details.first_name || ''} ${candidate.lead_details.last_name || ''}`  }
         }
-        initialValues = candidate.candidate_fields.reduce((acc, curr) => {
+
+        const values = candidate.candidate_fields.reduce((acc, curr) => {
 
             if (curr.main_field_info.field_type === 'choice') {
                 acc[curr.field] = { label: curr.value, value: curr.value};
             }
             if (curr.main_field_info.field_type === 'date') {
-                acc[curr.field] = new Date(formatDateOutput(curr.value, curr.main_field_info.field_configuration));
+                const date = formatDateOutput(curr.value, curr.main_field_info.field_configuration, true);
+                acc[curr.field] = new Date(date);
             }
             if (curr.main_field_info.field_type === 'text') {
                 acc[curr.field] = curr.value;
@@ -101,6 +103,7 @@ const UpdateCandidate = ({
             }
             return acc;
         }, init);
+        setFormValues(values);
     }
 
     const validationSchemaShape =  orderedDynamicFields.reduce((acc, curr) => {
@@ -111,7 +114,7 @@ const UpdateCandidate = ({
             }
             return acc;
         },
-        { lead: Yup.string() });
+        { lead: Yup.string().nullable() });
 
     const toggleShowLeads = (setFieldValue, value = false) => {
         setFieldValue('show_leads', !value);
@@ -131,7 +134,7 @@ const UpdateCandidate = ({
         }
     };
 
-    if (!initialValues) {
+    if (!formValues) {
         return null
     }
 
@@ -143,8 +146,7 @@ const UpdateCandidate = ({
                     message={successMessage}/>
             </When>
             <Formik
-                enableReinitialize
-                initialValues={initialValues}
+                initialValues={formValues}
                 validationSchema={Yup.object().shape(validationSchemaShape)}
                 onSubmit={(values) => {
 
@@ -290,7 +292,7 @@ const UpdateCandidate = ({
                             })
                         }
                         <div className="text-center">
-                            <Link to={`/project-manager/projects` }>
+                            <Link to={`/project-manager/projects/${match.params.projectId}/candidates` }>
                                 <Button
                                     className="mr-2"
                                     variant="secondary">Отменить
