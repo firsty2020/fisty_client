@@ -65,7 +65,7 @@ const CandidateForm = ({
     const validationSchemaShape =  dynamicFields.results.reduce((acc, curr) => {
             acc = { ...acc,
                 [curr.name]: Yup.string()
-                    .when('test',
+                    .when('__init__',
                         (_, schema) =>  curr.is_required ? schema.required(Messages.FIELD_REQUIRED) : schema),
             }
             return acc;

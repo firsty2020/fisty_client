@@ -29,7 +29,7 @@ export default [
         name: 'Кандидаты'
     },
     {
-        path: '/project-manager/projects/:projectId/edit/:candidateId',
+        path: '/project-manager/projects/:projectId/candidates/:candidateId/edit',
         component: UpdateCandidate,
         name: 'Редактировать кандидата'
     },

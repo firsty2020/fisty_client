@@ -25,6 +25,7 @@ import SelectProjectModal from '../../recruiter/SelectProjectModal';
 import Pagination from '../../Pagination';
 import { push } from 'connected-react-router';
 import { When } from 'react-if';
+import { extractUserDataFromToken } from '../../auth/auth';
 
 
 const candidatesTableLayout = {
@@ -92,6 +93,16 @@ const Candidates = ({
     const handleDeleteCandidate = () => {
         deleteCandidate(candidateToDelete);
         setCandidateToDelete(null);
+    };
+
+    const shouldBeEditable = () => {
+        const user = extractUserDataFromToken();
+        if (user.role === 'recruiter') {
+            return null;
+        }
+        return ({ url }) => {
+            push(`${match.url}/${extractIdFromUrl(url)}/edit`);
+        };
     }
 
     return (
@@ -127,6 +138,7 @@ const Candidates = ({
                     />
                 </div>
                 <TableList
+                    onEditItem={shouldBeEditable()}
                     onDeleteItem={({ url }) => setCandidateToDelete(extractIdFromUrl(url))}
                     onClickRow={({ url }) => push(`${match.url}/${extractIdFromUrl(url)}`)}
                     layout={candidatesTableLayout}

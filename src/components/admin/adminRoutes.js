@@ -42,6 +42,7 @@ import UpdateUser from './User/UpdateUser';
 import UpdateCompany from './Company/UpdateCompany';
 import CreateRecruiter from './User/CreateRecruiter';
 import CreateProjectManager from './User/CreateProjectManager';
+import UpdateCandidate from '../common/candidates/UpdateCandidate';
 
 
 const adminRoutes = [
@@ -314,6 +315,11 @@ const adminRoutes = [
         path: '/admin/candidates/:candidateId',
         component: CandidateDetails,
         name: 'Детали кандидата'
+    },
+    {
+        path: '/admin/candidates/:candidateId/edit',
+        component: UpdateCandidate,
+        name: 'Редактировать кандидата'
     },
     {
         path: '/admin/candidates',

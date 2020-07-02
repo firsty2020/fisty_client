@@ -14,8 +14,11 @@ import * as Yup from 'yup';
 import {
     autoToggleAlert,
     clearEmptyFields,
-    copyObject, extractIdFromUrl, generateSelectOptions, toBase64,
-    transformReactSelectFields
+    copyObject,
+    extractIdFromUrl,
+    generateSelectOptions,
+    toBase64,
+    transformReactSelectFields,
 } from '../../../helpers/utils';
 import { Button, Form } from 'react-bootstrap';
 import {AlertNotice, CheckBox, DropDown} from '../../ui';
@@ -30,6 +33,8 @@ import { dynamicFieldsSelector } from '../../admin/Config/configsReducer';
 import { dateFormatOptions, formatDateOutput, validateFileFormat } from '../../../helpers/utils';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
+import {extractUserDataFromToken} from '../../auth/auth';
+
 
 const UpdateCandidate = ({
                              match,
@@ -67,7 +72,7 @@ const UpdateCandidate = ({
             autoToggleAlert('Кандидат успешно обновлен', setSuccessMessage);
             setTimeout(() => {
                 resetCandidateState();
-                push(`/project-manager/projects/${match.params.projectId}/candidates`)
+                push(generateBackPath());
             }, 2000);
         }
     }, [updated, resetCandidateState,]);
@@ -134,9 +139,20 @@ const UpdateCandidate = ({
         }
     };
 
+    const generateBackPath = () => {
+        const user = extractUserDataFromToken();
+        if (user.role === 'project_manager') {
+            return `/project-manager/projects/${match.params.projectId}/candidates`;
+        }
+        if (user.role === 'admin') {
+            return `/admin/candidates`;
+        }
+    };
+
     if (!formValues) {
         return null
     }
+
 
     return (
         <div>
@@ -292,7 +308,7 @@ const UpdateCandidate = ({
                             })
                         }
                         <div className="text-center">
-                            <Link to={`/project-manager/projects/${match.params.projectId}/candidates` }>
+                            <Link to={generateBackPath()}>
                                 <Button
                                     className="mr-2"
                                     variant="secondary">Отменить
