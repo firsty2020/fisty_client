@@ -33,7 +33,7 @@ import { dynamicFieldsSelector } from '../../admin/Config/configsReducer';
 import { dateFormatOptions, formatDateOutput, validateFileFormat } from '../../../helpers/utils';
 import { When } from 'react-if';
 import { push } from 'connected-react-router';
-import {extractUserDataFromToken} from '../../auth/auth';
+import { extractUserDataFromToken } from '../../auth/auth';
 
 
 const UpdateCandidate = ({
@@ -212,9 +212,6 @@ const UpdateCandidate = ({
                                 onBlur={(e) => setFieldTouched('show_leads', e)}
                                 onChange={() => toggleShowLeads(setFieldValue, values.show_leads)}
                             />
-                            {touched.lead && errors.lead ? (
-                                <span className="mt-1 invalid-feedback-visible">{errors.lead}</span>
-                            ) : null}
                         </Form.Group>
                         {values.show_leads ? (
                             <Form.Group>
@@ -299,7 +296,10 @@ const UpdateCandidate = ({
                                                     placeholderText={`Формат: ${(dateFormatOptions.find(({ value }) => value === field_configuration.date_format)|| {}).label}`}
                                                 />
                                                 {touched[name] && errors[name] ? (
-                                                    <span className="mt-1 invalid-feedback-visible">{errors[name]}</span>
+                                                    <React.Fragment>
+                                                        <br/>
+                                                        <span className="mt-1 invalid-feedback-visible">{errors[name]}</span>
+                                                    </React.Fragment>
                                                 ) : null}
                                             </div>
                                         ) : null }

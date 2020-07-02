@@ -317,7 +317,7 @@ const adminRoutes = [
         name: 'Детали кандидата'
     },
     {
-        path: '/admin/candidates/:candidateId/edit',
+        path: '/admin/projects/:projectId/candidates/:candidateId/edit',
         component: UpdateCandidate,
         name: 'Редактировать кандидата'
     },

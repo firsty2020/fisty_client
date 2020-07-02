@@ -100,8 +100,8 @@ const Candidates = ({
         if (user.role === 'recruiter') {
             return null;
         }
-        return ({ url }) => {
-            push(`${match.url}/${extractIdFromUrl(url)}/edit`);
+        return ({ url, project_details }) => {
+            push(`/admin/projects/${project_details.id}/candidates/${extractIdFromUrl(url)}/edit`);
         };
     }
 
