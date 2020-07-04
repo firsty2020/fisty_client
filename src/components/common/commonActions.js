@@ -61,7 +61,7 @@ export const getVacancies = (params) => createApiAction({
 });
 
 export const getVacancy = (id) => createApiAction({
-    url: `vacancy/${id}`,
+    url: `vacancy/${id}/`,
     method: GET,
     label: GET_VACANCY,
 });

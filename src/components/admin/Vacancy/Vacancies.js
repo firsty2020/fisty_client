@@ -30,8 +30,8 @@ const vacanciesTableLayout = {
     headings: [
         '#', 'наименование', 'компания','дата создания', 'действия'
     ],
-    createRow: ({ name, company_details, created }, index) => [
-        index + 1,
+    createRow: ({ url, name, company_details, created }) => [
+        extractIdFromUrl(url),
         name,
         company_details.name,
         new Date(created).toLocaleDateString(),
@@ -147,11 +147,6 @@ const mapDispatchToProps = {
     removeVacancy,
     resetVacancyRemoved,
     push,
-};
-
-
-Vacancies.propTypes = {
-
 };
 
 
