@@ -5,7 +5,6 @@ import { getApplications } from '../common/commonActions';
 import { applicationsSelector } from '../common/commonReducer';
 import { getAuthUser } from '../auth/auth';
 import { userSelector } from '../auth/authReducer';
-import { extractIdFromUrl } from '../../helpers/utils';
 import { push } from 'connected-react-router';
 import Pagination from '../Pagination';
 
@@ -23,21 +22,14 @@ const companiesTableLayout = {
 
 const Applications = ({
                           applications,
-                          user,
                           match,
-                          getAuthUser,
                           getApplications,
                           push,
                       }) => {
 
     useEffect(() => {
-        getAuthUser();
-    }, [ getAuthUser ]);
-
-    useEffect(() => {
-        if (!user) return;
-        getApplications({ company: extractIdFromUrl(user.company) });
-    }, [ getApplications, user ]);
+        getApplications();
+    }, [ getApplications ]);
 
     return (
         <div>

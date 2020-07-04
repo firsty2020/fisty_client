@@ -10,7 +10,10 @@ import {
 } from './components';
 import adminRoutes from './components/admin/adminRoutes';
 import adminNavigation from './components/admin/adminNavigation';
-import { companyRoutes } from './components/company/companyRoutes';
+import {
+    companyNavigation,
+    companyRoutes
+} from './components/company/companyRoutes';
 import recruiterNavigation from './components/recruiter/recruiterNavigation';
 import recruiterRoutes from './components/recruiter/recruiterRoutes';
 import { LoadSpinner } from './components/ui';
@@ -72,10 +75,10 @@ const Routes = () => (
                 path="/company"
                 role='company'
                 render={(props) =>
-                    <ProjectManager
+                    <Company
                         {...props}
                         routes={companyRoutes}
-                        navigation={projectManagerNavigation}
+                        navigation={companyNavigation}
                     />
                 }
             />
@@ -83,7 +86,7 @@ const Routes = () => (
                 path="/project-manager"
                 role='project_manager'
                 render={(props) =>
-                    <Company
+                    <ProjectManager
                         {...props}
                         routes={projectManagerRoutes}
                         navigation={projectManagerNavigation}
