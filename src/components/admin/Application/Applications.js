@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
 
 
-const Applications = ({ applications, layout, getApplications, push }) => {
+const Applications = ({ applications, layout, getApplications, push, onCopy }) => {
 
     useEffect(() => {
         getApplications();
@@ -16,6 +16,7 @@ const Applications = ({ applications, layout, getApplications, push }) => {
     return (
         <div>
             <TableList
+                onCopy={() => null}
                 onClickRow={({id}) => push(`/admin/applications/${id}`)}
                 layout={layout}
                 data={(applications || {}).results}

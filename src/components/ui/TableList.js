@@ -5,6 +5,7 @@ import { EmptyListPlaceholder, } from './index';
 import { isLoadingSelector } from '../common/commonReducer';
 import { connect } from 'react-redux';
 import { Trash, Edit, UserMinus, Key, Edit3 } from 'react-feather';
+import { Copy } from 'react-feather';
 
 
 const TableList = ({
@@ -17,8 +18,8 @@ const TableList = ({
                        onUnlink,
                        onResetPassword,
                        onViewNotes,
+                       onCopy,
                    }) => {
-
 
     if ((data && !data.length) && !isLoading) {
         return <EmptyListPlaceholder/>;
@@ -94,6 +95,15 @@ const TableList = ({
                                     <Edit3 onClick={(e) => {
                                         e.stopPropagation();
                                         onViewNotes(item);
+                                    }}/>
+                                </span>
+                            </td>): null
+                        }
+                        { onCopy ? (
+                            <td width="1" className="text-center">
+                                <span title="Создать копию">
+                                    <Copy onClick={(e) => {
+                                        e.stopPropagation();
                                     }}/>
                                 </span>
                             </td>): null

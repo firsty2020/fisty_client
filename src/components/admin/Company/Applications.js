@@ -31,6 +31,7 @@ const Applications = ({ applications, layout, match, getApplications, push }) =>
                 </Link>
             </div>
             <TableList
+                onCopy={() => null}
                 onClickRow={({id}) => push(`${match.url}/${id}`)}
                 layout={layout}
                 data={(applications || {}).results}

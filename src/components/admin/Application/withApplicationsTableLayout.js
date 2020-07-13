@@ -7,7 +7,7 @@ const withApplicationsTableLayout = (WrappedComponent) => (props) => {
     const applicationsTableLayout = {
         headings: [
             '#', 'должность', 'тип договора', 'оклад',
-            'кол-во сотрудников',
+            'кол-во сотрудников', 'Действия',
         ],
         createRow: (application, index) => [
             index + 1, application.position, application.formalization_type.join(', '),
