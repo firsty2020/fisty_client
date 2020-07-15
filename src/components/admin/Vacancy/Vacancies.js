@@ -13,10 +13,15 @@ import {
     getVacancies,
     removeVacancy,
     resetVacancyRemoved,
+    copyEntity,
+    resetCopyState,
 } from '../../common/commonActions';
 import {
     applicationSelector,
-    vacanciesSelector, vacancyCreatedSelector, vacancyRemovedSelector
+    vacanciesSelector,
+    vacancyCreatedSelector,
+    vacancyRemovedSelector,
+    entityCopiedSelector,
 } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 import { autoToggleAlert, extractIdFromUrl } from '../../../helpers/utils';
@@ -43,9 +48,12 @@ const Vacancies = ({
                        vacancies,
                        match,
                        removed,
+                       copied,
                        getVacancies,
                        removeVacancy,
                        resetVacancyRemoved,
+                       copyEntity,
+                       resetCopyState,
                        push,
                    }) => {
 
@@ -53,6 +61,7 @@ const Vacancies = ({
     const [ vacancyIdToRemove, setVacancyIdToRemove ] = useState(null);
     const [ vacancyToUpdate, setVacancyToUpdate ] = useState(null);
     const [ successAlert, setSuccessAlert ] = useState('');
+    const [ vacancyIdToCopy, setVacancyIdToCopy ] = useState(null);
     const applicationId = match.params.applicationId;
 
     useEffect(() => {
@@ -67,6 +76,15 @@ const Vacancies = ({
             resetVacancyRemoved();
         }
     }, [ removed, getVacancies, resetVacancyRemoved, applicationId ]);
+
+    useEffect(() => {
+        if (copied) {
+            autoToggleAlert('Вакансия скопирована', setSuccessAlert);
+            resetCopyState();
+            setVacancyIdToCopy(null);
+            getVacancies({ application: applicationId });
+        }
+    }, [ copied, getVacancies, resetCopyState ]);
 
     const handleRemoveVacancy = () => {
         removeVacancy(vacancyIdToRemove);
@@ -115,9 +133,16 @@ const Vacancies = ({
                 onCancel={() => setVacancyIdToRemove(null)}
                 onConfirm={handleRemoveVacancy}
                 show={!!vacancyIdToRemove} />
+            <ConfirmationModal
+                show={!!vacancyIdToCopy}
+                question="Вы уверены, что хотите копировать эту вакансию?"
+                onConfirm={() => copyEntity('vacancy', vacancyIdToCopy)}
+                onCancel={() => setVacancyIdToCopy(null)}
+            />
             <BackButton path={detectBackPath()} />
             <CreateButton onClick={() => setIsCreatingVacancy(true)}/>
             <TableList
+                onCopy={({ url }) => setVacancyIdToCopy(extractIdFromUrl(url))}
                 onEditItem={(item) => setVacancyToUpdate(item)}
                 onDeleteItem={({ url }) => setVacancyIdToRemove(extractIdFromUrl(url))}
                 onClickRow={({url}) => push(`${match.url}/${extractIdFromUrl(url)}`)}
@@ -138,6 +163,7 @@ const mapStateToProps = state => ({
     application: applicationSelector(state),
     created: vacancyCreatedSelector(state),
     removed: vacancyRemovedSelector(state),
+    copied: entityCopiedSelector(state),
 });
 
 const mapDispatchToProps = {
@@ -146,6 +172,8 @@ const mapDispatchToProps = {
     createVacancy,
     removeVacancy,
     resetVacancyRemoved,
+    copyEntity,
+    resetCopyState,
     push,
 };
 

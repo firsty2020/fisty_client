@@ -39,10 +39,6 @@ const Applications = ({
         }
     }, [ copied, getApplications ]);
 
-    const handleCopyEntity = () => {
-        copyEntity('application', applicationIdToCopy);
-    };
-
     return (
         <div>
             <When condition={!!successMessage}>
@@ -54,7 +50,7 @@ const Applications = ({
             <ConfirmationModal
                 show={!!applicationIdToCopy}
                 question="Вы уверены, что хотите копировать эту заяавку?"
-                onConfirm={handleCopyEntity}
+                onConfirm={() => copyEntity('application', applicationIdToCopy)}
                 onCancel={() => setApplicationIdToCopy(null)}
             />
             <TableList
