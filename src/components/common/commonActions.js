@@ -28,6 +28,8 @@ import {
     PROJECT_CREATE,
     PROJECT_DELETE,
     COMMON_CANDIDATE_UPDATE,
+    ENTITY_COPY,
+    ENTITY_COPY_RESET_STATE,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -192,4 +194,18 @@ export const getUsers = (params, uid) => createApiAction({
     data: params ,
     label: USERS_GET,
     id: uid,
+});
+
+export const copyEntity = (entityName, entityId) => createApiAction({
+    url: 'companies/instance/copy/',
+    method: POST,
+    data: {
+        instance_pk: entityId,
+        entity: entityName,
+    },
+    label: ENTITY_COPY,
+});
+
+export const resetCopyState = () => ({
+    type: ENTITY_COPY_RESET_STATE,
 });

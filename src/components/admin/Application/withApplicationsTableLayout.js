@@ -9,8 +9,8 @@ const withApplicationsTableLayout = (WrappedComponent) => (props) => {
             '#', 'должность', 'тип договора', 'оклад',
             'кол-во сотрудников', 'Действия',
         ],
-        createRow: (application, index) => [
-            index + 1, application.position, application.formalization_type.join(', '),
+        createRow: (application) => [
+            application.id, application.position, application.formalization_type.join(', '),
             application.salary + ' р.', application.employees_count,
         ],
     };

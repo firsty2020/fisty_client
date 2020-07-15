@@ -25,7 +25,7 @@ import {
     PROJECT_STATE_RESET,
     PROJECT_CREATE,
     PROJECT_DELETE,
-    COMMON_CANDIDATE_UPDATE,
+    COMMON_CANDIDATE_UPDATE, ENTITY_COPY, ENTITY_COPY_RESET_STATE,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -140,6 +140,12 @@ export const common = (state = {}, action) => {
                 } : action.payload,
             };
 
+        case ENTITY_COPY:
+            return { ...state, entityCopied: true };
+
+        case ENTITY_COPY_RESET_STATE:
+            return { ...state, entityCopied: false };
+
         default:
             return state;
     }
@@ -193,6 +199,7 @@ export const projectSelector = state => state.common.project;
 export const projectCreatedSelector = state => state.common.projectCreated;
 export const projectDeletedSelector = state => state.common.projectDeleted;
 export const projectUpdatedSelector = state => state.common.projectUpdated;
+export const entityCopiedSelector = state => state.common.entityCopied;
 
 
 

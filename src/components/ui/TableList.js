@@ -104,6 +104,7 @@ const TableList = ({
                                 <span title="Создать копию">
                                     <Copy onClick={(e) => {
                                         e.stopPropagation();
+                                        onCopy(item);
                                     }}/>
                                 </span>
                             </td>): null
