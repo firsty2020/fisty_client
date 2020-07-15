@@ -48,7 +48,7 @@ const TableList = ({
                         {layout.createRow(item, index).map((value, i) =>
                             <td key={i}>{value}</td>
                         )}
-                        {onEditItem || onUnlink || onDeleteItem ? (
+                        {onEditItem || onUnlink || onDeleteItem || onCopy? (
                             <td width="5%">
                                 <div className="d-flex justify-content-around cursor-pointer">
                                     {onDeleteItem ? (
@@ -62,7 +62,6 @@ const TableList = ({
                                                 color="red"
                                             />
                                         </span>
-
                                     ) : null}
                                     {onEditItem ? (
                                         <span title="Редактировать">
@@ -86,25 +85,23 @@ const TableList = ({
                                             }}/>
                                         </span>) : null
                                     }
+                                    { onCopy ? (
+                                        <span title="Создать копию">
+                                            <Copy onClick={(e) => {
+                                                e.stopPropagation();
+                                                onCopy(item);
+                                            }}/>
+                                        </span>): null
+                                    }
                                 </div>
                             </td>
                         ) : null}
                         { onViewNotes ? (
                             <td width="1" className="text-center">
-                                <span title="Сбросить пароль">
+                                <span title="Заметки">
                                     <Edit3 onClick={(e) => {
                                         e.stopPropagation();
                                         onViewNotes(item);
-                                    }}/>
-                                </span>
-                            </td>): null
-                        }
-                        { onCopy ? (
-                            <td width="1" className="text-center">
-                                <span title="Создать копию">
-                                    <Copy onClick={(e) => {
-                                        e.stopPropagation();
-                                        onCopy(item);
                                     }}/>
                                 </span>
                             </td>): null

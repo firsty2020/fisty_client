@@ -15,24 +15,29 @@ import { autoToggleAlert } from '../../../helpers/utils';
 import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
 import NotesModal from '../../admin/project/NotesModal';
-import { deleteProject, resetProjectState } from '../commonActions';
-import { projectDeletedSelector } from '../commonReducer';
+import { deleteProject, resetProjectState, copyEntity, resetCopyState } from '../commonActions';
+import { projectDeletedSelector, entityCopiedSelector } from '../commonReducer';
+import { extractUserDataFromToken } from '../../auth/auth';
 
 const Projects = ({
                       projects,
                       match,
                       params,
                       deleted,
+                      copied,
                       hideBackButton,
                       getProjects,
                       deleteProject,
                       resetProjectState,
+                      copyEntity,
+                      resetCopyState,
                       push,
                   }) => {
 
     const [ projectIdToDelete, setProjectIdToDelete ] = useState(null);
     const [ successMessage, setSuccessMessage ] = useState(null);
-    const [ notesProject, setNotesProject ] = useState(null)
+    const [ notesProject, setNotesProject ] = useState(null);
+    const [ projectIdToCopy, setProjectIdToCopy ] = useState(null);
 
     useEffect(() => {
         getProjects(generateParams());
@@ -45,6 +50,15 @@ const Projects = ({
             getProjects(generateParams());
         }
     }, [ deleted, resetProjectState, getProjects ] );
+
+    useEffect(() => {
+        if (copied) {
+            autoToggleAlert('Проект скопирован', setSuccessMessage);
+            resetCopyState();
+            setProjectIdToCopy(null);
+            getProjects(generateParams());
+        }
+    }, [ copied, resetCopyState, getProjects ]);
 
     const showActions = !!match.params.vacancyId;
 
@@ -76,7 +90,7 @@ const Projects = ({
         ],
     };
 
-    const shouldActions = (isEditing) => {
+    const shouldShowActions = (isEditing) => {
         if (!showActions) {
             projectsTableLayout.headings = [
                 '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'заметки'];
@@ -88,6 +102,13 @@ const Projects = ({
             return ({ id }) => setProjectIdToDelete(id);
         }
     };
+    
+    const allowCopy = () => {
+        const role = (extractUserDataFromToken() || {}).role;
+        if (role !== 'admin' || !showActions)
+            return null;
+        return ({ id }) => setProjectIdToCopy(id);
+    }
 
     const generatePath = () => {
         let backPath;
@@ -113,6 +134,12 @@ const Projects = ({
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/>
             </When>
+            <ConfirmationModal
+                show={!!projectIdToCopy}
+                question="Вы уверены, что хотите копировать этот проект?"
+                onConfirm={() => copyEntity('project', projectIdToCopy)}
+                onCancel={() => setProjectIdToCopy(null)}
+            />
             <When condition={!!projectIdToDelete}>
                 <ConfirmationModal
                     onConfirm={handleDeleteProject}
@@ -129,10 +156,11 @@ const Projects = ({
                 </Link>
             ) : null }
             <TableList
+                onCopy={allowCopy()}
                 onViewNotes={(project)=> setNotesProject(project)}
                 onClickRow={({ id }) => push(`${match.url}/${id}`)}
-                onEditItem={shouldActions(true)}
-                onDeleteItem={shouldActions()}
+                onEditItem={shouldShowActions(true)}
+                onDeleteItem={shouldShowActions()}
                 layout={projectsTableLayout}
                 data={(projects || {}).results}
             />
@@ -148,9 +176,17 @@ const Projects = ({
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
     deleted: projectDeletedSelector(state),
+    copied: entityCopiedSelector(state),
 });
 
-const mapDispatchToProps = { getProjects, deleteProject, resetProjectState, push };
+const mapDispatchToProps = {
+    getProjects,
+    deleteProject,
+    resetProjectState,
+    push,
+    copyEntity,
+    resetCopyState,
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);
