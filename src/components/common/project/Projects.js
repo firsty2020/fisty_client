@@ -24,7 +24,7 @@ const Projects = ({
                       match,
                       params,
                       deleted,
-                      copied,
+                      copiedEntity,
                       hideBackButton,
                       getProjects,
                       deleteProject,
@@ -52,13 +52,13 @@ const Projects = ({
     }, [ deleted, resetProjectState, getProjects ] );
 
     useEffect(() => {
-        if (copied) {
+        if (copiedEntity) {
             autoToggleAlert('Проект скопирован', setSuccessMessage);
             resetCopyState();
             setProjectIdToCopy(null);
-            getProjects(generateParams());
+            push(`${match.url}/edit/${copiedEntity.id}`);
         }
-    }, [ copied, resetCopyState, getProjects ]);
+    }, [ copiedEntity, resetCopyState, getProjects ]);
 
     const showActions = !!match.params.vacancyId;
 
@@ -176,7 +176,7 @@ const Projects = ({
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
     deleted: projectDeletedSelector(state),
-    copied: entityCopiedSelector(state),
+    copiedEntity: entityCopiedSelector(state),
 });
 
 const mapDispatchToProps = {
