@@ -25,7 +25,9 @@ import {
     PROJECT_STATE_RESET,
     PROJECT_CREATE,
     PROJECT_DELETE,
-    COMMON_CANDIDATE_UPDATE, ENTITY_COPY, ENTITY_COPY_RESET_STATE,
+    COMMON_CANDIDATE_UPDATE,
+    ENTITY_COPY,
+    ENTITY_COPY_RESET_STATE,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -33,6 +35,9 @@ import { createSelector } from 'reselect';
 export const common = (state = {}, action) => {
 
     switch (action.type) {
+
+        case '@@router/LOCATION_CHANGE':
+            return { ...state, vacancy: null };
 
         case API_REQUEST:
             return { ...state, isLoading: true };
