@@ -15,6 +15,7 @@ import {
     resetVacancyRemoved,
     copyEntity,
     resetCopyState,
+    getVacancy,
 } from '../../common/commonActions';
 import {
     applicationSelector,
@@ -22,6 +23,7 @@ import {
     vacancyCreatedSelector,
     vacancyRemovedSelector,
     entityCopiedSelector,
+    vacancySelector,
 } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 import { autoToggleAlert, extractIdFromUrl } from '../../../helpers/utils';
@@ -48,13 +50,15 @@ const Vacancies = ({
                        vacancies,
                        match,
                        removed,
-                       copied,
+                       copiedEntity,
+                       copiedVacancy,
                        getVacancies,
                        removeVacancy,
                        resetVacancyRemoved,
                        copyEntity,
                        resetCopyState,
                        push,
+                       getVacancy,
                    }) => {
 
     const [ isCreatingVacancy, setIsCreatingVacancy ] = useState(false);
@@ -68,7 +72,6 @@ const Vacancies = ({
         getVacancies({ application: applicationId });
     }, [ getVacancies, applicationId ]);
 
-
     useEffect(() => {
         if (removed) {
             autoToggleAlert('Вы успешно удалили вакансию', setSuccessAlert);
@@ -78,13 +81,20 @@ const Vacancies = ({
     }, [ removed, getVacancies, resetVacancyRemoved, applicationId ]);
 
     useEffect(() => {
-        if (copied) {
+        if (copiedEntity) {
             autoToggleAlert('Вакансия скопирована', setSuccessAlert);
             resetCopyState();
             setVacancyIdToCopy(null);
             getVacancies({ application: applicationId });
+            getVacancy(copiedEntity.id);
         }
-    }, [ copied, getVacancies, resetCopyState ]);
+    }, [ copiedEntity, getVacancies, resetCopyState ]);
+
+    useEffect(() => {
+        if (copiedVacancy) {
+            setVacancyToUpdate(copiedVacancy);
+        }
+    }, [ copiedVacancy ]);
 
     const handleRemoveVacancy = () => {
         removeVacancy(vacancyIdToRemove);
@@ -163,11 +173,13 @@ const mapStateToProps = state => ({
     application: applicationSelector(state),
     created: vacancyCreatedSelector(state),
     removed: vacancyRemovedSelector(state),
-    copied: entityCopiedSelector(state),
+    copiedEntity: entityCopiedSelector(state),
+    copiedVacancy: vacancySelector(state),
 });
 
 const mapDispatchToProps = {
     getVacancies,
+    getVacancy,
     getApplication,
     createVacancy,
     removeVacancy,

@@ -141,10 +141,10 @@ export const common = (state = {}, action) => {
             };
 
         case ENTITY_COPY:
-            return { ...state, entityCopied: true };
+            return { ...state, copiedEntity: action.payload };
 
         case ENTITY_COPY_RESET_STATE:
-            return { ...state, entityCopied: false };
+            return { ...state, copiedEntity: null };
 
         default:
             return state;
@@ -199,7 +199,7 @@ export const projectSelector = state => state.common.project;
 export const projectCreatedSelector = state => state.common.projectCreated;
 export const projectDeletedSelector = state => state.common.projectDeleted;
 export const projectUpdatedSelector = state => state.common.projectUpdated;
-export const entityCopiedSelector = state => state.common.entityCopied;
+export const entityCopiedSelector = state => state.common.copiedEntity;
 
 
 
