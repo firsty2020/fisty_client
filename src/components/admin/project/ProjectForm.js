@@ -89,7 +89,7 @@ const ProjectForm = ({
         const values = {};
         const options = [ ...countriesOptions, ...extendedOptions ];
         const citizenships = project.citizenship
-            .map(c => options.find(option => option.value === c));
+            .map(c => options.find(option => option.value.toLowerCase() === c.toLowerCase()));
         Object.keys(initialValues).map((key) => values[key] = project[key]);
         values.citizenship = citizenships;
         values.age = { from: project.age[0], to: project.age[1] };
