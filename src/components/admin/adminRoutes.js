@@ -8,7 +8,7 @@ import BranchContactPersons from './Branch/ContactPersons';
 import Locations from './Config/Locations/Locations';
 import Industries from './Config/Industries';
 import Specifications from './Config/Specifications';
-import CreateApplication from './Company/CreateApplication';
+import CreateApplication from './Application/CreateApplication';
 import Applications from './Application/Applications';
 import CompanyApplications from './Company/Applications';
 import CreateBranch from './Branch/CreateBranch';
@@ -43,6 +43,7 @@ import UpdateCompany from './Company/UpdateCompany';
 import CreateRecruiter from './User/CreateRecruiter';
 import CreateProjectManager from './User/CreateProjectManager';
 import UpdateCandidate from '../common/candidates/UpdateCandidate';
+import UpdateApplication from './Application/UpdateApplication';
 
 
 const adminRoutes = [
@@ -175,6 +176,11 @@ const adminRoutes = [
         path: '/admin/companies/:companyId/application/create',
         component: CreateApplication,
         name: 'Создать заявку',
+    },
+    {
+        path: '/admin/companies/:companyId/applications/edit/:applicationId',
+        component: UpdateApplication,
+        name: 'Редактировать заявку',
     },
     {
         path: '/admin/companies/:companyId/applications',

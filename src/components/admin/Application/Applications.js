@@ -6,7 +6,7 @@ import {
     copyEntity,
     resetCopyState
 } from '../../common/commonActions';
-import { applicationsSelector, entityCopiedSelector } from '../../common/commonReducer';
+import { applicationsSelector, copiedEntitySelector } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
 import { When } from 'react-if';
@@ -16,7 +16,7 @@ import {autoToggleAlert} from '../../../helpers/utils';
 const Applications = ({
                           applications,
                           layout,
-                          copied,
+                          copiedEntity,
                           getApplications,
                           copyEntity,
                           resetCopyState,
@@ -31,13 +31,13 @@ const Applications = ({
     }, [ getApplications ]);
 
     useEffect(() => {
-        if (copied) {
+        if (copiedEntity) {
             autoToggleAlert('Заявкa скопирована', setSuccessMessage);
             resetCopyState();
             setApplicationIdToCopy(null);
-            getApplications();
+            setTimeout(() => push(`/admin/companies/${copiedEntity.company}/applications/edit/${copiedEntity.id}`), 1500);
         }
-    }, [ copied, getApplications ]);
+    }, [ copiedEntity, getApplications ]);
 
     return (
         <div>
@@ -49,7 +49,7 @@ const Applications = ({
             </When>
             <ConfirmationModal
                 show={!!applicationIdToCopy}
-                question="Вы уверены, что хотите копировать эту заяавку?"
+                question="Вы уверены, что хотите копировать эту заявку?"
                 onConfirm={() => copyEntity('application', applicationIdToCopy)}
                 onCancel={() => setApplicationIdToCopy(null)}
             />
@@ -70,7 +70,7 @@ const Applications = ({
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    copied: entityCopiedSelector(state),
+    copiedEntity: copiedEntitySelector(state),
 });
 
 const mapDispatchToProps = { getApplications, copyEntity, resetCopyState, push };

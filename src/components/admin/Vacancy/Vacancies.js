@@ -22,7 +22,7 @@ import {
     vacanciesSelector,
     vacancyCreatedSelector,
     vacancyRemovedSelector,
-    entityCopiedSelector,
+    copiedEntitySelector,
     vacancySelector,
 } from '../../common/commonReducer';
 import { push } from 'connected-react-router';
@@ -173,7 +173,7 @@ const mapStateToProps = state => ({
     application: applicationSelector(state),
     created: vacancyCreatedSelector(state),
     removed: vacancyRemovedSelector(state),
-    copiedEntity: entityCopiedSelector(state),
+    copiedEntity: copiedEntitySelector(state),
     copiedVacancy: vacancySelector(state),
 });
 

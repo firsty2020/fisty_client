@@ -36,6 +36,8 @@ const driverLicenceOptions = [
     { value: 'd', label: 'D' },
 ];
 
+const citizenshipOptions = [ ...countriesOptions, ...extendedOptions, { value: 'Не Важно', label: 'Не Важно'} ];
+
 const updateCheckboxValue = (setFieldValue, value, fieldName, values) => {
     const set = new Set(values);
     if (set.has(value)) {
@@ -46,40 +48,79 @@ const updateCheckboxValue = (setFieldValue, value, fieldName, values) => {
     setFieldValue(fieldName, Array.from(set));
 };
 
+let formValues = null;
+const initialValues = {
+    position: '',
+    employees_count: '',
+    salary: '',
+    formalization_type: '',
+    responsibilities: '',
+    citizenship: '',
+    gender: '',
+    age: {
+        from: '',
+        to: '',
+    },
+    education: '',
+    russian_level: '',
+    other_languages: '',
+    _has_driver_license: '',
+    driver_license: '',
+    mobile_availability: '',
+    appearance_requirements: '',
+    comments: '',
+    city: '',
+    address: '',
+    responsibilities_comments: '',
+    schedule: '',
+};
 
-const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
+const ApplicationForm = ({
+                             pending,
+                             backUrl,
+                             application,
+                             onSubmitApplication,
+                         }) => {
+
+    const populateForm = () => {
+        const values = {};
+        for (let key in application) {
+            values[key] = application[key];
+        }
+        values.age = {
+            from: application.age[0],
+            to: application.age[1],
+        };
+        values.citizenship = application.citizenship
+            .map(c => citizenshipOptions.find(option => option.value.toLowerCase() === c.toLowerCase()));
+        values.schedule = scheduleOptions.find(({ value }) => value === application.schedule);
+        values.russian_level = russianOptions.find(({ value }) => value === application.russian_level);
+        values.other_languages = (application.other_languages || [])
+            .map(c => languageOptions.find(option => option.value.toLowerCase() === c.toLowerCase()));
+        values._has_driver_license = !!application.driver_license;
+        values.driver_license = (application.driver_license || [])
+            .map(c => driverLicenceOptions.find(option => option.value.toLowerCase() === c.toLowerCase()));
+        return values;
+    };
+
+    if (application) {
+        formValues = populateForm();
+    } else {
+        formValues = initialValues;
+    }
+
+    if (!formValues) {
+        return null;
+    }
+
     return (
         <div>
             <Container>
                 <h3 className="text-center mt-4">Заявкa</h3>
                 <div className="mt-5">
                     <Formik
-                        initialValues={{
-                            position: '',
-                            employees_count: '',
-                            salary: '',
-                            formalization_type: '',
-                            responsibilities: '',
-                            citizenship: '',
-                            gender: '',
-                            age: {
-                                from: '',
-                                to: '',
-                            },
-                            education: '',
-                            russian_level: '',
-                            other_languages: '',
-                            _has_driver_license: '',
-                            driver_license: '',
-                            mobile_availability: '',
-                            appearance_requirements: '',
-                            comments: '',
-                            city: '',
-                            address: '',
-                            responsibilities_comments: '',
-                            schedule: '',
-
-                        }}
+                        enableReinitialize
+                        initialValues={formValues}
                         validationSchema={applicationSchema}
                         onSubmit={(values) => {
                             const clearedData = clearEmptyFields(JSON.parse(JSON.stringify(values)));
@@ -151,6 +192,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         <CheckBox
                                             inline
                                             custom
+                                            checked={values.formalization_type.includes('трудовой договор')}
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Трудовой договор"
@@ -160,6 +202,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         <CheckBox
                                             inline
                                             custom
+                                            checked={values.formalization_type.includes('самозанятый')}
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Самозанятый"
@@ -169,6 +212,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         <CheckBox
                                             inline
                                             custom
+                                            checked={values.formalization_type.includes('договор гражданско-правового характера')}
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Договор гражданско-правового характера"
@@ -178,6 +222,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         <CheckBox
                                             inline
                                             custom
+                                            checked={values.formalization_type.includes('агентский договор')}
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Агентский договор"
@@ -187,6 +232,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         <CheckBox
                                             inline
                                             custom
+                                            checked={values.formalization_type.includes('другое')}
                                             name="formalization_type"
                                             value={values.formalization_type}
                                             label="Другое"
@@ -232,7 +278,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         as="textarea"
                                         name="responsibilities_comments"
                                         placeholder="Комментарии"
-                                        value={values.responsibilities_comments}
+                                        value={values.responsibilities_comments || ''}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
@@ -241,7 +287,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                 <Form.Group>
                                     <p className="form-control-label">Гражданство *</p>
                                     <DropDown
-                                        options={[ ...countriesOptions, ...extendedOptions, { value: 'Не Важно', label: 'Не Важно'} ]}
+                                        options={citizenshipOptions}
                                         value={values.citizenship}
                                         name="citizenship"
                                         placeholder="Выберите из списка"
@@ -259,6 +305,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <CheckBox
                                         inline
                                         custom
+                                        checked={values.gender.includes('мужской')}
                                         name="gender"
                                         value={values.gender}
                                         label="Мужской"
@@ -268,6 +315,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <CheckBox
                                         inline
                                         custom
+                                        checked={values.gender.includes('женский')}
                                         name="gender"
                                         value={values.gender}
                                         label="Женский"
@@ -315,6 +363,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         className="warning-control-custom"
                                         inline
                                         custom
+                                        checked={values.education.includes('среднее')}
                                         name="education"
                                         value={values.education}
                                         label="Среднее"
@@ -324,6 +373,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <CheckBox
                                         inline
                                         custom
+                                        checked={values.education.includes('среднее специальное')}
                                         name="education"
                                         value={values.education}
                                         label="Среднее специальное"
@@ -333,6 +383,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <CheckBox
                                         inline
                                         custom
+                                        checked={values.education.includes('высшее неоконченное')}
                                         name="education"
                                         value={values.education}
                                         label="Высшее неоконченное"
@@ -342,10 +393,11 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                     <CheckBox
                                         inline
                                         custom
+                                        checked={values.education.includes('высшее')}
                                         name="education"
                                         value={values.education}
                                         label="Высшее"
-                                        onChange={() => updateCheckboxValue(setFieldValue, 'Высшее', 'education', values.education)}
+                                        onChange={() => updateCheckboxValue(setFieldValue, 'высшее', 'education', values.education)}
                                         onBlur={(e) => setFieldTouched('education', e)}
                                     />
                                     {touched.education && errors.education? (
@@ -361,7 +413,6 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         placeholder="Выберите из списка"
                                         onBlur={(e) => setFieldTouched('russian_level', e)}
                                         onChange={(e) => setFieldValue('russian_level', e)}
-                                        className={touched.russian_level && errors.russian_level ? 'is-invalid' : ''}
                                     />
                                     {touched.russian_level && errors.russian_level ? (
                                         <p className="mt-1 invalid-feedback-visible">{errors.russian_level}</p>
@@ -389,6 +440,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         inline
                                         custom
                                         name="_has_driver_license"
+                                        checked={values._has_driver_license}
                                         value={values._has_driver_license}
                                         label="Да"
                                         onChange={() => setFieldValue('_has_driver_license', true)}
@@ -398,6 +450,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         inline
                                         custom
                                         name="_has_driver_license"
+                                        checked={!values._has_driver_license}
                                         value={values._has_driver_license}
                                         label="Нет"
                                         onChange={() => {
@@ -429,7 +482,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         type="text"
                                         name="mobile_availability"
                                         placeholder="Требования к мобильному телефону (если есть)"
-                                        value={values.mobile_availability}
+                                        value={values.mobile_availability || ''}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
@@ -440,7 +493,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         type="text"
                                         name="appearance_requirements"
                                         placeholder="Требования к внешности (если есть)"
-                                        value={values.appearance_requirements}
+                                        value={values.appearance_requirements || ''}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
@@ -451,7 +504,7 @@ const ApplicationForm = ({ pending, backUrl, onSubmitApplication }) => {
                                         as="textarea"
                                         name="comments"
                                         placeholder="Напишите дополнительные требования"
-                                        value={values.comments}
+                                        value={values.comments || ''}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />

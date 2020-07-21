@@ -52,9 +52,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = { createApplication, push };
 
 
-CreateApplication.propTypes = {
-
-};
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(CreateApplication);

@@ -40,7 +40,6 @@ export default {
     AGE_REQUIRED: 'Укажите желаемый возраст',
     RUSSIAN_LEVEL_REQUIRED: 'Укажите уровень владения русским языком',
     ADDRESS_REQUIRED: 'Введите адрес',
-    BONUSES_REQUIRED: 'Укажите есть ли бонусы',
     SALARY_INVALID: 'Введите целое число',
     SALARY_REQUIRED: 'Введите зарплату',
     FORMALIZATION_TYPE_REQUIRED: 'Укажите вид оформления',

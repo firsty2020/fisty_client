@@ -16,7 +16,7 @@ import { push } from 'connected-react-router';
 import Pagination from '../../Pagination';
 import NotesModal from '../../admin/project/NotesModal';
 import { deleteProject, resetProjectState, copyEntity, resetCopyState } from '../commonActions';
-import { projectDeletedSelector, entityCopiedSelector } from '../commonReducer';
+import { projectDeletedSelector, copiedEntitySelector } from '../commonReducer';
 import { extractUserDataFromToken } from '../../auth/auth';
 
 const Projects = ({
@@ -176,7 +176,7 @@ const Projects = ({
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
     deleted: projectDeletedSelector(state),
-    copiedEntity: entityCopiedSelector(state),
+    copiedEntity: copiedEntitySelector(state),
 });
 
 const mapDispatchToProps = {

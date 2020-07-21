@@ -28,6 +28,7 @@ import {
     COMMON_CANDIDATE_UPDATE,
     ENTITY_COPY,
     ENTITY_COPY_RESET_STATE,
+    UPDATE_APPLICATION,
 } from '../../helpers/constants/actionTypes';
 import { createSelector } from 'reselect';
 
@@ -37,7 +38,7 @@ export const common = (state = {}, action) => {
     switch (action.type) {
 
         case '@@router/LOCATION_CHANGE':
-            return { ...state, vacancy: null };
+            return { ...state, vacancy: null, applicationUpdated: false };
 
         case API_REQUEST:
             return { ...state, isLoading: true };
@@ -47,6 +48,9 @@ export const common = (state = {}, action) => {
 
         case CREATE_APPLICATION:
             return { ...state, applicationCreated: true };
+
+        case UPDATE_APPLICATION:
+            return { ...state, applicationUpdated: true };
 
         case GET_APPLICATIONS:
             return { ...state, applications: action.payload };
@@ -160,6 +164,7 @@ export const common = (state = {}, action) => {
 export const isLoadingSelector = (state) => state.common.isLoading;
 
 export const createApplicationResolvedSelector = (state) => state.common.applicationCreated;
+export const applicationUpdatedSelector = (state) => state.common.applicationUpdated;
 
 export const applicationsSelector = state => state.common.applications;
 export const applicationSelector = state => state.common.application;
@@ -204,7 +209,7 @@ export const projectSelector = state => state.common.project;
 export const projectCreatedSelector = state => state.common.projectCreated;
 export const projectDeletedSelector = state => state.common.projectDeleted;
 export const projectUpdatedSelector = state => state.common.projectUpdated;
-export const entityCopiedSelector = state => state.common.copiedEntity;
+export const copiedEntitySelector = state => state.common.copiedEntity;
 
 
 

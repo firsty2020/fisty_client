@@ -2,10 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import {AlertNotice, BackButton, ConfirmationModal, TableList} from '../../ui';
 import { getApplications, copyEntity, resetCopyState } from '../../common/commonActions';
-import {
-    applicationsSelector,
-    entityCopiedSelector
-} from '../../common/commonReducer';
+import { applicationsSelector, copiedEntitySelector } from '../../common/commonReducer';
 import { Button } from 'react-bootstrap';
 import { PlusCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
@@ -19,7 +16,7 @@ const Applications = ({
                           applications,
                           layout,
                           match,
-                          copied,
+                          copiedEntity,
                           getApplications,
                           push,
                           copyEntity,
@@ -34,13 +31,13 @@ const Applications = ({
     }, [ getApplications, match.params.companyId ]);
 
     useEffect(() => {
-        if (copied) {
+        if (copiedEntity) {
             autoToggleAlert('Заявкa скопирована', setSuccessMessage);
             resetCopyState();
             setApplicationIdToCopy(null);
-            getApplications({ company: match.params.companyId });
+            setTimeout(() => push(`/admin/companies/${match.params.companyId}/applications/edit/${copiedEntity.id}`), 1500)
         }
-    }, [ copied, getApplications ]);
+    }, [ copiedEntity, getApplications ]);
 
     const handleCopyEntity = () => {
         copyEntity('application', applicationIdToCopy);
@@ -57,7 +54,7 @@ const Applications = ({
             </When>
             <ConfirmationModal
                 show={!!applicationIdToCopy}
-                question="Вы уверены, что хотите копировать эту заяавку?"
+                question="Вы уверены, что хотите копировать эту заявку?"
                 onConfirm={handleCopyEntity}
                 onCancel={() => setApplicationIdToCopy(null)}
             />
@@ -73,6 +70,7 @@ const Applications = ({
                 </Link>
             </div>
             <TableList
+                onEditItem={({ id }) => push(`${match.url}/edit/${id}`)}
                 onCopy={({ id }) => setApplicationIdToCopy(id)}
                 onClickRow={({id}) => push(`${match.url}/${id}`)}
                 layout={layout}
@@ -89,7 +87,7 @@ const Applications = ({
 
 const mapStateToProps = state => ({
     applications: applicationsSelector(state),
-    copied: entityCopiedSelector(state),
+    copiedEntity: copiedEntitySelector(state),
 });
 
 const mapDispatchToProps = { getApplications, push, copyEntity, resetCopyState };

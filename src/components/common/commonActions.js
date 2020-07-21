@@ -30,6 +30,7 @@ import {
     COMMON_CANDIDATE_UPDATE,
     ENTITY_COPY,
     ENTITY_COPY_RESET_STATE,
+    UPDATE_APPLICATION,
 } from '../../helpers/constants/actionTypes';
 import { createApiAction } from '../../helpers/utils';
 
@@ -41,6 +42,12 @@ export const createApplication = (data) => createApiAction({
     label: CREATE_APPLICATION,
 });
 
+export const updateApplication = (id, data) => createApiAction({
+    url: `applications/${id}/`,
+    method: PATCH,
+    data,
+    label: UPDATE_APPLICATION,
+});
 
 export const getApplications = (params) => createApiAction({
     url: 'applications/',
