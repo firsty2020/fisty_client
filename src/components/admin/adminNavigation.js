@@ -89,6 +89,12 @@ const adminNavigation =  {
                     url: '/admin/configs/statuses',
                     matcher: '/statuses',
                 },
+                {
+                    name: 'Процессы',
+                    icon: 'Activity',
+                    url: '/admin/configs/flows',
+                    matcher: '/flow',
+                },
             ]
         },
     ],

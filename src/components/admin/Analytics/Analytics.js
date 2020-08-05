@@ -10,6 +10,7 @@ import GraphCard from './CardGraph';
 import { connect } from 'react-redux';
 import { statisticsSelector } from '../adminReducer';
 import { getStatistics } from '../adminActions';
+import { generateRandomColor } from '../../../helpers/utils';
 
 
 const Analytics = ({ statistics, getStatistics }) => {
@@ -22,17 +23,12 @@ const Analytics = ({ statistics, getStatistics }) => {
         return null;
     }
 
-    const generateColor = () => {
-        const o = Math.round, r = Math.random, s = 255;
-        return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
-    };
-
     const usersData = () => {
 
         const { active_users, user } = statistics;
         const { users_role_recruiter, users_role_admin, users_role_company } = user;
         const labels = ['Рекрутеры', 'Админы', 'Компании' ];
-        const backgroundColor = labels.map(() => generateColor());
+        const backgroundColor = labels.map(() => generateRandomColor());
 
         return {
             graph: {
@@ -59,7 +55,7 @@ const Analytics = ({ statistics, getStatistics }) => {
 
         const { applications_count, applications_without_vacancy, new_applications } = statistics;
         const labels = [ 'с вакансией', 'без вакансии' ];
-        const backgroundColor = labels.map(() => generateColor());
+        const backgroundColor = labels.map(() => generateRandomColor());
 
         return {
             graph: {
@@ -80,7 +76,7 @@ const Analytics = ({ statistics, getStatistics }) => {
 
         const { active_lead_count, new_lead_count, approved_lead_count } = statistics;
         const labels = [ 'активные', 'новые', 'одобренные' ];
-        const backgroundColor = labels.map(() => generateColor());
+        const backgroundColor = labels.map(() => generateRandomColor());
 
         return {
             graph: {

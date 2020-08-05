@@ -75,9 +75,9 @@ const Filters = ({ onFilter }) => {
                     eventKey="0"
                     className="no-decoration p-0 mb-2 mt-2"
                 >
-                    <span title="Фильтровать">
+                    <span title="Фильтры">
                         <Sliders className="filter-icon"/>
-                        <span className="ml-2">Фильтровать</span>
+                        <span className="ml-2">Фильтры</span>
                     </span>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">

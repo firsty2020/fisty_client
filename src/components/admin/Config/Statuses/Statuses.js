@@ -22,7 +22,7 @@ import UpdateStatus from './UpdateStatus';
 
 const statusesTableLayout = {
     headings: [
-        'ID', 'Наоименование', 'По умолчанию', 'Закрыт', 'Одобрен', 'Действия',
+        'ID', 'Наименование', 'По умолчанию', 'Закрыт', 'Одобрен', 'Действия',
     ],
     createRow: ({ url, name, is_default, closed, approved }) => [
         extractIdFromUrl(url),
@@ -61,10 +61,6 @@ const Statuses = ({
     const [ statusToDelete, setStatusToDelete ] = useState(null);
     const [ statusToUpdate, setStatusToUpdate ] = useState(null);
     const [ params, setParams ] = useState(null);
-
-    useEffect(() => {
-        getStatuses(null, uid);
-    }, [ getStatuses ]);
 
     useEffect(() => {
         if (created || deleted) {
@@ -134,7 +130,7 @@ const Statuses = ({
                         </div>
                         <div className="col-md-3">
                             <DropDown
-                                placeholder="Фильтровать"
+                                placeholder="Фильтры"
                                 onChange={({ value }) => filterStatuses(value)}
                                 options={filterOptions}
                             />

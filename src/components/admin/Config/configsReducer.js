@@ -65,6 +65,17 @@ import {
     ADMIN_CONFIGS_STATUSES_GET,
     ADMIN_CONFIGS_STATUSES_DELETE,
     ADMIN_CONFIGS_STATUSES_UPDATE,
+    ADMIN_CONFIGS_FLOWS_CREATE,
+    ADMIN_CONFIGS_FLOWS_GET,
+    ADMIN_CONFIGS_FLOWS_STATUSES_GET,
+    ADMIN_CONFIGS_FLOWS_DELETE,
+    ADMIN_CONFIGS_FLOWS_STATE_RESET,
+    ADMIN_CONFIGS_FLOWS_UPDATE,
+    ADMIN_CONFIGS_FLOWS_STATUSES_ADD,
+    ADMIN_CONFIGS_FLOWS_STATUSES_UPDATE,
+    ADMIN_CONFIGS_FLOWS_STATUSES_LINK,
+    ADMIN_CONFIGS_FLOW_STATE_RESET,
+    ADMIN_CONFIGS_FLOWS_STATUSES_DELETE,
 } from '../../../helpers/constants/actionTypes';
 import {createSelector} from 'reselect';
 
@@ -491,6 +502,50 @@ export const configs = (state = {}, action) => {
                 statusUpdated: false,
             };
 
+        case ADMIN_CONFIGS_FLOWS_CREATE:
+            return { ...state,  flowCreated: true };
+
+        case ADMIN_CONFIGS_FLOWS_GET:
+            return { ...state,  flows: action.payload };
+
+        case ADMIN_CONFIGS_FLOWS_DELETE:
+            return { ...state,  flowDeleted: true };
+
+        case ADMIN_CONFIGS_FLOWS_UPDATE:
+            return { ...state,  flowUpdated: true };
+
+        case ADMIN_CONFIGS_FLOWS_STATUSES_GET:
+            return { ...state,  flowStatuses: action.payload };
+
+        case ADMIN_CONFIGS_FLOWS_STATUSES_ADD:
+            return { ...state,  flowStatusCreated: true };
+
+        case ADMIN_CONFIGS_FLOWS_STATUSES_DELETE:
+            return { ...state,  flowStatusDeleted: true };
+
+        case ADMIN_CONFIGS_FLOWS_STATUSES_UPDATE:
+            return { ...state,  flowStatusUpdated: true };
+
+        case ADMIN_CONFIGS_FLOWS_STATUSES_LINK:
+            return { ...state,  flowStatusLinked: true };
+
+        case ADMIN_CONFIGS_FLOWS_STATE_RESET:
+            return {
+                ...state,
+                flowCreated: false,
+                flowDeleted: false,
+                flowUpdated: false,
+            };
+
+        case ADMIN_CONFIGS_FLOW_STATE_RESET:
+            return {
+                ...state,
+                flowStatusLinked: false,
+                flowStatusUpdated: false,
+                flowStatusCreated: false,
+                flowStatusDeleted: false,
+            };
+
         default:
             return state;
     }
@@ -552,6 +607,15 @@ export const statusDeletedSelector = state => state.admin.configs.statusDeleted;
 export const statusUpdatedSelector = state => state.admin.configs.statusUpdated;
 const statusesSelector = state => state.admin.configs.statuses;
 
+export const flowCreatedSelector = state => state.admin.configs.flowCreated;
+export const flowDeletedSelector = state => state.admin.configs.flowDeleted;
+export const flowUpdatedSelector = state => state.admin.configs.flowUpdated;
+export const flowsSelector = state => state.admin.configs.flows;
+export const flowStatusCreatedSelector = state => state.admin.configs.flowStatusCreated;
+export const flowStatusDeletedSelector = state => state.admin.configs.flowStatusDeleted;
+export const flowStatusUpdatedSelector = state => state.admin.configs.flowStatusUpdated;
+export const flowStatusesSelector = state => state.admin.configs.flowStatuses;
+export const flowStatusesLinkedSelector = state => state.admin.configs.flowStatusLinked;
 
 export const statusesState = (uid = null) => createSelector(
     [ statusesSelector ],

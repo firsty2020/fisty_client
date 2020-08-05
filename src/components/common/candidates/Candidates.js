@@ -131,7 +131,7 @@ const Candidates = ({
                     <DropDown
                         isClearable
                         className="filter-dropdown"
-                        placeholder="Фильтровать"
+                        placeholder="Фильтры"
                         value={projectFilter}
                         onChange={(e) => handleProjectFilter(e)}
                         options={generateSelectOptions((projects || {}).results, 'url', 'name')}

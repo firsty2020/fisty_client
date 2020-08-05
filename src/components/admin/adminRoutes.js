@@ -44,6 +44,8 @@ import CreateRecruiter from './User/CreateRecruiter';
 import CreateProjectManager from './User/CreateProjectManager';
 import UpdateCandidate from '../common/candidates/UpdateCandidate';
 import UpdateApplication from './Application/UpdateApplication';
+import Flows from './Config/Flows/Flows';
+import Flow from './Config/Flows/Flow';
 
 
 const adminRoutes = [
@@ -331,6 +333,16 @@ const adminRoutes = [
         path: '/admin/candidates',
         component: Candidates,
         name: 'Кандидаты'
+    },
+    {
+        path: '/admin/configs/flows',
+        component: Flows,
+        name: 'Процессы'
+    },
+    {
+        path: '/admin/configs/flows/:flowId',
+        component: Flow,
+        name: 'Процесс'
     },
 ];
 

@@ -14,6 +14,17 @@ import {
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_RESOLVED,
     ADMIN_CONFIGS_CREATE_LOCATION_PENDING,
     ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED,
+    ADMIN_CONFIGS_FLOW_STATE_RESET,
+    ADMIN_CONFIGS_FLOWS_CREATE,
+    ADMIN_CONFIGS_FLOWS_DELETE,
+    ADMIN_CONFIGS_FLOWS_GET,
+    ADMIN_CONFIGS_FLOWS_STATE_RESET,
+    ADMIN_CONFIGS_FLOWS_STATUSES_ADD,
+    ADMIN_CONFIGS_FLOWS_STATUSES_DELETE,
+    ADMIN_CONFIGS_FLOWS_STATUSES_GET,
+    ADMIN_CONFIGS_FLOWS_STATUSES_LINK,
+    ADMIN_CONFIGS_FLOWS_STATUSES_UPDATE,
+    ADMIN_CONFIGS_FLOWS_UPDATE,
     ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_FAILED,
     ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_PENDING,
     ADMIN_CONFIGS_GET_CONTACT_PERSON_ROLES_RESOLVED,
@@ -455,4 +466,73 @@ export const deleteStatus = (id) => createApiAction({
 
 export const resetStatusState = () => ({
     type: ADMIN_CONFIGS_STATUSES_RESET,
+});
+
+export const createFlow = (data) => createApiAction({
+    url: 'flow/',
+    method: POST,
+    data,
+    label: ADMIN_CONFIGS_FLOWS_CREATE,
+});
+
+export const getFlows = (data) => createApiAction({
+    url: 'flow/',
+    method: GET,
+    data,
+    label: ADMIN_CONFIGS_FLOWS_GET,
+});
+
+export const deleteFlow = (id) => createApiAction({
+    url: `flow/${id}/`,
+    method: DELETE,
+    label: ADMIN_CONFIGS_FLOWS_DELETE,
+});
+
+export const updateFlow = (id, data) => createApiAction({
+    url: `flow/${id}/`,
+    method: PATCH,
+    data,
+    label: ADMIN_CONFIGS_FLOWS_UPDATE,
+});
+
+export const resetFlowsState = () => ({
+    type: ADMIN_CONFIGS_FLOWS_STATE_RESET,
+});
+
+export const getFlowStatuses = (params) => createApiAction({
+    url: `flow-status/`,
+    method: GET,
+    data: params,
+    label: ADMIN_CONFIGS_FLOWS_STATUSES_GET,
+});
+
+export const addFlowStatus = (data) => createApiAction({
+    url: 'flow-status/',
+    method: POST,
+    data,
+    label: ADMIN_CONFIGS_FLOWS_STATUSES_ADD,
+});
+
+export const deleteFlowStatus = (id) => createApiAction({
+    url: `flow-status/${id}/`,
+    method: DELETE,
+    label: ADMIN_CONFIGS_FLOWS_STATUSES_DELETE,
+});
+
+export const updateFlowStatus = (id, data) => createApiAction({
+    url: `flow-status/${id}/`,
+    method: PATCH,
+    data,
+    label: ADMIN_CONFIGS_FLOWS_STATUSES_UPDATE,
+});
+
+export const linkFlowStatuses = (data) => createApiAction({
+    url: `companies/flow/assign-status`,
+    method: POST,
+    data,
+    label: ADMIN_CONFIGS_FLOWS_STATUSES_LINK,
+});
+
+export const resetFlowState = () => ({
+    type: ADMIN_CONFIGS_FLOW_STATE_RESET,
 });
