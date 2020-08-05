@@ -84,6 +84,11 @@ import {createSelector} from 'reselect';
 export const configs = (state = {}, action) => {
     switch (action.type) {
 
+        case '@@router/LOCATION_CHANGE':
+            return { ...state,
+                flowStatuses: [],
+            };
+
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
             return {
                 ...state,

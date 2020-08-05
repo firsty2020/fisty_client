@@ -329,11 +329,13 @@ const Flow = ({
                                 id={main_status_details.name}
                                 className={`drag-item ${main_status_details.name}`}>
                                 <span
+                                    className="remove-icon-container"
                                     onClick={() => setFlowStatusIdToRemove(extractIdFromUrl(url))}
-                                    className="Удалить">
+                                    title="Удалить">
                                     <XCircle className="remove-icon"/>
                                 </span>
                                 <span
+                                    className="connect-icon-container"
                                     onClick={handleStartConnecting}
                                     title="Соединить">
                                      <Link
