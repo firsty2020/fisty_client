@@ -89,7 +89,7 @@ const StatusFormModal = ({
                 <p className="text-center mt-1 mb-2">{status ? 'Редактировать' :'Создать'} статус
                     { defaultExists ? (
                         <OverlayTrigger
-                            trigger="hover"
+                            trigger={['hover', 'focus']}
                             placement="right"
                             overlay={
                                 <Popover>

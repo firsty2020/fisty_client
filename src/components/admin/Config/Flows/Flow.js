@@ -18,6 +18,8 @@ import {
     updateFlowStatus,
     linkFlowStatuses,
     resetFlowState,
+    createStatus,
+    resetStatusState,
 } from '../configsActions';
 import {
     flowStatusCreatedSelector,
@@ -31,6 +33,7 @@ import {
 import { baseURL } from '../../../../axios';
 import { AlertNotice, ConfirmationModal } from '../../../ui';
 import { When } from 'react-if';
+import CreateStatus from '../Statuses/CreateStatus';
 
 
 const generateLines = (draggables) => {
@@ -67,13 +70,15 @@ const Flow = ({
                   flowStatusCreated,
                   flowStatusUpdated,
                   flowStatusDeleted,
-                  getStatuses,
+                  getMainStatuses,
                   getFlowStatuses,
                   addFlowStatus,
                   deleteFlowStatus,
                   updateFlowStatus,
                   linkFlowStatuses,
                   resetFlowState,
+                  createMainStatus,
+                  resetMainStatusState,
               }) => {
 
     const [_, updateState] = useState(0);
@@ -82,16 +87,17 @@ const Flow = ({
     const [connectionToCreate, setConnectionToCreate ] = useState(false);
     const [flowStatusIdToRemove, setFlowStatusIdToRemove ] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
+    const [isCreatingMainStatus, setIsCreatingMainStatus] = useState(false);
 
-    const [_dra, setDraggables ] = useState([]);
+    const [draggables, setDraggables ] = useState([]);
     const containerRef = useRef(null);
 
     const params = { flow: match.params.flowId, show_all: true };
 
     useEffect(() => {
-        getStatuses({ show_all: true });
+        getMainStatuses({ show_all: true });
         getFlowStatuses(params);
-    }, [ getFlowStatuses, getStatuses]);
+    }, [ getFlowStatuses, getMainStatuses]);
 
     useEffect(() => {
         if (flowStatusCreated || linked || flowStatusUpdated || flowStatusDeleted) {
@@ -119,6 +125,13 @@ const Flow = ({
         }
     })
 
+    useEffect(() => {
+        if (mainStatusCreated) {
+            autoToggleAlert('Статус создан', setSuccessMessage);
+            resetMainStatusState();
+            getMainStatuses({ show_all: true });
+        }
+    }, [ mainStatusCreated, resetMainStatusState ])
 
     const onStop = (a, b) => {
         let dragged = flowStatuses.results
@@ -165,9 +178,9 @@ const Flow = ({
 
     const removeConnection = () => {
         const [ from, to ] = connectionToRemove.split('-');
-        const fromDraggable = copyObject(_dra
+        const fromDraggable = copyObject(draggables
             .find(({ main_status_details }) => main_status_details.name === from.trim()));
-        const toDraggable = _dra.find(({ main_status_details }) => main_status_details.name === to.trim());
+        const toDraggable = draggables.find(({ main_status_details }) => main_status_details.name === to.trim());
         linkFlowStatuses({
             from_status: fromDraggable.url,
             to_status: toDraggable.url,
@@ -257,6 +270,11 @@ const Flow = ({
 
     return (
         <div>
+            <When condition={!!isCreatingMainStatus}>
+                <CreateStatus
+                    createStatus={createMainStatus}
+                    onToggleModal={setIsCreatingMainStatus}/>
+            </When>
             <When condition={!!successMessage}>
                 <AlertNotice type="success" message={successMessage}/>
             </When>
@@ -307,7 +325,8 @@ const Flow = ({
                             )
                         })}
                         <Dropdown.Divider />
-                        <Dropdown.Item>Добавить новый статус</Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={() => setIsCreatingMainStatus(true)}>Добавить новый статус</Dropdown.Item>
                     </DropdownButton>
                 </Col>
             </Row>
@@ -316,7 +335,7 @@ const Flow = ({
                  ref={containerRef}
                  id="flow-container"
             >
-                {_dra.map(({ x, y, url, main_status_details }) => {
+                {draggables.map(({ x, y, url, main_status_details }) => {
                     return (
                         <Draggable
                             defaultPosition={{x: x, y: y }}
@@ -346,7 +365,7 @@ const Flow = ({
                         </Draggable>
                     );
                 })}
-                {generateLines(_dra).map(({ from, to, color, className }, index) => {
+                {generateLines(draggables).map(({ from, to, color, className }, index) => {
                     return (
                         <SteppedLineTo
                             fromAnchor="top right"
@@ -379,12 +398,14 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     getFlowStatuses,
-    getStatuses,
+    getMainStatuses: getStatuses,
     addFlowStatus,
     updateFlowStatus,
     linkFlowStatuses,
     resetFlowState,
     deleteFlowStatus,
+    createMainStatus: createStatus,
+    resetMainStatusState: resetStatusState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Flow);
