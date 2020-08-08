@@ -523,7 +523,7 @@ export const configs = (state = {}, action) => {
             return { ...state,  flowStatuses: action.payload };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_ADD:
-            return { ...state,  flowStatusCreated: true };
+            return { ...state,  flowStatusCreated: action.payload };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_DELETE:
             return { ...state,  flowStatusDeleted: true };
@@ -547,7 +547,7 @@ export const configs = (state = {}, action) => {
                 ...state,
                 flowStatusLinked: false,
                 flowStatusUpdated: false,
-                flowStatusCreated: false,
+                flowStatusCreated: null,
                 flowStatusDeleted: false,
             };
 

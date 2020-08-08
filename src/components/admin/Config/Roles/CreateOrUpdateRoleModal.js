@@ -79,7 +79,7 @@ const CreateOrUpdateRoleModal = ({ role, pending, onSubmit, onClose }) => {
                                         onChange={handleChange}
                                         type="switch"
                                         id="custom-switch"
-                                        label="Ползователь"
+                                        label="Пользователь"
                                     />
                                 </Form.Group>
                                 <div className="text-center">

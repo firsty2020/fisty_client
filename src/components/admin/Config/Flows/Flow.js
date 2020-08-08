@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import './Flows.css';
 import { SteppedLineTo } from 'react-lineto';
 import { Button, Col, Modal, Row, Dropdown, DropdownButton } from 'react-bootstrap';
-import { ArrowRight, Link, XCircle } from 'react-feather';
+import { ArrowRight, Link, XCircle, PlusCircle, Edit } from 'react-feather';
 import {
     autoToggleAlert,
     copyObject, extractIdFromUrl,
@@ -34,6 +34,7 @@ import { baseURL } from '../../../../axios';
 import { AlertNotice, ConfirmationModal } from '../../../ui';
 import { When } from 'react-if';
 import CreateStatus from '../Statuses/CreateStatus';
+import AddSubStatus from './AddSubStatus';
 
 
 const generateLines = (draggables) => {
@@ -51,7 +52,6 @@ const generateLines = (draggables) => {
                     from: main_status_details.name,
                     to,
                     color,
-                    id: Math.random() * 100,
                     className: `line ${main_status_details.name}-${to}`
                 });
             })
@@ -88,11 +88,13 @@ const Flow = ({
     const [flowStatusIdToRemove, setFlowStatusIdToRemove ] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
     const [isCreatingMainStatus, setIsCreatingMainStatus] = useState(false);
-
     const [draggables, setDraggables ] = useState([]);
+    const [subStatus, setSubStatus ] = useState(null);
+    const [showMainStatusesModal, setShowMainStatusesModal ] = useState(false);
     const containerRef = useRef(null);
 
     const params = { flow: match.params.flowId, show_all: true };
+    const flow = `${baseURL}flow/${match.params.flowId}/`;
 
     useEffect(() => {
         getMainStatuses({ show_all: true });
@@ -131,7 +133,19 @@ const Flow = ({
             resetMainStatusState();
             getMainStatuses({ show_all: true });
         }
-    }, [ mainStatusCreated, resetMainStatusState ])
+    }, [ mainStatusCreated, resetMainStatusState ]);
+
+    useEffect(() => {
+        if (flowStatusCreated && subStatus) {
+            linkFlowStatuses({
+                from_status: subStatus.from,
+                to_status: flowStatusCreated.url,
+                link: true,
+            });
+            resetFlowState();
+            setSubStatus(null);
+        }
+    }, [flowStatusCreated, linkFlowStatuses, resetFlowState]);
 
     const onStop = (a, b) => {
         let dragged = flowStatuses.results
@@ -190,14 +204,13 @@ const Flow = ({
     }
 
     const handleAddStatus = (status) => {
-        const flow = `${baseURL}flow/${match.params.flowId}/`;
         const newStatus = {
             is_default: false,
             x: 0,
             y: 0,
             flow,
             main_status: status.url,
-        }
+        };
         addFlowStatus(newStatus);
     }
 
@@ -233,6 +246,7 @@ const Flow = ({
         if (!connectionToCreate) return;
         const targetDiv = findParentDiv(e.target);
         if (unAvailableStatuses.includes(targetDiv.id)) {
+            resetConnecting();
             return alert('connection already exists');
         }
         let initiatorIndex;
@@ -249,6 +263,7 @@ const Flow = ({
             .find(({ main_status_details }) => main_status_details.name === targetDiv.id);
 
         if (initiatorStatus.url === statusToConnect.url) {
+            resetConnecting();
             return alert('Cannot connect to itself');
         }
 
@@ -256,7 +271,11 @@ const Flow = ({
             from_status: initiatorStatus.url,
             to_status: statusToConnect.url,
             link: true,
-        })
+        });
+        resetConnecting();
+    };
+
+    const resetConnecting = () => {
         setUnAvailableStatuses([]);
         setConnectionToCreate(null);
         document.querySelectorAll('.drag-item')
@@ -266,10 +285,39 @@ const Flow = ({
     const handleDeleteFlowStatus = () => {
         deleteFlowStatus(flowStatusIdToRemove);
         setFlowStatusIdToRemove(null);
+    };
+
+    const handleAddSubStatus = (main_status) => {
+        const newStatus = {
+            is_default: false,
+            x: 0,
+            y: 0,
+            flow,
+            main_status,
+        }
+        addFlowStatus(newStatus);
+    };
+
+    const handleOpenStatusesModal = url => {
+        setSubStatus({from: url});
+        setShowMainStatusesModal(true);
+    };
+
+
+    const handleAddSubStatusModalClose = (reset) => {
+        setShowMainStatusesModal(false);
+        if (!reset) return
+        setSubStatus(null);
     }
 
     return (
         <div>
+            <When condition={!!showMainStatusesModal}>
+                <AddSubStatus
+                    onSubmit={(main_status) => handleAddSubStatus(main_status)}
+                    mainStatuses={(mainStatuses || {}).results}
+                    onClose={(reset) => handleAddSubStatusModalClose(reset)}/>
+            </When>
             <When condition={!!isCreatingMainStatus}>
                 <CreateStatus
                     createStatus={createMainStatus}
@@ -347,19 +395,24 @@ const Flow = ({
                                 onClick={dropConnectionLine}
                                 id={main_status_details.name}
                                 className={`drag-item ${main_status_details.name}`}>
-                                <span
-                                    className="remove-icon-container"
-                                    onClick={() => setFlowStatusIdToRemove(extractIdFromUrl(url))}
-                                    title="Удалить">
-                                    <XCircle className="remove-icon"/>
-                                </span>
-                                <span
-                                    className="connect-icon-container"
-                                    onClick={handleStartConnecting}
-                                    title="Соединить">
-                                     <Link
-                                         className="connect-icon"/>
-                                </span>
+                                <div className="icons-container">
+                                    <span title="Добавить"><Edit className="icon"/></span>
+                                    <span
+                                        onClick={() => handleOpenStatusesModal(url)} title="Добавить">
+                                        <PlusCircle className="icon add-icon"/>
+                                    </span>
+                                    <span
+                                        onClick={handleStartConnecting}
+                                        title="Соединить">
+                                        <Link
+                                         className="icon connect-icon"/>
+                                    </span>
+                                    <span
+                                        onClick={() => setFlowStatusIdToRemove(extractIdFromUrl(url))}
+                                        title="Удалить">
+                                        <XCircle className="icon remove-icon"/>
+                                    </span>
+                                </div>
                                 <div className="text-center">{main_status_details.name}</div>
                             </div>
                         </Draggable>

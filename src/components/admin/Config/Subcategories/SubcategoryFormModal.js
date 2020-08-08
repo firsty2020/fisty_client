@@ -40,7 +40,7 @@ const SubcategoryFormModal = ({
         getCategories();
     }, [ getCategories ]);
 
-    const generateOptions = () => generateSelectOptions(categories, 'url', 'name');
+    const generateOptions = () => generateSelectOptions(((categories || {}).results || []), 'url', 'name');
 
     if (categories && subcategory) {
         formValues = {
@@ -82,7 +82,7 @@ const SubcategoryFormModal = ({
                         <Form onSubmit={handleSubmit}>
                             <Form.Group>
                                 <DropDown
-                                    isDisabled={!categories || !categories.length}
+                                    isDisabled={!categories || !categories.results.length}
                                     name="category"
                                     value={values.category}
                                     onBlur={(e) => setFieldTouched('category', e)}
