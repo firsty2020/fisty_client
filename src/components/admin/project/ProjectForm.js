@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import { Formik } from 'formik';
 import { Button, Col, Form } from 'react-bootstrap';
-import { getLocations } from '../Config/configsActions';
+import { getFlows, getLocations } from '../Config/configsActions';
 import { connect } from 'react-redux';
-import { locationsSelector } from '../Config/configsReducer';
+import { flowsSelector, locationsSelector } from '../Config/configsReducer';
 import {
     clearEmptyFields,
     copyObject,
@@ -37,6 +37,7 @@ const initialValues = {
     branch: '',
     location_type: '',
     manager: '',
+    flow: '',
 };
 
 const recruitersUid = generateUId();
@@ -49,12 +50,14 @@ const ProjectForm = ({
                          managers,
                          project,
                          match,
+                         flows,
                          backPath,
                          isLoading,
                          getBranches,
                          getLocations,
                          getUsers,
                          onSubmit,
+                         getFlows,
                      }) => {
 
     useEffect(() => {
@@ -63,6 +66,7 @@ const ProjectForm = ({
         getBranches({ ...params,  company: match.params.companyId });
         getUsers({...params, role: 'recruiter'}, recruitersUid);
         getUsers({ ...params, role: 'project_manager' }, projectManagersUid);
+        getFlows(params);
     }, [ getLocations, getBranches, match.params.companyId ]);
 
     const handleLocationTypeChange = (setFieldValue, fieldValue) => {
@@ -100,6 +104,8 @@ const ProjectForm = ({
         values.branch = (project.branch || [])
             .map((branchUrl) => generateOptions(branches)
                 .find((branch) => branch.value === branchUrl));
+        values.flow = generateSelectOptions(flows.results, 'url', 'name')
+            .find(({value}) => value === project.flow)
 
         if (project.location) {
             values.location_type = 'location';
@@ -125,7 +131,7 @@ const ProjectForm = ({
             ({ first_name, last_name }) => `${first_name} ${last_name}`);
 
 
-    if (project && locations && branches && recruiters && managers) {
+    if (project && locations && branches && recruiters && managers && flows) {
         formValues = populateForm();
     } else {
         formValues = initialValues;
@@ -140,7 +146,7 @@ const ProjectForm = ({
                 onSubmit={(values) => {
                     const data = copyObject(clearEmptyFields(values));
                     const transformedData = transformReactSelectFields(
-                        ['citizenship', 'location', 'branch', 'recruiter', 'manager'], data);
+                        ['citizenship', 'location', 'branch', 'recruiter', 'manager', 'flow'], data);
                     transformedData.age = [ values.age.from, values.age.to ];
                     delete transformedData.location_type;
                     onSubmit(transformedData);
@@ -289,6 +295,22 @@ const ProjectForm = ({
                             ) : null}
                         </Form.Group>
                         <Form.Group>
+                            <p className="form-control-label">Процесс</p>
+                            <DropDown
+                                isDisabled={!flows || !flows.results}
+                                isClearable
+                                name="flow"
+                                placeholder="Выберите из списка"
+                                value={values.flow}
+                                options={generateSelectOptions((flows || []).results, 'url', 'name')}
+                                onBlur={(e) => setFieldTouched('flow', e || '')}
+                                onChange={(e) => setFieldValue('flow', e || null)}
+                            />
+                            {touched.flow && errors.flow ? (
+                                <span className="mt-1 invalid-feedback-visible">{errors.flow}</span>
+                            ) : null}
+                        </Form.Group>
+                        <Form.Group>
                             <p className="form-control-label">Местонахождение</p>
                             <RadioButton
                                 custom
@@ -373,9 +395,10 @@ const mapStateToProps = state => ({
     isLoading: isLoadingSelector(state),
     recruiters: usersState(recruitersUid)(state),
     managers: usersState(projectManagersUid)(state),
+    flows: flowsSelector(state),
 });
 
-const mapDispatchToProps = { getLocations, getBranches, getUsers };
+const mapDispatchToProps = { getLocations, getBranches, getUsers, getFlows };
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectForm);

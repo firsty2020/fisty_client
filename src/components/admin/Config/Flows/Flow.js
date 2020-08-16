@@ -205,7 +205,7 @@ const Flow = ({
 
     const handleAddStatus = (status) => {
         const newStatus = {
-            is_default: false,
+            is_default: !flowStatuses.results.length,
             x: 0,
             y: 0,
             flow,

@@ -211,4 +211,5 @@ export const projectSchema = Yup.object().shape({
         return !!(this.parent.location || value);
     }),
     location_type: Yup.string().required('Укажите местонахождение'),
+    flow: Yup.string().required('Укажите процесс'),
 });

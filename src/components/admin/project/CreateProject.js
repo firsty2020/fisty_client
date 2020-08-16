@@ -10,6 +10,7 @@ import { recruitersSet} from '../adminReducer';
 import { AlertNotice } from '../../ui';
 import { push } from 'connected-react-router';
 import { copyObject, extractIdFromUrl } from '../../../helpers/utils';
+import { getFlows } from '../Config/configsActions';
 
 
 const CreateProject = ({
@@ -22,12 +23,14 @@ const CreateProject = ({
                            setProjectRecruiters,
                            push,
                            resetProjectState,
+                           getFlows,
                        }) => {
 
     const [ projectData, setProjectData ] = useState(null);
 
     useEffect(() => {
         getVacancy(match.params.vacancyId);
+        getFlows({ show_all: true });
     }, [ getVacancy, match.params.vacancyId ]);
 
     useEffect(() => {
@@ -91,6 +94,7 @@ const mapDispatchToProps = {
     push,
     setProjectRecruiters,
     resetProjectState,
+    getFlows,
 };
 
 

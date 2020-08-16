@@ -18,6 +18,7 @@ import NotesModal from '../../admin/project/NotesModal';
 import { deleteProject, resetProjectState, copyEntity, resetCopyState } from '../commonActions';
 import { projectDeletedSelector, copiedEntitySelector } from '../commonReducer';
 import { extractUserDataFromToken } from '../../auth/auth';
+import UpdateProjectStatus from './UpdateProjectStatus';
 
 const Projects = ({
                       projects,
@@ -73,9 +74,15 @@ const Projects = ({
         setProjectIdToDelete(null);
     };
 
+    const handleStatusUpdated = () => {
+        getProjects(generateParams());
+        autoToggleAlert('Статус обновлен', setSuccessMessage);
+    }
+
     const projectsTableLayout = {
         headings: [
-            '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'действия', 'заметки',
+            '#', 'название', 'статус', 'Кол-во выполненных ЦД',
+            'Доля Выполненных ЦД', 'действия', 'заметки',
         ],
         createRow: ({
                         id,
@@ -85,6 +92,11 @@ const Projects = ({
                     }) => [
             id,
             name,
+            <UpdateProjectStatus
+                key={id}
+                updated={handleStatusUpdated}
+                project={(projects || {}).results.find((project) => project.id === id)}
+            />,
             completed_targeted_actions_count,
             target_action_amount,
         ],
