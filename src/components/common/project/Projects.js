@@ -105,7 +105,7 @@ const Projects = ({
     const shouldShowActions = (isEditing) => {
         if (!showActions) {
             projectsTableLayout.headings = [
-                '#', 'название', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'заметки'];
+                '#', 'название', 'статус', 'Кол-во выполненных ЦД', 'Доля Выполненных ЦД', 'заметки'];
             return null
         }
         if (isEditing) {

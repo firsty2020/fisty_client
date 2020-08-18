@@ -2,57 +2,67 @@ import { DropDown } from '../../ui';
 import {extractIdFromUrl, generateSelectOptions} from '../../../helpers/utils';
 import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
-import { flowStatusesSelector } from '../../admin/Config/configsReducer';
-import { getFlowStatuses } from '../../admin/Config/configsActions';
 import { resetProjectState, updateProject } from '../commonActions';
-import { projectUpdatedSelector } from '../commonReducer';
+import { isLoadingSelector, projectUpdatedSelector } from '../commonReducer';
+import api from '../../../axios';
 
 const UpdateProjectStatus = ({
                                  project,
-                                 statuses,
-                                 getFlowStatuses,
                                  updateProject,
                                  updated,
                                  projectUpdated,
                                  resetProjectState,
+                                 pending,
                              }) => {
 
     const params = { flow: extractIdFromUrl(project.flow), show_all: true };
 
     const [ status, setStatus ] = useState(null);
+    const [ updatedProjectId, setUpdatedProjectId ] = useState(null);
+    const [ statuses, setStatuses ] = useState([]);
     const [ projectStatus, setProjectStatus ] = useState(null);
 
     useEffect(() => {
         if (!project) return ;
-        getFlowStatuses(params);
-    }, [ getFlowStatuses ]);
+        const getStatuses = async () => {
+            const {data} = await api.request({
+                url: 'flow-status',
+                method: 'GET',
+                params
+            });
+            setStatuses(data.results);
+        }
+        getStatuses();
+
+    }, [ ]);
 
     useEffect(() => {
-        if (!statuses || !statuses.results || status) return ;
-        const _projectStatus = statuses.results.find(({url}) => url === project.flow_status);
+        if (!statuses.length || status) return;
+        const _projectStatus = statuses.find(({url}) => url === project.flow_status);
         _projectStatus.name = _projectStatus.main_status_details.name;
         setProjectStatus(_projectStatus);
         setStatus({value: _projectStatus.url, label: _projectStatus.name});
     });
 
     useEffect(() => {
-        if (projectUpdated) {
-            updated();
+        if (projectUpdated && project.id === updatedProjectId) {
             resetProjectState();
-            const _projectStatus = statuses.results.find(({url}) => url === project.flow_status);
+            const _projectStatus = statuses.find(({url}) => url === project.flow_status);
             _projectStatus.name = _projectStatus.main_status_details.name;
             setProjectStatus(_projectStatus);
+            setUpdatedProjectId(null);
+            updated();
         }
     }, [projectUpdated, updated, resetProjectState]);
 
 
-    if (!statuses || !statuses.results || !projectStatus || !project) return null;
+    if (!statuses.length || !projectStatus || !project) return null;
 
 
     const generateStatuses = () => {
         return project.flow_status_details.available_statuses
             .reduce((acc, curr) => {
-                const _status = statuses.results.find(({url}) => url === curr);
+                const _status = statuses.find(({url}) => url === curr);
                 if (_status) {
                     _status.name = _status.main_status_details.name;
                     acc.push(_status);
@@ -64,6 +74,7 @@ const UpdateProjectStatus = ({
     const handleUpdateStatus = (e) => {
         setStatus(e);
         if (e.value === project.flow_status) return ;
+        setUpdatedProjectId(project.id)
         updateProject(project.id, {flow_status: e.value});
     }
 
@@ -71,6 +82,7 @@ const UpdateProjectStatus = ({
         <div style={{width: '200px'}}
             onClick={(e) => e.stopPropagation()}>
             <DropDown
+                isDisabled={pending && project.id === updatedProjectId}
                 className="select-status"
                 name="filter"
                 value={status}
@@ -82,10 +94,10 @@ const UpdateProjectStatus = ({
 };
 
 const mapStateToProps = (state) => ({
-    statuses: flowStatusesSelector(state),
     projectUpdated: projectUpdatedSelector(state),
+    pending: isLoadingSelector(state),
 });
 
-const mapDispatchToProps = { getFlowStatuses, updateProject, resetProjectState }
+const mapDispatchToProps = { updateProject, resetProjectState }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateProjectStatus);
