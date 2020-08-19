@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Formik } from 'formik';
 import { Button, Col, Form } from 'react-bootstrap';
 import { getFlows, getLocations } from '../Config/configsActions';
@@ -12,7 +12,7 @@ import {
 } from '../../../helpers/utils';
 import { getBranches } from '../Branch/branchActions';
 import { branchesSelector } from '../Branch/branchReducer';
-import { DropDown, RadioButton } from '../../ui';
+import {ConfirmationModal, DropDown, RadioButton} from '../../ui';
 import CountriesDropdown from '../../auth/Registration/CountriesDropdown';
 import { Link } from 'react-router-dom';
 import { projectSchema } from '../../../helpers/schemas';
@@ -59,6 +59,8 @@ const ProjectForm = ({
                          onSubmit,
                          getFlows,
                      }) => {
+
+    const [flowModifier, setFlowModifier] = useState(null);
 
     useEffect(() => {
         const params = { show_all: true };
@@ -137,8 +139,29 @@ const ProjectForm = ({
         formValues = initialValues;
     }
 
+    const handleFlowChange = (modifier, value) => {
+        if (project) {
+            setFlowModifier({modifier, value})
+        } else {
+            modifier('flow', value || null)
+        }
+    }
+
+    const changeFlow = () => {
+        const { modifier, value } = flowModifier;
+        modifier('flow', value);
+        setFlowModifier(null);
+    }
+
     return (
         <div>
+            <ConfirmationModal
+                question="Статус проекта изменится на начальный стаус выбранного процесса."
+                onConfirm={changeFlow}
+                onCancel={() => setFlowModifier(null)}
+                decline="Отменить"
+                confirm="Продолжить"
+                show={!!flowModifier} />
             <Formik
                 enableReinitialize
                 initialValues={formValues}
@@ -304,7 +327,7 @@ const ProjectForm = ({
                                 value={values.flow}
                                 options={generateSelectOptions((flows || []).results, 'url', 'name')}
                                 onBlur={(e) => setFieldTouched('flow', e || '')}
-                                onChange={(e) => setFieldValue('flow', e || null)}
+                                onChange={(e) => handleFlowChange(setFieldValue, e)}
                             />
                             {touched.flow && errors.flow ? (
                                 <span className="mt-1 invalid-feedback-visible">{errors.flow}</span>
