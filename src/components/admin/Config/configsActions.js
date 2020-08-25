@@ -14,6 +14,8 @@ import {
     ADMIN_CONFIGS_CREATE_CONTACT_PERSON_ROLE_RESOLVED,
     ADMIN_CONFIGS_CREATE_LOCATION_PENDING,
     ADMIN_CONFIGS_CREATE_LOCATION_RESOLVED,
+    ADMIN_CONFIGS_FLOW_ACTIVATE,
+    ADMIN_CONFIGS_FLOW_GET,
     ADMIN_CONFIGS_FLOW_STATE_RESET,
     ADMIN_CONFIGS_FLOWS_CREATE,
     ADMIN_CONFIGS_FLOWS_DELETE,
@@ -488,6 +490,13 @@ export const deleteFlow = (id) => createApiAction({
     label: ADMIN_CONFIGS_FLOWS_DELETE,
 });
 
+export const getFlow = (id) => createApiAction({
+    url: `flow/${id}/`,
+    method: GET,
+    label: ADMIN_CONFIGS_FLOW_GET,
+});
+
+
 export const updateFlow = (id, data) => createApiAction({
     url: `flow/${id}/`,
     method: PATCH,
@@ -513,6 +522,13 @@ export const addFlowStatus = (data) => createApiAction({
     label: ADMIN_CONFIGS_FLOWS_STATUSES_ADD,
 });
 
+export const activateFlow = (data) => createApiAction({
+    url: `companies/flow/validate/`,
+    method: POST,
+    data,
+    label: ADMIN_CONFIGS_FLOW_ACTIVATE,
+});
+
 export const deleteFlowStatus = (id) => createApiAction({
     url: `flow-status/${id}/`,
     method: DELETE,
@@ -525,6 +541,7 @@ export const updateFlowStatus = (id, data) => createApiAction({
     data,
     label: ADMIN_CONFIGS_FLOWS_STATUSES_UPDATE,
 });
+
 
 export const linkFlowStatuses = (data) => createApiAction({
     url: `companies/flow/assign-status`,
