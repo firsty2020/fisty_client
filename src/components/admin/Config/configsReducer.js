@@ -76,6 +76,8 @@ import {
     ADMIN_CONFIGS_FLOWS_STATUSES_LINK,
     ADMIN_CONFIGS_FLOW_STATE_RESET,
     ADMIN_CONFIGS_FLOWS_STATUSES_DELETE,
+    ADMIN_CONFIGS_FLOW_GET,
+    ADMIN_CONFIGS_FLOW_ACTIVATE, API_REQUEST_ERROR, API_REQUEST,
 } from '../../../helpers/constants/actionTypes';
 import {createSelector} from 'reselect';
 
@@ -88,6 +90,12 @@ export const configs = (state = {}, action) => {
             return { ...state,
                 flowStatuses: [],
             };
+
+        case API_REQUEST_ERROR:
+            return { ...state, apiError: true };
+
+        case API_REQUEST:
+            return { ...state, apiError: false };
 
         case ADMIN_CONFIGS_ADD_INDUSTRY_PENDING:
             return {
@@ -508,31 +516,37 @@ export const configs = (state = {}, action) => {
             };
 
         case ADMIN_CONFIGS_FLOWS_CREATE:
-            return { ...state,  flowCreated: true };
+            return { ...state, flowCreated: true };
 
         case ADMIN_CONFIGS_FLOWS_GET:
-            return { ...state,  flows: action.payload };
+            return { ...state, flows: action.payload };
+
+        case ADMIN_CONFIGS_FLOW_GET:
+            return { ...state, flow: action.payload };
 
         case ADMIN_CONFIGS_FLOWS_DELETE:
-            return { ...state,  flowDeleted: true };
+            return { ...state, flowDeleted: true };
 
         case ADMIN_CONFIGS_FLOWS_UPDATE:
-            return { ...state,  flowUpdated: true };
+            return { ...state, flowUpdated: true };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_GET:
-            return { ...state,  flowStatuses: action.payload };
+            return { ...state, flowStatuses: action.payload };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_ADD:
-            return { ...state,  flowStatusCreated: action.payload };
+            return { ...state, flowStatusCreated: action.payload };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_DELETE:
-            return { ...state,  flowStatusDeleted: true };
+            return { ...state, flowStatusDeleted: true };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_UPDATE:
-            return { ...state,  flowStatusUpdated: true };
+            return { ...state, flowStatusUpdated: true };
 
         case ADMIN_CONFIGS_FLOWS_STATUSES_LINK:
-            return { ...state,  flowStatusLinked: true };
+            return { ...state, flowStatusLinked: true };
+
+        case ADMIN_CONFIGS_FLOW_ACTIVATE:
+            return { ...state, flowActivated: true };
 
         case ADMIN_CONFIGS_FLOWS_STATE_RESET:
             return {
@@ -549,6 +563,7 @@ export const configs = (state = {}, action) => {
                 flowStatusUpdated: false,
                 flowStatusCreated: null,
                 flowStatusDeleted: false,
+                flowActivated: false,
             };
 
         default:
@@ -556,6 +571,7 @@ export const configs = (state = {}, action) => {
     }
 };
 
+export const apiErrorSelector = state => state.admin.configs.apiError;
 
 export const addIndustryOptionPendingSelector = state => state.admin.configs.addIndustryOptionPending;
 export const addIndustryOptionResolvedSelector = state => state.admin.configs.addIndustryOptionResolved;
@@ -616,6 +632,7 @@ export const flowCreatedSelector = state => state.admin.configs.flowCreated;
 export const flowDeletedSelector = state => state.admin.configs.flowDeleted;
 export const flowUpdatedSelector = state => state.admin.configs.flowUpdated;
 export const flowsSelector = state => state.admin.configs.flows;
+export const flowSelector = state => state.admin.configs.flow;
 export const flowStatusCreatedSelector = state => state.admin.configs.flowStatusCreated;
 export const flowStatusDeletedSelector = state => state.admin.configs.flowStatusDeleted;
 export const flowStatusUpdatedSelector = state => state.admin.configs.flowStatusUpdated;

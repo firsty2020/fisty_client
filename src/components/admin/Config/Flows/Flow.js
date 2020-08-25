@@ -1,8 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import './Flows.css';
 import { SteppedLineTo } from 'react-lineto';
-import { Button, Col, Modal, Row, Dropdown, DropdownButton } from 'react-bootstrap';
+import {
+    Button,
+    Col,
+    Modal,
+    Row,
+    Dropdown,
+    DropdownButton,
+    Form
+} from 'react-bootstrap';
 import { ArrowRight, Link, XCircle, PlusCircle, Edit } from 'react-feather';
 import {
     autoToggleAlert,
@@ -20,6 +28,10 @@ import {
     resetFlowState,
     createStatus,
     resetStatusState,
+    getFlow,
+    activateFlow,
+    updateFlow,
+    resetFlowsState,
 } from '../configsActions';
 import {
     flowStatusCreatedSelector,
@@ -29,12 +41,15 @@ import {
     statusesState,
     flowStatusesLinkedSelector,
     flowStatusDeletedSelector,
+    flowSelector,
+    flowUpdatedSelector,
+    apiErrorSelector,
 } from '../configsReducer';
-import { baseURL } from '../../../../axios';
 import { AlertNotice, ConfirmationModal } from '../../../ui';
 import { When } from 'react-if';
 import CreateStatus from '../Statuses/CreateStatus';
 import AddSubStatus from './AddSubStatus';
+import { isLoadingSelector } from '../../../common/commonReducer';
 
 
 const generateLines = (draggables) => {
@@ -79,6 +94,14 @@ const Flow = ({
                   resetFlowState,
                   createMainStatus,
                   resetMainStatusState,
+                  getFlow,
+                  flow,
+                  pending,
+                  activateFlow,
+                  updateFlow,
+                  flowUpdated,
+                  resetFlowsState,
+                  apiError,
               }) => {
 
     const [_, updateState] = useState(0);
@@ -91,14 +114,15 @@ const Flow = ({
     const [draggables, setDraggables ] = useState([]);
     const [subStatus, setSubStatus ] = useState(null);
     const [showMainStatusesModal, setShowMainStatusesModal ] = useState(false);
+    const [isFlowActive, setIsFlowActive] = useState(false);
     const containerRef = useRef(null);
 
     const params = { flow: match.params.flowId, show_all: true };
-    const flow = `${baseURL}flow/${match.params.flowId}/`;
 
     useEffect(() => {
         getMainStatuses({ show_all: true });
         getFlowStatuses(params);
+        getFlow(match.params.flowId);
     }, [ getFlowStatuses, getMainStatuses]);
 
     useEffect(() => {
@@ -125,7 +149,7 @@ const Flow = ({
         if ((flowStatuses || {}).results) {
             setDraggables(flowStatuses.results)
         }
-    })
+    });
 
     useEffect(() => {
         if (mainStatusCreated) {
@@ -146,6 +170,25 @@ const Flow = ({
             setSubStatus(null);
         }
     }, [flowStatusCreated, linkFlowStatuses, resetFlowState]);
+
+    useEffect(() => {
+        if (flow) {
+            setIsFlowActive(flow.is_active);
+        }
+    }, [ flow ]);
+
+    useEffect(() => {
+        if (flowUpdated) {
+            resetFlowsState();
+            getFlow(match.params.flowId);
+        }
+    }, [flowUpdated, match.params.flowId]);
+
+    useEffect(() => {
+        if (apiError) {
+            setIsFlowActive(false);
+        }
+    }, [apiError])
 
     const onStop = (a, b) => {
         let dragged = flowStatuses.results
@@ -199,27 +242,28 @@ const Flow = ({
             from_status: fromDraggable.url,
             to_status: toDraggable.url,
             link: false,
-        })
+        });
+        updateFlow(match.params.flowId, { is_active: false });
         setConnectionToRemove(null);
-    }
+    };
 
     const handleAddStatus = (status) => {
         const newStatus = {
-            is_default: !flowStatuses.results.length,
             x: 0,
             y: 0,
-            flow,
+            flow: flow.url,
             main_status: status.url,
         };
         addFlowStatus(newStatus);
-    }
+        updateFlow(match.params.flowId, { is_active: false });
+    };
 
     const findParentDiv = (el) => {
         if (el.nodeName.toLowerCase() === 'div' && el.classList.contains('drag-item')) {
             return el;
         }
         return findParentDiv(el.parentElement);
-    }
+    };
 
     const handleStartConnecting = (e) => {
         e.persist();
@@ -238,7 +282,7 @@ const Flow = ({
                 if ((statusName !== dragItem.id) && !(_unAvailableStatuses.includes(dragItem.id))) {
                     dragItem.classList.add('blink')
                 }
-            })
+            });
     };
 
     const dropConnectionLine = (e) => {
@@ -272,6 +316,8 @@ const Flow = ({
             to_status: statusToConnect.url,
             link: true,
         });
+
+        updateFlow(match.params.flowId, { is_active: false });
         resetConnecting();
     };
 
@@ -285,6 +331,7 @@ const Flow = ({
     const handleDeleteFlowStatus = () => {
         deleteFlowStatus(flowStatusIdToRemove);
         setFlowStatusIdToRemove(null);
+        updateFlow(match.params.flowId, { is_active: false });
     };
 
     const handleAddSubStatus = (main_status) => {
@@ -292,10 +339,11 @@ const Flow = ({
             is_default: false,
             x: 0,
             y: 0,
-            flow,
+            flow: flow.url,
             main_status,
         }
         addFlowStatus(newStatus);
+        updateFlow(match.params.flowId, { is_active: false });
     };
 
     const handleOpenStatusesModal = url => {
@@ -303,11 +351,23 @@ const Flow = ({
         setShowMainStatusesModal(true);
     };
 
-
     const handleAddSubStatusModalClose = (reset) => {
         setShowMainStatusesModal(false);
         if (!reset) return
         setSubStatus(null);
+    };
+
+    const handleFlowActivation = () => {
+        const value = !isFlowActive;
+        setIsFlowActive(value);
+        if (value) {
+            activateFlow({
+                flow: flow.url,
+                activate: true,
+            });
+        } else {
+            updateFlow(match.params.flowId, { is_active: false });
+        }
     }
 
     return (
@@ -378,7 +438,23 @@ const Flow = ({
                     </DropdownButton>
                 </Col>
             </Row>
+            <Row className="mb-3">
+                <Col>
+                    <Form.Check
+                        className="warning-control-custom"
+                        name="create_user"
+                        checked={isFlowActive}
+                        value={isFlowActive}
+                        disabled={pending}
+                        custom
+                        onChange={handleFlowActivation}
+                        type="switch"
+                        id="custom-switch"
+                        label="Активен"
+                    />
+                </Col>
 
+            </Row>
             <div className="flow-container"
                  ref={containerRef}
                  id="flow-container"
@@ -447,6 +523,10 @@ const mapStateToProps = (state) => ({
     flowStatusDeleted: flowStatusDeletedSelector(state),
     flowStatusUpdated: flowStatusUpdatedSelector(state),
     linked: flowStatusesLinkedSelector(state),
+    flow: flowSelector(state),
+    flowUpdated: flowUpdatedSelector(state),
+    pending: isLoadingSelector(state),
+    apiError: apiErrorSelector(state),
 });
 
 const mapDispatchToProps = {
@@ -456,9 +536,13 @@ const mapDispatchToProps = {
     updateFlowStatus,
     linkFlowStatuses,
     resetFlowState,
+    resetFlowsState,
     deleteFlowStatus,
     createMainStatus: createStatus,
     resetMainStatusState: resetStatusState,
+    getFlow,
+    activateFlow,
+    updateFlow,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Flow);
