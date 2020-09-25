@@ -99,7 +99,7 @@ const generateLinePlaceholders = () => {
             lineNodes[i].appendChild(icon);
         }
     }
-    return null
+    return null;
 };
 
 
@@ -230,8 +230,8 @@ const Flow = ({
     const diamondShapeItems = (nodes) => {
         if (!nodes || !nodes.length) return;
         nodes.forEach((node) => {
-            if (!node.style.transform.includes('rotate'))
-            node.style.transform = `${node.style.transform} rotate(45deg)`
+            // if (!node.style.transform.includes('rotate'))
+            // node.style.transform = `${node.style.transform} rotate(45deg)`
         })
     };
 
@@ -520,7 +520,7 @@ const Flow = ({
                                 id={main_status_details.name}
                                 className={`drag-item ${main_status_details.name}` }>
                                 <div className="icons-container">
-                                    <span title="Добавить"><Edit className="icon"/></span>
+                                    <span title="Действия"><Edit className="icon"/></span>
                                     <span
                                         onClick={() => handleOpenStatusesModal(url)} title="Добавить">
                                         <PlusCircle className="icon add-icon"/>
@@ -546,7 +546,7 @@ const Flow = ({
                 {generateLines(draggables).map(({ from, to, color, className }, index) => {
                     return (
                         <SteppedLineTo
-                            fromAnchor="right right"
+                            fromAnchor="right bottom"
                             toAnchor="left left"
                             color={color}
                             className={className}
@@ -558,7 +558,6 @@ const Flow = ({
                         />
                     );
                 })}
-                {/*{document.querySelectorAll('.line').length ? generateLinePlaceholders() : null}*/}
             </div>
         </div>
     );
