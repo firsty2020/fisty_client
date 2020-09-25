@@ -59,7 +59,7 @@ const generateLines = (draggables) => {
             available_statuses.map(statusUrl => {
                 const to = draggables.find(({ url }) => url === statusUrl).main_status_details.name;
                 let color = sessionStorage.getItem(`line ${main_status_details.name}-${to}`);
-                if(!color) {
+                if (!color) {
                     color = generateRandomColor();
                     sessionStorage.setItem(`line ${main_status_details.name}-${to}`, color);
                 }
@@ -72,8 +72,35 @@ const generateLines = (draggables) => {
             })
         }
     });
+
+    generateArrows(linesToDraw);
     return linesToDraw;
-}
+};
+
+const generateArrows = (linesToDraw) => {
+    const arrows = Array.from(document.querySelectorAll('i.arrow'));
+    arrows.map((arrow) => arrow.style.color = 'transparent')
+
+    linesToDraw.map((line) => {
+        const icon = arrows.find((arrow) => arrow.classList.toString().includes(line.to));
+        if (icon) {
+            icon.style.color = line.color;
+        }
+    });
+};
+
+const generateLinePlaceholders = () => {
+    const lineNodes = Array.from(document.querySelectorAll('.line'));
+    if (!lineNodes || !lineNodes.length) return;
+    const icon = document.createElement('i');
+    icon.classList.add('fa', 'fa-times-circle', 'fa-delete');
+    for (let i = 2; i < lineNodes.length; i += 3) {
+        if (!lineNodes[i].hasChildNodes()) {
+            lineNodes[i].appendChild(icon);
+        }
+    }
+    return null
+};
 
 
 const Flow = ({
@@ -137,17 +164,27 @@ const Flow = ({
 
     useEffect(() => {
         const draggables = (flowStatuses || {}).results || []
-        const svg = document.getElementById(((draggables[0] || {}).main_status_details || {}).name);
-        if (svg) {
+        const draggable = document.getElementById(((draggables[0] || {}).main_status_details || {}).name);
+        const draggableNodes = document.querySelectorAll('.drag-item');
+        diamondShapeItems(draggableNodes);
+        if (draggable) {
             attachMouseEvents();
             // just trigger state update
-            updateState(1);
+            setTimeout(() => {
+                generateLinePlaceholders();
+                updateState(1);
+            });
+
         }
     });
 
     useEffect(() => {
         if ((flowStatuses || {}).results) {
-            setDraggables(flowStatuses.results)
+            setDraggables(flowStatuses.results);
+            setTimeout(() => {
+                generateLinePlaceholders();
+                updateState(1);
+            });
         }
     });
 
@@ -188,7 +225,15 @@ const Flow = ({
         if (apiError) {
             setIsFlowActive(false);
         }
-    }, [apiError])
+    }, [apiError]);
+
+    const diamondShapeItems = (nodes) => {
+        if (!nodes || !nodes.length) return;
+        nodes.forEach((node) => {
+            if (!node.style.transform.includes('rotate'))
+            node.style.transform = `${node.style.transform} rotate(45deg)`
+        })
+    };
 
     const onStop = (a, b) => {
         let dragged = flowStatuses.results
@@ -217,7 +262,7 @@ const Flow = ({
     };
 
     const handleLineClick = (e) => {
-        const classList = Array.from(e.target.classList)
+        const classList = Array.from(findParentDiv(e.target).classList)
         const a = classList.slice(classList.indexOf('line') + 1).join(' ').split('-') .join(' - ')
         setConnectionToRemove(a);
     };
@@ -259,7 +304,7 @@ const Flow = ({
     };
 
     const findParentDiv = (el) => {
-        if (el.nodeName.toLowerCase() === 'div' && el.classList.contains('drag-item')) {
+        if (el.nodeName.toLowerCase() === 'div' && (el.classList.contains('drag-item') || el.classList.contains('line')) ) {
             return el;
         }
         return findParentDiv(el.parentElement);
@@ -368,7 +413,8 @@ const Flow = ({
         } else {
             updateFlow(match.params.flowId, { is_active: false });
         }
-    }
+    };
+
 
     return (
         <div>
@@ -464,13 +510,15 @@ const Flow = ({
                         <Draggable
                             defaultPosition={{x: x, y: y }}
                             onStop={onStop}
+                            // onDrag={test}
+                            // onStart={test}
                             key={main_status_details.name}
                             bounds="#flow-container"
                         >
                             <div
                                 onClick={dropConnectionLine}
                                 id={main_status_details.name}
-                                className={`drag-item ${main_status_details.name}`}>
+                                className={`drag-item ${main_status_details.name}` }>
                                 <div className="icons-container">
                                     <span title="Добавить"><Edit className="icon"/></span>
                                     <span
@@ -489,7 +537,8 @@ const Flow = ({
                                         <XCircle className="icon remove-icon"/>
                                     </span>
                                 </div>
-                                <div className="text-center">{main_status_details.name}</div>
+                                <div className="text-center text">{main_status_details.name}</div>
+                                <i className={`fa fa-caret-right arrow ${main_status_details.name}`}/>
                             </div>
                         </Draggable>
                     );
@@ -497,7 +546,8 @@ const Flow = ({
                 {generateLines(draggables).map(({ from, to, color, className }, index) => {
                     return (
                         <SteppedLineTo
-                            fromAnchor="top right"
+                            fromAnchor="right right"
+                            toAnchor="left left"
                             color={color}
                             className={className}
                             key={index}
@@ -506,9 +556,9 @@ const Flow = ({
                             borderColor={color}
                             to={to}
                         />
-                    )
+                    );
                 })}
-
+                {/*{document.querySelectorAll('.line').length ? generateLinePlaceholders() : null}*/}
             </div>
         </div>
     );
